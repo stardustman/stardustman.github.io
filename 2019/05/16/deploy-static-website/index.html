@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="dockerfile and index.html12# index.html&amp;lt;h1&amp;gt;Hello World&amp;lt;/h1&amp;gt;  1. Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-16T08:53:48.579Z">
+<meta property="og:updated_time" content="2019-05-16T08:56:12.305Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="deploy-static-website">
 <meta name="twitter:description" content="dockerfile and index.html12# index.html&amp;lt;h1&amp;gt;Hello World&amp;lt;/h1&amp;gt;  1. Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required">
@@ -355,7 +355,7 @@
 <h1 id="3-Run"><a href="#3-Run" class="headerlink" title="3. Run"></a>3. Run</h1><blockquote>
 <p>The built Image can be launched in a consistent way to other Docker Images. When a container launches, it’s sandboxed from other processes and networks on the host. When starting a container you need to give it permission and access to what it requires.<br>For example, to open and bind to a network port on the host you need to provide the parameter <em>-p host-port:container-port</em>.</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Launch our newly built image providing the friendly name and tag. As\ it&apos;s a web server, bind port 80 to our host using the -p parameter.</span><br><span class="line">docker run -d -p 80:80 webserver-image:v1</span><br><span class="line"># Access the results of port 80</span><br><span class="line">curl docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Launch our newly built image providing the friendly name and tag. As it&apos;s a web server, bind port 80 to our host using the -p parameter.</span><br><span class="line">docker run -d -p 80:80 webserver-image:v1</span><br><span class="line"># Access the results of port 80</span><br><span class="line">curl docker</span><br></pre></td></tr></table></figure>
 
 
       
