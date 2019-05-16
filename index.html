@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang>
+<html class="theme-next gemini use-motion" lang>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -93,7 +93,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -310,16 +310,27 @@
       
         
           
-            <h1 id="1-Running-a-container"><a href="#1-Running-a-container" class="headerlink" title="1. Running a container"></a>1. Running a container</h1><p><strong>docker search image-name</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search redis</span><br></pre></td></tr></table></figure></p>
-<p><strong>docker run options image-name:version</strong><br>    note: -d running a container in a  detached , background state<br><strong>solution1: default latest version</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis</span><br></pre></td></tr></table></figure></p>
-<p><strong>solution2: version is 3.2</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis:3.2</span><br></pre></td></tr></table></figure></p>
+            <h1 id="1-Running-a-container-background-detached"><a href="#1-Running-a-container-background-detached" class="headerlink" title="1. Running a container background(detached)"></a>1. Running a container background(detached)</h1><p><strong>docker search image-name</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search redis</span><br></pre></td></tr></table></figure>
+
+<p><strong>docker run options image-name:version</strong><br><strong>solution1: default latest version</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis</span><br></pre></td></tr></table></figure>
+
+<p><strong>solution2: version is 3.2</strong> </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis:3.2</span><br></pre></td></tr></table></figure>
+
 <h1 id="2-Find-running-container"><a href="#2-Find-running-container" class="headerlink" title="2. Find running container"></a>2. Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="3-Access-redis"><a href="#3-Access-redis" class="headerlink" title="3. Access redis"></a>3. Access redis</h1><pre><code>note: each docker container is sandboxed
-</code></pre><p><strong>solution1: specify host port is 6379</strong><br>    -p host-port:container-post<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure></p>
-<p><strong>solution2: specify randomly host port</strong><br>    -p container-port<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisDynamic  -p 6379 redis:latest</span><br></pre></td></tr></table></figure></p>
-<p><strong>verify:</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker port redisDynamic 6379</span><br></pre></td></tr></table></figure></p>
-<h1 id="4-Persisting-data"><a href="#4-Persisting-data" class="headerlink" title="4. Persisting data"></a>4. Persisting data</h1><p><strong>solution:</strong><br>    -v host-dir:container-dir<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v /opt/docker/data/redis:/data redis</span><br></pre></td></tr></table></figure></p>
+
+<h1 id="3-Access-redis"><a href="#3-Access-redis" class="headerlink" title="3. Access redis"></a>3. Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre><p><strong>solution1: specify host port is 6379</strong><br>    * -p host-port:container-post* </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure>
+
+<p><strong>solution2: specify randomly host port</strong><br>    * -p container-port* </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisDynamic  -p 6379 redis:latest</span><br><span class="line">docker port redisDynamic 6379</span><br></pre></td></tr></table></figure>
+
+<h1 id="4-Persisting-data"><a href="#4-Persisting-data" class="headerlink" title="4. Persisting data"></a>4. Persisting data</h1><pre><code>* -v host-dir:container-dir* </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v /opt/docker/data/redis:/data redis</span><br></pre></td></tr></table></figure>
+
 <h1 id="5-Running-a-container-foreground"><a href="#5-Running-a-container-foreground" class="headerlink" title="5. Running a container foreground"></a>5. Running a container foreground</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu bash</span><br></pre></td></tr></table></figure>
+
 
           
         
@@ -451,12 +462,16 @@
           
             <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
+
 <p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
 <h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
+
 <p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
 <h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
+
 <p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
 <h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
+
 <p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 
           
@@ -607,7 +622,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
@@ -706,6 +721,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
 
