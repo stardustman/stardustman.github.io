@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="1. Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: versio">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-16T07:05:17.066Z">
+<meta property="og:updated_time" content="2019-05-16T07:09:30.570Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="katacoda-deploying-first-docker-container">
 <meta name="twitter:description" content="1. Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: versio">
@@ -321,13 +321,13 @@
 
 <h1 id="2-Find-running-container"><a href="#2-Find-running-container" class="headerlink" title="2. Find running container"></a>2. Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
 
-<h1 id="3-Access-redis"><a href="#3-Access-redis" class="headerlink" title="3. Access redis"></a>3. Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre><p><strong>solution1: specify host port is 6379</strong><br>    * -p host-port:container-post* </p>
+<h1 id="3-Access-redis"><a href="#3-Access-redis" class="headerlink" title="3. Access redis"></a>3. Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre><p><strong>solution1: specify host port is 6379</strong><br>    <em>-p host-port:container-post</em> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure>
 
-<p><strong>solution2: specify randomly host port</strong><br>    * -p container-port* </p>
+<p><strong>solution2: specify randomly host port</strong><br>    <em>-p container-port</em> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisDynamic  -p 6379 redis:latest</span><br><span class="line">docker port redisDynamic 6379</span><br></pre></td></tr></table></figure>
 
-<h1 id="4-Persisting-data"><a href="#4-Persisting-data" class="headerlink" title="4. Persisting data"></a>4. Persisting data</h1><pre><code>* -v host-dir:container-dir* </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v /opt/docker/data/redis:/data redis</span><br></pre></td></tr></table></figure>
+<h1 id="4-Persisting-data"><a href="#4-Persisting-data" class="headerlink" title="4. Persisting data"></a>4. Persisting data</h1><pre><code>*-v host-dir:container-dir* </code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v /opt/docker/data/redis:/data redis</span><br></pre></td></tr></table></figure>
 
 <h1 id="5-Running-a-container-foreground"><a href="#5-Running-a-container-foreground" class="headerlink" title="5. Running a container foreground"></a>5. Running a container foreground</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu bash</span><br></pre></td></tr></table></figure>
 
