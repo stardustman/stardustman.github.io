@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="docker,">
+  <meta name="keywords" content="Hexo, NexT">
 
 
 
@@ -79,18 +79,14 @@
 
 
 
-<meta name="description" content="1. Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: versio">
-<meta name="keywords" content="docker">
 <meta property="og:type" content="article">
-<meta property="og:title" content="katacoda-deploying-first-docker-container">
-<meta property="og:url" content="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/index.html">
+<meta property="og:title" content="katacoda-optimising-dockerfile-with-onbuild">
+<meta property="og:url" content="http://yoursite.com/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="1. Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: versio">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-16T07:32:34.529Z">
+<meta property="og:updated_time" content="2019-05-20T08:08:52.717Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="katacoda-deploying-first-docker-container">
-<meta name="twitter:description" content="1. Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: versio">
+<meta name="twitter:title" content="katacoda-optimising-dockerfile-with-onbuild">
 
 
 
@@ -120,13 +116,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/">
 
 
 
 
 
-  <title>katacoda-deploying-first-docker-container | stardustman</title>
+  <title>katacoda-optimising-dockerfile-with-onbuild | stardustman</title>
   
 
 
@@ -263,7 +259,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -280,7 +276,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">katacoda-deploying-first-docker-container</h1>
+          <h1 class="post-title" itemprop="name headline">katacoda-optimising-dockerfile-with-onbuild</h1>
         
 
         <div class="post-meta">
@@ -292,8 +288,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-16T12:40:16+08:00">
-                2019-05-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-20T16:08:52+08:00">
+                2019-05-20
               </time>
             
 
@@ -311,8 +307,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/05/16/katacoda-deploying-first-docker-container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/16/katacoda-deploying-first-docker-container/" itemprop="commentCount"></span>
+                <a href="/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/20/katacoda-optimising-dockerfile-with-onbuild/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -340,29 +336,7 @@
       
 
       
-        <h1 id="1-Running-a-container-background-detached"><a href="#1-Running-a-container-background-detached" class="headerlink" title="1. Running a container background(detached)"></a>1. Running a container background(detached)</h1><p><strong>docker search image-name</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search redis</span><br></pre></td></tr></table></figure>
-
-<p><strong>docker run options image-name:version</strong><br><strong>solution1: default latest version</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis</span><br></pre></td></tr></table></figure>
-
-<p><strong>solution2: version is 3.2</strong> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis:3.2</span><br></pre></td></tr></table></figure>
-
-<h1 id="2-Find-running-container"><a href="#2-Find-running-container" class="headerlink" title="2. Find running container"></a>2. Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="3-Access-redis"><a href="#3-Access-redis" class="headerlink" title="3. Access redis"></a>3. Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre><p><strong>solution1: specify host port is 6379</strong><br><em>-p host-port:container-post</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure>
-
-<p><strong>solution2: specify randomly host port</strong><br><em>-p container-port</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisDynamic  -p 6379 redis:latest</span><br><span class="line">docker port redisDynamic 6379</span><br></pre></td></tr></table></figure>
-
-<h1 id="4-Persisting-data"><a href="#4-Persisting-data" class="headerlink" title="4. Persisting data"></a>4. Persisting data</h1><p><em>-v host-dir:container-dir</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v /opt/docker/data/redis:/data redis</span><br></pre></td></tr></table></figure>
-
-<h1 id="5-Running-a-container-foreground"><a href="#5-Running-a-container-foreground" class="headerlink" title="5. Running a container foreground"></a>5. Running a container foreground</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu bash</span><br></pre></td></tr></table></figure>
-
-
+        
       
     </div>
     
@@ -377,12 +351,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/docker/" rel="tag"># docker</a>
-          
-        </div>
-      
 
       
       
@@ -392,8 +360,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/16/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/05/20/csapp-memory-hierarchy/" rel="next" title="csapp-memory-hierarchy">
+                <i class="fa fa-chevron-left"></i> csapp-memory-hierarchy
               </a>
             
           </div>
@@ -402,8 +370,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/16/katacoda-deploy-static-website/" rel="prev" title="deploy-static-website">
-                deploy-static-website <i class="fa fa-chevron-right"></i>
+              <a href="/2019/05/20/git-commands/" rel="prev" title="git-commands">
+                git-commands <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -435,7 +403,7 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/05/16/katacoda-deploying-first-docker-container/" data-title="katacoda-deploying-first-docker-container" data-url="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/">
+      <div class="ds-thread" data-thread-key="2019/05/20/katacoda-optimising-dockerfile-with-onbuild/" data-title="katacoda-optimising-dockerfile-with-onbuild" data-url="http://yoursite.com/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/">
       </div>
     </div>
 
@@ -462,17 +430,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -523,22 +482,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Running-a-container-background-detached"><span class="nav-number">1.</span> <span class="nav-text">1. Running a container background(detached)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Find-running-container"><span class="nav-number">2.</span> <span class="nav-text">2. Find running container</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Access-redis"><span class="nav-number">3.</span> <span class="nav-text">3. Access redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Persisting-data"><span class="nav-number">4.</span> <span class="nav-text">4. Persisting data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Running-a-container-foreground"><span class="nav-number">5.</span> <span class="nav-text">5. Running a container foreground</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
