@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="Docker images are built based on a Dockerfile. A Dockerfile defines all the steps required to create a Docker image with your application configured and ready to be run as a container. The image itse">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-16T10:09:17.625Z">
+<meta property="og:updated_time" content="2019-05-22T06:55:50.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="building-docker-image">
 <meta name="twitter:description" content="Docker images are built based on a Dockerfile. A Dockerfile defines all the steps required to create a Docker image with your application configured and ready to be run as a container. The image itse">
@@ -343,28 +343,28 @@
         <blockquote>
 <p><strong><em>Docker images</em></strong> are built based on a Dockerfile. A Dockerfile defines <strong>all the steps</strong> required to create a Docker image with your application configured and ready to be run as a container. The image itself contains everything, from operating system to dependencies and configuration required to run your application.<br>Having everything within the image allows you to migrate images between different environments and be confident that if it works in one environment, then it will work in another.<br>The Dockerfile allows for images to be composable, enabling users to extend existing images instead of building from scratch. <em>By building on an existing image, you only need to define the steps to setup your application</em>. The base images can be basic operating system installations or configured systems which simply need some additional customisations.</p>
 </blockquote>
-<h1 id="1-Base-images"><a href="#1-Base-images" class="headerlink" title="1. Base images"></a>1. Base images</h1><blockquote>
+<h1 id="Base-images"><a href="#Base-images" class="headerlink" title="Base images"></a>Base images</h1><blockquote>
 <p>All Docker images start from a base image. A base image is the same images from the Docker Registry which are used to start containers. Along with the image name, we can also include the image tag to indicate which particular version we want, <em>by default, this is latest</em>.
 These base images are used as the foundation for your additional changes to run your application. For example, in this scenario, we require NGINX to be configured and running on the system before we can deploy our static HTML files. As such we want to use NGINX as our base image.<br>Dockerfile’s are simple text files with a command on each line. To define a base image we use the instruction <strong>FROM image-name:tag</strong></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br></pre></td></tr></table></figure>
 
-<h1 id="2-Running-commands"><a href="#2-Running-commands" class="headerlink" title="2. Running commands"></a>2. Running commands</h1><blockquote>
+<h1 id="Running-commands"><a href="#Running-commands" class="headerlink" title="Running commands"></a>Running commands</h1><blockquote>
 <p>With the base image defined, we need to run various commands to configure our image. There are many commands to help with this, the main commands two are COPY and RUN.<br><strong><em>RUN</em></strong> command allows you to execute any command as you would at a command prompt, for example installing different application packages or running a build command. The results of the RUN are <strong>persisted</strong> to the image so it’s important not to leave any unnecessary or temporary files on the disk as these will be included in the image.<br><strong><em>COPY src dest</em></strong> allows you to copy files from the directory containing the Dockerfile to the container’s image. This is extremely useful for <strong>source code</strong> and assets that you want to be deployed inside your container<br><em>A new index.html file has been created for you which we want to serve from our container. On the next line after the <strong><em>FROM</em></strong> command, use the COPY command to copy index.html into a directory called <strong>/usr/share/nginx/</strong>html</em></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br></pre></td></tr></table></figure>
 
-<h1 id="3-Exposing-ports"><a href="#3-Exposing-ports" class="headerlink" title="3. Exposing ports"></a>3. Exposing ports</h1><blockquote>
+<h1 id="Exposing-ports"><a href="#Exposing-ports" class="headerlink" title="Exposing ports"></a>Exposing ports</h1><blockquote>
 <p>With our files copied into our image and any dependencies downloaded, you need to define which port application needs to be accessible on.<br>Using the <strong><em>EXPOSE port</em></strong> command you tell Docker which ports should be open and can be bound too. You can define multiple ports on the single command, for example, EXPOSE 80 433 or EXPOSE 7000-8000</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br><span class="line"># web server to be accessible via port 80</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
 
-<h1 id="4-Default-commands"><a href="#4-Default-commands" class="headerlink" title="4. Default commands"></a>4. Default commands</h1><blockquote>
+<h1 id="Default-commands"><a href="#Default-commands" class="headerlink" title="Default commands"></a>Default commands</h1><blockquote>
 <p>With the Docker image configured and having defined which ports we want accessible, we now need to define the command that launches the application.<br><em>The <strong><em>CMD</em></strong> line in a Dockerfile defines the default command to run when a container is launched.</em> If the command requires arguments then it’s recommended to use an array, for example [“cmd”, “-a”, “arga value”, “-b”, “argb-value”], which will be combined together and the command<br><strong>*cmd -a “arga value” -b argb-value</strong> would be run.<br>An alternative approach to CMD is ENTRYPOINT. While a CMD can be overridden when the container starts, a ENTRYPOINT defines a command which can have arguments passed to it when the container launches.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br><span class="line"># web server to be accessible via port 80</span><br><span class="line">EXPOSE 80</span><br><span class="line"># The command to run NGINX is nginx -g daemon off;</span><br><span class="line">CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span><br></pre></td></tr></table></figure>
 
-<h1 id="5-Building-containers"><a href="#5-Building-containers" class="headerlink" title="5. Building containers"></a>5. Building containers</h1><blockquote>
+<h1 id="Building-containers"><a href="#Building-containers" class="headerlink" title="Building containers"></a>Building containers</h1><blockquote>
 <p>After writing your Dockerfile you need to use <strong><em>docker build</em></strong> to turn it into an image. <em>The build command takes in a directory containing the Dockerfile, executes the steps and stores the image in your local Docker Engine.</em> If one fails because of an error then the build stops.<br>Using the docker build command to build the image. You can give the image a <strong><em>friendly name by using the -t name option.</em></strong></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t my-nginx-image:latest</span><br></pre></td></tr></table></figure>
@@ -372,7 +372,7 @@ These base images are used as the foundation for your additional changes to run 
 <blockquote>
 <p>Sending build context to Docker daemon  3.072kB<br>Step 1/5 : FROM nginx:1.11-alpine<br> —&gt; bedece1f06cc<br>Step 2/5 : COPY index.html /usr/share/nginx/html/index.html<br> —&gt; Using cache<br> —&gt; 2be98924804a<br>Step 3/5 : EXPOSE 80<br> —&gt; Using cache<br> —&gt; 233ea4308326<br>Step 4/5 : CMD [“nginx”, “-g”, “daemon off;”]<br> —&gt; Using cache<br> —&gt; 1a518260bb2b<br>Step 5/5 : CMD [“nginx”, “-g”, “daemon off;”]<br> —&gt; Using cache<br> —&gt; 563c68c52ed7<br>Successfully built 563c68c52ed7<br>Successfully tagged my-nginx-image:latest</p>
 </blockquote>
-<h1 id="6-Launching-new-image"><a href="#6-Launching-new-image" class="headerlink" title="6. Launching new image"></a>6. Launching new image</h1><blockquote>
+<h1 id="Launching-new-image"><a href="#Launching-new-image" class="headerlink" title="Launching new image"></a>Launching new image</h1><blockquote>
 <p>NGINX is designed to run as a background service so you should include the option -d. To make the web server accessible, bind it to port 80 using p 80:80</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 my-nginx-image:latest</span><br></pre></td></tr></table></figure>
@@ -505,7 +505,7 @@ These base images are used as the foundation for your additional changes to run 
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -518,7 +518,7 @@ These base images are used as the foundation for your additional changes to run 
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -551,7 +551,7 @@ These base images are used as the foundation for your additional changes to run 
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Base-images"><span class="nav-number">1.</span> <span class="nav-text">1. Base images</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Running-commands"><span class="nav-number">2.</span> <span class="nav-text">2. Running commands</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Exposing-ports"><span class="nav-number">3.</span> <span class="nav-text">3. Exposing ports</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Default-commands"><span class="nav-number">4.</span> <span class="nav-text">4. Default commands</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Building-containers"><span class="nav-number">5.</span> <span class="nav-text">5. Building containers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-Launching-new-image"><span class="nav-number">6.</span> <span class="nav-text">6. Launching new image</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Base-images"><span class="nav-number">1.</span> <span class="nav-text">Base images</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Running-commands"><span class="nav-number">2.</span> <span class="nav-text">Running commands</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Exposing-ports"><span class="nav-number">3.</span> <span class="nav-text">Exposing ports</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Default-commands"><span class="nav-number">4.</span> <span class="nav-text">Default commands</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Building-containers"><span class="nav-number">5.</span> <span class="nav-text">Building containers</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Launching-new-image"><span class="nav-number">6.</span> <span class="nav-text">Launching new image</span></a></li></ol></div>
             
 
           </div>

@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.This ba">
+<meta name="description" content="Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.This base">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="deploy-static-website">
 <meta property="og:url" content="http://yoursite.com/2019/05/16/katacoda-deploy-static-website/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="1. Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.This ba">
+<meta property="og:description" content="Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.This base">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-16T09:15:36.494Z">
+<meta property="og:updated_time" content="2019-05-22T06:55:12.201Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="deploy-static-website">
-<meta name="twitter:description" content="1. Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.This ba">
+<meta name="twitter:description" content="Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.This base">
 
 
 
@@ -340,22 +340,22 @@
       
 
       
-        <h1 id="1-Create-a-Dockerfile"><a href="#1-Create-a-Dockerfile" class="headerlink" title="1. Create a Dockerfile"></a>1. Create a Dockerfile</h1><blockquote>
+        <h1 id="Create-a-Dockerfile"><a href="#Create-a-Dockerfile" class="headerlink" title="Create a Dockerfile"></a>Create a Dockerfile</h1><blockquote>
 <p>Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.<br>This base image is defined as an instruction in the Dockerfile. Docker Images are built based on the contents of a Dockerfile. The Dockerfile is a list of instructions describing how to deploy your application.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># base image</span><br><span class="line">FROM nginx:alpine</span><br><span class="line"># copies the content of the current directory into a particular location (/usr/share/nginx/html)inside the container.</span><br><span class="line">COPY . /usr/share/nginx/html</span><br></pre></td></tr></table></figure>
 
-<h1 id="2-Build-docker-image"><a href="#2-Build-docker-image" class="headerlink" title="2. Build docker image"></a>2. Build docker image</h1><blockquote>
+<h1 id="Build-docker-image"><a href="#Build-docker-image" class="headerlink" title="Build docker image"></a>Build docker image</h1><blockquote>
 <p>The Dockerfile is used by the Docker CLI build command. The build command executes each instruction within the Dockerfile. The result is a built Docker Image that can be launched and run your configured app.<br>The build command takes in some different parameters. The format is <strong>docker build -t build-directory</strong>. The -t parameter allows you to specify a friendly name for the image and a tag, commonly used as a version number. This allows you to track built images and be confident about which version is being started.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Build our static HTML image using the build command below.</span><br><span class="line"># The built image will have the name webserver-image with a tag of v1.</span><br><span class="line">docker build -t webserver-image:v1 .</span><br><span class="line"># view a list of all the images on the host</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
 
-<h1 id="3-Run"><a href="#3-Run" class="headerlink" title="3. Run"></a>3. Run</h1><blockquote>
+<h1 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h1><blockquote>
 <p>The built Image can be launched in a consistent way to other Docker Images. When a container launches, it’s sandboxed from other processes and networks on the host. When starting a container you need to give it permission and access to what it requires.<br>For example, to open and bind to a network port on the host you need to provide the parameter <em>-p host-port:container-port</em>.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Launch our newly built image providing the friendly name and tag. As it&apos;s a web server, bind port 80 to our host using the -p parameter.</span><br><span class="line">docker run -d -p 80:80 webserver-image:v1</span><br><span class="line"># Access the results of port 80</span><br><span class="line">curl docker</span><br></pre></td></tr></table></figure>
 
-<h1 id="4-dockerfile-and-index-html"><a href="#4-dockerfile-and-index-html" class="headerlink" title="4. dockerfile and index.html"></a>4. dockerfile and index.html</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># index.html</span><br><span class="line">&lt;h1&gt;Hello World&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="dockerfile-and-index-html"><a href="#dockerfile-and-index-html" class="headerlink" title="dockerfile and index.html"></a>dockerfile and index.html</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># index.html</span><br><span class="line">&lt;h1&gt;Hello World&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
 
 
       
@@ -482,7 +482,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -495,7 +495,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -528,7 +528,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Create-a-Dockerfile"><span class="nav-number">1.</span> <span class="nav-text">1. Create a Dockerfile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Build-docker-image"><span class="nav-number">2.</span> <span class="nav-text">2. Build docker image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Run"><span class="nav-number">3.</span> <span class="nav-text">3. Run</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-dockerfile-and-index-html"><span class="nav-number">4.</span> <span class="nav-text">4. dockerfile and index.html</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Create-a-Dockerfile"><span class="nav-number">1.</span> <span class="nav-text">Create a Dockerfile</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Build-docker-image"><span class="nav-number">2.</span> <span class="nav-text">Build docker image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Run"><span class="nav-number">3.</span> <span class="nav-text">Run</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dockerfile-and-index-html"><span class="nav-number">4.</span> <span class="nav-text">dockerfile and index.html</span></a></li></ol></div>
             
 
           </div>

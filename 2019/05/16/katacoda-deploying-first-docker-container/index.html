@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="1. Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: versio">
+<meta name="description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
 <meta name="keywords" content="docker">
 <meta property="og:type" content="article">
 <meta property="og:title" content="katacoda-deploying-first-docker-container">
 <meta property="og:url" content="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="1. Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: versio">
+<meta property="og:description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-16T07:32:34.529Z">
+<meta property="og:updated_time" content="2019-05-22T06:54:34.956Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="katacoda-deploying-first-docker-container">
-<meta name="twitter:description" content="1. Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: versio">
+<meta name="twitter:description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
 
 
 
@@ -340,7 +340,7 @@
       
 
       
-        <h1 id="1-Running-a-container-background-detached"><a href="#1-Running-a-container-background-detached" class="headerlink" title="1. Running a container background(detached)"></a>1. Running a container background(detached)</h1><p><strong>docker search image-name</strong></p>
+        <h1 id="Running-a-container-background-detached"><a href="#Running-a-container-background-detached" class="headerlink" title="Running a container background(detached)"></a>Running a container background(detached)</h1><p><strong>docker search image-name</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search redis</span><br></pre></td></tr></table></figure>
 
 <p><strong>docker run options image-name:version</strong><br><strong>solution1: default latest version</strong></p>
@@ -349,18 +349,18 @@
 <p><strong>solution2: version is 3.2</strong> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis:3.2</span><br></pre></td></tr></table></figure>
 
-<h1 id="2-Find-running-container"><a href="#2-Find-running-container" class="headerlink" title="2. Find running container"></a>2. Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
+<h1 id="Find-running-container"><a href="#Find-running-container" class="headerlink" title="Find running container"></a>Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
 
-<h1 id="3-Access-redis"><a href="#3-Access-redis" class="headerlink" title="3. Access redis"></a>3. Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre><p><strong>solution1: specify host port is 6379</strong><br><em>-p host-port:container-post</em> </p>
+<h1 id="Access-redis"><a href="#Access-redis" class="headerlink" title="Access redis"></a>Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre><p><strong>solution1: specify host port is 6379</strong><br><em>-p host-port:container-post</em> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure>
 
 <p><strong>solution2: specify randomly host port</strong><br><em>-p container-port</em> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisDynamic  -p 6379 redis:latest</span><br><span class="line">docker port redisDynamic 6379</span><br></pre></td></tr></table></figure>
 
-<h1 id="4-Persisting-data"><a href="#4-Persisting-data" class="headerlink" title="4. Persisting data"></a>4. Persisting data</h1><p><em>-v host-dir:container-dir</em></p>
+<h1 id="Persisting-data"><a href="#Persisting-data" class="headerlink" title="Persisting data"></a>Persisting data</h1><p><em>-v host-dir:container-dir</em></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v /opt/docker/data/redis:/data redis</span><br></pre></td></tr></table></figure>
 
-<h1 id="5-Running-a-container-foreground"><a href="#5-Running-a-container-foreground" class="headerlink" title="5. Running a container foreground"></a>5. Running a container foreground</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu bash</span><br></pre></td></tr></table></figure>
+<h1 id="Running-a-container-foreground"><a href="#Running-a-container-foreground" class="headerlink" title="Running a container foreground"></a>Running a container foreground</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu bash</span><br></pre></td></tr></table></figure>
 
 
       
@@ -487,7 +487,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -500,7 +500,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -533,7 +533,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-Running-a-container-background-detached"><span class="nav-number">1.</span> <span class="nav-text">1. Running a container background(detached)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-Find-running-container"><span class="nav-number">2.</span> <span class="nav-text">2. Find running container</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-Access-redis"><span class="nav-number">3.</span> <span class="nav-text">3. Access redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-Persisting-data"><span class="nav-number">4.</span> <span class="nav-text">4. Persisting data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-Running-a-container-foreground"><span class="nav-number">5.</span> <span class="nav-text">5. Running a container foreground</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Running-a-container-background-detached"><span class="nav-number">1.</span> <span class="nav-text">Running a container background(detached)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Find-running-container"><span class="nav-number">2.</span> <span class="nav-text">Find running container</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Access-redis"><span class="nav-number">3.</span> <span class="nav-text">Access redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Persisting-data"><span class="nav-number">4.</span> <span class="nav-text">Persisting data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Running-a-container-foreground"><span class="nav-number">5.</span> <span class="nav-text">Running a container foreground</span></a></li></ol></div>
             
 
           </div>
