@@ -259,6 +259,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/linux-kernel-analysis-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/28/linux-kernel-analysis-1/" itemprop="url">linux-kernel-analysis-1</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-28T12:25:46+08:00">
+                2019-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/28/linux-kernel-analysis-1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/28/linux-kernel-analysis-1/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="设计理念"><a href="#设计理念" class="headerlink" title="设计理念"></a>设计理念</h1><p>机制与策略分离<br>机制 – 提供什么样的功能<br>策略 – 如何使用这些功能</p>
+<blockquote>
+<p>说实在的这句话第一次听到还是挺震撼的, 一时觉得大学里的操作系统都不知道在干嘛, 我们学的就是机制, 比如进程创建功能, 进程创建完成后具体如何使用与OS内核不再有关. 文件创建功能, 文件创建完,如何使用交给用户. 其实很类似编程中的接口, 接口定义功能, 实现负责具体的策略.</p>
+</blockquote>
+<h1 id="内核类型"><a href="#内核类型" class="headerlink" title="内核类型"></a>内核类型</h1><ol>
+<li>单内核 (Linux)<blockquote>
+<p>可加载的 Linux 内核模块, 提高维护性.</p>
+</blockquote>
+</li>
+<li>微内核 </li>
+</ol>
+<h1 id="Linux-Kernel"><a href="#Linux-Kernel" class="headerlink" title="Linux Kernel"></a>Linux Kernel</h1><h2 id="双链表"><a href="#双链表" class="headerlink" title="双链表"></a>双链表</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">list_head</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> *<span class="title">next</span> , *<span class="title">prev</span></span></span><br><span class="line"><span class="class">&#125;;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>这个结构很有意思, 改变两个指针的含义, 会发现几乎描述了很多数据结构.<br>只有一个 *next, 单链表, 只进行头部插入数据-栈, 只进行尾部插入数据-队列<br>*left, *right </p>
+</blockquote>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">define <span class="title">LIST_HEAD_INIT</span><span class="params">(name)</span></span>&#123;&amp;name, &amp;name&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>前后指针都指向自己</p>
+</blockquote>
+<h3 id="声明并初始化"><a href="#声明并初始化" class="headerlink" title="声明并初始化"></a>声明并初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">define <span class="title">LIST_HEAD</span><span class="params">(name)</span> struct <span class="title">list_head</span><span class="params">(name)</span></span>&#123;LIST_HEAD_INIT(name)&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="判空"><a href="#判空" class="headerlink" title="判空"></a>判空</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">list_empty</span><span class="params">(<span class="keyword">const</span> struct list_head*head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next == head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> _ _list_add(struct list_head*<span class="keyword">new</span>,struct list_head*prev,struct_head*next)&#123;</span><br><span class="line">    next-&gt;prev = <span class="keyword">new</span>;</span><br><span class="line">    <span class="keyword">new</span>-&gt;next = next;</span><br><span class="line">    <span class="keyword">new</span>-&gt;prev = prev;</span><br><span class="line">    prev-&gt;next = <span class="keyword">new</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>static 该函数作用域仅在本文件内, 可以隐藏信息<br>inline 编译器展开该函数</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> _ _list_add_tail(struct list_head*<span class="keyword">new</span>,struct list_head*head)&#123;</span><br><span class="line">    _ _list_add(<span class="keyword">new</span>,head-&gt;prev,head);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/master-tcp/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -363,11 +524,10 @@
 <li>window size</li>
 </ul>
 <h1 id="TCP-建立连接目的"><a href="#TCP-建立连接目的" class="headerlink" title="TCP 建立连接目的"></a>TCP 建立连接目的</h1><blockquote>
-<p>交换通信双方的 ISN (Initial Sequence Number)</p>
+<p>交换通信双方的 ISN (Initial Sequence Number)<br>凡是占据序列号的任何TCP报文，一定对方确认，如果没有收到确认，会一直重传，直到达到规定的上限次数。<br>syn , data , fin 占据 sequence number 需要确认. ack 不占据 sequence number 不需要确认.</p>
 </blockquote>
 <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
-<li><a href="https://mp.weixin.qq.com/s/cS3f6m9zDSdA2Bt2Sfcl5g" target="_blank" rel="noopener">为何TCP三次握手的第三个报文不需要确认?</a></li>
-<li><a href="https://mp.weixin.qq.com/s/zRelB6uSz07YaCoJoggZZA" target="_blank" rel="noopener">TCP three way handshake 1</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&mid=2650005578&idx=1&sn=9e4ba700512e68e2dcbd54bfe11bd669&chksm=87398263b04e0b7577be99e43c272147b74030514df3f78b894c5b5cee21a3565cf3e4ceebeb&scene=21#wechat_redirect" target="_blank" rel="noopener">TCP three way handshake 1</a></li>
 <li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&mid=2650005835&idx=1&sn=dd0104635b5510ab6bf4f34ec347fe57&chksm=87398362b04e0a7402a6075b46e9a62855a78408a6dfecf6f7d13d8ae5e0375fab6d84208159&scene=21#wechat_redirect" target="_blank" rel="noopener">TCP three way handshake 2</a></li>
 <li><a href="https://tools.ietf.org/html/rfc793" target="_blank" rel="noopener">rfc793</a></li>
 </ol>
@@ -1475,7 +1635,7 @@ These base images are used as the foundation for your additional changes to run 
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1488,7 +1648,7 @@ These base images are used as the foundation for your additional changes to run 
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
