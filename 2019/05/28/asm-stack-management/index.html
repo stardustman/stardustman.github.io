@@ -79,18 +79,20 @@
 
 
 
-<meta name="description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (%e">
+<meta name="description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (">
 <meta name="keywords" content="asm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="asm-stack-management">
 <meta property="og:url" content="http://yoursite.com/2019/05/28/asm-stack-management/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (%e">
+<meta property="og:description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-29T03:03:29.373Z">
+<meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png">
+<meta property="og:updated_time" content="2019-05-29T04:29:06.140Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="asm-stack-management">
-<meta name="twitter:description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (%e">
+<meta name="twitter:description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (">
+<meta name="twitter:image" content="http://yoursite.com/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png">
 
 
 
@@ -340,7 +342,9 @@
       
 
       
-        <h1 id="instruction-suffiex"><a href="#instruction-suffiex" class="headerlink" title="instruction suffiex"></a>instruction suffiex</h1><table>
+        <blockquote>
+</blockquote>
+<h1 id="instruction-suffiex"><a href="#instruction-suffiex" class="headerlink" title="instruction suffiex"></a>instruction suffiex</h1><table>
 <thead>
 <tr>
 <th>缩写</th>
@@ -395,6 +399,7 @@
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $2, %esi //由 caller 准备函数参数 2</span><br><span class="line">        movl    $1, %edi //由 caller 准备函数参数 1</span><br><span class="line">        call    swap //在 CPU fetch了 call 指令后,pc 已经指向了下一条指令,也就是 mov1 $0, %eax 这条指令.此时的 call 指令完成了两件事,第一件事:将 pc(OLD) 压入到栈中(swap 函数 ret 指令(函数返回)就是把这个 pc 重新 pop 到 pc 这个寄存器,CPU 就能接着执行 mov1 $0, %eax 这条指令了),第二件事:jump 到swap的地址,开始执行swap的代码.</span><br><span class="line">        movl    $0, %eax //返回值 0 </span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
+<h1 id="C-VS-Asm"><a href="#C-VS-Asm" class="headerlink" title="C VS Asm"></a>C VS Asm</h1><img src="/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png" title="This is an image"> 
 <h1 id="references"><a href="#references" class="headerlink" title="references"></a>references</h1><ol>
 <li><a href="https://en.wikipedia.org/wiki/Program_counter" target="_blank" rel="noopener">program counter</a></li>
 <li><a href="http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/02/S01_x86_64.key.pdf" target="_blank" rel="noopener">A reader’s guide to x86 assembly</a></li>
@@ -566,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#instruction-suffiex"><span class="nav-number">1.</span> <span class="nav-text">instruction suffiex</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack-management"><span class="nav-number">2.</span> <span class="nav-text">stack management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pushl-eax"><span class="nav-number">2.1.</span> <span class="nav-text">pushl %eax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#popl-eax"><span class="nav-number">2.2.</span> <span class="nav-text">popl %eax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#program-counter-for-stored-program"><span class="nav-number">3.</span> <span class="nav-text">program counter for stored program</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack-frame"><span class="nav-number">4.</span> <span class="nav-text">stack frame</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">5.</span> <span class="nav-text">references</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#instruction-suffiex"><span class="nav-number">1.</span> <span class="nav-text">instruction suffiex</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack-management"><span class="nav-number">2.</span> <span class="nav-text">stack management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pushl-eax"><span class="nav-number">2.1.</span> <span class="nav-text">pushl %eax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#popl-eax"><span class="nav-number">2.2.</span> <span class="nav-text">popl %eax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#program-counter-for-stored-program"><span class="nav-number">3.</span> <span class="nav-text">program counter for stored program</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack-frame"><span class="nav-number">4.</span> <span class="nav-text">stack frame</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#C-VS-Asm"><span class="nav-number">5.</span> <span class="nav-text">C VS Asm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">6.</span> <span class="nav-text">references</span></a></li></ol></div>
             
 
           </div>
