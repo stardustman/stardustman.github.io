@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="docker,">
+  <meta name="keywords" content="asm,">
 
 
 
@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
-<meta name="keywords" content="docker">
+<meta name="description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (%e">
+<meta name="keywords" content="asm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="katacoda-deploying-first-docker-container">
-<meta property="og:url" content="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/index.html">
+<meta property="og:title" content="asm-stack-management">
+<meta property="og:url" content="http://yoursite.com/2019/05/28/asm-stack-management/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
+<meta property="og:description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (%e">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-22T06:54:34.956Z">
+<meta property="og:updated_time" content="2019-05-29T02:31:49.746Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="katacoda-deploying-first-docker-container">
-<meta name="twitter:description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
+<meta name="twitter:title" content="asm-stack-management">
+<meta name="twitter:description" content="instruction suffiex   缩写 全称 位数    b byte 8bit   w word 16bit   l long 32bit   q quad 64bit   stack management 操作的是 stack pointer 这个寄存器  pushl %eax等价于 12subl $4, %esp //分配4个字节的空间,所谓的栈向下生长movl %eax, (%e">
 
 
 
@@ -120,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/">
+  <link rel="canonical" href="http://yoursite.com/2019/05/28/asm-stack-management/">
 
 
 
 
 
-  <title>katacoda-deploying-first-docker-container | stardustman</title>
+  <title>asm-stack-management | stardustman</title>
   
 
 
@@ -263,7 +263,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/asm-stack-management/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -280,7 +280,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">katacoda-deploying-first-docker-container</h1>
+          <h1 class="post-title" itemprop="name headline">asm-stack-management</h1>
         
 
         <div class="post-meta">
@@ -292,8 +292,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-16T12:40:16+08:00">
-                2019-05-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-28T19:32:16+08:00">
+                2019-05-28
               </time>
             
 
@@ -311,8 +311,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/05/16/katacoda-deploying-first-docker-container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/16/katacoda-deploying-first-docker-container/" itemprop="commentCount"></span>
+                <a href="/2019/05/28/asm-stack-management/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/28/asm-stack-management/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -340,28 +340,65 @@
       
 
       
-        <h1 id="Running-a-container-background-detached"><a href="#Running-a-container-background-detached" class="headerlink" title="Running a container background(detached)"></a>Running a container background(detached)</h1><p><strong>docker search image-name</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search redis</span><br></pre></td></tr></table></figure>
+        <h1 id="instruction-suffiex"><a href="#instruction-suffiex" class="headerlink" title="instruction suffiex"></a>instruction suffiex</h1><table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>全称</th>
+<th>位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>b</td>
+<td>byte</td>
+<td>8bit</td>
+</tr>
+<tr>
+<td>w</td>
+<td>word</td>
+<td>16bit</td>
+</tr>
+<tr>
+<td>l</td>
+<td>long</td>
+<td>32bit</td>
+</tr>
+<tr>
+<td>q</td>
+<td>quad</td>
+<td>64bit</td>
+</tr>
+</tbody></table>
+<h1 id="stack-management"><a href="#stack-management" class="headerlink" title="stack management"></a>stack management</h1><blockquote>
+<p>操作的是 stack pointer 这个寄存器</p>
+</blockquote>
+<h2 id="pushl-eax"><a href="#pushl-eax" class="headerlink" title="pushl %eax"></a>pushl %eax</h2><p>等价于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">subl $4, %esp //分配4个字节的空间,所谓的栈向下生长</span><br><span class="line">movl %eax, (%esp) //将 eax 的值复制到 esp 指到的内存地址</span><br></pre></td></tr></table></figure>
 
-<p><strong>docker run options image-name:version</strong><br><strong>solution1: default latest version</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>push value of %eax onto stack</p>
+</blockquote>
+<h2 id="popl-eax"><a href="#popl-eax" class="headerlink" title="popl %eax"></a>popl %eax</h2><p>等价于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movl (%esp),%eax //将 esp 的值复制到 eax</span><br><span class="line">addl $4,%esp //回收空间</span><br></pre></td></tr></table></figure>
 
-<p><strong>solution2: version is 3.2</strong> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis:3.2</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>pop %eax off stack</p>
+</blockquote>
+<h1 id="函数栈帧"><a href="#函数栈帧" class="headerlink" title="函数栈帧"></a>函数栈帧</h1><blockquote>
+<p>In most processors, the PC is incremented after fetching an instruction,<br>and holds the memory address of (“points to”) the next instruction that would be executed.<br>(In a processor where the incrementation precedes the fetch,<br>the PC points to the current instruction being executed.)<br>注意:不允许操作 ip(instruction pointer)这个寄存器,如果这个能被编译器操作的话,就完全想跳到哪执行就跳到哪执行了.</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> tmp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="Find-running-container"><a href="#Find-running-container" class="headerlink" title="Find running container"></a>Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 64 bit 机器 , AT&amp;T 风格的汇编</span><br><span class="line">swap(int, int):</span><br><span class="line">        pushq   %rbp // 上一个栈帧的基地址压栈 等价于 subl $8, %rsp; movq %rbp,(%rsp)</span><br><span class="line">        movq    %rsp, %rbp // 开辟新的函数栈帧,也就是形成一个新的栈的基地址</span><br><span class="line">        movl    %edi, -20(%rbp) //参数 a</span><br><span class="line">        movl    %esi, -24(%rbp) //参数 b</span><br><span class="line">        movl    -20(%rbp), %eax // 把 a 赋值给 %eax</span><br><span class="line">        movl    %eax, -4(%rbp)  // 把 %eax（a）赋值给 %rbp - 4（a） 的地址处</span><br><span class="line">        movl    -24(%rbp), %eax // 把 b 赋值给 % eax（b）</span><br><span class="line">        movl    %eax, -20(%rbp) // 把 %eax （b）赋值给 %rbp - 20（b） 的地址处,完成 b 的交换</span><br><span class="line">        movl    -4(%rbp), %eax  // 把 %rbp - 4（a） 赋值给 %eax （a）</span><br><span class="line">        movl    %eax, -24(%rbp) // 把 %eax (a) 赋值给 %rbp - 24 的地址处,完成 a 的交换</span><br><span class="line">        nop // 延时</span><br><span class="line">        popq    %rbp // 等价于 movq (%rsp),%rbp ; 上一个函数栈帧的基地址恢复;addq $8,%rsp; 上一个函数的%rsp恢复</span><br><span class="line">        ret // popq %rip.(恢复原来的 pc) 函数调用会把 return address 压入栈帧,Call instruction pushes return address (old EIP) onto stack</span><br></pre></td></tr></table></figure>
 
-<h1 id="Access-redis"><a href="#Access-redis" class="headerlink" title="Access redis"></a>Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre><p><strong>solution1: specify host port is 6379</strong><br><em>-p host-port:container-post</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    swap(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>solution2: specify randomly host port</strong><br><em>-p container-port</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisDynamic  -p 6379 redis:latest</span><br><span class="line">docker port redisDynamic 6379</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $2, %esi //由caller准备函数参数 2</span><br><span class="line">        movl    $1, %edi //由caller准备函数参数 1</span><br><span class="line">        call    swap //在CPU fetch了 call 指令后,pc 已经指向了下一条指令,也就是 mov1 $0, %eax 这条指令.此时的 call 指令完成了两件事,第一件事:将 pc(OLD) 压入到栈中,第二件事:jump 到swap的地址,开始执行swap的代码.</span><br><span class="line">        movl    $0, %eax //返回值 0 </span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
-<h1 id="Persisting-data"><a href="#Persisting-data" class="headerlink" title="Persisting data"></a>Persisting data</h1><p><em>-v host-dir:container-dir</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v /opt/docker/data/redis:/data redis</span><br></pre></td></tr></table></figure>
-
-<h1 id="Running-a-container-foreground"><a href="#Running-a-container-foreground" class="headerlink" title="Running a container foreground"></a>Running a container foreground</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu bash</span><br></pre></td></tr></table></figure>
-
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><a href="https://en.wikipedia.org/wiki/Program_counter" target="_blank" rel="noopener">program counter</a></li>
+<li><a href="http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/02/S01_x86_64.key.pdf" target="_blank" rel="noopener">A reader’s guide to x86 assembly</a></li>
+</ol>
 
       
     </div>
@@ -379,7 +416,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker/" rel="tag"># docker</a>
+            <a href="/tags/asm/" rel="tag"># asm</a>
           
         </div>
       
@@ -392,8 +429,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/16/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2019/05/28/linux-kernel-analysis-1/" rel="next" title="linux-kernel-analysis-1">
+                <i class="fa fa-chevron-left"></i> linux-kernel-analysis-1
               </a>
             
           </div>
@@ -401,10 +438,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/16/katacoda-deploy-static-website/" rel="prev" title="deploy-static-website">
-                deploy-static-website <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -435,7 +468,7 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/05/16/katacoda-deploying-first-docker-container/" data-title="katacoda-deploying-first-docker-container" data-url="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/">
+      <div class="ds-thread" data-thread-key="2019/05/28/asm-stack-management/" data-title="asm-stack-management" data-url="http://yoursite.com/2019/05/28/asm-stack-management/">
       </div>
     </div>
 
@@ -533,7 +566,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Running-a-container-background-detached"><span class="nav-number">1.</span> <span class="nav-text">Running a container background(detached)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Find-running-container"><span class="nav-number">2.</span> <span class="nav-text">Find running container</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Access-redis"><span class="nav-number">3.</span> <span class="nav-text">Access redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Persisting-data"><span class="nav-number">4.</span> <span class="nav-text">Persisting data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Running-a-container-foreground"><span class="nav-number">5.</span> <span class="nav-text">Running a container foreground</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#instruction-suffiex"><span class="nav-number">1.</span> <span class="nav-text">instruction suffiex</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#stack-management"><span class="nav-number">2.</span> <span class="nav-text">stack management</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#pushl-eax"><span class="nav-number">2.1.</span> <span class="nav-text">pushl %eax</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#popl-eax"><span class="nav-number">2.2.</span> <span class="nav-text">popl %eax</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#函数栈帧"><span class="nav-number">3.</span> <span class="nav-text">函数栈帧</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">4.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
             
 
           </div>

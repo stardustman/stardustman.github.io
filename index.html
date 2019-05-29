@@ -259,6 +259,194 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/asm-stack-management/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/28/asm-stack-management/" itemprop="url">asm-stack-management</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-28T19:32:16+08:00">
+                2019-05-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/28/asm-stack-management/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/28/asm-stack-management/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="instruction-suffiex"><a href="#instruction-suffiex" class="headerlink" title="instruction suffiex"></a>instruction suffiex</h1><table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>全称</th>
+<th>位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>b</td>
+<td>byte</td>
+<td>8bit</td>
+</tr>
+<tr>
+<td>w</td>
+<td>word</td>
+<td>16bit</td>
+</tr>
+<tr>
+<td>l</td>
+<td>long</td>
+<td>32bit</td>
+</tr>
+<tr>
+<td>q</td>
+<td>quad</td>
+<td>64bit</td>
+</tr>
+</tbody></table>
+<h1 id="stack-management"><a href="#stack-management" class="headerlink" title="stack management"></a>stack management</h1><blockquote>
+<p>操作的是 stack pointer 这个寄存器</p>
+</blockquote>
+<h2 id="pushl-eax"><a href="#pushl-eax" class="headerlink" title="pushl %eax"></a>pushl %eax</h2><p>等价于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">subl $4, %esp //分配4个字节的空间,所谓的栈向下生长</span><br><span class="line">movl %eax, (%esp) //将 eax 的值复制到 esp 指到的内存地址</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>push value of %eax onto stack</p>
+</blockquote>
+<h2 id="popl-eax"><a href="#popl-eax" class="headerlink" title="popl %eax"></a>popl %eax</h2><p>等价于</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movl (%esp),%eax //将 esp 的值复制到 eax</span><br><span class="line">addl $4,%esp //回收空间</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>pop %eax off stack</p>
+</blockquote>
+<h1 id="函数栈帧"><a href="#函数栈帧" class="headerlink" title="函数栈帧"></a>函数栈帧</h1><blockquote>
+<p>In most processors, the PC is incremented after fetching an instruction,<br>and holds the memory address of (“points to”) the next instruction that would be executed.<br>(In a processor where the incrementation precedes the fetch,<br>the PC points to the current instruction being executed.)<br>注意:不允许操作 ip(instruction pointer)这个寄存器,如果这个能被编译器操作的话,就完全想跳到哪执行就跳到哪执行了.</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> a,<span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> tmp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// 64 bit 机器 , AT&amp;T 风格的汇编</span><br><span class="line">swap(int, int):</span><br><span class="line">        pushq   %rbp // 上一个栈帧的基地址压栈 等价于 subl $8, %rsp; movq %rbp,(%rsp)</span><br><span class="line">        movq    %rsp, %rbp // 开辟新的函数栈帧,也就是形成一个新的栈的基地址</span><br><span class="line">        movl    %edi, -20(%rbp) //参数 a</span><br><span class="line">        movl    %esi, -24(%rbp) //参数 b</span><br><span class="line">        movl    -20(%rbp), %eax // 把 a 赋值给 %eax</span><br><span class="line">        movl    %eax, -4(%rbp)  // 把 %eax（a）赋值给 %rbp - 4（a） 的地址处</span><br><span class="line">        movl    -24(%rbp), %eax // 把 b 赋值给 % eax（b）</span><br><span class="line">        movl    %eax, -20(%rbp) // 把 %eax （b）赋值给 %rbp - 20（b） 的地址处,完成 b 的交换</span><br><span class="line">        movl    -4(%rbp), %eax  // 把 %rbp - 4（a） 赋值给 %eax （a）</span><br><span class="line">        movl    %eax, -24(%rbp) // 把 %eax (a) 赋值给 %rbp - 24 的地址处,完成 a 的交换</span><br><span class="line">        nop // 延时</span><br><span class="line">        popq    %rbp // 等价于 movq (%rsp),%rbp ; 上一个函数栈帧的基地址恢复;addq $8,%rsp; 上一个函数的%rsp恢复</span><br><span class="line">        ret // popq %rip.(恢复原来的 pc) 函数调用会把 return address 压入栈帧,Call instruction pushes return address (old EIP) onto stack</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    swap(<span class="number">1</span>,<span class="number">2</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $2, %esi //由caller准备函数参数 2</span><br><span class="line">        movl    $1, %edi //由caller准备函数参数 1</span><br><span class="line">        call    swap //在CPU fetch了 call 指令后,pc 已经指向了下一条指令,也就是 mov1 $0, %eax 这条指令.此时的 call 指令完成了两件事,第一件事:将 pc(OLD) 压入到栈中,第二件事:jump 到swap的地址,开始执行swap的代码.</span><br><span class="line">        movl    $0, %eax //返回值 0 </span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><a href="https://en.wikipedia.org/wiki/Program_counter" target="_blank" rel="noopener">program counter</a></li>
+<li><a href="http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/02/S01_x86_64.key.pdf" target="_blank" rel="noopener">A reader’s guide to x86 assembly</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/linux-kernel-analysis-1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -372,6 +560,150 @@
 </blockquote>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> _ _list_add_tail(struct list_head*<span class="keyword">new</span>,struct list_head*head)&#123;</span><br><span class="line">    _ _list_add(<span class="keyword">new</span>,head-&gt;prev,head);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/25/ubuntu18-04-install-openjdk8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/25/ubuntu18-04-install-openjdk8/" itemprop="url">ubuntu18.04-install-openjdk8</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-25T14:33:35+08:00">
+                2019-05-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/25/ubuntu18-04-install-openjdk8/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/25/ubuntu18-04-install-openjdk8/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="添加openjdk8的第三方源"><a href="#添加openjdk8的第三方源" class="headerlink" title="添加openjdk8的第三方源"></a>添加openjdk8的第三方源</h1><blockquote>
+<p>sudo add-apt-repository ppa:openjdk-r/ppa<br>ppa (Personal Package Achives)</p>
+</blockquote>
+<h1 id="执行更新"><a href="#执行更新" class="headerlink" title="执行更新"></a>执行更新</h1><blockquote>
+<p>apt-get update</p>
+</blockquote>
+<h1 id="安装openjdk8"><a href="#安装openjdk8" class="headerlink" title="安装openjdk8"></a>安装openjdk8</h1><blockquote>
+<p>sudo apt-get install openjdk-8-jdk</p>
+</blockquote>
+<h1 id="选择版本"><a href="#选择版本" class="headerlink" title="选择版本"></a>选择版本</h1><blockquote>
+<p>sudo update-alternatives  - -config java</p>
+</blockquote>
+<h1 id="确认安装成功"><a href="#确认安装成功" class="headerlink" title="确认安装成功"></a>确认安装成功</h1><blockquote>
+<p>java -version</p>
+</blockquote>
 
           
         
@@ -1447,151 +1779,13 @@ These base images are used as the foundation for your additional changes to run 
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/16/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/16/hello-world/" itemprop="url">Hello World</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-16T11:57:51+08:00">
-                2019-05-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/16/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/16/hello-world/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1635,7 +1829,7 @@ These base images are used as the foundation for your additional changes to run 
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1648,7 +1842,7 @@ These base images are used as the foundation for your additional changes to run 
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
