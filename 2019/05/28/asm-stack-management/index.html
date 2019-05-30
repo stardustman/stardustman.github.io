@@ -89,7 +89,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/asm-execute-graph.png">
-<meta property="og:updated_time" content="2019-05-30T08:46:47.998Z">
+<meta property="og:updated_time" content="2019-05-30T08:55:39.475Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="asm-stack-management">
 <meta name="twitter:description" content="前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编译后的汇编代码.目的: 搞明白 X86 架构下函数到底是怎么调用执行的.  assembly syntax for X86 gas (gnu assembler syntax), 也就是 AT&amp;amp;T 风格.本文采用该风">
@@ -436,7 +436,7 @@
 <h1 id="C-compare-to-Assembly"><a href="#C-compare-to-Assembly" class="headerlink" title="C compare to  Assembly"></a>C compare to  Assembly</h1><img src="/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png" title="C swap code VS asm code">
 <h1 id="asm-execute-graph"><a href="#asm-execute-graph" class="headerlink" title="asm execute graph"></a>asm execute graph</h1><img src="/2019/05/28/asm-stack-management/asm-execute-graph.png" title="asm execute graph">
 <blockquote>
-<p>注意: 示意图里面的是 64 bit 的汇编代码. 也就是 rbp, rsp, pc 都是 64 bit的.<br>注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.<br>图1 和 图5 , 图2 和 图6 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的. 在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址. 也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧. 也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 rsp 和 pc).<br>图3 是 swap 函数的栈帧, 此时新函数的栈帧 rsp 和 rbp 指向的是相同的内存地址.<br>图4 所有的 mov 使用的内存地址, 都是通过 rbp 来偏移得到, rbp 的值并没有发生改变.<br>图5 执行完 popq %rsp, 恢复 main 函数的栈基址(rbp), 也就是和图1 一样.<br>图6 执行完 ret 恢复为 main 函数的栈帧. ret 的作用等价于 popq %rip. 但是无法操作 ip(pc) 这个寄存器. 也就相当于曲线完成改变 ip 的功能. 此时 pc 也被 ret 指令恢复成了 X. 程序接着执行 main 函数的代码. 其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.(当然用汇编操作 rsp 还是可以访问到的).</p>
+<p>注意: 示意图里面的是 64 bit 的汇编代码. 也就是 rbp, rsp, pc 都是 64 bit的.<br>注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.<br>图1 和 图6 , 图2 和 图5 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的. 在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址. 也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧. 也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 rsp 和 pc).<br>图3 是 swap 函数的栈帧, 此时新函数的栈帧 rsp 和 rbp 指向的是相同的内存地址.<br>图4 所有的 mov 使用的内存地址, 都是通过 rbp 来偏移得到, rbp 的值并没有发生改变.<br>图5 执行完 popq %rsp, 恢复 main 函数的栈基址(rbp), 也就是和图1 一样.<br>图6 执行完 ret 恢复为 main 函数的栈帧. ret 的作用等价于 popq %rip. 但是无法操作 ip(pc) 这个寄存器. 也就相当于曲线完成改变 ip 的功能. 此时 pc 也被 ret 指令恢复成了 X. 程序接着执行 main 函数的代码. 其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.(当然用汇编操作 rsp 还是可以访问到的).</p>
 </blockquote>
 <h1 id="bombs"><a href="#bombs" class="headerlink" title="bombs"></a>bombs</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pushq   %rbp  // 保留上一个函数(也就是调用者)的栈基址</span><br><span class="line">movq    %rsp, %rbp // 新函数的栈基址. 一个新的栈帧 sp 和 bp 指向的是同一个地址</span><br></pre></td></tr></table></figure>
 
