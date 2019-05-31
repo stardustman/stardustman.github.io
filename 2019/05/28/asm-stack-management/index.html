@@ -89,7 +89,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/asm-execute-graph.png">
-<meta property="og:updated_time" content="2019-05-31T14:08:59.105Z">
+<meta property="og:updated_time" content="2019-05-31T14:23:33.720Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="asm-stack-management">
 <meta name="twitter:description" content="前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编译后的汇编代码.目的: 搞明白 X86 架构下函数到底是怎么调用执行的.  assembly syntax for X86 gas (gnu assembler syntax), 也就是 AT&amp;amp;T 风格.本文采用该风">
@@ -398,7 +398,7 @@
 <p>PC = PC + (instruction size in bytes)<br>(instruction) (src1) (src2) (dst)<br>In most processors, the PC is incremented after fetching an instruction,<br>and holds the memory address of (“points to”) the next instruction that would be executed.<br>这里就用到了指令周期(instruction cycle)这个概念了, fetch, decode, execute.<br>注意到 PC 这个寄存器, 在 CPU fetch 了一条指令后就自动增加了.<br>(In a processor where the incrementation precedes the fetch, the PC points to the current instruction being executed.)<br>同样的在 CPU fetch 一条指令之前, PC 指向当前正在执行的指令.<br>注意:不允许直接操作 ip(instruction pointer)这个寄存器, 如果这个能被编译器操作的话, 就完全想跳到哪执行就跳到哪执行了. 实际上 call 和 ret 指令就是在操作这两个寄存器. call 带来的效果之一就是 push %rip, ret 带来的效果之一就是 pop %rip.两者具有对称作用啊!</p>
 </blockquote>
 <h1 id="change-control-flow"><a href="#change-control-flow" class="headerlink" title="change control flow"></a>change control flow</h1><h2 id="jmp-label"><a href="#jmp-label" class="headerlink" title="jmp label"></a>jmp label</h2><blockquote>
-<p>When a jump instruction executes (in the last step of the machine cycle), it puts a new address into the PC. Now the fetch at the top of the next machine cycle fetches the instruction at that new address. Instead of executing the instruction that follows the jump instruction in memory, the processor “jumps” to an instruction somewhere else in memory.<br>jmp 指令把 label 所在的地址, 复制给 pc 寄存器. 这就改变了程序的控制流. 然后程序流程就脱离了原来的执行流. 和 call label 很相似, 对, call指令作用之一就包括了一个隐式的 jmp label. 函数调用也就是把控制权交给了被调用者. 但是控制权要回到调用函数那里. 只不过 call 指令在函数交出控制权之前还多干了一件事, 就是把函数栈帧的基地址(bp) push 到了栈里. </p>
+<p>When a jump instruction executes (in the last step of the machine cycle), it puts a new address into the PC. Now the fetch at the top of the next machine cycle fetches the instruction at that new address. Instead of executing the instruction that follows the jump instruction in memory, the processor “jumps” to an instruction somewhere else in memory.<br>jmp 指令把 label 所在的地址, 复制给 pc 寄存器. 这就改变了程序的控制流. 然后程序流程就脱离了原来的执行流. 和 call label 很相似, 对, call指令作用之一就包括了一个隐式的 jmp label. 函数调用也就是把控制权交给了被调用者. 但是控制权要回到调用函数那里. 只不过 call 指令在函数交出控制权之前还多干了一件事, 就是把此时的 pc 值 push 到了栈里. </p>
 </blockquote>
 <h1 id="stack-management"><a href="#stack-management" class="headerlink" title="stack management"></a>stack management</h1><blockquote>
 <p>push pop 指令操作的是 sp(stack pointer) 这个寄存器.<br>由 bp(base pointer) 这个寄存器存放栈底的内存地址.<br>X86 架构的(sp)栈底指向高地址. (栈绘图的话自上而下, 高地址在上面)<br>栈分配空间: sp 减去需要的地址空间大小(所谓的栈向下生长);<br>栈回收空间: sp 加上需要的地址空间大小(所谓的栈向上收缩);(PS: 相当无聊的话)</p>
