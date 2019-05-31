@@ -89,7 +89,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/asm-execute-graph.png">
-<meta property="og:updated_time" content="2019-05-30T08:55:39.475Z">
+<meta property="og:updated_time" content="2019-05-31T04:48:59.748Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="asm-stack-management">
 <meta name="twitter:description" content="前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编译后的汇编代码.目的: 搞明白 X86 架构下函数到底是怎么调用执行的.  assembly syntax for X86 gas (gnu assembler syntax), 也就是 AT&amp;amp;T 风格.本文采用该风">
@@ -420,7 +420,7 @@
 <p>pop %eax off stack</p>
 </blockquote>
 <h1 id="function-call-and-return"><a href="#function-call-and-return" class="headerlink" title="function call and return"></a>function call and return</h1><h2 id="call"><a href="#call" class="headerlink" title="call "></a>call <label></label></h2><blockquote>
-<p>These instructions implement a subroutine call and return. The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.<br>注意到 CPU 在 fetch 到一条指令后(当然 call 指令也不例外), PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. call 指令做了两件事, 第一件事:将 caller 的 rbp 保留到栈中, 第二件事: jump 到 label 位置, 此时改变了 pc 的值.</p>
+<p>These instructions implement a subroutine call and return. The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.<br>注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. call 指令做了两件事, 第一件事:将此时的 ip 保存到栈中(因为控制流将要跳转了), 第二件事: jump 到 label 位置, 此时已经改变了 pc 的值.</p>
 </blockquote>
 <h2 id="ret"><a href="#ret" class="headerlink" title="ret"></a>ret</h2><blockquote>
 <p>The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (也就是 call 指令压入栈中的 PC, 将这个值复制到 PC 寄存器)(see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.<br>所以啊, call(含有一个 push 操作) 和 ret(含有一个 pop 操作) 指令也间接操作了 sp 这个寄存器. 硬件实现的功能, 不需要过多的计较.</p>
@@ -489,6 +489,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/05/31/linux-kernel-analysis-2/" rel="prev" title="linux-kernel-analysis-2">
+                linux-kernel-analysis-2 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -571,7 +575,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">11</span>
+                  <span class="site-state-item-count">12</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -584,7 +588,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">8</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
