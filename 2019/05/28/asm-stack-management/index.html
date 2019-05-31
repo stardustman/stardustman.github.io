@@ -89,7 +89,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png">
 <meta property="og:image" content="http://yoursite.com/2019/05/28/asm-stack-management/asm-execute-graph.png">
-<meta property="og:updated_time" content="2019-05-31T14:23:33.720Z">
+<meta property="og:updated_time" content="2019-05-31T14:31:24.155Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="asm-stack-management">
 <meta name="twitter:description" content="前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编译后的汇编代码.目的: 搞明白 X86 架构下函数到底是怎么调用执行的.  assembly syntax for X86 gas (gnu assembler syntax), 也就是 AT&amp;amp;T 风格.本文采用该风">
@@ -404,23 +404,17 @@
 <p>push pop 指令操作的是 sp(stack pointer) 这个寄存器.<br>由 bp(base pointer) 这个寄存器存放栈底的内存地址.<br>X86 架构的(sp)栈底指向高地址. (栈绘图的话自上而下, 高地址在上面)<br>栈分配空间: sp 减去需要的地址空间大小(所谓的栈向下生长);<br>栈回收空间: sp 加上需要的地址空间大小(所谓的栈向上收缩);(PS: 相当无聊的话)</p>
 </blockquote>
 <h2 id="pushl-eax"><a href="#pushl-eax" class="headerlink" title="pushl %eax"></a>pushl %eax</h2><blockquote>
-<p>The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.<br>这里可以看到 push 的是多字节的数据, 那就涉及到怎样排列多字节数据的问题了.也就是所谓的字节序的问题. X86 采用所谓的小端, 也就是把数字按照顺序放到栈里, 当然也就是数字的高位放在了比较大的内存地址那里.(这里不做讨论)<br>等价于</p>
+<p>push value of %eax onto stack<br>The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.<br>这里可以看到 push 的是多字节的数据, 那就涉及到怎样排列多字节数据的问题了.也就是所谓的字节序的问题. X86 采用所谓的小端, 也就是把数字按照顺序放到栈里, 当然也就是数字的高位放在了比较大的内存地址那里.(这里不做讨论)<br>等价于</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">subl $4, %esp //分配4个字节的空间, 所谓的栈向下生长</span><br><span class="line">movl %eax, (%esp) //将 eax 的值复制到 esp 指到的内存地址处</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>push value of %eax onto stack</p>
-</blockquote>
 <h2 id="popl-eax"><a href="#popl-eax" class="headerlink" title="popl %eax"></a>popl %eax</h2><blockquote>
-<p>The pop instruction removes the 4-byte data element from the top of the hardware-supported stack into the specified operand (i.e. register or memory location). It first moves the 4 bytes located at memory location [SP] into the specified register or memory location, and then increments SP by 4.<br>等价于</p>
+<p>pop %eax off stack<br>The pop instruction removes the 4-byte data element from the top of the hardware-supported stack into the specified operand (i.e. register or memory location). It first moves the 4 bytes located at memory location [ESP] into the specified register or memory location, and then increments SP by 4.<br>等价于</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movl (%esp),%eax //将 esp 指向的内存地址里面的值复制到 eax</span><br><span class="line">addl $4,%esp //回收空间</span><br></pre></td></tr></table></figure>
 
-<blockquote>
-<p>pop %eax off stack</p>
-</blockquote>
 <h1 id="function-call-and-return"><a href="#function-call-and-return" class="headerlink" title="function call and return"></a>function call and return</h1><h2 id="call"><a href="#call" class="headerlink" title="call "></a>call <label></label></h2><blockquote>
-<p>These instructions implement a subroutine call and return. The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.<br>注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. call 指令做了两件事, 第一件事: 将此时的 ip 保存到栈中(因为控制流将要跳转了), 第二件事: jump 到 label 位置, 此时已经改变了 pc 的值.</p>
+<p>These instructions implement a subroutine call and return. The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.<br>注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. call 指令做了两件事, 第一件事: 将此时的 ip 保存到栈中(因为控制流将要跳转了), 第二件事: jump 到 label 位置, 此时已经改变了 PC 的值.</p>
 </blockquote>
 <h2 id="ret"><a href="#ret" class="headerlink" title="ret"></a>ret</h2><blockquote>
 <p>The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (也就是 call 指令压入栈中的 PC, 将这个值复制到 PC 寄存器)(see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.<br>所以啊, call(含有一个 push 操作) 和 ret(含有一个 pop 操作) 指令也间接操作了 sp 这个寄存器. 硬件实现的功能, 不需要过多的计较.</p>
