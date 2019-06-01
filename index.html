@@ -472,13 +472,40 @@
             <blockquote>
 <p>前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编译后的汇编代码.<br>目的: 搞明白 X86 架构下函数到底是怎么调用执行的.</p>
 </blockquote>
-<h1 id="assembly-syntax-for-X86"><a href="#assembly-syntax-for-X86" class="headerlink" title="assembly syntax for X86"></a>assembly syntax for X86</h1><h2 id="gas-gnu-assembler-syntax-也就是-AT-amp-T-风格-本文采用该风格"><a href="#gas-gnu-assembler-syntax-也就是-AT-amp-T-风格-本文采用该风格" class="headerlink" title="gas (gnu assembler syntax), 也就是 AT&amp;T 风格. 本文采用该风格."></a>gas (gnu assembler syntax), 也就是 AT&amp;T 风格. 本文采用该风格.</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">swap(int, int):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    %edi, -20(%rbp)</span><br><span class="line">        movl    %esi, -24(%rbp)</span><br><span class="line">        movl    -20(%rbp), %eax</span><br><span class="line">        movl    %eax, -4(%rbp)</span><br><span class="line">        movl    -24(%rbp), %eax</span><br><span class="line">        movl    %eax, -20(%rbp)</span><br><span class="line">        movl    -4(%rbp), %eax</span><br><span class="line">        movl    %eax, -24(%rbp)</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<h1 id="assembly-syntax-for-X86"><a href="#assembly-syntax-for-X86" class="headerlink" title="assembly syntax for X86"></a>assembly syntax for X86</h1><h2 id="gas-gnu-assembler-syntax-也就是-AT-amp-T-风格"><a href="#gas-gnu-assembler-syntax-也就是-AT-amp-T-风格" class="headerlink" title="gas (gnu assembler syntax), 也就是 AT&amp;T 风格."></a>gas (gnu assembler syntax), 也就是 AT&amp;T 风格.</h2><p>本文采用该风格.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">swap(int, int):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    %edi, -20(%rbp)</span><br><span class="line">        movl    %esi, -24(%rbp)</span><br><span class="line">        movl    -20(%rbp), %eax</span><br><span class="line">        movl    %eax, -4(%rbp)</span><br><span class="line">        movl    -24(%rbp), %eax</span><br><span class="line">        movl    %eax, -20(%rbp)</span><br><span class="line">        movl    -4(%rbp), %eax</span><br><span class="line">        movl    %eax, -24(%rbp)</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
 <h2 id="intel-syntax"><a href="#intel-syntax" class="headerlink" title="intel syntax"></a>intel syntax</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">swap(int, int):</span><br><span class="line">        push    rbp</span><br><span class="line">        mov     rbp, rsp</span><br><span class="line">        mov     DWORD PTR [rbp-20], edi</span><br><span class="line">        mov     DWORD PTR [rbp-24], esi</span><br><span class="line">        mov     eax, DWORD PTR [rbp-20]</span><br><span class="line">        mov     DWORD PTR [rbp-4], eax</span><br><span class="line">        mov     eax, DWORD PTR [rbp-24]</span><br><span class="line">        mov     DWORD PTR [rbp-20], eax</span><br><span class="line">        mov     eax, DWORD PTR [rbp-4]</span><br><span class="line">        mov     DWORD PTR [rbp-24], eax</span><br><span class="line">        nop</span><br><span class="line">        pop     rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
-<h1 id="instruction-suffixes"><a href="#instruction-suffixes" class="headerlink" title="instruction suffixes"></a>instruction suffixes</h1><blockquote>
-<p>指令的后缀. X86 系列的 CPU 已经发展到 64 bit, 指令长度也发生了改变. 但是向后兼容.<br>缩写 | 全称 | 位数<br>—- | —- | —-<br>b | byte | 8bit<br>w | word | 16bit<br>l | long | 32bit<br>q | quad | 64bit</p>
-</blockquote>
+<h1 id="instruction-suffixes"><a href="#instruction-suffixes" class="headerlink" title="instruction suffixes"></a>instruction suffixes</h1><table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>全称</th>
+<th>位数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>b</td>
+<td>byte</td>
+<td>8bit</td>
+</tr>
+<tr>
+<td>w</td>
+<td>word</td>
+<td>16bit</td>
+</tr>
+<tr>
+<td>l</td>
+<td>long</td>
+<td>32bit</td>
+</tr>
+<tr>
+<td>q</td>
+<td>quad</td>
+<td>64bit</td>
+</tr>
+</tbody></table>
 <h1 id="addressing-mode"><a href="#addressing-mode" class="headerlink" title="addressing mode"></a>addressing mode</h1><blockquote>
 <p>CPU 寻址方式, 也就是拿到数据的方式.</p>
 </blockquote>
