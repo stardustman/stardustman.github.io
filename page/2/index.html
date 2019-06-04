@@ -259,6 +259,152 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/16/katacoda-deploy-static-website/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/16/katacoda-deploy-static-website/" itemprop="url">deploy-static-website</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-16T16:17:51+08:00">
+                2019-05-16
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/16/katacoda-deploy-static-website/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/16/katacoda-deploy-static-website/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Create-a-Dockerfile"><a href="#Create-a-Dockerfile" class="headerlink" title="Create a Dockerfile"></a>Create a Dockerfile</h1><blockquote>
+<p>Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.<br>This base image is defined as an instruction in the Dockerfile. Docker Images are built based on the contents of a Dockerfile. The Dockerfile is a list of instructions describing how to deploy your application.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># base image</span><br><span class="line">FROM nginx:alpine</span><br><span class="line"># copies the content of the current directory into a particular location (/usr/share/nginx/html)inside the container.</span><br><span class="line">COPY . /usr/share/nginx/html</span><br></pre></td></tr></table></figure>
+
+<h1 id="Build-docker-image"><a href="#Build-docker-image" class="headerlink" title="Build docker image"></a>Build docker image</h1><blockquote>
+<p>The Dockerfile is used by the Docker CLI build command. The build command executes each instruction within the Dockerfile. The result is a built Docker Image that can be launched and run your configured app.<br>The build command takes in some different parameters. The format is <strong>docker build -t build-directory</strong>. The -t parameter allows you to specify a friendly name for the image and a tag, commonly used as a version number. This allows you to track built images and be confident about which version is being started.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Build our static HTML image using the build command below.</span><br><span class="line"># The built image will have the name webserver-image with a tag of v1.</span><br><span class="line">docker build -t webserver-image:v1 .</span><br><span class="line"># view a list of all the images on the host</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+
+<h1 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h1><blockquote>
+<p>The built Image can be launched in a consistent way to other Docker Images. When a container launches, it’s sandboxed from other processes and networks on the host. When starting a container you need to give it permission and access to what it requires.<br>For example, to open and bind to a network port on the host you need to provide the parameter <em>-p host-port:container-port</em>.</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Launch our newly built image providing the friendly name and tag. As it&apos;s a web server, bind port 80 to our host using the -p parameter.</span><br><span class="line">docker run -d -p 80:80 webserver-image:v1</span><br><span class="line"># Access the results of port 80</span><br><span class="line">curl docker</span><br></pre></td></tr></table></figure>
+
+<h1 id="dockerfile-and-index-html"><a href="#dockerfile-and-index-html" class="headerlink" title="dockerfile and index.html"></a>dockerfile and index.html</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># index.html</span><br><span class="line">&lt;h1&gt;Hello World&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
+
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/16/katacoda-deploying-first-docker-container/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -591,7 +737,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -604,7 +750,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
