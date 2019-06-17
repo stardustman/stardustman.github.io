@@ -341,7 +341,11 @@
         
           
             <h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>  The Internet Protocol is designed for use in interconnected systems of <strong>packet-switched</strong> computer communication networks.  Such a system has been called a “catenet”.  The internet protocol provides for transmitting blocks of data called datagrams from sources to destinations, where sources and destinations are hosts identified by <strong>fixed length addresses</strong>.  The internet protocol also provides for <strong>fragmentation</strong> and <strong>reassembly</strong> of long datagrams, if necessary, for transmission through “small packet” networks.</p>
-<h1 id="IP-format"><a href="#IP-format" class="headerlink" title="IP format"></a>IP format</h1>  <img src="/2019/06/04/master-ip/ip-header-format.png" title="ip-format">
+<blockquote>
+<p>IPv4 is a connectionless protocol for use on packet-switched networks. It operates on a best effort delivery model, in that it does not guarantee delivery, nor does it assure proper sequencing or avoidance of duplicate delivery. These aspects, including data integrity, are addressed by an upper layer transport protocol, such as the Transmission Control Protocol (TCP).</p>
+</blockquote>
+<h1 id="IP-header-format"><a href="#IP-header-format" class="headerlink" title="IP header format"></a>IP header format</h1>  <img src="/2019/06/04/master-ip/ip-header-format.png" title="ip-header-format">
+<h1 id="Ip-datagram"><a href="#Ip-datagram" class="headerlink" title="Ip datagram"></a>Ip datagram</h1>  <img src="/2019/06/04/master-ip/ip-format.png" title="ip-format">
 
 <h1 id="IPV4-example"><a href="#IPV4-example" class="headerlink" title="IPV4 example"></a>IPV4 example</h1>  <img src="/2019/06/04/master-ip/ip-capture-wireshark.jpg" title="ip-capture-wireshark">
   <img src="/2019/06/04/master-ip/ip-capture-wireshark-example.png" title="ip-capture-wireshark-example">
@@ -365,6 +369,11 @@
 <h2 id="Header-Checksum-16-bits"><a href="#Header-Checksum-16-bits" class="headerlink" title="Header Checksum(16 bits)"></a>Header Checksum(16 bits)</h2><p>0x2e35</p>
 <h2 id="Source-IP-Address-32-bits"><a href="#Source-IP-Address-32-bits" class="headerlink" title="Source IP Address(32 bits)"></a>Source IP Address(32 bits)</h2><p>0x 0a:fe:c9:ad -&gt; 10.254.201.173</p>
 <h2 id="Destination-IP-Address-32-bits"><a href="#Destination-IP-Address-32-bits" class="headerlink" title="Destination IP Address(32 bits)"></a>Destination IP Address(32 bits)</h2><p>0x ac:10:79:65 -&gt; 172.16.121.101</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
+<li><a href="http://user.it.uu.se/~rmg/teaching/IP.pdf" target="_blank" rel="noopener">ip fragmentation and reassembly</a></li>
+<li><a href="https://en.m.wikipedia.org/wiki/IPv4#Fragmentation_and_reassembly" target="_blank" rel="noopener">fragmentation &amp; reassembly</a></li>
+<li><a href="https://mp.weixin.qq.com/s/ifZk5Ox9cnixq1ZxgwFBSw" target="_blank" rel="noopener">ip 重组</a></li>
+</ol>
 
           
         
@@ -542,7 +551,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/asm-stack-management/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/28/asm-how-x86-function-execute/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -561,7 +570,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2019/05/28/asm-stack-management/" itemprop="url">asm-stack-management</a></h1>
+                <a class="post-title-link" href="/2019/05/28/asm-how-x86-function-execute/" itemprop="url">asm-how-x86-function-execute</a></h1>
         
 
         <div class="post-meta">
@@ -592,8 +601,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/05/28/asm-stack-management/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/28/asm-stack-management/" itemprop="commentCount"></span>
+                <a href="/2019/05/28/asm-how-x86-function-execute/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/28/asm-how-x86-function-execute/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -708,8 +717,8 @@
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $2, %esi // 由 caller 准备函数参数 2</span><br><span class="line">        movl    $1, %edi // 由 caller 准备函数参数 1</span><br><span class="line">        call    swap // 在 CPU fetch 了 call 指令后, pc 已经指向了下一条指令, 也就是 movl $0, %eax 这条指令. 此时的 call 指令完成了两件事, 第一件事: 将 pc(old) 压入到栈中(swap 函数 ret 指令(函数返回)就是把这个 pc(old) pop 到 pc 这个寄存器, CPU 就能接着执行 movl $0, %eax 这条指令了), 第二件事: jump 到swap的地址,开始执行swap的代码.</span><br><span class="line">        movl    $0, %eax // 返回值 0 </span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
-<h1 id="C-compare-to-Assembly"><a href="#C-compare-to-Assembly" class="headerlink" title="C compare to  Assembly"></a>C compare to  Assembly</h1><img src="/2019/05/28/asm-stack-management/c-swap-to-asm-swap.png" title="C code VS asm code">
-<h1 id="asm-execute-graph"><a href="#asm-execute-graph" class="headerlink" title="asm execute graph"></a>asm execute graph</h1><img src="/2019/05/28/asm-stack-management/asm-execute-graph.png" title="asm execute graph">
+<h1 id="C-compare-to-Assembly"><a href="#C-compare-to-Assembly" class="headerlink" title="C compare to  Assembly"></a>C compare to  Assembly</h1><img src="/2019/05/28/asm-how-x86-function-execute/c-swap-to-asm-swap.png" title="C code VS asm code">
+<h1 id="asm-execute-graph"><a href="#asm-execute-graph" class="headerlink" title="asm execute graph"></a>asm execute graph</h1><img src="/2019/05/28/asm-how-x86-function-execute/asm-execute-graph.png" title="asm execute graph">
 <blockquote>
 <p>注意: 示意图里面的是 64 bit 的汇编代码.<br>注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.<br>图1 和 图6 , 图2 和 图5 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的. 在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址. 也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧. 也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 pc). call 和 ret 指令的也分别有 push %rip 和 pop %rip 的作用. 很对称的操作!
 图3 是 swap 函数的栈帧, 此时新函数的栈帧 rsp 和 rbp 指向的是相同的内存地址.<br>图4 所有的 mov 使用的内存地址, 都是通过 rbp 来偏移得到, rbp 的值并没有发生改变.<br>图5 执行完 popq %rsp, 恢复 main 函数的栈基址(rbp), 也就是和图1 一样.<br>图6 执行完 ret 恢复为 main 函数的栈帧. ret 的作用等价于 popq %rip. 但是无法直接操作 ip(pc) 这个寄存器. 也就相当于曲线完成改变 ip 的功能. 此时 pc 也被 ret 指令恢复成了 X. (此时实际上已经控制权已经回到 main 函数了), 接下来就是继续执行 main 函数的代码. 其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.(当然用汇编操作 rsp 还是可以访问到的).</p>
