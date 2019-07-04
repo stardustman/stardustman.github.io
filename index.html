@@ -259,6 +259,535 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/25/asm-clang-concepts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/25/asm-clang-concepts/" itemprop="url">asm-clang-concepts</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-25T16:57:59+08:00">
+                2019-06-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/25/asm-clang-concepts/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/25/asm-clang-concepts/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&amp;T 风格. 编译器是 gcc-x86-64-9.1</p>
+<h1 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h1><blockquote>
+<p>A pointer is a programming language object that stores the memory address of another value located in computer memory.<br> A pointer references a location in memory, and obtaining the value stored at that location is known as dereferencing the pointer.</p>
+</blockquote>
+<h2 id="变量地址"><a href="#变量地址" class="headerlink" title="变量地址"></a>变量地址</h2><blockquote>
+<p>The lea (load effective address) instruction is used to put a memory address into the destination.<br>leaq  -8(%rbp), %rdx<br>-8(%rbp)等价于 mem[R[rbp] -8]. 将 rbp - 8 的值(这个值就是内存地址)复制到 rdx.</p>
+</blockquote>
+<h2 id="寄存器间接寻址"><a href="#寄存器间接寻址" class="headerlink" title="寄存器间接寻址"></a>寄存器间接寻址</h2><blockquote>
+<p>movq    (%rax), %rdx<br>将 rax 的值(X)指向的内存地址处的值复制到 rdx. 此时 rax 的值(X)就是指针, 所谓指针在汇编层面就是将一个内存地址放到寄存器, 利用寄存器间接寻址去获取这个地址的数值. 这就是 C 语言里指针的本质. </p>
+</blockquote>
+<h2 id="movq-operand-combinations"><a href="#movq-operand-combinations" class="headerlink" title="movq operand combinations"></a>movq operand combinations</h2><img src="/2019/06/25/asm-clang-concepts/address-modes.png" title="movq operand combinations">
+
+<h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">void swap(int *pa, int *pb)&#123;</span><br><span class="line">    int temp = *pa; </span><br><span class="line">    *pa = *pb;</span><br><span class="line">    *pb = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">swap(int*, int*):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp) // 将变量 a(10) 的地址(&amp;a)复制到 rbp - 24 地址处, 参数 pa</span><br><span class="line">        movq    %rsi, -32(%rbp) // 将变量 b(100) 的地址(&amp;b)复制到 rbp - 32 地址处, 参数 pb </span><br><span class="line">        movq    -24(%rbp), %rax // 将 rbp - 24 指向的内存地址的数值(也就是变量 a 的地址)复制到 rax</span><br><span class="line">        movl    (%rax), %eax    // 将 rax 指向的内存地址的值 10(也就是变量 a) 复制到 eax, int a 4 Bytes 需要 32 bit 的 eax 即可.</span><br><span class="line">        movl    %eax, -4(%rbp)  // 将 eax 的值 10 (也就是变量 a) 复制到 rbp - 4 指向的内存地址处, 完成 temp = *pa;</span><br><span class="line">        movq    -32(%rbp), %rax // 将 rbp - 32 指向的内存地址的值(也就是变量 b 的地址) 的地址复制到 rax</span><br><span class="line">        movl    (%rax), %edx    // 将 rax 的值指向的内存地址出的值 100(也就是变量 b) 复制到 edx, int b 4 Bytes 需要 32 bit 的 eax 即可.</span><br><span class="line">        movq    -24(%rbp), %rax // 将 rbp - 24 指向的内存地址的值(也就是变量 a 的地址)复制到 rax</span><br><span class="line">        movl    %edx, (%rax)    // 将 edx 的值 100 (也就是变量 b)复制到 rax 指向的地址处(也就是变量 a 的地址), 完成 *pa = *pb</span><br><span class="line">        movq    -32(%rbp), %rax // 将 rbp - 32 指向的内存地址的值(也就是变量 b 的地址)复制到 rax</span><br><span class="line">        movl    -4(%rbp), %edx  // 将 rbp - 4 指向的内存地址的值 10 复制到 edx</span><br><span class="line">        movl    %edx, (%rax)    // 将 edx 的值 10 复制到 rax 指向的地址处(也就是变量 b 的地址), 完成 *pb = temp</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">    int a = 10;</span><br><span class="line">    int b = 100;</span><br><span class="line">    swap(&amp;a,&amp;b);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp // 保存调用者的 rbp</span><br><span class="line">        movq    %rsp, %rbp // 开辟 main 函数的栈帧</span><br><span class="line">        subq    $16, %rsp  // 分配 main 的栈空间 16 bytes</span><br><span class="line">        movl    $10, -4(%rbp) // 将变量 a 复制到 rbp - 4 指向的地址处.(int a, 4 bytes)</span><br><span class="line">        movl    $100, -8(%rbp) // 将变量 b 复制到 rbp - 8 指向的地址处.(int b, 4 bytes)</span><br><span class="line">        leaq    -8(%rbp), %rdx // 将 rbp - 8 的值复制到 rdx 寄存器(int b 变量的地址)</span><br><span class="line">        leaq    -4(%rbp), %rax // 将 rbp - 4 的值复制到 rax 寄存器(int a 变量的地址)</span><br><span class="line">        movq    %rdx, %rsi // 复制 rdx(第二个参数: 变量 b 的地址) 到 rsi 寄存器</span><br><span class="line">        movq    %rax, %rdi // 复制 rax(第一个参数: 变量 a 的地址) 到 rdi 寄存器</span><br><span class="line">        call    swap(int*, int*)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave   // 等价于 1. mov %rbp, %rsp(回收分配的栈空间) 2.pop %rbp(恢复 main 的 rbp)</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<img src="/2019/06/25/asm-clang-concepts/swap-c-asm.png" title="swap-c-asm">
+<h3 id="栈帧分析"><a href="#栈帧分析" class="headerlink" title="栈帧分析"></a>栈帧分析</h3><img src="/2019/06/25/asm-clang-concepts/swap-pointer.png" title="main-swap-call-stack">
+<blockquote>
+<p>该图是 swap 执行完 int temp = *pa 后的状态.</p>
+</blockquote>
+<h3 id="参数传递"><a href="#参数传递" class="headerlink" title="参数传递"></a>参数传递</h3><blockquote>
+<p>To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first of the extra parameters (really the seventh parameter) parameter will be stored at the lowest address (this inversion of parameters was historically used to allow functions to be passed a variable number of parameters).</p>
+</blockquote>
+<h3 id="函数返回值"><a href="#函数返回值" class="headerlink" title="函数返回值"></a>函数返回值</h3><blockquote>
+<p>the return value for the function should be placed in rax if it is not already there.<br>返回值放在 rax 寄存器. 这是 x86-64 的约定. 架构设计决定只有 rax 一个寄存器存放返回值, 这也是高级语言返回值只能是一个的原因. C 语言里返回的结构体, 其实也就是结构体开始的地址, 还是一个值.</p>
+</blockquote>
+<h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><blockquote>
+<p>指针本质就是寄存器间接寻址. 函数传参其实传的都是数值而已, 本质上都是数值的副本. </p>
+</blockquote>
+<h1 id="数据类型转化"><a href="#数据类型转化" class="headerlink" title="数据类型转化"></a>数据类型转化</h1><h2 id="x86-64-registers"><a href="#x86-64-registers" class="headerlink" title="x86-64 registers"></a>x86-64 registers</h2><img src="/2019/06/25/asm-clang-concepts/x86-64-registers.png">
+<h2 id="IA32-registers"><a href="#IA32-registers" class="headerlink" title="IA32 registers"></a>IA32 registers</h2><img src="/2019/06/25/asm-clang-concepts/IA32-registers.png">
+<h2 id="int-number"><a href="#int-number" class="headerlink" title="int number"></a>int number</h2><h3 id="code"><a href="#code" class="headerlink" title="code"></a>code</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void testTypeConvert()&#123;</span><br><span class="line">     unsigned long i64bit = 1844674407370955199;</span><br><span class="line">     unsigned int i32bit = (unsigned int)i64bit;</span><br><span class="line">     unsigned short i16bit = (unsigned int)i32bit;</span><br><span class="line">     unsigned char i8bit = (unsigned char)i16bit;</span><br><span class="line">     //printf(&quot;%ld\n&quot;,i64bit);</span><br><span class="line">     //printf(&quot;%ld\n&quot;,i32bit);</span><br><span class="line">     //printf(&quot;%d\n&quot;,i16bit);</span><br><span class="line">     //printf(&quot;%d\n&quot;,i8bit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">testTypeConvert():</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movabsq $1844674407370955199, %rax //‭00011001 10011001 10011001 10011001 10011001 10011001 10011001 10111111‬</span><br><span class="line">        movq    %rax, -8(%rbp)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movl    %eax, -12(%rbp) // 10011001 10011001 10011001 10111111‬ (2576980415)</span><br><span class="line">        movl    -12(%rbp), %eax</span><br><span class="line">        movw    %ax, -14(%rbp) // 10011001 10111111‬(39359)</span><br><span class="line">        movzwl  -14(%rbp), %eax // 00000000 00000000 10011001 10111111‬ (zero extend)</span><br><span class="line">        movb    %al, -15(%rbp) // 10111111‬(191)</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<h3 id="结论-1"><a href="#结论-1" class="headerlink" title="结论"></a>结论</h3><p>int 类型的数据转化, 利用不同长度的寄存器. 比如 int 转 char 类型. 直接取 int 的最后 8 位. char 转 int ,对应的寄存器高位补上 3 个字节的 0.</p>
+<h1 id="array"><a href="#array" class="headerlink" title="array"></a>array</h1><h1 id="references"><a href="#references" class="headerlink" title="references"></a>references</h1><ol>
+<li><a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)" target="_blank" rel="noopener">pointer</a></li>
+<li><a href="https://stackoverflow.com/questions/29790175/assembly-x86-leave-instruction/29790275" target="_blank" rel="noopener">lea instruction</a></li>
+<li><a href="https://aaronbloomfield.github.io/pdr/book/x86-64bit-ccc-chapter.pdf" target="_blank" rel="noopener">x86 c call convention</a></li>
+<li><a href="https://www.cs.auckland.ac.nz/references/macvax/op-codes/Instructions/movz.html" target="_blank" rel="noopener">opcode-movz</a></li>
+<li><a href="http://faydoc.tripod.com/cpu/movsd.htm" target="_blank" rel="noopener">movsd</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/24/asm-how-x86-64-arguments-pass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/24/asm-how-x86-64-arguments-pass/" itemprop="url">asm-how-x86-64-arguments-pass</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-24T09:52:27+08:00">
+                2019-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/24/asm-how-x86-64-arguments-pass/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/24/asm-how-x86-64-arguments-pass/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>x86-64 下函数参数传递, 汇编层面分析.<br>To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first of the extra parameters (really the seventh parameter) parameter will be stored at the lowest address (this inversion of parameters was historically used to allow functions to be passed a variable number of parameters).</p>
+</blockquote>
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="C-main"><a href="#C-main" class="headerlink" title="C main"></a>C main</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">    int result = 0;</span><br><span class="line">    result = testArgs(1,2,3,4,5,6,7,8);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Asm-main"><a href="#Asm-main" class="headerlink" title="Asm main"></a>Asm main</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $16, %rsp</span><br><span class="line">        movl    $0, -4(%rbp) //result</span><br><span class="line">        pushq   $8 // 最后一个参数</span><br><span class="line">        pushq   $7 // 倒数第二个参数</span><br><span class="line">        movl    $6, %r9d // 第六个参数</span><br><span class="line">        movl    $5, %r8d // 第五个参数</span><br><span class="line">        movl    $4, %ecx // 第四个参数</span><br><span class="line">        movl    $3, %edx // 第三个参数</span><br><span class="line">        movl    $2, %esi // 第二个参数</span><br><span class="line">        movl    $1, %edi // 第一个参数</span><br><span class="line">        call    testArgs(long, long, long, long, long, long, long, long)</span><br><span class="line">        addq    $16, %rsp // 回收分配的栈空间</span><br><span class="line">        movl    %eax, -4(%rbp)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-testArgs"><a href="#C-testArgs" class="headerlink" title="C testArgs"></a>C testArgs</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int testArgs(long a1,long a2,long a3,long a4,long a5,long a6,long a7,long a8)&#123;</span><br><span class="line">    long sum = 0;</span><br><span class="line">    sum = a1 + a2 + a3 + a4 +a5 + a6 + a7 + a8;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Asm-testArgs"><a href="#Asm-testArgs" class="headerlink" title="Asm testArgs"></a>Asm testArgs</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">testArgs(long, long, long, long, long, long, long, long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp)</span><br><span class="line">        movq    %rsi, -32(%rbp)</span><br><span class="line">        movq    %rdx, -40(%rbp)</span><br><span class="line">        movq    %rcx, -48(%rbp)</span><br><span class="line">        movq    %r8, -56(%rbp)</span><br><span class="line">        movq    %r9, -64(%rbp)</span><br><span class="line">        movq    $0, -8(%rbp) // sum</span><br><span class="line">        movq    -24(%rbp), %rdx // a1</span><br><span class="line">        movq    -32(%rbp), %rax // a2</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    -40(%rbp), %rax // a3</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    -48(%rbp), %rax // a4</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    -56(%rbp), %rax // a5</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    -64(%rbp), %rax // a6</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    16(%rbp), %rax  // a7</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    24(%rbp), %rax  // a8</span><br><span class="line">        addq    %rdx, %rax</span><br><span class="line">        movq    %rax, -8(%rbp)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<h2 id="栈帧分析"><a href="#栈帧分析" class="headerlink" title="栈帧分析"></a>栈帧分析</h2><img src="/2019/06/24/asm-how-x86-64-arguments-pass/x86-64-arguments-pass.png" title="x86-64-arguments-pass">
+
+<blockquote>
+<p>上图是执行完 testArgs 前两句汇编的栈帧状态图.<br>分析:<br>testArgs 中 movq    16(%rbp), %rax  // 将 rbp + 16 地址处的数值(a7)复制到 rax<br>rbp + 16 的原因是: 参数 a7 是 main 准备的, 属于 main 的栈帧. 16 Bytes 包括 8 Bytes 的 Return address 和 8 Bytes 的 main 的 rbp.</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/17/tools-for-me/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/17/tools-for-me/" itemprop="url">tools-for-me</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-17T18:37:10+08:00">
+                2019-06-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/17/tools-for-me/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/17/tools-for-me/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="programming"><a href="#programming" class="headerlink" title="programming"></a>programming</h1><h2 id="java"><a href="#java" class="headerlink" title="java"></a>java</h2><ol>
+<li><a href="https://github.com/deathmarine/Luyten" target="_blank" rel="noopener">decompiler-Luyten</a></li>
+<li><a href="http://www.benf.org/other/cfr/" target="_blank" rel="noopener">decompiler-cfr</a></li>
+<li><a href="https://bytecodeviewer.com/" target="_blank" rel="noopener">byte-code-viewer</a></li>
+</ol>
+<h2 id="assembly"><a href="#assembly" class="headerlink" title="assembly"></a>assembly</h2><ol>
+<li><a href="https://godbolt.org/" target="_blank" rel="noopener">godbolt</a></li>
+</ol>
+<h2 id="json"><a href="#json" class="headerlink" title="json"></a>json</h2><ol>
+<li><a href="https://c.runoob.com/front-end/53" target="_blank" rel="noopener">json-runoob</a></li>
+<li><a href="https://www.json.cn/" target="_blank" rel="noopener">json-online</a></li>
+</ol>
+<h2 id="regexp"><a href="#regexp" class="headerlink" title="regexp"></a>regexp</h2><ol>
+<li><a href="https://jex.im/regulex/#!flags=&re=%5E(a%7Cb)*%3F%24" target="_blank" rel="noopener">regexp-jex.im</a></li>
+<li><a href="https://regexr.com/" target="_blank" rel="noopener">regexp-regexr</a></li>
+<li><a href="https://regexper.com/" target="_blank" rel="noopener">regexp-regexper</a></li>
+</ol>
+<h2 id="hex"><a href="#hex" class="headerlink" title="hex"></a>hex</h2><ol>
+<li><a href="http://tool.oschina.net/hexconvert/" target="_blank" rel="noopener">hex converter</a></li>
+<li><a href="https://www.onlinehexeditor.com/" target="_blank" rel="noopener">hex editor</a></li>
+</ol>
+<h2 id="html"><a href="#html" class="headerlink" title="html"></a>html</h2><ol>
+<li><a href="https://tool.lu/html/" target="_blank" rel="noopener">html beautify</a></li>
+</ol>
+<h2 id="base64"><a href="#base64" class="headerlink" title="base64"></a>base64</h2><ol>
+<li><a href="http://www1.tc711.com/tool/BASE64.htm" target="_blank" rel="noopener">base64</a></li>
+</ol>
+<h2 id="code-format"><a href="#code-format" class="headerlink" title="code format"></a>code format</h2><ol>
+<li><a href="http://tool.oschina.net/codeformat/xml" target="_blank" rel="noopener">code format</a></li>
+<li><a href="http://tool.chinaz.com/Tools/urlencode.aspx" target="_blank" rel="noopener">url</a></li>
+</ol>
+<h2 id="unicode"><a href="#unicode" class="headerlink" title="unicode"></a>unicode</h2><ol>
+<li><a href="https://www.ftrain.com/unicode/" target="_blank" rel="noopener">unicode for you</a></li>
+</ol>
+<h2 id="shell"><a href="#shell" class="headerlink" title="shell"></a>shell</h2><ol>
+<li><a href="https://ohmyz.sh/" target="_blank" rel="noopener">oh-my-zsh</a></li>
+</ol>
+<h1 id="working"><a href="#working" class="headerlink" title="working"></a>working</h1><h2 id="pc"><a href="#pc" class="headerlink" title="pc"></a>pc</h2><ol>
+<li><a href="https://www.snipaste.com/" target="_blank" rel="noopener">sinp &amp; paste</a></li>
+<li><a href="https://mubu.com/" target="_blank" rel="noopener">mubu</a></li>
+<li><a href="https://www.processon.com" target="_blank" rel="noopener">process on</a></li>
+<li><a href="https://www.apowersoft.cn/free-online-screen-recorder" target="_blank" rel="noopener">screen-recorder</a></li>
+</ol>
+<h1 id="reinstall-os"><a href="#reinstall-os" class="headerlink" title="reinstall os"></a>reinstall os</h1><ol>
+<li><a href="http://multibootusb.org/page_download/" target="_blank" rel="noopener">multibootusb</a></li>
+<li><a href="https://www.pendrivelinux.com/universal-usb-installer-easy-as-1-2-3/" target="_blank" rel="noopener">universal usb installer</a></li>
+</ol>
+<h1 id="entertainment"><a href="#entertainment" class="headerlink" title="entertainment"></a>entertainment</h1><h2 id="video"><a href="#video" class="headerlink" title="video"></a>video</h2><h3 id="online"><a href="#online" class="headerlink" title="online"></a>online</h3><ol>
+<li><a href="https://github.com/soimort/you-get" target="_blank" rel="noopener">downloader-you-get</a></li>
+<li><a href="https://motrix.app/" target="_blank" rel="noopener">downloader-motrix</a></li>
+</ol>
+<h3 id="baidu"><a href="#baidu" class="headerlink" title="baidu"></a>baidu</h3><ol>
+<li><a href="https://www.baiduwp.com/" target="_blank" rel="noopener">baiduwp</a></li>
+<li><a href="http://pandownload.com/index.html" target="_blank" rel="noopener">pandownload</a></li>
+</ol>
+<h3 id="converter"><a href="#converter" class="headerlink" title="converter"></a>converter</h3><ol>
+<li><a href="https://online-audio-converter.com/" target="_blank" rel="noopener">audio-converter</a></li>
+</ol>
+<h2 id="movie"><a href="#movie" class="headerlink" title="movie"></a>movie</h2><ol>
+<li><a href="https://www.cupfox.com/" target="_blank" rel="noopener">cupfox</a></li>
+<li><a href="http://www.bt177.tel/" target="_blank" rel="noopener">bt-177.tel</a></li>
+<li><a href="http://www.yyetss.com/" target="_blank" rel="noopener">renren</a></li>
+</ol>
+<h2 id="picture"><a href="#picture" class="headerlink" title="picture"></a>picture</h2><ol>
+<li><a href="http://waifu2x.udp.jp/" target="_blank" rel="noopener">waifu2x</a></li>
+<li><a href="https://www.awanqi.com/" target="_blank" rel="noopener">papers-anwanqi</a></li>
+<li><a href="http://ilovepapers.com/" target="_blank" rel="noopener">ilovepapers</a></li>
+</ol>
+<h2 id="file"><a href="#file" class="headerlink" title="file"></a>file</h2><ol>
+<li><a href="https://www.ilovepdf.com" target="_blank" rel="noopener">ilovepdf</a></li>
+<li><a href="https://html2pdf.com/" target="_blank" rel="noopener">html to pdf</a></li>
+</ol>
+<h2 id="typing"><a href="#typing" class="headerlink" title="typing"></a>typing</h2><ol>
+<li><a href="https://dazi.kukuw.com/" target="_blank" rel="noopener">practice typing</a></li>
+</ol>
+<h1 id="job"><a href="#job" class="headerlink" title="job"></a>job</h1><h2 id="company"><a href="#company" class="headerlink" title="company"></a>company</h2><ol>
+<li><a href="https://www.tianyancha.com/" target="_blank" rel="noopener">tianyancha</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/04/master-ip/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1394,439 +1923,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/" itemprop="url">katacoda-optimising-dockerfile-with-onbuild</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-20T16:08:52+08:00">
-                2019-05-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/20/katacoda-optimising-dockerfile-with-onbuild/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/csapp-memory-hierarchy/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/20/csapp-memory-hierarchy/" itemprop="url">csapp-memory-hierarchy</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-20T14:22:49+08:00">
-                2019-05-20
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/20/csapp-memory-hierarchy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/20/csapp-memory-hierarchy/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="Disk-Controller"><a href="#Disk-Controller" class="headerlink" title="Disk Controller"></a>Disk Controller</h1><blockquote>
-<p>我们知道定位一个磁盘空间需要三个参数(platter, track, sector). 但是 cpu 不使用这么麻烦的方式, cpu 使用的是逻辑盘号. 也就是磁盘控制器将逻辑盘号翻译成 platter, track, sector. 磁盘控制器充当一个中间层. </p>
-</blockquote>
-<h1 id="Memory-Hierarchy"><a href="#Memory-Hierarchy" class="headerlink" title="Memory Hierarchy"></a>Memory Hierarchy</h1><blockquote>
-<p>我们知道不同类型的存储, 每一个 bit 的价格不一样, 元件不同, 速度也不同. 世上事情大抵如此,不会集所有优点于一身.<br>利用程序的局部性, 构造一个层次存储系统, 每一层的存储当做下一层的缓存,(也就是下一层的一部分)这才会有 hit 和 miss 的根本原因啊! 这才会引出缓存的 placement policy 和 replacement policy. 缓存这种思想和普遍, 做开发时 redis 作为数据库的缓存, 也是解决速度不匹配的问题. </p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/16/katacoda-building-docker-image/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/16/katacoda-building-docker-image/" itemprop="url">building-docker-image</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-16T17:33:01+08:00">
-                2019-05-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/16/katacoda-building-docker-image/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/16/katacoda-building-docker-image/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p><strong><em>Docker images</em></strong> are built based on a Dockerfile. A Dockerfile defines <strong>all the steps</strong> required to create a Docker image with your application configured and ready to be run as a container. The image itself contains everything, from operating system to dependencies and configuration required to run your application.<br>Having everything within the image allows you to migrate images between different environments and be confident that if it works in one environment, then it will work in another.<br>The Dockerfile allows for images to be composable, enabling users to extend existing images instead of building from scratch. <em>By building on an existing image, you only need to define the steps to setup your application</em>. The base images can be basic operating system installations or configured systems which simply need some additional customisations.</p>
-</blockquote>
-<h1 id="Base-images"><a href="#Base-images" class="headerlink" title="Base images"></a>Base images</h1><blockquote>
-<p>All Docker images start from a base image. A base image is the same images from the Docker Registry which are used to start containers. Along with the image name, we can also include the image tag to indicate which particular version we want, <em>by default, this is latest</em>.
-These base images are used as the foundation for your additional changes to run your application. For example, in this scenario, we require NGINX to be configured and running on the system before we can deploy our static HTML files. As such we want to use NGINX as our base image.<br>Dockerfile’s are simple text files with a command on each line. To define a base image we use the instruction <strong>FROM image-name:tag</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br></pre></td></tr></table></figure>
-
-<h1 id="Running-commands"><a href="#Running-commands" class="headerlink" title="Running commands"></a>Running commands</h1><blockquote>
-<p>With the base image defined, we need to run various commands to configure our image. There are many commands to help with this, the main commands two are COPY and RUN.<br><strong><em>RUN</em></strong> command allows you to execute any command as you would at a command prompt, for example installing different application packages or running a build command. The results of the RUN are <strong>persisted</strong> to the image so it’s important not to leave any unnecessary or temporary files on the disk as these will be included in the image.<br><strong><em>COPY src dest</em></strong> allows you to copy files from the directory containing the Dockerfile to the container’s image. This is extremely useful for <strong>source code</strong> and assets that you want to be deployed inside your container<br><em>A new index.html file has been created for you which we want to serve from our container. On the next line after the <strong><em>FROM</em></strong> command, use the COPY command to copy index.html into a directory called <strong>/usr/share/nginx/</strong>html</em></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br></pre></td></tr></table></figure>
-
-<h1 id="Exposing-ports"><a href="#Exposing-ports" class="headerlink" title="Exposing ports"></a>Exposing ports</h1><blockquote>
-<p>With our files copied into our image and any dependencies downloaded, you need to define which port application needs to be accessible on.<br>Using the <strong><em>EXPOSE port</em></strong> command you tell Docker which ports should be open and can be bound too. You can define multiple ports on the single command, for example, EXPOSE 80 433 or EXPOSE 7000-8000</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br><span class="line"># web server to be accessible via port 80</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
-
-<h1 id="Default-commands"><a href="#Default-commands" class="headerlink" title="Default commands"></a>Default commands</h1><blockquote>
-<p>With the Docker image configured and having defined which ports we want accessible, we now need to define the command that launches the application.<br><em>The <strong><em>CMD</em></strong> line in a Dockerfile defines the default command to run when a container is launched.</em> If the command requires arguments then it’s recommended to use an array, for example [“cmd”, “-a”, “arga value”, “-b”, “argb-value”], which will be combined together and the command<br><strong>*cmd -a “arga value” -b argb-value</strong> would be run.<br>An alternative approach to CMD is ENTRYPOINT. While a CMD can be overridden when the container starts, a ENTRYPOINT defines a command which can have arguments passed to it when the container launches.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br><span class="line"># web server to be accessible via port 80</span><br><span class="line">EXPOSE 80</span><br><span class="line"># The command to run NGINX is nginx -g daemon off;</span><br><span class="line">CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span><br></pre></td></tr></table></figure>
-
-<h1 id="Building-containers"><a href="#Building-containers" class="headerlink" title="Building containers"></a>Building containers</h1><blockquote>
-<p>After writing your Dockerfile you need to use <strong><em>docker build</em></strong> to turn it into an image. <em>The build command takes in a directory containing the Dockerfile, executes the steps and stores the image in your local Docker Engine.</em> If one fails because of an error then the build stops.<br>Using the docker build command to build the image. You can give the image a <strong><em>friendly name by using the -t name option.</em></strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t my-nginx-image:latest</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Sending build context to Docker daemon  3.072kB<br>Step 1/5 : FROM nginx:1.11-alpine<br> —&gt; bedece1f06cc<br>Step 2/5 : COPY index.html /usr/share/nginx/html/index.html<br> —&gt; Using cache<br> —&gt; 2be98924804a<br>Step 3/5 : EXPOSE 80<br> —&gt; Using cache<br> —&gt; 233ea4308326<br>Step 4/5 : CMD [“nginx”, “-g”, “daemon off;”]<br> —&gt; Using cache<br> —&gt; 1a518260bb2b<br>Step 5/5 : CMD [“nginx”, “-g”, “daemon off;”]<br> —&gt; Using cache<br> —&gt; 563c68c52ed7<br>Successfully built 563c68c52ed7<br>Successfully tagged my-nginx-image:latest</p>
-</blockquote>
-<h1 id="Launching-new-image"><a href="#Launching-new-image" class="headerlink" title="Launching new image"></a>Launching new image</h1><blockquote>
-<p>NGINX is designed to run as a background service so you should include the option -d. To make the web server accessible, bind it to port 80 using p 80:80</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 my-nginx-image:latest</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>access the launched web server via the hostname docker. the command <strong><em>curl -i <a href="http://docker" target="_blank" rel="noopener">http://docker</a></em></strong> will return our index file via NGINX and the image we built.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i http://docker</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1877,7 +1973,7 @@ These base images are used as the foundation for your additional changes to run 
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1890,7 +1986,7 @@ These base images are used as the foundation for your additional changes to run 
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

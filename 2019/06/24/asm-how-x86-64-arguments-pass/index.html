@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="tcp,">
+  <meta name="keywords" content="asm,">
 
 
 
@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="The Transmission Control Protocol (TCP) is intended for use as a highlyreliable host-to-host protocol between hosts in packet-switched computer communication networks, and in interconnected systems o">
-<meta name="keywords" content="tcp">
+<meta name="description" content="x86-64 下函数参数传递, 汇编层面分析.To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, t">
+<meta name="keywords" content="asm">
 <meta property="og:type" content="article">
-<meta property="og:title" content="master-tcp">
-<meta property="og:url" content="http://yoursite.com/2019/05/22/master-tcp/index.html">
+<meta property="og:title" content="asm-how-x86-64-arguments-pass">
+<meta property="og:url" content="http://yoursite.com/2019/06/24/asm-how-x86-64-arguments-pass/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="The Transmission Control Protocol (TCP) is intended for use as a highlyreliable host-to-host protocol between hosts in packet-switched computer communication networks, and in interconnected systems o">
+<meta property="og:description" content="x86-64 下函数参数传递, 汇编层面分析.To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, t">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://yoursite.com/images/master-tcp-tcp-header.png">
-<meta property="og:updated_time" content="2019-05-24T02:38:54.049Z">
+<meta property="og:image" content="http://yoursite.com/2019/06/24/asm-how-x86-64-arguments-pass/x86-64-arguments-pass.png">
+<meta property="og:updated_time" content="2019-07-04T10:02:54.131Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="master-tcp">
-<meta name="twitter:description" content="The Transmission Control Protocol (TCP) is intended for use as a highlyreliable host-to-host protocol between hosts in packet-switched computer communication networks, and in interconnected systems o">
-<meta name="twitter:image" content="http://yoursite.com/images/master-tcp-tcp-header.png">
+<meta name="twitter:title" content="asm-how-x86-64-arguments-pass">
+<meta name="twitter:description" content="x86-64 下函数参数传递, 汇编层面分析.To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, t">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/24/asm-how-x86-64-arguments-pass/x86-64-arguments-pass.png">
 
 
 
@@ -122,13 +122,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/22/master-tcp/">
+  <link rel="canonical" href="http://yoursite.com/2019/06/24/asm-how-x86-64-arguments-pass/">
 
 
 
 
 
-  <title>master-tcp | stardustman</title>
+  <title>asm-how-x86-64-arguments-pass | stardustman</title>
   
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/master-tcp/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/24/asm-how-x86-64-arguments-pass/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -282,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">master-tcp</h1>
+          <h1 class="post-title" itemprop="name headline">asm-how-x86-64-arguments-pass</h1>
         
 
         <div class="post-meta">
@@ -294,8 +294,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-22T09:18:08+08:00">
-                2019-05-22
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-24T09:52:27+08:00">
+                2019-06-24
               </time>
             
 
@@ -313,8 +313,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/05/22/master-tcp/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/22/master-tcp/" itemprop="commentCount"></span>
+                <a href="/2019/06/24/asm-how-x86-64-arguments-pass/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/24/asm-how-x86-64-arguments-pass/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -343,35 +343,21 @@
 
       
         <blockquote>
-<p>The Transmission Control Protocol (TCP) is intended for use as a highly<br>reliable <strong>host-to-host</strong> protocol between hosts in <strong>packet-switched</strong> computer communication networks, and in interconnected systems of such networks.</p>
+<p>x86-64 下函数参数传递, 汇编层面分析.<br>To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first of the extra parameters (really the seventh parameter) parameter will be stored at the lowest address (this inversion of parameters was historically used to allow functions to be passed a variable number of parameters).</p>
 </blockquote>
-<h1 id="TCP-header-format"><a href="#TCP-header-format" class="headerlink" title="TCP header format"></a>TCP header format</h1><p><img src="/images/master-tcp-tcp-header.png" alt="tcp header"></p>
-<h2 id="basic-data-transfer"><a href="#basic-data-transfer" class="headerlink" title="basic data transfer"></a>basic data transfer</h2><h2 id="reliability"><a href="#reliability" class="headerlink" title="reliability"></a>reliability</h2><ul>
-<li>sequence number</li>
-<li>acknowledgement</li>
-</ul>
-<h2 id="flow-control"><a href="#flow-control" class="headerlink" title="flow control"></a>flow control</h2><ul>
-<li>window size</li>
-</ul>
-<h2 id="multiplexing"><a href="#multiplexing" class="headerlink" title="multiplexing"></a>multiplexing</h2><ul>
-<li>socket (ip, port)</li>
-</ul>
-<h2 id="connections"><a href="#connections" class="headerlink" title="connections"></a>connections</h2><blockquote>
-<p>Each connection is uniquely specified by a <strong>pair</strong> of sockets identifying its two sides.(source ip, source port),(destination ip, destination port)</p>
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="C-main"><a href="#C-main" class="headerlink" title="C main"></a>C main</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int main()&#123;</span><br><span class="line">    int result = 0;</span><br><span class="line">    result = testArgs(1,2,3,4,5,6,7,8);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Asm-main"><a href="#Asm-main" class="headerlink" title="Asm main"></a>Asm main</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $16, %rsp</span><br><span class="line">        movl    $0, -4(%rbp) //result</span><br><span class="line">        pushq   $8 // 最后一个参数</span><br><span class="line">        pushq   $7 // 倒数第二个参数</span><br><span class="line">        movl    $6, %r9d // 第六个参数</span><br><span class="line">        movl    $5, %r8d // 第五个参数</span><br><span class="line">        movl    $4, %ecx // 第四个参数</span><br><span class="line">        movl    $3, %edx // 第三个参数</span><br><span class="line">        movl    $2, %esi // 第二个参数</span><br><span class="line">        movl    $1, %edi // 第一个参数</span><br><span class="line">        call    testArgs(long, long, long, long, long, long, long, long)</span><br><span class="line">        addq    $16, %rsp // 回收分配的栈空间</span><br><span class="line">        movl    %eax, -4(%rbp)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-testArgs"><a href="#C-testArgs" class="headerlink" title="C testArgs"></a>C testArgs</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">int testArgs(long a1,long a2,long a3,long a4,long a5,long a6,long a7,long a8)&#123;</span><br><span class="line">    long sum = 0;</span><br><span class="line">    sum = a1 + a2 + a3 + a4 +a5 + a6 + a7 + a8;</span><br><span class="line">    return sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Asm-testArgs"><a href="#Asm-testArgs" class="headerlink" title="Asm testArgs"></a>Asm testArgs</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">testArgs(long, long, long, long, long, long, long, long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp)</span><br><span class="line">        movq    %rsi, -32(%rbp)</span><br><span class="line">        movq    %rdx, -40(%rbp)</span><br><span class="line">        movq    %rcx, -48(%rbp)</span><br><span class="line">        movq    %r8, -56(%rbp)</span><br><span class="line">        movq    %r9, -64(%rbp)</span><br><span class="line">        movq    $0, -8(%rbp) // sum</span><br><span class="line">        movq    -24(%rbp), %rdx // a1</span><br><span class="line">        movq    -32(%rbp), %rax // a2</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    -40(%rbp), %rax // a3</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    -48(%rbp), %rax // a4</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    -56(%rbp), %rax // a5</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    -64(%rbp), %rax // a6</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    16(%rbp), %rax  // a7</span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        movq    24(%rbp), %rax  // a8</span><br><span class="line">        addq    %rdx, %rax</span><br><span class="line">        movq    %rax, -8(%rbp)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<h2 id="栈帧分析"><a href="#栈帧分析" class="headerlink" title="栈帧分析"></a>栈帧分析</h2><img src="/2019/06/24/asm-how-x86-64-arguments-pass/x86-64-arguments-pass.png" title="x86-64-arguments-pass">
+
+<blockquote>
+<p>上图是执行完 testArgs 前两句汇编的栈帧状态图.<br>分析:<br>testArgs 中 movq    16(%rbp), %rax  // 将 rbp + 16 地址处的数值(a7)复制到 rax<br>rbp + 16 的原因是: 参数 a7 是 main 准备的, 属于 main 的栈帧. 16 Bytes 包括 8 Bytes 的 Return address 和 8 Bytes 的 main 的 rbp.</p>
 </blockquote>
-<ul>
-<li>sockets</li>
-<li>sequence numbers</li>
-<li>window size</li>
-</ul>
-<h1 id="TCP-建立连接目的"><a href="#TCP-建立连接目的" class="headerlink" title="TCP 建立连接目的"></a>TCP 建立连接目的</h1><blockquote>
-<p>交换通信双方的 ISN (Initial Sequence Number)<br>凡是占据序列号的任何TCP报文，一定对方确认，如果没有收到确认，会一直重传，直到达到规定的上限次数。<br>syn , data , fin 占据 sequence number 需要确认. ack 不占据 sequence number 不需要确认.</p>
-</blockquote>
-<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
-<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&mid=2650005578&idx=1&sn=9e4ba700512e68e2dcbd54bfe11bd669&chksm=87398263b04e0b7577be99e43c272147b74030514df3f78b894c5b5cee21a3565cf3e4ceebeb&scene=21#wechat_redirect" target="_blank" rel="noopener">TCP three way handshake 1</a></li>
-<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&mid=2650005835&idx=1&sn=dd0104635b5510ab6bf4f34ec347fe57&chksm=87398362b04e0a7402a6075b46e9a62855a78408a6dfecf6f7d13d8ae5e0375fab6d84208159&scene=21#wechat_redirect" target="_blank" rel="noopener">TCP three way handshake 2</a></li>
-<li><a href="https://tools.ietf.org/html/rfc793" target="_blank" rel="noopener">rfc793</a></li>
-</ol>
 
       
     </div>
@@ -389,7 +375,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tcp/" rel="tag"># tcp</a>
+            <a href="/tags/asm/" rel="tag"># asm</a>
           
         </div>
       
@@ -402,8 +388,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/20/git-commands/" rel="next" title="git-commands">
-                <i class="fa fa-chevron-left"></i> git-commands
+              <a href="/2019/06/17/tools-for-me/" rel="next" title="tools-for-me">
+                <i class="fa fa-chevron-left"></i> tools-for-me
               </a>
             
           </div>
@@ -412,8 +398,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2019/05/25/ubuntu18-04-install-openjdk8/" rel="prev" title="ubuntu18.04-install-openjdk8">
-                ubuntu18.04-install-openjdk8 <i class="fa fa-chevron-right"></i>
+              <a href="/2019/06/25/asm-clang-concepts/" rel="prev" title="asm-clang-concepts">
+                asm-clang-concepts <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -445,7 +431,7 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/05/22/master-tcp/" data-title="master-tcp" data-url="http://yoursite.com/2019/05/22/master-tcp/">
+      <div class="ds-thread" data-thread-key="2019/06/24/asm-how-x86-64-arguments-pass/" data-title="asm-how-x86-64-arguments-pass" data-url="http://yoursite.com/2019/06/24/asm-how-x86-64-arguments-pass/">
       </div>
     </div>
 
@@ -543,7 +529,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-header-format"><span class="nav-number">1.</span> <span class="nav-text">TCP header format</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#basic-data-transfer"><span class="nav-number">1.1.</span> <span class="nav-text">basic data transfer</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reliability"><span class="nav-number">1.2.</span> <span class="nav-text">reliability</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#flow-control"><span class="nav-number">1.3.</span> <span class="nav-text">flow control</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#multiplexing"><span class="nav-number">1.4.</span> <span class="nav-text">multiplexing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#connections"><span class="nav-number">1.5.</span> <span class="nav-text">connections</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TCP-建立连接目的"><span class="nav-number">2.</span> <span class="nav-text">TCP 建立连接目的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考链接"><span class="nav-number">3.</span> <span class="nav-text">参考链接</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#代码分析"><span class="nav-number">1.</span> <span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-main"><span class="nav-number">1.1.</span> <span class="nav-text">C main</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Asm-main"><span class="nav-number">1.1.1.</span> <span class="nav-text">Asm main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#C-testArgs"><span class="nav-number">1.1.2.</span> <span class="nav-text">C testArgs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asm-testArgs"><span class="nav-number">1.1.3.</span> <span class="nav-text">Asm testArgs</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#栈帧分析"><span class="nav-number">1.2.</span> <span class="nav-text">栈帧分析</span></a></li></ol></li></ol></div>
             
 
           </div>
