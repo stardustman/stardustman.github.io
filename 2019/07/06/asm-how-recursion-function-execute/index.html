@@ -96,7 +96,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/07/06/asm-how-recursion-function-execute/fib-dynamic-stack-frame.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/06/asm-how-recursion-function-execute/fib-optimize-stack-frame.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/06/asm-how-recursion-function-execute/fib-tail-recursion.png">
-<meta property="og:updated_time" content="2019-07-12T07:47:09.329Z">
+<meta property="og:updated_time" content="2019-07-12T08:22:36.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="asm-how-recursion-function-execute">
 <meta name="twitter:description" content="斐波那契数列问题描述 第一个月初有一对刚诞生的兔子第二个月之后(第三个月)它们可以生育每月每对可生育的兔子会诞生下一对新兔子兔子永不死问第 n 月有多少对兔子?  图解 假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新">
@@ -418,7 +418,7 @@
 </blockquote>
 <h5 id="fib-n-汇编代码分析"><a href="#fib-n-汇编代码分析" class="headerlink" title="fib(n) 汇编代码分析"></a>fib(n) 汇编代码分析</h5><img src="/2019/07/06/asm-how-recursion-function-execute/fib-tail-recursion.png" title="fib(n) 尾递归汇编代码">
 <blockquote>
-<p>其实还是函数调用. 尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n &lt;= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.</p>
+<p>其实还是函数调用, 这里 fib(n-1, sum , prev + sum) 的才是和 fib(unsigned long n, unsigned long prev, unsigned long sum ) 完全一样的函数.<br>尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n &lt;= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.</p>
 </blockquote>
 <p>References</p>
 <ol>
