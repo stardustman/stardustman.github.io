@@ -356,7 +356,7 @@
 
 <img src="/2019/07/06/asm-how-recursion-function-execute/fib.png" title="fib">
 <blockquote>
-<p>fib(long n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个函数, 因为函数返回值根本不一样. 也可以视为编译级别的函数重载. 理解成两个不同的函数, 这个递归就很好理解了.</p>
+<p>fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.</p>
 </blockquote>
 <h2 id="调用栈调用顺序分析"><a href="#调用栈调用顺序分析" class="headerlink" title="调用栈调用顺序分析"></a>调用栈调用顺序分析</h2><h3 id="调用栈图解分析"><a href="#调用栈图解分析" class="headerlink" title="调用栈图解分析"></a>调用栈图解分析</h3><img src="/2019/07/06/asm-how-recursion-function-execute/fib(4)-call-stack.png" title="fib(4)调用栈分析">
 <h3 id="符合递归终止时调用栈执行顺序"><a href="#符合递归终止时调用栈执行顺序" class="headerlink" title="符合递归终止时调用栈执行顺序"></a>符合递归终止时调用栈执行顺序</h3><blockquote>

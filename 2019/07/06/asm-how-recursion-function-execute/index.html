@@ -95,7 +95,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/07/06/asm-how-recursion-function-execute/fib(3)-execute-squence-treefy.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/06/asm-how-recursion-function-execute/fib-dynamic-stack-frame.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/06/asm-how-recursion-function-execute/fib-optimize-stack-frame.png">
-<meta property="og:updated_time" content="2019-07-12T02:02:16.063Z">
+<meta property="og:updated_time" content="2019-07-12T02:11:53.984Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="asm-how-recursion-function-execute">
 <meta name="twitter:description" content="斐波那契数列问题描述 第一个月初有一对刚诞生的兔子第二个月之后(第三个月)它们可以生育每月每对可生育的兔子会诞生下一对新兔子兔子永不死问第 n 月有多少对兔子?  图解 假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新">
@@ -365,7 +365,7 @@
 
 <img src="/2019/07/06/asm-how-recursion-function-execute/fib.png" title="fib">
 <blockquote>
-<p>fib(long n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个函数, 因为函数返回值根本不一样. 也可以视为编译级别的函数重载. 理解成两个不同的函数, 这个递归就很好理解了.</p>
+<p>fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.</p>
 </blockquote>
 <h2 id="调用栈调用顺序分析"><a href="#调用栈调用顺序分析" class="headerlink" title="调用栈调用顺序分析"></a>调用栈调用顺序分析</h2><h3 id="调用栈图解分析"><a href="#调用栈图解分析" class="headerlink" title="调用栈图解分析"></a>调用栈图解分析</h3><img src="/2019/07/06/asm-how-recursion-function-execute/fib(4)-call-stack.png" title="fib(4)调用栈分析">
 <h3 id="符合递归终止时调用栈执行顺序"><a href="#符合递归终止时调用栈执行顺序" class="headerlink" title="符合递归终止时调用栈执行顺序"></a>符合递归终止时调用栈执行顺序</h3><blockquote>
