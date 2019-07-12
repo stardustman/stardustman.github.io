@@ -396,6 +396,9 @@
 </blockquote>
 <h3 id="尾递归优化"><a href="#尾递归优化" class="headerlink" title="尾递归优化"></a>尾递归优化</h3><h4 id="非优化递归"><a href="#非优化递归" class="headerlink" title="非优化递归"></a>非优化递归</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">unsigned long fib(unsigned long n)&#123;</span><br><span class="line">    if(n &lt;= 2)&#123;</span><br><span class="line">        return 1;</span><br><span class="line">    &#125;</span><br><span class="line">   return fib(n-1) + fib(n-2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<blockquote>
+<p>这里 fib(n-1) 和 fib(n-2) 与 fib(n) 其实根本不是同一个函数.<br>三者的逻辑其实不同, 但是函数之间有依赖.</p>
+</blockquote>
 <h4 id="优化递归-1"><a href="#优化递归-1" class="headerlink" title="优化递归"></a>优化递归</h4><blockquote>
 <p>尾递归的实现, 往往需要改写递归函数, 确保最后一步只调用自身. 做到这一点的方法, 就是把所有用到的内部变量改写成函数的参数.<br>尾调用的概念非常简单, 一句话就能说清楚, 就是指某个函数的最后一步是调用另一个函数.</p>
 </blockquote>
@@ -409,6 +412,9 @@
 <h5 id="fib-n-汇编代码分析"><a href="#fib-n-汇编代码分析" class="headerlink" title="fib(n) 汇编代码分析"></a>fib(n) 汇编代码分析</h5><img src="/2019/07/06/asm-how-recursion-function-execute/fib-tail-recursion.png" title="fib(n) 尾递归汇编代码">
 <blockquote>
 <p>尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n &lt;= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.</p>
+</blockquote>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><blockquote>
+<p>用简单的一句话,递归就是调用函数本身. 这句话是相当不负责任的. 递归函数在汇编级别的调用自己, 尽管调用的是自己, 递归的函数名尽管相同, 但是函数返回地址是不相同的. 这也意味着其实逻辑其实完全可能不一样.<br>结合栈帧的创建和销毁, 就可以理解 Stack Overflow 这种错误.</p>
 </blockquote>
 <p>References</p>
 <ol>
