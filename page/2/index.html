@@ -259,6 +259,165 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/22/master-tcp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/05/22/master-tcp/" itemprop="url">master-tcp</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-22T09:18:08+08:00">
+                2019-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/05/22/master-tcp/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/22/master-tcp/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>The Transmission Control Protocol (TCP) is intended for use as a highly<br>reliable <strong>host-to-host</strong> protocol between hosts in <strong>packet-switched</strong> computer communication networks, and in interconnected systems of such networks.</p>
+</blockquote>
+<h1 id="TCP-header-format"><a href="#TCP-header-format" class="headerlink" title="TCP header format"></a>TCP header format</h1><p><img src="/images/master-tcp-tcp-header.png" alt="tcp header"></p>
+<h2 id="basic-data-transfer"><a href="#basic-data-transfer" class="headerlink" title="basic data transfer"></a>basic data transfer</h2><h2 id="reliability"><a href="#reliability" class="headerlink" title="reliability"></a>reliability</h2><ul>
+<li>sequence number</li>
+<li>acknowledgement</li>
+</ul>
+<h2 id="flow-control"><a href="#flow-control" class="headerlink" title="flow control"></a>flow control</h2><ul>
+<li>window size</li>
+</ul>
+<h2 id="multiplexing"><a href="#multiplexing" class="headerlink" title="multiplexing"></a>multiplexing</h2><ul>
+<li>socket (ip, port)</li>
+</ul>
+<h2 id="connections"><a href="#connections" class="headerlink" title="connections"></a>connections</h2><blockquote>
+<p>Each connection is uniquely specified by a <strong>pair</strong> of sockets identifying its two sides.(source ip, source port),(destination ip, destination port)</p>
+</blockquote>
+<ul>
+<li>sockets</li>
+<li>sequence numbers</li>
+<li>window size</li>
+</ul>
+<h1 id="TCP-建立连接目的"><a href="#TCP-建立连接目的" class="headerlink" title="TCP 建立连接目的"></a>TCP 建立连接目的</h1><blockquote>
+<p>交换通信双方的 ISN (Initial Sequence Number)<br>凡是占据序列号的任何TCP报文，一定对方确认，如果没有收到确认，会一直重传，直到达到规定的上限次数。<br>syn , data , fin 占据 sequence number 需要确认. ack 不占据 sequence number 不需要确认.</p>
+</blockquote>
+<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&mid=2650005578&idx=1&sn=9e4ba700512e68e2dcbd54bfe11bd669&chksm=87398263b04e0b7577be99e43c272147b74030514df3f78b894c5b5cee21a3565cf3e4ceebeb&scene=21#wechat_redirect" target="_blank" rel="noopener">TCP three way handshake 1</a></li>
+<li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&mid=2650005835&idx=1&sn=dd0104635b5510ab6bf4f34ec347fe57&chksm=87398362b04e0a7402a6075b46e9a62855a78408a6dfecf6f7d13d8ae5e0375fab6d84208159&scene=21#wechat_redirect" target="_blank" rel="noopener">TCP three way handshake 2</a></li>
+<li><a href="https://tools.ietf.org/html/rfc793" target="_blank" rel="noopener">rfc793</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/git-commands/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -621,7 +780,7 @@
         
           
             <h1 id="Disk-Controller"><a href="#Disk-Controller" class="headerlink" title="Disk Controller"></a>Disk Controller</h1><blockquote>
-<p>我们知道定位一个磁盘空间需要三个参数(platter, track, sector). 但是 cpu 不使用这么麻烦的方式, cpu 使用的是逻辑盘号. 也就是磁盘控制器将逻辑盘号翻译成 platter, track, sector. 磁盘控制器充当一个中间层. </p>
+<p>我们知道定位一个磁盘空间需要三个参数(platter, track, sector). 但是 cpu 不使用这么麻烦的方式, cpu 使用的是逻辑盘号. 也就是磁盘控制器将逻辑盘号翻译成 platter, track, sector. 磁盘控制器充当一个中间层. 也就是只关心逻辑盘号, 不关心具体的(platter, track, sector).<br>通过逻辑盘号将三维的(platter, track, sector) 转换为一维数组, 这就是抽象的意义啊. 这就是降维思维嘛.</p>
 </blockquote>
 <h1 id="Memory-Hierarchy"><a href="#Memory-Hierarchy" class="headerlink" title="Memory Hierarchy"></a>Memory Hierarchy</h1><blockquote>
 <p>我们知道不同类型的存储, 每一个 bit 的价格不一样, 元件不同, 速度也不同. 世上事情大抵如此,不会集所有优点于一身.<br>利用程序的局部性, 构造一个层次存储系统, 每一层的存储当做下一层的缓存,(也就是下一层的一部分)这才会有 hit 和 miss 的根本原因啊! 这才会引出缓存的 placement policy 和 replacement policy. 缓存这种思想和普遍, 做开发时 redis 作为数据库的缓存, 也是解决速度不匹配的问题. </p>
@@ -1321,7 +1480,7 @@ These base images are used as the foundation for your additional changes to run 
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1334,7 +1493,7 @@ These base images are used as the foundation for your additional changes to run 
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">10</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
