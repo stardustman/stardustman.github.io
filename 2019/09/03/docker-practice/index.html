@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="运行的 Docker 容器是: mssql-node-docker-demo-app   docker inspect12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747">
+<meta name="keywords" content="docker">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker-practice">
+<meta property="og:url" content="http://yoursite.com/2019/09/03/docker-practice/index.html">
+<meta property="og:site_name" content="stardustman">
+<meta property="og:description" content="运行的 Docker 容器是: mssql-node-docker-demo-app   docker inspect12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-09-03T07:52:47.871Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="docker-practice">
+<meta name="twitter:description" content="运行的 Docker 容器是: mssql-node-docker-demo-app   docker inspect12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/09/03/docker-practice/">
+
+
+
+
+
+  <title>docker-practice | stardustman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">stardustman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/03/docker-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">docker-practice</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-03T14:20:16+08:00">
+                2019-09-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/09/03/docker-practice/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/09/03/docker-practice/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>运行的 Docker 容器是: mssql-node-docker-demo-app </p>
+</blockquote>
+<h2 id="docker-inspect"><a href="#docker-inspect" class="headerlink" title="docker inspect"></a>docker inspect</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">"Id"</span>: <span class="string">"405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655"</span>,</span><br><span class="line">        <span class="attr">"Created"</span>: <span class="string">"2019-08-01T02:57:14.067532309Z"</span>,</span><br><span class="line">        <span class="attr">"Path"</span>: <span class="string">"/bin/sh"</span>,</span><br><span class="line">        <span class="attr">"Args"</span>: [</span><br><span class="line">            <span class="string">"-c"</span>,</span><br><span class="line">            <span class="string">"/bin/bash ./entrypoint.sh"</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"State"</span>: &#123;</span><br><span class="line">            <span class="attr">"Status"</span>: <span class="string">"running"</span>,</span><br><span class="line">            <span class="attr">"Running"</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">"Paused"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"Restarting"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"OOMKilled"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"Dead"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"Pid"</span>: <span class="number">12164</span>,</span><br><span class="line">            <span class="attr">"ExitCode"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"Error"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"StartedAt"</span>: <span class="string">"2019-08-22T06:08:43.334320939Z"</span>,</span><br><span class="line">            <span class="attr">"FinishedAt"</span>: <span class="string">"2019-08-21T09:25:32.130119566Z"</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"Image"</span>: <span class="string">"sha256:e600f86aa4e2aced43a193a28aa507651bfb77daa09ca8dbf286451a630cf27e"</span>,</span><br><span class="line">        <span class="attr">"ResolvConfPath"</span>: <span class="string">"/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf"</span>,</span><br><span class="line">        <span class="attr">"HostnamePath"</span>: <span class="string">"/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname"</span>,</span><br><span class="line">        <span class="attr">"HostsPath"</span>: <span class="string">"/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts"</span>,</span><br><span class="line">        <span class="attr">"LogPath"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"Name"</span>: <span class="string">"/friendly_hamilton"</span>,</span><br><span class="line">        <span class="attr">"RestartCount"</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">"Driver"</span>: <span class="string">"overlay2"</span>,</span><br><span class="line">        <span class="attr">"MountLabel"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"ProcessLabel"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"AppArmorProfile"</span>: <span class="string">""</span>,</span><br><span class="line">        <span class="attr">"ExecIDs"</span>: <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">"HostConfig"</span>: &#123;</span><br><span class="line">            <span class="attr">"Binds"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"ContainerIDFile"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"LogConfig"</span>: &#123;</span><br><span class="line">                <span class="attr">"Type"</span>: <span class="string">"journald"</span>,</span><br><span class="line">                <span class="attr">"Config"</span>: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"NetworkMode"</span>: <span class="string">"default"</span>,</span><br><span class="line">            <span class="attr">"PortBindings"</span>: &#123;</span><br><span class="line">                <span class="attr">"1433/tcp"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"HostIp"</span>: <span class="string">""</span>,</span><br><span class="line">                        <span class="attr">"HostPort"</span>: <span class="string">"1433"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">"8080/tcp"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"HostIp"</span>: <span class="string">""</span>,</span><br><span class="line">                        <span class="attr">"HostPort"</span>: <span class="string">"8080"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"RestartPolicy"</span>: &#123;</span><br><span class="line">                <span class="attr">"Name"</span>: <span class="string">"no"</span>,</span><br><span class="line">                <span class="attr">"MaximumRetryCount"</span>: <span class="number">0</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"AutoRemove"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"VolumeDriver"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"VolumesFrom"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"CapAdd"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"CapDrop"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"Dns"</span>: [],</span><br><span class="line">            <span class="attr">"DnsOptions"</span>: [],</span><br><span class="line">            <span class="attr">"DnsSearch"</span>: [],</span><br><span class="line">            <span class="attr">"ExtraHosts"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"GroupAdd"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"IpcMode"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"Cgroup"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"Links"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"OomScoreAdj"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"PidMode"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"Privileged"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"PublishAllPorts"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"ReadonlyRootfs"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"SecurityOpt"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"UTSMode"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"UsernsMode"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"ShmSize"</span>: <span class="number">67108864</span>,</span><br><span class="line">            <span class="attr">"Runtime"</span>: <span class="string">"docker-runc"</span>,</span><br><span class="line">            <span class="attr">"ConsoleSize"</span>: [</span><br><span class="line">                <span class="number">0</span>,</span><br><span class="line">                <span class="number">0</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"Isolation"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"CpuShares"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"Memory"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"NanoCpus"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"CgroupParent"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"BlkioWeight"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"BlkioWeightDevice"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"BlkioDeviceReadBps"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"BlkioDeviceWriteBps"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"BlkioDeviceReadIOps"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"BlkioDeviceWriteIOps"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"CpuPeriod"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"CpuQuota"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"CpuRealtimePeriod"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"CpuRealtimeRuntime"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"CpusetCpus"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"CpusetMems"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"Devices"</span>: [],</span><br><span class="line">            <span class="attr">"DiskQuota"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"KernelMemory"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"MemoryReservation"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"MemorySwap"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"MemorySwappiness"</span>: <span class="number">-1</span>,</span><br><span class="line">            <span class="attr">"OomKillDisable"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"PidsLimit"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"Ulimits"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"CpuCount"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"CpuPercent"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"IOMaximumIOps"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"IOMaximumBandwidth"</span>: <span class="number">0</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"GraphDriver"</span>: &#123;</span><br><span class="line">            <span class="attr">"Name"</span>: <span class="string">"overlay2"</span>,</span><br><span class="line">            <span class="attr">"Data"</span>: &#123;</span><br><span class="line">                <span class="attr">"LowerDir"</span>: <span class="string">"/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2-init/diff:/var/lib/docker/overlay2/83b7194d94d42c0ef8f78a2f4105cc7a7a215a8e885b695a933a8f8212db9cfa/diff:/var/lib/docker/overlay2/9549118d3883d39414fadf0dc17e654d1408878be3296b294711ee65ef336b98/diff:/var/lib/docker/overlay2/8e85764472e79d42f469dd3681883cd415e85098d6c42fb3dd239471212f87b3/diff:/var/lib/docker/overlay2/8dc8ec519bade76b07994adc690d1e6fcad408147835198a250b4c66c489a151/diff:/var/lib/docker/overlay2/b07d1c7463b2a4ff25f7800729381fdf5b036c12a065973b9d079580c3a50a5e/diff:/var/lib/docker/overlay2/60c9257cc9d8a7ac4b66d1c4cae5ff994471976f0a344f8ac1856a4fba7b290e/diff:/var/lib/docker/overlay2/2a00c5b47427e151e000ffe05de8121e956dbf15b0d356cfc9ad2754dc5554d5/diff:/var/lib/docker/overlay2/3495bcc2d508cbdad81b1f3eb49645fe0eb05caf0e99fbb6310d40fbdd8118a2/diff:/var/lib/docker/overlay2/9df322481c6f8b91b3583016634664e6ad991b8b846a9585385227a02b898770/diff:/var/lib/docker/overlay2/163747850da2115bac28b39ac6d2e08ca5c0e409fe6cae624155f8e61489aacd/diff:/var/lib/docker/overlay2/52405978404b67e0a67ba95cb12682d0e8a8ae781fd2b21dc2ab94197e97c38b/diff:/var/lib/docker/overlay2/c987c31253bca839eb789feb3e4fe7bc247b1e88dc88c67e2b4209fc26025fe8/diff:/var/lib/docker/overlay2/ed663d4b2fffda783f9b69e5eb7c139f34142e0e2d868460a3c1e1d925ec3e7e/diff:/var/lib/docker/overlay2/a0e3d07a65b7ee70d3869fa41418ecf71056b9ac0ba1182170621c83c77bba94/diff:/var/lib/docker/overlay2/aa4c66b37aae4e55a94aa60ac763a60851af34271ccb1a80f547e3d90e7ac2bf/diff:/var/lib/docker/overlay2/527b1a014d302c1fe835d778be6cd008de6741d290fbc0f2e64e3f25f7a7b8d0/diff"</span>,</span><br><span class="line">                <span class="attr">"MergedDir"</span>: <span class="string">"/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/merged"</span>,</span><br><span class="line">                <span class="attr">"UpperDir"</span>: <span class="string">"/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/diff"</span>,</span><br><span class="line">                <span class="attr">"WorkDir"</span>: <span class="string">"/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/work"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"Mounts"</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">"Type"</span>: <span class="string">"volume"</span>,</span><br><span class="line">                <span class="attr">"Name"</span>: <span class="string">"7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834"</span>,</span><br><span class="line">                <span class="attr">"Source"</span>: <span class="string">"/var/lib/docker/volumes/7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834/_data"</span>,</span><br><span class="line">                <span class="attr">"Destination"</span>: <span class="string">"/var/opt/mssql"</span>,</span><br><span class="line">                <span class="attr">"Driver"</span>: <span class="string">"local"</span>,</span><br><span class="line">                <span class="attr">"Mode"</span>: <span class="string">""</span>,</span><br><span class="line">                <span class="attr">"RW"</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">"Propagation"</span>: <span class="string">""</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">"Config"</span>: &#123;</span><br><span class="line">            <span class="attr">"Hostname"</span>: <span class="string">"405a378d6f88"</span>,</span><br><span class="line">            <span class="attr">"Domainname"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"User"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"AttachStdin"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"AttachStdout"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"AttachStderr"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"ExposedPorts"</span>: &#123;</span><br><span class="line">                <span class="attr">"1433/tcp"</span>: &#123;&#125;,</span><br><span class="line">                <span class="attr">"8080/tcp"</span>: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"Tty"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"OpenStdin"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"StdinOnce"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"Env"</span>: [</span><br><span class="line">                <span class="string">"ACCEPT_EULA=Y"</span>,</span><br><span class="line">                <span class="string">"SA_PASSWORD=Yukon900"</span>,</span><br><span class="line">                <span class="string">"PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"Cmd"</span>: [</span><br><span class="line">                <span class="string">"/bin/sh"</span>,</span><br><span class="line">                <span class="string">"-c"</span>,</span><br><span class="line">                <span class="string">"/bin/bash ./entrypoint.sh"</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">"ArgsEscaped"</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">"Image"</span>: <span class="string">"node-web-app"</span>,</span><br><span class="line">            <span class="attr">"Volumes"</span>: &#123;</span><br><span class="line">                <span class="attr">"/var/opt/mssql"</span>: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"WorkingDir"</span>: <span class="string">"/usr/src/app"</span>,</span><br><span class="line">            <span class="attr">"Entrypoint"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"OnBuild"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"Labels"</span>: &#123;</span><br><span class="line">                <span class="attr">"com.microsoft.product"</span>: <span class="string">"Microsoft SQL Server"</span>,</span><br><span class="line">                <span class="attr">"com.microsoft.version"</span>: <span class="string">"14.0.3048.4"</span>,</span><br><span class="line">                <span class="attr">"vendor"</span>: <span class="string">"Microsoft"</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">"NetworkSettings"</span>: &#123;</span><br><span class="line">            <span class="attr">"Bridge"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"SandboxID"</span>: <span class="string">"d21ee4834e9078042da65677d8db9717748eb7f86a6954c5e4eee29636159aa7"</span>,</span><br><span class="line">            <span class="attr">"HairpinMode"</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">"LinkLocalIPv6Address"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"LinkLocalIPv6PrefixLen"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"Ports"</span>: &#123;</span><br><span class="line">                <span class="attr">"1433/tcp"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"HostIp"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">                        <span class="attr">"HostPort"</span>: <span class="string">"1433"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">"8080/tcp"</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">"HostIp"</span>: <span class="string">"0.0.0.0"</span>,</span><br><span class="line">                        <span class="attr">"HostPort"</span>: <span class="string">"8080"</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">"SandboxKey"</span>: <span class="string">"/var/run/docker/netns/d21ee4834e90"</span>,</span><br><span class="line">            <span class="attr">"SecondaryIPAddresses"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"SecondaryIPv6Addresses"</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">"EndpointID"</span>: <span class="string">"46dac1ff81a297ede919100e0d06a743b845e34b802b54bca8cb8f02dcd33c85"</span>,</span><br><span class="line">            <span class="attr">"Gateway"</span>: <span class="string">"172.17.0.1"</span>,</span><br><span class="line">            <span class="attr">"GlobalIPv6Address"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"GlobalIPv6PrefixLen"</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">"IPAddress"</span>: <span class="string">"172.17.0.2"</span>,</span><br><span class="line">            <span class="attr">"IPPrefixLen"</span>: <span class="number">16</span>,</span><br><span class="line">            <span class="attr">"IPv6Gateway"</span>: <span class="string">""</span>,</span><br><span class="line">            <span class="attr">"MacAddress"</span>: <span class="string">"02:42:ac:11:00:02"</span>,</span><br><span class="line">            <span class="attr">"Networks"</span>: &#123;</span><br><span class="line">                <span class="attr">"bridge"</span>: &#123;</span><br><span class="line">                    <span class="attr">"IPAMConfig"</span>: <span class="literal">null</span>,</span><br><span class="line">                    <span class="attr">"Links"</span>: <span class="literal">null</span>,</span><br><span class="line">                    <span class="attr">"Aliases"</span>: <span class="literal">null</span>,</span><br><span class="line">                    <span class="attr">"NetworkID"</span>: <span class="string">"a8af0599996912141c3f2ce4b0a2bcc48eea9164a35672aac6307333450acb6b"</span>,</span><br><span class="line">                    <span class="attr">"EndpointID"</span>: <span class="string">"46dac1ff81a297ede919100e0d06a743b845e34b802b54bca8cb8f02dcd33c85"</span>,</span><br><span class="line">                    <span class="attr">"Gateway"</span>: <span class="string">"172.17.0.1"</span>,</span><br><span class="line">                    <span class="attr">"IPAddress"</span>: <span class="string">"172.17.0.2"</span>,</span><br><span class="line">                    <span class="attr">"IPPrefixLen"</span>: <span class="number">16</span>,</span><br><span class="line">                    <span class="attr">"IPv6Gateway"</span>: <span class="string">""</span>,</span><br><span class="line">                    <span class="attr">"GlobalIPv6Address"</span>: <span class="string">""</span>,</span><br><span class="line">                    <span class="attr">"GlobalIPv6PrefixLen"</span>: <span class="number">0</span>,</span><br><span class="line">                    <span class="attr">"MacAddress"</span>: <span class="string">"02:42:ac:11:00:02"</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker’s-local-storage-area"><a href="#Docker’s-local-storage-area" class="headerlink" title="Docker’s local storage area"></a>Docker’s local storage area</h2><p>/var/lib/docker</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><p><a href="https://github.com/twright-msft/mssql-node-docker-demo-app/blob/master/Dockerfile" target="_blank" rel="noopener">mssql-node-docker-demo-app</a></p>
+</li>
+<li><p><a href="https://docs.docker.com/storage/storagedriver/" target="_blank" rel="noopener">storage driver</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/22/hadoop-environment-setup/" rel="next" title="hadoop-environment-setup">
+                <i class="fa fa-chevron-left"></i> hadoop-environment-setup
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/09/10/wireshark/" rel="prev" title="wireshark">
+                wireshark <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div class="ds-thread" data-thread-key="2019/09/03/docker-practice/" data-title="docker-practice" data-url="http://yoursite.com/2019/09/03/docker-practice/">
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">stardustman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-inspect"><span class="nav-number">1.</span> <span class="nav-text">docker inspect</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Docker’s-local-storage-area"><span class="nav-number">2.</span> <span class="nav-text">Docker’s local storage area</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">3.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stardustman</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"your-duoshuo-shortname"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
