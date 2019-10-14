@@ -96,7 +96,7 @@
     root: '/',
     scheme: 'Gemini',
     version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
     fancybox: true,
     tabs: true,
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
@@ -266,10 +266,10 @@
         
           <div class="tag-cloud">
             <div class="tag-cloud-title">
-                12 tags in total
+                13 tags in total
             </div>
             <div class="tag-cloud-tags">
-              <a href="/tags/asm/" style="font-size: 30px; color: #111">asm</a> <a href="/tags/clang/" style="font-size: 12px; color: #ccc">clang</a> <a href="/tags/csapp/" style="font-size: 12px; color: #ccc">csapp</a> <a href="/tags/docker/" style="font-size: 30px; color: #111">docker</a> <a href="/tags/git/" style="font-size: 12px; color: #ccc">git</a> <a href="/tags/hadoop/" style="font-size: 12px; color: #ccc">hadoop</a> <a href="/tags/linux/" style="font-size: 12px; color: #ccc">linux</a> <a href="/tags/linux-analysis/" style="font-size: 12px; color: #ccc">linux-analysis</a> <a href="/tags/network/" style="font-size: 21px; color: #6f6f6f">network</a> <a href="/tags/openjdk/" style="font-size: 12px; color: #ccc">openjdk</a> <a href="/tags/tcp/" style="font-size: 12px; color: #ccc">tcp</a> <a href="/tags/tools/" style="font-size: 21px; color: #6f6f6f">tools</a>
+              <a href="/tags/asm/" style="font-size: 30px; color: #111">asm</a> <a href="/tags/clang/" style="font-size: 12px; color: #ccc">clang</a> <a href="/tags/csapp/" style="font-size: 12px; color: #ccc">csapp</a> <a href="/tags/docker/" style="font-size: 30px; color: #111">docker</a> <a href="/tags/git/" style="font-size: 12px; color: #ccc">git</a> <a href="/tags/hadoop/" style="font-size: 12px; color: #ccc">hadoop</a> <a href="/tags/io/" style="font-size: 12px; color: #ccc">io</a> <a href="/tags/linux/" style="font-size: 12px; color: #ccc">linux</a> <a href="/tags/linux-analysis/" style="font-size: 12px; color: #ccc">linux-analysis</a> <a href="/tags/network/" style="font-size: 21px; color: #6f6f6f">network</a> <a href="/tags/openjdk/" style="font-size: 12px; color: #ccc">openjdk</a> <a href="/tags/tcp/" style="font-size: 12px; color: #ccc">tcp</a> <a href="/tags/tools/" style="font-size: 21px; color: #6f6f6f">tools</a>
             </div>
           </div>
         
@@ -335,7 +335,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -348,7 +348,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">13</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
@@ -373,6 +373,13 @@
 
       
 
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
       
 
     </div>
@@ -420,11 +427,6 @@
       </div>
     </footer>
 
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
     
 
     
@@ -563,6 +565,23 @@
 
 
 
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '594b71d84b426849357b',
+          clientSecret: 'ca828589230a05bb0df6190337e7716364198adc',
+          repo: 'blog-comments',
+          owner: '',
+          admin: ['['stardustman']'],
+          id: location.pathname,
+          distractionFreeMode: 'false'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
 
 
 
