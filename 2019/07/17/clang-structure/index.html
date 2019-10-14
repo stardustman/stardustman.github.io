@@ -17,6 +17,10 @@
 
 
 
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
 
 
 
@@ -334,7 +338,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
+    <div class="post-body han-init-context" itemprop="articleBody">
 
       
       
@@ -369,6 +373,11 @@
     <strong>Copyright Notice: </strong>
     All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
   </li>
+   
+   
+
+
+
 </ul>
 
       </div>
@@ -739,13 +748,13 @@
   <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
    <script type="text/javascript">
         var gitalk = new Gitalk({
-          clientID: '594b71d84b426849357b',
-          clientSecret: 'ca828589230a05bb0df6190337e7716364198adc',
-          repo: 'blog-comments',
-          owner: '',
-          admin: ['['stardustman']'],
+          clientID: 'a45c948d1a183fed1b40',
+          clientSecret: 'a47e11a7939bf7207d0445e6855c6e4461a8779a',
+          repo: 'comments',
+          owner: 'stardustman',
+          admin: ['stardustman'],
           id: location.pathname,
-          distractionFreeMode: 'false'
+          distractionFreeMode: 'true'
         })
         gitalk.render('gitalk-container')           
        </script>
@@ -770,6 +779,9 @@
   
 
   
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
 
   
 
