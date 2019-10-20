@@ -572,7 +572,7 @@
 <ul>
 <li>select 会修改传入的参数数组, 这个对于一个需要调用很多次的函数, 是非常不友好的.</li>
 <li>select 如果任何一个 sock(I/O stream) 出现了数据, select 仅仅会返回, 但是并不会告诉你是那个 sock 上有数,于是你只能自己一个一个的找.<blockquote>
-<p>相当于 <code>Mutiplexer</code> 监测到 Y = 1, 但是不知道I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>哪一个的输入是 1. 那就只好去具体查看<br>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>的值.</p>
+<p>相当于监测到 <code>Mutiplexer</code> 的 Y = 1, 但是不知道 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>哪一个的输入是 1. 也就是不告诉 S<sub>1</sub> 和 S<sub>0</sub>的值, 那就只好再去具体查看一次.<br>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>的值.</p>
 </blockquote>
 </li>
 <li>select 只能监视 1024 个链接. 相当于实现了一个 1024x1 的 Mutiplexer.</li>
@@ -584,11 +584,11 @@
 <li>poll 去掉了 1024 个链接的限制</li>
 </ul>
 </blockquote>
-<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 可以说是 I/O 多路复用最新的一个实, epoll 修复了 poll 和 select 绝大部分问题, 比如:</p>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 可以说是 I/O 多路复用最新的一个实现, epoll 修复了 poll 和 select 绝大部分问题, 比如:</p>
 <ul>
 <li>epoll 现在是线程安全的。</li>
 <li>epoll 现在不仅告诉你 sock 组里面数据，还会告诉你具体哪个 sock 有数据, 你不用自己去找了.<blockquote>
-<p>相当于 <code>Mutiplexer</code> 监测到 Y = 1, 且告知了此时的 S<sub>1</sub> 和 S<sub>0</sub> 的值, 通过组合就可以知道是哪一个具体的输入是 1 了.</p>
+<p>相当于监测到  <code>Mutiplexer</code> 的 Y = 1, 且告知了此时的 S<sub>1</sub> 和 S<sub>0</sub> 的值, 通过组合就可以知道是哪一个具体的输入是 1 了.</p>
 </blockquote>
 </li>
 </ul>
