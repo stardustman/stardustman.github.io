@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="csapp,">
+  <meta name="keywords" content="x86,">
 
 
 
@@ -85,18 +85,18 @@
 
 
 
-<meta name="description" content="Disk Controller 我们知道定位一个磁盘空间需要三个参数(platter, track, sector). 但是 cpu 不使用这么麻烦的方式, cpu 使用的是逻辑盘号. 也就是磁盘控制器将逻辑盘号翻译成 platter, track, sector. 磁盘控制器充当一个中间层. 也就是只关心逻辑盘号, 不关心具体的(platter, track, sector).通过逻辑盘号将三维">
-<meta name="keywords" content="csapp">
+<meta name="description" content="操作系统其实很大一部分面向 CPU 来编程的。一些 OS 的概念直接来源于 CPU 的术语，或者和 CPU 关联性非常大。要想彻底理解 OS ，无法绕过 CPU。因为 Intel 的 X86(Intel 80386 之后的一系列 CPU 称之为 X86 架构) 是业界的标准。掌握这个架构对于理解 OS 是非常必要的。因为 X86 系列的 CPU 向后兼容，所以本文使用 Intel 8086(16">
+<meta name="keywords" content="x86">
 <meta property="og:type" content="article">
-<meta property="og:title" content="csapp-memory-hierarchy">
-<meta property="og:url" content="http://yoursite.com/2019/05/20/csapp-memory-hierarchy/index.html">
+<meta property="og:title" content="x86-64-architecture">
+<meta property="og:url" content="http://yoursite.com/2019/10/16/x86-64-architecture/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="Disk Controller 我们知道定位一个磁盘空间需要三个参数(platter, track, sector). 但是 cpu 不使用这么麻烦的方式, cpu 使用的是逻辑盘号. 也就是磁盘控制器将逻辑盘号翻译成 platter, track, sector. 磁盘控制器充当一个中间层. 也就是只关心逻辑盘号, 不关心具体的(platter, track, sector).通过逻辑盘号将三维">
+<meta property="og:description" content="操作系统其实很大一部分面向 CPU 来编程的。一些 OS 的概念直接来源于 CPU 的术语，或者和 CPU 关联性非常大。要想彻底理解 OS ，无法绕过 CPU。因为 Intel 的 X86(Intel 80386 之后的一系列 CPU 称之为 X86 架构) 是业界的标准。掌握这个架构对于理解 OS 是非常必要的。因为 X86 系列的 CPU 向后兼容，所以本文使用 Intel 8086(16">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-07-20T04:37:53.483Z">
+<meta property="og:updated_time" content="2019-10-18T01:07:23.773Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="csapp-memory-hierarchy">
-<meta name="twitter:description" content="Disk Controller 我们知道定位一个磁盘空间需要三个参数(platter, track, sector). 但是 cpu 不使用这么麻烦的方式, cpu 使用的是逻辑盘号. 也就是磁盘控制器将逻辑盘号翻译成 platter, track, sector. 磁盘控制器充当一个中间层. 也就是只关心逻辑盘号, 不关心具体的(platter, track, sector).通过逻辑盘号将三维">
+<meta name="twitter:title" content="x86-64-architecture">
+<meta name="twitter:description" content="操作系统其实很大一部分面向 CPU 来编程的。一些 OS 的概念直接来源于 CPU 的术语，或者和 CPU 关联性非常大。要想彻底理解 OS ，无法绕过 CPU。因为 Intel 的 X86(Intel 80386 之后的一系列 CPU 称之为 X86 架构) 是业界的标准。掌握这个架构对于理解 OS 是非常必要的。因为 X86 系列的 CPU 向后兼容，所以本文使用 Intel 8086(16">
 
 
 
@@ -126,13 +126,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/05/20/csapp-memory-hierarchy/">
+  <link rel="canonical" href="http://yoursite.com/2019/10/16/x86-64-architecture/">
 
 
 
 
 
-  <title>csapp-memory-hierarchy | stardustman</title>
+  <title>x86-64-architecture | stardustman</title>
   
 
 
@@ -269,7 +269,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/05/20/csapp-memory-hierarchy/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/16/x86-64-architecture/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -286,7 +286,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">csapp-memory-hierarchy</h1>
+          <h1 class="post-title" itemprop="name headline">x86-64-architecture</h1>
         
 
         <div class="post-meta">
@@ -298,8 +298,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-20T14:22:49+08:00">
-                2019-05-20
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-10-16T13:59:24+08:00">
+                2019-10-16
               </time>
             
 
@@ -317,8 +317,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/05/20/csapp-memory-hierarchy/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/20/csapp-memory-hierarchy/" itemprop="commentCount"></span>
+                <a href="/2019/10/16/x86-64-architecture/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/10/16/x86-64-architecture/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -346,12 +346,22 @@
       
 
       
-        <h1 id="Disk-Controller"><a href="#Disk-Controller" class="headerlink" title="Disk Controller"></a>Disk Controller</h1><blockquote>
-<p>我们知道定位一个磁盘空间需要三个参数(platter, track, sector). 但是 cpu 不使用这么麻烦的方式, cpu 使用的是逻辑盘号. 也就是磁盘控制器将逻辑盘号翻译成 platter, track, sector. 磁盘控制器充当一个中间层. 也就是只关心逻辑盘号, 不关心具体的(platter, track, sector).<br>通过逻辑盘号将三维的(platter, track, sector) 转换为一维数组, 这就是抽象的意义啊. 这就是降维思维嘛.</p>
+        <blockquote>
+<p>操作系统其实很大一部分面向 <code>CPU</code> 来编程的。一些 <code>OS</code> 的概念直接来源于 <code>CPU</code> 的术语，或者和 <code>CPU</code> 关联性非常大。要想彻底理解 <code>OS</code> ，无法绕过 <code>CPU</code>。因为 Intel 的 <code>X86</code>(Intel 80386 之后的一系列 CPU 称之为 X86 架构) 是业界的标准。掌握这个架构对于理解 <code>OS</code> 是非常必要的。因为 <code>X86</code> 系列的 <code>CPU</code> 向后兼容，所以本文使用 Intel 8086(16 bit) 和 Intel 80386(32 bit) 来试图理解 <code>X86</code> 架构。</p>
 </blockquote>
-<h1 id="Memory-Hierarchy"><a href="#Memory-Hierarchy" class="headerlink" title="Memory Hierarchy"></a>Memory Hierarchy</h1><blockquote>
-<p>我们知道不同类型的存储, 每一个 bit 的价格不一样, 元件不同, 速度也不同. 世上事情大抵如此,不会集所有优点于一身.<br>利用程序的局部性, 构造一个层次存储系统, 每一层的存储当做下一层的缓存,(也就是下一层的一部分)这才会有 hit 和 miss 的根本原因啊! 这才会引出缓存的 placement policy 和 replacement policy. 缓存这种思想和普遍, 做开发时 redis 作为数据库的缓存, 也是解决速度不匹配的问题. </p>
+<h2 id="Intel-8086"><a href="#Intel-8086" class="headerlink" title="Intel 8086"></a>Intel 8086</h2><h3 id="1M-的寻址空间"><a href="#1M-的寻址空间" class="headerlink" title="1M 的寻址空间"></a>1M 的寻址空间</h3><h3 id="real-address-mode"><a href="#real-address-mode" class="headerlink" title="real address mode"></a>real address mode</h3><h3 id="general-purpose-register"><a href="#general-purpose-register" class="headerlink" title="general purpose register"></a>general purpose register</h3><h3 id="segment-register"><a href="#segment-register" class="headerlink" title="segment register"></a>segment register</h3><h3 id="address-generation"><a href="#address-generation" class="headerlink" title="address generation"></a>address generation</h3><h3 id="memory-mapping"><a href="#memory-mapping" class="headerlink" title="memory mapping"></a>memory mapping</h3><blockquote>
+<p>已安装内存 8G(7.88G) 可用？？？原因在哪里呢？</p>
 </blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="http://8086microprocessor4u.blogspot.com/2012/12/bus-interface-unit-biu.html" target="_blank" rel="noopener">bus interface unit</a></li>
+<li><a href="http://8086microprocessor4u.blogspot.com/2015/04/the-execution-unit-eu.html" target="_blank" rel="noopener">execution unit</a></li>
+<li><a href="https://www.tutorialspoint.com/microprocessor/microprocessor_8086_functional_units.htm" target="_blank" rel="noopener">8086 Functional Units</a></li>
+<li><a href="https://www.csetutor.com/components-of-cpu-and-their-functions/" target="_blank" rel="noopener">components of cpu</a></li>
+<li><a href="https://vdocuments.mx/8086-microprocessor-architecture-5584489b9c738.html" target="_blank" rel="noopener">8086-microprocessor-architecture</a></li>
+<li><a href="https://www.academia.edu/40314276/8086_microprocessor20190911_87442_nxpkcz" target="_blank" rel="noopener">8086-microprocessor</a></li>
+<li><a href="https://www.geeksforgeeks.org/memory-segmentation-8086-microprocessor/" target="_blank" rel="noopener">memory-segmentation-8086-microprocessor</a></li>
+<li><a href="https://www.cs.usfca.edu/~cruse/cs630f06/" target="_blank" rel="noopener">Advanced Microcomputer Programming</a></li>
+</ol>
 
       
     </div>
@@ -372,7 +382,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://yoursite.com/2019/05/20/csapp-memory-hierarchy/" title="csapp-memory-hierarchy">http://yoursite.com/2019/05/20/csapp-memory-hierarchy/</a>
+    <a href="http://yoursite.com/2019/10/16/x86-64-architecture/" title="x86-64-architecture">http://yoursite.com/2019/10/16/x86-64-architecture/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -392,7 +402,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/csapp/" rel="tag"># csapp</a>
+            <a href="/tags/x86/" rel="tag"># x86</a>
           
         </div>
       
@@ -405,8 +415,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/16/katacoda-building-docker-image/" rel="next" title="building-docker-image">
-                <i class="fa fa-chevron-left"></i> building-docker-image
+              <a href="/2019/09/19/select-poll-epoll/" rel="next" title="select_poll_epoll">
+                <i class="fa fa-chevron-left"></i> select_poll_epoll
               </a>
             
           </div>
@@ -414,10 +424,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/20/katacoda-optimising-dockerfile-with-onbuild/" rel="prev" title="katacoda-optimising-dockerfile-with-onbuild">
-                katacoda-optimising-dockerfile-with-onbuild <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -448,7 +454,7 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/05/20/csapp-memory-hierarchy/" data-title="csapp-memory-hierarchy" data-url="http://yoursite.com/2019/05/20/csapp-memory-hierarchy/">
+      <div class="ds-thread" data-thread-key="2019/10/16/x86-64-architecture/" data-title="x86-64-architecture" data-url="http://yoursite.com/2019/10/16/x86-64-architecture/">
       </div>
     </div>
 
@@ -553,7 +559,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Disk-Controller"><span class="nav-number">1.</span> <span class="nav-text">Disk Controller</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Memory-Hierarchy"><span class="nav-number">2.</span> <span class="nav-text">Memory Hierarchy</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Intel-8086"><span class="nav-number">1.</span> <span class="nav-text">Intel 8086</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1M-的寻址空间"><span class="nav-number">1.1.</span> <span class="nav-text">1M 的寻址空间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#real-address-mode"><span class="nav-number">1.2.</span> <span class="nav-text">real address mode</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#general-purpose-register"><span class="nav-number">1.3.</span> <span class="nav-text">general purpose register</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#segment-register"><span class="nav-number">1.4.</span> <span class="nav-text">segment register</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#address-generation"><span class="nav-number">1.5.</span> <span class="nav-text">address generation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#memory-mapping"><span class="nav-number">1.6.</span> <span class="nav-text">memory mapping</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
