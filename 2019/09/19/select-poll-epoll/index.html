@@ -99,7 +99,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/09/19/select-poll-epoll/multiplexers_S1_S0_I2.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/19/select-poll-epoll/multiplexers_S1_S0_I3.png">
 <meta property="og:image" content="http://yoursite.com/2019/09/19/select-poll-epoll/multiplexers_S1_S0_I0.png">
-<meta property="og:updated_time" content="2019-10-20T10:10:12.227Z">
+<meta property="og:updated_time" content="2019-10-20T10:54:11.247Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="select_poll_epoll">
 <meta name="twitter:description" content="弄清楚 I/O Multiplexing 和 Linux 中 select, poll, epoll 之间的关系.  multiplexer Multiplexer is a combinational circuit that has maximum of 2^n data inputs, n selection lines and single output line. One of the">
@@ -437,7 +437,7 @@
 <p>相当于监测到 <code>Mutiplexer</code> 的 Y = 1, 但是不知道 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>哪一个的输入是 1. 也就是不告诉 S<sub>1</sub> 和 S<sub>0</sub>的值, 那就只好再去具体查看一次.<br>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>的值.</p>
 </blockquote>
 </li>
-<li>select 只能监视 1024 个链接. 相当于实现了一个 1024x1 的 Mutiplexer.</li>
+<li>select 只能监视 1024 个链接. 相当于实现了一个 1024x1 的 Mutiplexer. 只能有1024 个输入.</li>
 <li>select 不是线程安全的.</li>
 </ul>
 <h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><blockquote>
