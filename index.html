@@ -87,7 +87,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="stardustman">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://stardustman.github.io/index.html">
 <meta property="og:site_name" content="stardustman">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
@@ -121,7 +121,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/">
+  <link rel="canonical" href="http://stardustman.github.io/">
 
 
 
@@ -265,7 +265,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/16/x86-64-architecture/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/10/16/x86-64-architecture/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -349,10 +349,47 @@
             <blockquote>
 <p>操作系统其实很大一部分面向 <code>CPU</code> 来编程的。一些 <code>OS</code> 的概念直接来源于 <code>CPU</code> 的术语，或者和 <code>CPU</code> 关联性非常大。要想彻底理解 <code>OS</code> ，无法绕过 <code>CPU</code>。因为 Intel 的 <code>X86</code>(Intel 80386 之后的一系列 CPU 称之为 X86 架构) 是业界的标准。掌握这个架构对于理解 <code>OS</code> 是非常必要的。因为 <code>X86</code> 系列的 <code>CPU</code> 向后兼容，所以本文使用 Intel 8086(16 bit) 和 Intel 80386(32 bit) 来试图理解 <code>X86</code> 架构。</p>
 </blockquote>
-<h2 id="Intel-8086"><a href="#Intel-8086" class="headerlink" title="Intel 8086"></a>Intel 8086</h2><h3 id="1M-的寻址空间"><a href="#1M-的寻址空间" class="headerlink" title="1M 的寻址空间"></a>1M 的寻址空间</h3><h3 id="real-address-mode"><a href="#real-address-mode" class="headerlink" title="real address mode"></a>real address mode</h3><h3 id="general-purpose-register"><a href="#general-purpose-register" class="headerlink" title="general purpose register"></a>general purpose register</h3><h3 id="segment-register"><a href="#segment-register" class="headerlink" title="segment register"></a>segment register</h3><h3 id="address-generation"><a href="#address-generation" class="headerlink" title="address generation"></a>address generation</h3><h3 id="memory-mapping"><a href="#memory-mapping" class="headerlink" title="memory mapping"></a>memory mapping</h3><blockquote>
+<h2 id="Intel-8086"><a href="#Intel-8086" class="headerlink" title="Intel 8086"></a>Intel 8086</h2><h3 id="16-bit-processor"><a href="#16-bit-processor" class="headerlink" title="16 bit processor"></a>16 bit processor</h3><blockquote>
+<p><code>16-bit</code> is a computer hardware device or software program capable of transferring 16 bits of data at a time. 一次传输 16 bits 的数据<br>For example, early computer processors (e.g., 8088 and 80286) were 16-bit processors, meaning they were capable of working with 16-bit binary numbers (decimal number up to 65,535). Anything larger and the computer would need to break the number into smaller pieces.</p>
+</blockquote>
+<h3 id="1M-的寻址空间带来的问题与解决方法"><a href="#1M-的寻址空间带来的问题与解决方法" class="headerlink" title="1M 的寻址空间带来的问题与解决方法"></a>1M 的寻址空间带来的问题与解决方法</h3><h4 id="Intel-8086-地址引脚"><a href="#Intel-8086-地址引脚" class="headerlink" title="Intel 8086 地址引脚"></a>Intel 8086 地址引脚</h4><img src="/2019/10/16/x86-64-architecture/intel8086_address.png" title="Intel 8086 寻址空间"> 
+
+<blockquote>
+<p>上图的 AD<sub>0</sub> ~ AD<sub>15</sub> 是复用(Multiplex)引脚<br>A<sub>16</sub> ~ A<sub>19</sub> 也是复用引脚</p>
+</blockquote>
+<ul>
+<li>ALE(Address Latch Enable) = 1 是作为地址线 A<sub>0</sub>~A<sub>15</sub>(寻址) 再加上A<sub>16</sub> ~ A<sub>19</sub>.</li>
+<li>ALE(Address Latch Enable) = 0 是作为数据线 D<sub>0</sub>~D<sub>15</sub>(传输 16 bit 数据)</li>
+</ul>
+<h4 id="物理地址生成"><a href="#物理地址生成" class="headerlink" title="物理地址生成"></a>物理地址生成</h4><blockquote>
+<p>20 bit 来表示一个内存地址. 但是 Intel 8086 是一个 <code>16 bit</code> 的处理器(其实就是一次只能传输 16 bit 的数据). 怎样来表示 <code>20 bit</code> 的内存地址呢? 比如一个内存地址是: <code>0x18AC9</code>, 该怎样表示呢? 其实道理很简单, 既然没法一次传输 20 bit, 那就分两次好了. 最后用两个 <code>16 bit</code> 的数据来合成 <code>0x18AC9</code> 这个地址. 很显然要有生成 <code>0x18AC9</code> 这个地址的策略. 在 Intel 8086 中, 将 <code>0x18AC9</code> 拆分为 <code>0x1234</code>(segment address) 和 <code>0x6789</code>(offset address) 这两个 <code>16 bit</code> 的地址, 这就是所谓的逻辑地址(logical address). 怎样生成 <code>0x18AC9</code> 这个真实的物理地址呢? 也很简单使用一个 <code>20 bit</code> 的 <code>adder</code>(加法器). 0x18AC9 = 0x1234 * 16 + 0x6789</p>
+</blockquote>
+<img src="/2019/10/16/x86-64-architecture/intel8086_real_address_mode_translation.png" title="Intel 8086 Real Address Mode Translation"> 
+
+<h4 id="Real-Address-Mode"><a href="#Real-Address-Mode" class="headerlink" title="Real Address Mode"></a>Real Address Mode</h4><blockquote>
+<p>物理地址由两部分组成: segment address 和 offset address. 这两个地址不能直接使用, 是用来合成真正的物理地址的. 这两个地址称之为 <code>逻辑地址</code>. 16 * segment address + offset address 合成的地址称之为 <code>物理地址</code>, 也叫 <code>线性地址</code>(也就是从 0 ~ 2^20 -1 地址空间). Intel 8086 这种得到物理地址的机制就叫做 <code>real address mode</code>. 也就是所谓的 <code>实模式</code>.
+PS: 多说一句, <code>实模式</code> 这个翻译有点坑, 翻译成 <code>实地址模式</code> 不就十分清楚了吗?</p>
+</blockquote>
+<h4 id="segmented-memory"><a href="#segmented-memory" class="headerlink" title="segmented memory"></a>segmented memory</h4><blockquote>
+<p>physical address = 16 * segment address + offset address<br>offset address 是 16 bit, 决定了一个 segment 的范围是 64K. 将 1M 的寻址空间以 64K 为一个 segment 划分为多个 segment. 反过来说就是一个 segment 可以选择一个 64K 范围内的地址. 是的, <code>segment</code> 可以当作是一种 <code>selector</code>, 就像 <code>CSS</code> 里面的选择器.<br>那么这个 segment 存放在哪里呢? 放在专门的 <code>segment register</code> 里. </p>
+</blockquote>
+<h4 id="segment-registers"><a href="#segment-registers" class="headerlink" title="segment registers"></a>segment registers</h4><blockquote>
+<p>Intel 8086 提供了 <code>Extra Segment</code>(ES), <code>Data Segment</code>(DS), <code>Stack Segment</code>(SS), <code>Code Segment</code>(CS) 这 4 个 段寄存器.</p>
+</blockquote>
+<h5 id="code-segment-CS-instruction-pointer-IP"><a href="#code-segment-CS-instruction-pointer-IP" class="headerlink" title="code segment(CS) + instruction pointer(IP)"></a>code segment(CS) + instruction pointer(IP)</h5><blockquote>
+<p>code segment 存放 segment address, 这是个专门的代码段寄存器, 用来存放代码的地址.<br>instruction pointer 存放 offset address, 这个是专门的指令寄存器, 用来存放下一条指令的地址.<br>所以访问代码的 <code>物理地址 = 16 * CS + IP</code></p>
+</blockquote>
+<h5 id="stack-segment-SS-stack-pointer-SP"><a href="#stack-segment-SS-stack-pointer-SP" class="headerlink" title="stack segment(SS) + stack pointer(SP)"></a>stack segment(SS) + stack pointer(SP)</h5><blockquote>
+<p>stack segment 存放 segment address, 这个是专门的栈帧段寄存器.<br>stack pointer 存放 offset address, 这个专门的记录栈帧的寄存器.<br>所以访问函数栈帧的 <code>物理地址 = 16 * SS + SP</code></p>
+</blockquote>
+<blockquote>
+<p>注意: 如果令 SS = 0, 那么访问函数栈帧的 <code>物理地址 = SP</code>, 也就是只能访问 64K 的空间.<br>注意: real address mode 能够不受限制地访问 1M 的地址空间. 程序可以自由的访问 1M 的地址空间, 无法进行内存的保护, 这也是 <code>Intel 80386</code> 要解决的问题之一. </p>
+</blockquote>
+<p>#### </p>
+<h3 id="general-purpose-register"><a href="#general-purpose-register" class="headerlink" title="general purpose register"></a>general purpose register</h3><h3 id="memory-mapping"><a href="#memory-mapping" class="headerlink" title="memory mapping"></a>memory mapping</h3><blockquote>
 <p>已安装内存 8G(7.88G) 可用？？？原因在哪里呢？</p>
 </blockquote>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<h2 id="Intel-80386"><a href="#Intel-80386" class="headerlink" title="Intel 80386"></a>Intel 80386</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><a href="http://8086microprocessor4u.blogspot.com/2012/12/bus-interface-unit-biu.html" target="_blank" rel="noopener">bus interface unit</a></li>
 <li><a href="http://8086microprocessor4u.blogspot.com/2015/04/the-execution-unit-eu.html" target="_blank" rel="noopener">execution unit</a></li>
 <li><a href="https://www.tutorialspoint.com/microprocessor/microprocessor_8086_functional_units.htm" target="_blank" rel="noopener">8086 Functional Units</a></li>
@@ -361,6 +398,7 @@
 <li><a href="https://www.academia.edu/40314276/8086_microprocessor20190911_87442_nxpkcz" target="_blank" rel="noopener">8086-microprocessor</a></li>
 <li><a href="https://www.geeksforgeeks.org/memory-segmentation-8086-microprocessor/" target="_blank" rel="noopener">memory-segmentation-8086-microprocessor</a></li>
 <li><a href="https://www.cs.usfca.edu/~cruse/cs630f06/" target="_blank" rel="noopener">Advanced Microcomputer Programming</a></li>
+<li><a href="https://www.computerhope.com/jargon/num/16bit.htm" target="_blank" rel="noopener">16 bit processor mean?</a></li>
 </ol>
 
           
@@ -410,7 +448,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/19/select-poll-epoll/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/09/19/select-poll-epoll/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -646,7 +684,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/10/wireshark/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/09/10/wireshark/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -788,7 +826,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/09/03/docker-practice/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/09/03/docker-practice/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -965,7 +1003,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/22/hadoop-environment-setup/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/07/22/hadoop-environment-setup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -1134,7 +1172,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/17/clang-structure/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/07/17/clang-structure/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -1266,7 +1304,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/06/asm-how-recursion-function-execute/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -1483,7 +1521,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/25/asm-clang-concepts/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/06/25/asm-clang-concepts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -1705,7 +1743,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/24/asm-how-x86-64-arguments-pass/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/06/24/asm-how-x86-64-arguments-pass/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -1850,7 +1888,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/06/17/tools-for-me/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/06/17/tools-for-me/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
