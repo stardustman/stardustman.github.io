@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,images,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="container image A container image is a tar file containing tar files. Each of the tar file is a layer. Once all tar files have been extract into the same location then you have the container’s filesys">
+<meta name="keywords" content="docker,images">
+<meta property="og:type" content="article">
+<meta property="og:title" content="katacoda-what-is-a-container-image">
+<meta property="og:url" content="http://stardustman.github.io/2019/11/26/katacoda-what-is-a-container-image/index.html">
+<meta property="og:site_name" content="stardustman">
+<meta property="og:description" content="container image A container image is a tar file containing tar files. Each of the tar file is a layer. Once all tar files have been extract into the same location then you have the container’s filesys">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-11-28T13:34:02.679Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="katacoda-what-is-a-container-image">
+<meta name="twitter:description" content="container image A container image is a tar file containing tar files. Each of the tar file is a layer. Once all tar files have been extract into the same location then you have the container’s filesys">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://stardustman.github.io/2019/11/26/katacoda-what-is-a-container-image/">
+
+
+
+
+
+  <title>katacoda-what-is-a-container-image | stardustman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">stardustman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/11/26/katacoda-what-is-a-container-image/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">katacoda-what-is-a-container-image</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-26T20:12:23+08:00">
+                2019-11-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/11/26/katacoda-what-is-a-container-image/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/26/katacoda-what-is-a-container-image/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="container-image"><a href="#container-image" class="headerlink" title="container image"></a>container image</h2><blockquote>
+<p>A container image is a tar file containing tar files. Each of the tar file is a layer. Once all tar files have been extract into the same location then you have the container’s filesystem.<br><code>container image</code> 是一个 <code>tar</code> 文件. 每一个 <code>tar</code> 文件就是一个 layer</p>
+</blockquote>
+<h3 id="docker-pull-拉去每一-layer"><a href="#docker-pull-拉去每一-layer" class="headerlink" title="docker pull 拉去每一 layer"></a>docker pull 拉去每一 layer</h3><blockquote>
+<p>docker pull redis:3.2.11-alpine<br>3.2.11-alpine: Pulling from library/redis<br>ff3a5c916c92: Pull complete<br>aae70a2e6027: Pull complete<br>87c655da471c: Pull complete<br>bc3141806bdc: Pull complete<br>53616fb426d9: Pull complete<br>9791c5883c6a: Pull complete<br>Digest: sha256:ebf1948b84dcaaa0f8a2849cce6f2548edb8862e2829e3e7d9e4cd5a324fb3b7<br>Status: Downloaded newer image for redis:3.2.11-alpine</p>
+</blockquote>
+<blockquote>
+<p>可以看到 <code>redis:3.2.11-alpine</code> 这个 <code>image</code> 分为了 <code>ff3a5c916c92</code>, <code>aae70a2e6027</code>,<code>87c655da471c</code>,<code>bc3141806bdc</code>,<code>53616fb426d9</code>,<code>9791c5883c6a</code> 6 个 layer.</p>
+</blockquote>
+<h3 id="docker-save-验证-image-分层"><a href="#docker-save-验证-image-分层" class="headerlink" title="docker save 验证 image 分层"></a>docker save 验证 image 分层</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ docker save --help</span><br><span class="line">Usage:  docker save [OPTIONS] IMAGE [IMAGE...]</span><br><span class="line">Save one or more images to a tar archive (streamed to STDOUT by default)</span><br><span class="line">Options:</span><br><span class="line">  -o, --output string   Write to a file, instead of STDOUT</span><br></pre></td></tr></table></figure>
+
+<h4 id="验证-redis-分层"><a href="#验证-redis-分层" class="headerlink" title="验证 redis 分层"></a>验证 redis 分层</h4><h5 id="docker-save-保存-image-为-tar-文件"><a href="#docker-save-保存-image-为-tar-文件" class="headerlink" title="docker save 保存 image 为 tar 文件"></a>docker save 保存 image 为 tar 文件</h5><blockquote>
+<p>docker  save  redis:3.2.11-alpine &gt; redis.tar</p>
+</blockquote>
+<h5 id="解压-tar-文件"><a href="#解压-tar-文件" class="headerlink" title="解压 tar 文件"></a>解压 tar 文件</h5><blockquote>
+<p>$ tar -xvf redis.tar</p>
+</blockquote>
+<blockquote>
+<p>tree<br>.
+├── 46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557<br>│   ├── json // 这一 layer 的配置文件<br>│   ├── layer.tar<br>│   └── VERSION<br>├── 498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59<br>│   ├── json // 这一 layer 的配置文件<br>│   ├── layer.tar<br>│   └── VERSION<br>├── ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c<br>│   ├── json // 这一 layer 的配置文件<br>│   ├── layer.tar<br>│   └── VERSION<br>├── ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json<br>├── da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c<br>│   ├── json // 这一 layer 的配置文件<br>│   ├── layer.tar<br>│   └── VERSION<br>├── db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3<br>│   ├── json // 这一 layer 的配置文件<br>│   ├── layer.tar<br>│   └── VERSION<br>├── f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c<br>│   ├── json // 这一 layer 的配置文件<br>│   ├── layer.tar<br>│   └── VERSION<br>├── manifest.json<br>├── redis.tar<br>└── repositories</p>
+</blockquote>
+<h5 id="查看解压后的-tar-文件"><a href="#查看解压后的-tar-文件" class="headerlink" title="查看解压后的 tar 文件"></a>查看解压后的 tar 文件</h5><blockquote>
+<p>ls<br>46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557<br>498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59<br>ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c<br>ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json<br>da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c<br>db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3<br>f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c<br>manifest.json<br>repositories</p>
+</blockquote>
+<h5 id="查看-manifest-json"><a href="#查看-manifest-json" class="headerlink" title="查看 manifest.json"></a>查看 manifest.json</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        "Config":"ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json", // 整个 image 的配置文件</span><br><span class="line">        "RepoTags":[</span><br><span class="line">            <span class="string">"redis:3.2.11-alpine"</span></span><br><span class="line">        ],</span><br><span class="line">        "Layers":[</span><br><span class="line">            "498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59/layer.tar",</span><br><span class="line">            "ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c/layer.tar",</span><br><span class="line">            "da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c/layer.tar",</span><br><span class="line">            "db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3/layer.tar",</span><br><span class="line">            "f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c/layer.tar",</span><br><span class="line">            <span class="string">"46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557/layer.tar"</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>由上可知, <code>redis:3.2.11-alpine</code> 这个 <code>image</code> 有 6 个 <code>*layer.tar</code> 组成.</p>
+</blockquote>
+<h5 id="查看-repositories"><a href="#查看-repositories" class="headerlink" title="查看 repositories"></a>查看 repositories</h5><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"redis"</span>:&#123;</span><br><span class="line">        <span class="attr">"3.2.11-alpine"</span>:<span class="string">"46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="创建一个空的-image"><a href="#创建一个空的-image" class="headerlink" title="创建一个空的 image"></a>创建一个空的 image</h3><blockquote>
+<p>$ docker import –help<br>Usage:  docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]<br>Import the contents from a tarball to create a filesystem image<br>Options:<br>  -c, –change list      Apply Dockerfile instruction to the created image<br>  -m, –message string   Set commit message for imported image</p>
+</blockquote>
+<blockquote>
+<p>tar cv –files-from /dev/null | docker import - empty<br>sha256:8880ab5b7953a69e0a9252cbeeb537f0667ec10d3f849289117f8434802c0c49</p>
+</blockquote>
+<blockquote>
+<p>$ docker images<br>REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE<br>empty               latest              8880ab5b7953        9 seconds ago       0B</p>
+</blockquote>
+<h3 id="Creating-Image-without-Dockerfile"><a href="#Creating-Image-without-Dockerfile" class="headerlink" title="Creating Image without Dockerfile"></a>Creating Image without Dockerfile</h3><p>$ curl -LO <a href="https://raw.githubusercontent.com/moby/moby/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/contrib/mkimage/busybox-static" target="_blank" rel="noopener">https://raw.githubusercontent.com/moby/moby/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/contrib/mkimage/busybox-static</a> &amp;&amp; chmod +x busybox-static<br>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current<br>                                 Dload  Upload   Total   Spent    Left  Speed<br>100   782  100   782    0     0   2153      0 –:–:– –:–:– –:–:–  2154</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechar-subscriber.jpg" alt="stardustman wechat" style="width: 200px; max-width: 100%;">
+    <div>业精于勤， 荒于嬉。行成于思，毁于随。</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    stardustman
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://stardustman.github.io/2019/11/26/katacoda-what-is-a-container-image/" title="katacoda-what-is-a-container-image">http://stardustman.github.io/2019/11/26/katacoda-what-is-a-container-image/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+   
+   
+
+
+
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/images/" rel="tag"># images</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/22/bloomfilter/" rel="next" title="bloomfilter">
+                <i class="fa fa-chevron-left"></i> bloomfilter
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/11/29/tomcat-http-cookie/" rel="prev" title="tomcat-http-cookie">
+                tomcat-http-cookie <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div class="ds-thread" data-thread-key="2019/11/26/katacoda-what-is-a-container-image/" data-title="katacoda-what-is-a-container-image" data-url="http://stardustman.github.io/2019/11/26/katacoda-what-is-a-container-image/">
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">stardustman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#container-image"><span class="nav-number">1.</span> <span class="nav-text">container image</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-pull-拉去每一-layer"><span class="nav-number">1.1.</span> <span class="nav-text">docker pull 拉去每一 layer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker-save-验证-image-分层"><span class="nav-number">1.2.</span> <span class="nav-text">docker save 验证 image 分层</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#验证-redis-分层"><span class="nav-number">1.2.1.</span> <span class="nav-text">验证 redis 分层</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#docker-save-保存-image-为-tar-文件"><span class="nav-number">1.2.1.1.</span> <span class="nav-text">docker save 保存 image 为 tar 文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解压-tar-文件"><span class="nav-number">1.2.1.2.</span> <span class="nav-text">解压 tar 文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看解压后的-tar-文件"><span class="nav-number">1.2.1.3.</span> <span class="nav-text">查看解压后的 tar 文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看-manifest-json"><span class="nav-number">1.2.1.4.</span> <span class="nav-text">查看 manifest.json</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看-repositories"><span class="nav-number">1.2.1.5.</span> <span class="nav-text">查看 repositories</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#创建一个空的-image"><span class="nav-number">1.3.</span> <span class="nav-text">创建一个空的 image</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Creating-Image-without-Dockerfile"><span class="nav-number">1.4.</span> <span class="nav-text">Creating Image without Dockerfile</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stardustman</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"your-duoshuo-shortname"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '88de6dd17c3c088f4e63',
+          clientSecret: '4cf81a11c565fca5d19a1430002f55fb84c3bf27',
+          repo: 'comments',
+          owner: 'stardustman',
+          admin: ['stardustman'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>

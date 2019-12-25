@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="docker,container,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="Processes Containers are just normal Linux Processes with additional configuration applied.  容器只是应用了附加配置的普通 Linux 进程。 redis containerlanch redis-server process Usage:  docker run [OPTIONS] IMAGE [COMM">
+<meta name="keywords" content="docker,container">
+<meta property="og:type" content="article">
+<meta property="og:title" content="katacoda-what-is-a-container">
+<meta property="og:url" content="http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/index.html">
+<meta property="og:site_name" content="stardustman">
+<meta property="og:description" content="Processes Containers are just normal Linux Processes with additional configuration applied.  容器只是应用了附加配置的普通 Linux 进程。 redis containerlanch redis-server process Usage:  docker run [OPTIONS] IMAGE [COMM">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-12-25T03:09:25.218Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="katacoda-what-is-a-container">
+<meta name="twitter:description" content="Processes Containers are just normal Linux Processes with additional configuration applied.  容器只是应用了附加配置的普通 Linux 进程。 redis containerlanch redis-server process Usage:  docker run [OPTIONS] IMAGE [COMM">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/">
+
+
+
+
+
+  <title>katacoda-what-is-a-container | stardustman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">stardustman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">katacoda-what-is-a-container</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-24T13:02:03+08:00">
+                2019-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/24/katacoda-what-is-a-container/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/12/24/katacoda-what-is-a-container/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Processes"><a href="#Processes" class="headerlink" title="Processes"></a>Processes</h2><blockquote>
+<p>Containers are just normal Linux Processes with additional configuration applied.</p>
+</blockquote>
+<p>容器只是应用了附加配置的普通 Linux 进程。</p>
+<h3 id="redis-container"><a href="#redis-container" class="headerlink" title="redis container"></a>redis container</h3><h4 id="lanch-redis-server-process"><a href="#lanch-redis-server-process" class="headerlink" title="lanch redis-server process"></a>lanch redis-server process</h4><blockquote>
+<p>Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG…]<br>docker run –help<br>-d, –detach   Run container in background and print container ID<br>–name string  Assign a name to the container</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=db redis:alpine</span><br></pre></td></tr></table></figure>
+
+<p>在后台启动一个 <code>container name</code> 是 <code>db</code> 的容器, 并打印容器的 <code>ID</code></p>
+<blockquote>
+<p>Unable to find image ‘redis:alpine’ locally<br>alpine: Pulling from library/redis<br>63bc94deeb28: Pull complete<br>828e397560e3: Pull complete<br>5902d88df6c2: Pull complete<br>157b2c953c6d: Pull complete<br>b5212c16b59d: Pull complete<br>5f8f01031701: Pull complete<br>Digest: sha256:613ab7e1c0175cae18b69c291512e5e8f1129175f6617ff2126b7ac9a1e5c550<br>Status: Downloaded newer image for redis:alpine<br>0a5ceea3df52e200d45772c4507b20d7c95a97dcd3939cb33a8d5bc1b842e334</p>
+</blockquote>
+<h4 id="检验"><a href="#检验" class="headerlink" title="检验"></a>检验</h4><h5 id="pidof-lt-process-name-gt"><a href="#pidof-lt-process-name-gt" class="headerlink" title="pidof &lt;process-name&gt;"></a>pidof &lt;process-name&gt;</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pidof redis-server</span><br></pre></td></tr></table></figure>
+
+<h5 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep redis-server</span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-top"><a href="#docker-top" class="headerlink" title="docker top "></a>docker top <container-name></container-name></h5><blockquote>
+<p>docker top can help us identify information about the process including the PID (Process ID) and PPID (Parent Process ID)</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker top db</span><br></pre></td></tr></table></figure>
+
+<h5 id="pstree"><a href="#pstree" class="headerlink" title="pstree"></a>pstree</h5><blockquote>
+<p>pstree will list all of the sub processes</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree -c -p -A $(pgrep dockerd)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Process-Directory"><a href="#Process-Directory" class="headerlink" title="Process Directory"></a>Process Directory</h2><blockquote>
+<p>Linux is just a series of magic files and contents, this makes it fun to explore and navigate to see what is happening under the covers, and in some cases, change the contents to see the results. The configuration for each process is defined within the /proc directory. If you know the process ID, then you can identify the configuration directory.</p>
+</blockquote>
+<p>每一个 <code>process</code> 的配置都定义在 <code>/proc</code> 文件夹下. 如果知道 <code>process ID</code>, 就能找到该进程的配置文件夹</p>
+<h3 id="redis-server-进程的配置"><a href="#redis-server-进程的配置" class="headerlink" title="redis-server 进程的配置"></a>redis-server 进程的配置</h3><h4 id="找到-redis-server-的-pid"><a href="#找到-redis-server-的-pid" class="headerlink" title="找到 redis-server 的 pid"></a>找到 redis-server 的 pid</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DBPID=$(pgrep redis-server)</span><br><span class="line"><span class="built_in">echo</span> Redis is <span class="variable">$DBPID</span></span><br><span class="line">ls /proc</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看-redis-server-进程的环境变量"><a href="#查看-redis-server-进程的环境变量" class="headerlink" title="查看 redis-server 进程的环境变量"></a>查看 redis-server 进程的环境变量</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /proc/<span class="variable">$DBPID</span></span><br><span class="line">cat /proc/<span class="variable">$DBPID</span>/environ</span><br></pre></td></tr></table></figure>
+
+<p>结果如下:</p>
+<blockquote>
+<p>HOSTNAME=f3b9624ce46cSHLVL=2REDIS_DOWNLOAD_SHA=<br>61db74eabf6801f057fd24b590232f2f337d422280fd19486<br>eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sb<br>in:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br>REDIS_DOWNLOAD_URL=<a href="http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data" target="_blank" rel="noopener">http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data</a></p>
+</blockquote>
+<p>解析查看:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'HOSTNAME=5fba1658e4ceSHLVL=2REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binREDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data'</span>.match(<span class="regexp">/[A-Z]+=[^A-Z]*/g</span>) <span class="comment">// regexp 解析查看 key=value</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="docker-容器里执行-env-命令"><a href="#docker-容器里执行-env-命令" class="headerlink" title="docker 容器里执行 env 命令"></a>docker 容器里执行 env 命令</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it db env</span><br></pre></td></tr></table></figure>
+
+<p><code>env</code> 内容如下:</p>
+<blockquote>
+<p>PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br>HOSTNAME=f3b9624ce46c<br>TERM=xterm<br>REDIS_VERSION=5.0.7<br>REDIS_DOWNLOAD_URL=<a href="http://download.redis.io/releases/redis-5.0.7.tar.gz" target="_blank" rel="noopener">http://download.redis.io/releases/redis-5.0.7.tar.gz</a><br>REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82b<br>HOME=/root</p>
+</blockquote>
+<h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><blockquote>
+<p>One of the fundamental parts of a container is namespaces. The concept of namespaces is to limit what processes can see and access certain parts of the system, such as other network interfaces or processes<br>When a container is started, the container runtime, such as Docker, will create new namespaces to sandbox the process. By running a process in it’s own Pid namespace, it will look like it’s the only process on the system.</p>
+</blockquote>
+<ul>
+<li>Mount (mnt)</li>
+<li>Process (pid)</li>
+<li>Network (net)</li>
+<li>Interprocess Communication (ipc)</li>
+<li>UTS (hostnames) aka unix time-sharing system</li>
+<li>User ID (user)</li>
+<li>Control group (cgroup)</li>
+</ul>
+<h3 id="lanched-“contained”-processes"><a href="#lanched-“contained”-processes" class="headerlink" title="lanched “contained” processes"></a>lanched “contained” processes</h3><blockquote>
+<p>Without using a runtime such as Docker, a process can still operate within it’s own namespace. One tool to help is unshare.</p>
+</blockquote>
+<p>不用 <code>docker</code> 这个 <code>runtime</code>, 也可以用 <code>unshare</code> 这个工具来创建一个拥有自己的 <code>namespace</code> 的进程.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unshare --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Run a program with some namespaces unshared from the parent.</p>
+</blockquote>
+<p>运行一个程序, 不共享父进程的某些 namespaces</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">unshare --fork --pid --mount-proc bash</span><br><span class="line">ps</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="namespace-是啥"><a href="#namespace-是啥" class="headerlink" title="namespace 是啥"></a>namespace 是啥</h3><blockquote>
+<p>Namespaces are inode locations on disk. this allows for processes to shared/reused the same namespace, allowing them to view and interact.</p>
+</blockquote>
+<p><code>namespace</code> 是硬盘上的 <code>inode</code>. 这允许 <code>processes</code> 共享/复用相同的 <code>namespace</code>, 允许进程之间可以互相看得到, 互相交流.</p>
+<h4 id="查看-redis-server-的所有-namespace"><a href="#查看-redis-server-的所有-namespace" class="headerlink" title="查看 redis-server 的所有 namespace"></a>查看 redis-server 的所有 namespace</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -liha /proc/<span class="variable">$DBPID</span>/ns</span><br></pre></td></tr></table></figure>
+
+<h4 id="attach-process-to-existing-NameSpaces"><a href="#attach-process-to-existing-NameSpaces" class="headerlink" title="attach process to existing NameSpaces"></a>attach process to existing NameSpaces</h4><blockquote>
+<p><code>nsenter</code> run a program with namespaces of other processes.</p>
+</blockquote>
+<p>在其他进程的 <code>namespace</code> 中运行一个程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">nsenter --help</span><br><span class="line">nsenter [options] [&lt;program&gt; [&lt;argument&gt;...]]</span><br><span class="line"> Options:</span><br><span class="line"> -a, --all              enter all namespaces</span><br><span class="line"> -t, --target &lt;pid&gt;     target process to get namespaces from</span><br><span class="line"> -m, --mount[=&lt;file&gt;]   enter mount namespace</span><br><span class="line"> -u, --uts[=&lt;file&gt;]     enter UTS namespace (hostname etc)</span><br><span class="line"> -i, --ipc[=&lt;file&gt;]     enter System V IPC namespace</span><br><span class="line"> -n, --net[=&lt;file&gt;]     enter network namespace</span><br><span class="line"> -p, --pid[=&lt;file&gt;]     enter pid namespace</span><br><span class="line"> -C, --cgroup[=&lt;file&gt;]  enter cgroup namespace</span><br><span class="line"> -U, --user[=&lt;file&gt;]    enter user namespace</span><br><span class="line"> -S, --setuid &lt;uid&gt;     set uid in entered namespace</span><br><span class="line"> -G, --setgid &lt;gid&gt;     set gid in entered namespace</span><br><span class="line">     --preserve-credentials do not touch uids or gids</span><br><span class="line"> -r, --root[=&lt;dir&gt;]     set the root directory</span><br><span class="line"> -w, --wd[=&lt;dir&gt;]       set the working directory</span><br><span class="line"> -F, --no-fork          do not fork before exec&apos;ing &lt;program&gt;</span><br><span class="line"> -Z, --follow-context   set SELinux context according to --target PID</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nsenter --target <span class="variable">$DBPID</span> --mount --uts --ipc --net --pid ps aux</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>redis-server</code> 的 <code>mount</code>, <code>uts</code>, <code>ipc</code>, <code>net</code>, <code>pid</code> 这些命名空间里执行 <code>ps</code> 命令</p>
+<h4 id="share-namespaces-of-redis-server"><a href="#share-namespaces-of-redis-server" class="headerlink" title="share namespaces of redis-server"></a>share namespaces of redis-server</h4><blockquote>
+<p>With Docker, these namespaces can be shared using the syntax container:&lt;container-name&gt;. For example, the command below will connect nginx to the DB namespace</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=web --net=container:db nginx:alpine</span><br></pre></td></tr></table></figure>
+
+<p>启动 <code>nginx</code> 的容器. 共享 <code>redis-server</code> 的 <code>net</code> namespace</p>
+<ul>
+<li>查看 <code>nginx</code> 容器的 <code>net</code> 的 namespace</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lha /proc/<span class="variable">$WEBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>dr-x–x–x 2 systemd-network systemd-journal 0 Dec 24 13:40 .<br>dr-xr-xr-x 9 systemd-network systemd-journal 0 Dec 24 13:40 ..<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 cgroup -&gt; cgroup:[4026531835]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 ipc -&gt; ipc:[4026532225]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 mnt -&gt; mnt:[4026532223]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 net -&gt; net:[4026532160] – 注意这个是共享的 redis-server 的 net 命名空间<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 pid -&gt; pid:[4026532226]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 user -&gt; user:[4026531837]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 uts -&gt; uts:[4026532224]</p>
+</blockquote>
+<ul>
+<li>查看 <code>redis-server</code> 容器的 <code>net</code> 命名空间</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lha /proc/<span class="variable">$DBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>lrwxrwxrwx 1 999 packer 0 Dec 24 13:39 net -&gt; net:[4026532160]</p>
+</blockquote>
+<h2 id="CGroups"><a href="#CGroups" class="headerlink" title="CGroups"></a>CGroups</h2><blockquote>
+<p>CGroups limit the amount of resources a process can consume. These cgroups are values defined in particular files within the /proc directory.<br>CGroups 用来限制一个进程可以使用的资源的量. cgroups 的值被定义在 /proc 文件夹下的特定文件里.</p>
+</blockquote>
+<h3 id="查看-redis-server-的-CGroups"><a href="#查看-redis-server-的-CGroups" class="headerlink" title="查看 redis-server 的 CGroups"></a>查看 redis-server 的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/cgroup</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>得到 redis-server 的容器 ID</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DBID=$(docker ps --no-trunc | grep <span class="string">'db'</span> | awk <span class="string">'&#123;print $1&#125;'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看 redis-server 的 cpu stats 和 usages</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpuacct.stat</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看 redis-server 的 cpu shares</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpu.shares</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看所有容器的 memory 的 docker cgroups 配置</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/fs/cgroup/memory/docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看所有的-CGroups"><a href="#查看所有的-CGroups" class="headerlink" title="查看所有的 CGroups"></a>查看所有的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/fs/cgroup</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-cgroups"><a href="#配置-cgroups" class="headerlink" title="配置 cgroups"></a>配置 cgroups</h3><blockquote>
+<p>用 cgroups 配置 内存, memory quotes 存放在 memory.limit_in_bytes<br>这个文件</p>
+</blockquote>
+<ul>
+<li>容器默认没有内存限制</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stats db --no-strem ; 只查看一条信息</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>限制 db 这个容器的内存使用</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 8000000 &gt; /sys/fs/cgroup/memory/docker/<span class="variable">$DBID</span>/memory.limit_in_bytes</span><br></pre></td></tr></table></figure>
+
+<h2 id="Seccomp-限制可以使用的-syscall"><a href="#Seccomp-限制可以使用的-syscall" class="headerlink" title="Seccomp 限制可以使用的 syscall"></a>Seccomp 限制可以使用的 syscall</h2><blockquote>
+<p>When assigned to a process it means the process will be limited to a subset of the ability system calls. If it attempts to call a blocked system call is will recieve the error “Operation Not Allowed”. <a href="https://github.com/moby/moby/blob/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/profiles/seccomp/default.json" target="_blank" rel="noopener">容器默认可以使用的 syscall</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/status</span><br><span class="line">cat /proc/<span class="variable">$DBPID</span>/status | grep Seccomp</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>The flag meaning are: 0: disabled 1: strict 2: filtering</p>
+</blockquote>
+<h2 id="Capabilities"><a href="#Capabilities" class="headerlink" title="Capabilities"></a>Capabilities</h2><blockquote>
+<p>Capabilities are groupings about what a process or user has permission to do. These Capabilities might cover multiple system calls or actions, such as changing the system time or hostname.</p>
+</blockquote>
+<ul>
+<li>查看 redis-server 的 Capabilities</li>
+</ul>
+<blockquote>
+<p>The status file also containers the Capabilities flag. A process can drop as many Capabilities as possible to ensure it’s secure.</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/status | grep ^Cap</span><br></pre></td></tr></table></figure>
+
+<p>结果如下:</p>
+<blockquote>
+<p>CapInh: 00000000a80425fb<br>CapPrm: 0000000000000000<br>CapEff: 0000000000000000<br>CapBnd: 00000000a80425fb<br>CapAmb: 0000000000000000</p>
+</blockquote>
+<ul>
+<li>解析 redis-server 的 flags</li>
+</ul>
+<blockquote>
+<p>The flags are stored as a bitmask that can be decoded with capsh</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">capsh --decode=00000000a80425fb</span><br></pre></td></tr></table></figure>
+
+<p>解析结果如下:</p>
+<blockquote>
+<p>0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,<br>cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,<br>cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,<br>cap_audit_write,cap_setfcap</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><p><a href="https://www.katacoda.com/courses/container-runtimes/what-is-a-container" target="_blank" rel="noopener">what is a container</a></p>
+</li>
+<li><p>[awk] (<a href="http://www.ruanyifeng.com/blog/2018/11/awk.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2018/11/awk.html</a>)</p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechar-subscriber.jpg" alt="stardustman wechat" style="width: 200px; max-width: 100%;">
+    <div>业精于勤， 荒于嬉。行成于思，毁于随。</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    stardustman
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/" title="katacoda-what-is-a-container">http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+   
+   
+
+
+
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/docker/" rel="tag"># docker</a>
+          
+            <a href="/tags/container/" rel="tag"># container</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/11/29/tomcat-http-cookie/" rel="next" title="tomcat-http-cookie">
+                <i class="fa fa-chevron-left"></i> tomcat-http-cookie
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div class="ds-thread" data-thread-key="2019/12/24/katacoda-what-is-a-container/" data-title="katacoda-what-is-a-container" data-url="http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/">
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">stardustman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Processes"><span class="nav-number">1.</span> <span class="nav-text">Processes</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-container"><span class="nav-number">1.1.</span> <span class="nav-text">redis container</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#lanch-redis-server-process"><span class="nav-number">1.1.1.</span> <span class="nav-text">lanch redis-server process</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检验"><span class="nav-number">1.1.2.</span> <span class="nav-text">检验</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#pidof-lt-process-name-gt"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">pidof &lt;process-name&gt;</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#ps"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">ps</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#docker-top"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">docker top </span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#pstree"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">pstree</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Process-Directory"><span class="nav-number">2.</span> <span class="nav-text">Process Directory</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#redis-server-进程的配置"><span class="nav-number">2.1.</span> <span class="nav-text">redis-server 进程的配置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#找到-redis-server-的-pid"><span class="nav-number">2.1.1.</span> <span class="nav-text">找到 redis-server 的 pid</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#查看-redis-server-进程的环境变量"><span class="nav-number">2.1.2.</span> <span class="nav-text">查看 redis-server 进程的环境变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#docker-容器里执行-env-命令"><span class="nav-number">2.1.3.</span> <span class="nav-text">docker 容器里执行 env 命令</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#namespace"><span class="nav-number">3.</span> <span class="nav-text">namespace</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#lanched-“contained”-processes"><span class="nav-number">3.1.</span> <span class="nav-text">lanched “contained” processes</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#namespace-是啥"><span class="nav-number">3.2.</span> <span class="nav-text">namespace 是啥</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#查看-redis-server-的所有-namespace"><span class="nav-number">3.2.1.</span> <span class="nav-text">查看 redis-server 的所有 namespace</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#attach-process-to-existing-NameSpaces"><span class="nav-number">3.2.2.</span> <span class="nav-text">attach process to existing NameSpaces</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#share-namespaces-of-redis-server"><span class="nav-number">3.2.3.</span> <span class="nav-text">share namespaces of redis-server</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CGroups"><span class="nav-number">4.</span> <span class="nav-text">CGroups</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#查看-redis-server-的-CGroups"><span class="nav-number">4.1.</span> <span class="nav-text">查看 redis-server 的 CGroups</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查看所有的-CGroups"><span class="nav-number">4.2.</span> <span class="nav-text">查看所有的 CGroups</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-cgroups"><span class="nav-number">4.3.</span> <span class="nav-text">配置 cgroups</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Seccomp-限制可以使用的-syscall"><span class="nav-number">5.</span> <span class="nav-text">Seccomp 限制可以使用的 syscall</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Capabilities"><span class="nav-number">6.</span> <span class="nav-text">Capabilities</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stardustman</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"your-duoshuo-shortname"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+   <script type="text/javascript">
+        var gitalk = new Gitalk({
+          clientID: '88de6dd17c3c088f4e63',
+          clientSecret: '4cf81a11c565fca5d19a1430002f55fb84c3bf27',
+          repo: 'comments',
+          owner: 'stardustman',
+          admin: ['stardustman'],
+          id: location.pathname,
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')           
+       </script>
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
