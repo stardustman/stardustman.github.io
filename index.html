@@ -946,8 +946,7 @@
 <p>3.2.11-alpine: Pulling from library/redis<br>ff3a5c916c92: Pull complete<br>aae70a2e6027: Pull complete<br>87c655da471c: Pull complete<br>bc3141806bdc: Pull complete<br>53616fb426d9: Pull complete<br>9791c5883c6a: Pull complete<br>Digest: sha256:ebf1948b84dcaaa0f8a2849cce6f2548edb8862e2829e3e7d9e4cd5a324fb3b7<br>Status: Downloaded newer image for redis:3.2.11-alpine</p>
 </blockquote>
 <blockquote>
-<p>可以看到 redis:3.2.11-alpine 这个 image 拉取了 <em>ff3a5c916c92</em>, 
-<em>aae70a2e6027</em>, <em>87c655da471c</em>, <em>bc3141806bdc</em>, <em>53616fb426d9</em>, <em>9791c5883c6a</em> 共 6 次.</p>
+<p>可以看到 redis:3.2.11-alpine 这个 image 拉取了 <em>ff3a5c916c92</em>,<br><em>aae70a2e6027</em>, <em>87c655da471c</em>, <em>bc3141806bdc</em>, <em>53616fb426d9</em>, <em>9791c5883c6a</em> 共 6 次.</p>
 </blockquote>
 <h3 id="docker-save-验证-image-分层"><a href="#docker-save-验证-image-分层" class="headerlink" title="docker save 验证 image 分层"></a>docker save 验证 image 分层</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker save --<span class="built_in">help</span></span><br><span class="line">Usage:  docker save [OPTIONS] IMAGE [IMAGE...]</span><br><span class="line">Save one or more images to a tar archive (streamed to STDOUT by default)</span><br><span class="line">Options:</span><br><span class="line">  -o, --output string   Write to a file, instead of STDOUT</span><br></pre></td></tr></table></figure>
 
@@ -1307,8 +1306,7 @@
 <img src="/2019/10/16/x86-64-architecture/intel8086_real_address_mode_translation.png" title="Intel 8086 Real Address Mode Translation"> 
 
 <h4 id="Real-Address-Mode"><a href="#Real-Address-Mode" class="headerlink" title="Real Address Mode"></a>Real Address Mode</h4><blockquote>
-<p>物理地址由两部分组成: segment address 和 offset address. 这两个地址不能直接使用, 是用来合成真正的物理地址的. 这两个地址称之为 <code>逻辑地址</code>. 16 * segment address + offset address 合成的地址称之为 <code>物理地址</code>, 也叫 <code>线性地址</code>(也就是从 0 ~ 2^20 -1 地址空间). Intel 8086 这种得到物理地址的机制就叫做 <code>real address mode</code>. 也就是所谓的 <code>实模式</code>.
-PS: 多说一句, <code>实模式</code> 这个翻译有点坑, 翻译成 <code>实地址模式</code> 不就十分清楚了吗?</p>
+<p>物理地址由两部分组成: segment address 和 offset address. 这两个地址不能直接使用, 是用来合成真正的物理地址的. 这两个地址称之为 <code>逻辑地址</code>. 16 * segment address + offset address 合成的地址称之为 <code>物理地址</code>, 也叫 <code>线性地址</code>(也就是从 0 ~ 2^20 -1 地址空间). Intel 8086 这种得到物理地址的机制就叫做 <code>real address mode</code>. 也就是所谓的 <code>实模式</code>.<br>PS: 多说一句, <code>实模式</code> 这个翻译有点坑, 翻译成 <code>实地址模式</code> 不就十分清楚了吗?</p>
 </blockquote>
 <h4 id="segmented-memory"><a href="#segmented-memory" class="headerlink" title="segmented memory"></a>segmented memory</h4><blockquote>
 <p>physical address = 16 * segment address + offset address<br>offset address 是 16 bit, 决定了一个 segment 的范围是 64K. 将 1M 的寻址空间以 64K 为一个 segment 划分为多个 segment. 反过来说就是一个 segment 可以选择一个 64K 范围内的地址. 是的, <code>segment</code> 可以当作是一种 <code>selector</code>, 就像 <code>CSS</code> 里面的选择器.<br>那么这个 segment 存放在哪里呢? 放在专门的 <code>segment register</code> 里. </p>
@@ -1325,8 +1323,7 @@ PS: 多说一句, <code>实模式</code> 这个翻译有点坑, 翻译成 <code>
 <blockquote>
 <p>注意: 如果令 SS = 0, 那么访问函数栈帧的 <code>物理地址 = SP</code>, 也就是只能访问 64K 的空间.<br>注意: real address mode 能够不受限制地访问 1M 的地址空间. 程序可以自由的访问 1M 的地址空间, 无法进行内存的保护, 这也是 <code>Intel 80386</code> 要解决的问题之一. </p>
 </blockquote>
-<p>#### </p>
-<h3 id="general-purpose-register"><a href="#general-purpose-register" class="headerlink" title="general purpose register"></a>general purpose register</h3><h3 id="memory-mapping"><a href="#memory-mapping" class="headerlink" title="memory mapping"></a>memory mapping</h3><blockquote>
+<h4 id><a href="#" class="headerlink" title></a></h4><h3 id="general-purpose-register"><a href="#general-purpose-register" class="headerlink" title="general purpose register"></a>general purpose register</h3><h3 id="memory-mapping"><a href="#memory-mapping" class="headerlink" title="memory mapping"></a>memory mapping</h3><blockquote>
 <p>已安装内存 8G(7.88G) 可用？？？原因在哪里呢？</p>
 </blockquote>
 <h2 id="Intel-80386"><a href="#Intel-80386" class="headerlink" title="Intel 80386"></a>Intel 80386</h2><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
@@ -1536,8 +1533,7 @@ PS: 多说一句, <code>实模式</code> 这个翻译有点坑, 翻译成 <code>
 </tr>
 </tbody></table>
 <h3 id="Multiplexer-Mux"><a href="#Multiplexer-Mux" class="headerlink" title="Multiplexer (Mux)"></a>Multiplexer (Mux)</h3><blockquote>
-<p>4x1 Multiplexer 相当于提供了一种映射, Y = I<sub>(S1S0)</sub>. 
-通过组合S<sub>1</sub> 和 S<sub>0</sub> 的值, 可以直接得到 I<sub>S1S0</sub> 的值.也就是通过 4x1 Multiplexer 输出的 Y 值是 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 之一.</p>
+<p>4x1 Multiplexer 相当于提供了一种映射, Y = I<sub>(S1S0)</sub>.<br>通过组合S<sub>1</sub> 和 S<sub>0</sub> 的值, 可以直接得到 I<sub>S1S0</sub> 的值.也就是通过 4x1 Multiplexer 输出的 Y 值是 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 之一.</p>
 </blockquote>
 <h2 id="I-O-Multiplexing"><a href="#I-O-Multiplexing" class="headerlink" title="I/O Multiplexing"></a>I/O Multiplexing</h2><blockquote>
 <p>I/O multiplexing 这里面的 multiplexing 指的其实是在单个线程通过记录跟踪每一个 Sock(I/O 流)的状态.<br>select, poll, epoll 都是 I/O multiplexing的具体的实现, 之所以有这三个存在，其实是他们出现是有先后顺序的.</p>
@@ -1559,10 +1555,10 @@ PS: 多说一句, <code>实模式</code> 这个翻译有点坑, 翻译成 <code>
 </ul>
 <h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><blockquote>
 <p>修复版的 select</p>
+</blockquote>
 <ul>
 <li>poll 去掉了 1024 个链接的限制</li>
 </ul>
-</blockquote>
 <h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 可以说是 I/O 多路复用最新的一个实现, epoll 修复了 poll 和 select 绝大部分问题, 比如:</p>
 <ul>
 <li>epoll 现在是线程安全的。</li>
@@ -2057,8 +2053,8 @@ PS: 多说一句, <code>实模式</code> 这个翻译有点坑, 翻译成 <code>
 </li>
 <li><p>source /etc/profile</p>
 </li>
-<li><p>hadoop version<br>## </p>
-</li>
+<li><p>hadoop version</p>
+<h2 id><a href="#" class="headerlink" title></a></h2></li>
 </ol>
 <h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
 <li><a href="http://www.mustbegeek.com/configure-static-ip-address-in-centos/" target="_blank" rel="noopener">centos7-static-ip-config</a></li>

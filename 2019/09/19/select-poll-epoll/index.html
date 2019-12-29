@@ -419,8 +419,7 @@
 </tr>
 </tbody></table>
 <h3 id="Multiplexer-Mux"><a href="#Multiplexer-Mux" class="headerlink" title="Multiplexer (Mux)"></a>Multiplexer (Mux)</h3><blockquote>
-<p>4x1 Multiplexer 相当于提供了一种映射, Y = I<sub>(S1S0)</sub>. 
-通过组合S<sub>1</sub> 和 S<sub>0</sub> 的值, 可以直接得到 I<sub>S1S0</sub> 的值.也就是通过 4x1 Multiplexer 输出的 Y 值是 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 之一.</p>
+<p>4x1 Multiplexer 相当于提供了一种映射, Y = I<sub>(S1S0)</sub>.<br>通过组合S<sub>1</sub> 和 S<sub>0</sub> 的值, 可以直接得到 I<sub>S1S0</sub> 的值.也就是通过 4x1 Multiplexer 输出的 Y 值是 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 之一.</p>
 </blockquote>
 <h2 id="I-O-Multiplexing"><a href="#I-O-Multiplexing" class="headerlink" title="I/O Multiplexing"></a>I/O Multiplexing</h2><blockquote>
 <p>I/O multiplexing 这里面的 multiplexing 指的其实是在单个线程通过记录跟踪每一个 Sock(I/O 流)的状态.<br>select, poll, epoll 都是 I/O multiplexing的具体的实现, 之所以有这三个存在，其实是他们出现是有先后顺序的.</p>
@@ -442,10 +441,10 @@
 </ul>
 <h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><blockquote>
 <p>修复版的 select</p>
+</blockquote>
 <ul>
 <li>poll 去掉了 1024 个链接的限制</li>
 </ul>
-</blockquote>
 <h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 可以说是 I/O 多路复用最新的一个实现, epoll 修复了 poll 和 select 绝大部分问题, 比如:</p>
 <ul>
 <li>epoll 现在是线程安全的。</li>
