@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://stardustman.github.io/"/>
-  <updated>2019-12-25T06:43:50.671Z</updated>
+  <updated>2019-12-29T03:23:17.473Z</updated>
   <id>http://stardustman.github.io/</id>
   
   <author>
@@ -15,6 +15,30 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>master-git</title>
+    <link href="http://stardustman.github.io/2019/12/28/master-git/"/>
+    <id>http://stardustman.github.io/2019/12/28/master-git/</id>
+    <published>2019-12-28T05:15:29.000Z</published>
+    <updated>2019-12-29T03:23:17.473Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="git-add-git-commit-git-branch-图解"><a href="#git-add-git-commit-git-branch-图解" class="headerlink" title="git add | git commit | git branch 图解"></a>git add | git commit | git branch 图解</h2><img src="/2019/12/28/master-git/git.svg" title="git"><h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol><li><a href="https://www.lzane.com/slide/git-under-the-hood/index.html#/" target="_blank" rel="noopener">git-under-the-hood</a></li><li><a href="https://www.bilibili.com/video/av77252063" target="_blank" rel="noopener">Bilibili-git-under-the-hood</a></li><li><a href="https://zh.wikipedia.org/wiki/SHA-1" target="_blank" rel="noopener">SHA-1</a></li></ol>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;git-add-git-commit-git-branch-图解&quot;&gt;&lt;a href=&quot;#git-add-git-commit-git-branch-图解&quot; class=&quot;headerlink&quot; title=&quot;git add | git commit | git b
+      
+    
+    </summary>
+    
+    
+    
+      <category term="git" scheme="http://stardustman.github.io/tags/git/"/>
+    
+  </entry>
   
   <entry>
     <title>katacoda-what-is-a-container</title>
@@ -495,31 +519,6 @@
     
     
       <category term="openjdk" scheme="http://stardustman.github.io/tags/openjdk/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>master-tcp</title>
-    <link href="http://stardustman.github.io/2019/05/22/master-tcp/"/>
-    <id>http://stardustman.github.io/2019/05/22/master-tcp/</id>
-    <published>2019-05-22T01:18:08.000Z</published>
-    <updated>2019-05-24T02:38:54.049Z</updated>
-    
-    <content type="html"><![CDATA[<blockquote><p>The Transmission Control Protocol (TCP) is intended for use as a highly<br>reliable <strong>host-to-host</strong> protocol between hosts in <strong>packet-switched</strong> computer communication networks, and in interconnected systems of such networks.</p></blockquote><h1 id="TCP-header-format"><a href="#TCP-header-format" class="headerlink" title="TCP header format"></a>TCP header format</h1><p><img src="/images/master-tcp-tcp-header.png" alt="tcp header"></p><h2 id="basic-data-transfer"><a href="#basic-data-transfer" class="headerlink" title="basic data transfer"></a>basic data transfer</h2><h2 id="reliability"><a href="#reliability" class="headerlink" title="reliability"></a>reliability</h2><ul><li>sequence number</li><li>acknowledgement</li></ul><h2 id="flow-control"><a href="#flow-control" class="headerlink" title="flow control"></a>flow control</h2><ul><li>window size</li></ul><h2 id="multiplexing"><a href="#multiplexing" class="headerlink" title="multiplexing"></a>multiplexing</h2><ul><li>socket (ip, port)</li></ul><h2 id="connections"><a href="#connections" class="headerlink" title="connections"></a>connections</h2><blockquote><p>Each connection is uniquely specified by a <strong>pair</strong> of sockets identifying its two sides.(source ip, source port),(destination ip, destination port)</p></blockquote><ul><li>sockets</li><li>sequence numbers</li><li>window size</li></ul><h1 id="TCP-建立连接目的"><a href="#TCP-建立连接目的" class="headerlink" title="TCP 建立连接目的"></a>TCP 建立连接目的</h1><blockquote><p>交换通信双方的 ISN (Initial Sequence Number)<br>凡是占据序列号的任何TCP报文，一定对方确认，如果没有收到确认，会一直重传，直到达到规定的上限次数。<br>syn , data , fin 占据 sequence number 需要确认. ack 不占据 sequence number 不需要确认.</p></blockquote><h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ol><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&mid=2650005578&idx=1&sn=9e4ba700512e68e2dcbd54bfe11bd669&chksm=87398263b04e0b7577be99e43c272147b74030514df3f78b894c5b5cee21a3565cf3e4ceebeb&scene=21#wechat_redirect" target="_blank" rel="noopener">TCP three way handshake 1</a></li><li><a href="https://mp.weixin.qq.com/s?__biz=MzA3MDMwOTcwMg==&mid=2650005835&idx=1&sn=dd0104635b5510ab6bf4f34ec347fe57&chksm=87398362b04e0a7402a6075b46e9a62855a78408a6dfecf6f7d13d8ae5e0375fab6d84208159&scene=21#wechat_redirect" target="_blank" rel="noopener">TCP three way handshake 2</a></li><li><a href="https://tools.ietf.org/html/rfc793" target="_blank" rel="noopener">rfc793</a></li></ol>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;blockquote&gt;
-&lt;p&gt;The Transmission Control Protocol (TCP) is intended for use as a highly&lt;br&gt;reliable &lt;strong&gt;host-to-host&lt;/strong&gt; protocol b
-      
-    
-    </summary>
-    
-    
-    
-      <category term="tcp" scheme="http://stardustman.github.io/tags/tcp/"/>
     
   </entry>
   

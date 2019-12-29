@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="network,tools,">
+  <meta name="keywords" content="git,">
 
 
 
@@ -85,21 +85,20 @@
 
 
 
-<meta name="description" content="Wireshark Windows 配置 SSL Version 3.0.3  配置 SSLKEYLOGFILE 系统变量  配置 Wireshark 编辑 -&amp;gt; 首选项 -&amp;gt; Protocols -&amp;gt; TLS    重启 Wireshark过滤器查看 视图 -&amp;gt; 内部 -&amp;gt; 支持的协议">
-<meta name="keywords" content="network,tools">
+<meta name="description" content="git add | git commit | git branch 图解       Reference git-under-the-hood Bilibili-git-under-the-hood SHA-1">
+<meta name="keywords" content="git">
 <meta property="og:type" content="article">
-<meta property="og:title" content="wireshark">
-<meta property="og:url" content="http://stardustman.github.io/2019/09/10/wireshark/index.html">
+<meta property="og:title" content="master-git">
+<meta property="og:url" content="http://stardustman.github.io/2019/12/28/master-git/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="Wireshark Windows 配置 SSL Version 3.0.3  配置 SSLKEYLOGFILE 系统变量  配置 Wireshark 编辑 -&amp;gt; 首选项 -&amp;gt; Protocols -&amp;gt; TLS    重启 Wireshark过滤器查看 视图 -&amp;gt; 内部 -&amp;gt; 支持的协议">
+<meta property="og:description" content="git add | git commit | git branch 图解       Reference git-under-the-hood Bilibili-git-under-the-hood SHA-1">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://stardustman.github.io/2019/09/10/wireshark/SSLKEYLOGFILE.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/09/10/wireshark/wireshark_tls_logfile.png">
-<meta property="og:updated_time" content="2019-09-10T06:26:33.349Z">
+<meta property="og:image" content="http://stardustman.github.io/2019/12/28/master-git/git.svg">
+<meta property="og:updated_time" content="2019-12-29T03:23:17.473Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="wireshark">
-<meta name="twitter:description" content="Wireshark Windows 配置 SSL Version 3.0.3  配置 SSLKEYLOGFILE 系统变量  配置 Wireshark 编辑 -&amp;gt; 首选项 -&amp;gt; Protocols -&amp;gt; TLS    重启 Wireshark过滤器查看 视图 -&amp;gt; 内部 -&amp;gt; 支持的协议">
-<meta name="twitter:image" content="http://stardustman.github.io/2019/09/10/wireshark/SSLKEYLOGFILE.png">
+<meta name="twitter:title" content="master-git">
+<meta name="twitter:description" content="git add | git commit | git branch 图解       Reference git-under-the-hood Bilibili-git-under-the-hood SHA-1">
+<meta name="twitter:image" content="http://stardustman.github.io/2019/12/28/master-git/git.svg">
 
 
 
@@ -129,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://stardustman.github.io/2019/09/10/wireshark/">
+  <link rel="canonical" href="http://stardustman.github.io/2019/12/28/master-git/">
 
 
 
 
 
-  <title>wireshark | stardustman</title>
+  <title>master-git | stardustman</title>
   
 
 
@@ -272,7 +271,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/09/10/wireshark/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/12/28/master-git/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -289,7 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">wireshark</h1>
+          <h1 class="post-title" itemprop="name headline">master-git</h1>
         
 
         <div class="post-meta">
@@ -301,8 +300,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-09-10T09:51:07+08:00">
-                2019-09-10
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-28T13:15:29+08:00">
+                2019-12-28
               </time>
             
 
@@ -320,8 +319,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/09/10/wireshark/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/09/10/wireshark/" itemprop="commentCount"></span>
+                <a href="/2019/12/28/master-git/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/12/28/master-git/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -349,19 +348,18 @@
       
 
       
-        <h2 id="Wireshark-Windows-配置-SSL"><a href="#Wireshark-Windows-配置-SSL" class="headerlink" title="Wireshark Windows 配置 SSL"></a>Wireshark Windows 配置 SSL</h2><blockquote>
-<p>Version 3.0.3</p>
-</blockquote>
-<h3 id="配置-SSLKEYLOGFILE-系统变量"><a href="#配置-SSLKEYLOGFILE-系统变量" class="headerlink" title="配置 SSLKEYLOGFILE 系统变量"></a>配置 SSLKEYLOGFILE 系统变量</h3><img src="/2019/09/10/wireshark/SSLKEYLOGFILE.png" title="系统变量 SSLKEYLOGFILE">
+        <h2 id="git-add-git-commit-git-branch-图解"><a href="#git-add-git-commit-git-branch-图解" class="headerlink" title="git add | git commit | git branch 图解"></a>git add | git commit | git branch 图解</h2><img src="/2019/12/28/master-git/git.svg" title="git">
 
-<h3 id="配置-Wireshark"><a href="#配置-Wireshark" class="headerlink" title="配置 Wireshark"></a>配置 Wireshark</h3><blockquote>
-<p>编辑 -&gt; 首选项 -&gt; Protocols -&gt; TLS</p>
-</blockquote>
-<img src="/2019/09/10/wireshark/wireshark_tls_logfile.png" title="Wireshark 配置 TLS">
 
-<h3 id="重启-Wireshark"><a href="#重启-Wireshark" class="headerlink" title="重启 Wireshark"></a>重启 Wireshark</h3><h2 id="过滤器查看"><a href="#过滤器查看" class="headerlink" title="过滤器查看"></a>过滤器查看</h2><blockquote>
-<p>视图 -&gt; 内部 -&gt; 支持的协议</p>
-</blockquote>
+
+
+
+
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><a href="https://www.lzane.com/slide/git-under-the-hood/index.html#/" target="_blank" rel="noopener">git-under-the-hood</a></li>
+<li><a href="https://www.bilibili.com/video/av77252063" target="_blank" rel="noopener">Bilibili-git-under-the-hood</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/SHA-1" target="_blank" rel="noopener">SHA-1</a></li>
+</ol>
 
       
     </div>
@@ -390,7 +388,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://stardustman.github.io/2019/09/10/wireshark/" title="wireshark">http://stardustman.github.io/2019/09/10/wireshark/</a>
+    <a href="http://stardustman.github.io/2019/12/28/master-git/" title="master-git">http://stardustman.github.io/2019/12/28/master-git/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -410,9 +408,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/network/" rel="tag"># network</a>
-          
-            <a href="/tags/tools/" rel="tag"># tools</a>
+            <a href="/tags/git/" rel="tag"># git</a>
           
         </div>
       
@@ -425,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/09/03/docker-practice/" rel="next" title="docker-practice">
-                <i class="fa fa-chevron-left"></i> docker-practice
+              <a href="/2019/12/24/katacoda-what-is-a-container/" rel="next" title="katacoda-what-is-a-container">
+                <i class="fa fa-chevron-left"></i> katacoda-what-is-a-container
               </a>
             
           </div>
@@ -434,10 +430,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/09/19/select-poll-epoll/" rel="prev" title="select_poll_epoll">
-                select_poll_epoll <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -468,7 +460,7 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/09/10/wireshark/" data-title="wireshark" data-url="http://stardustman.github.io/2019/09/10/wireshark/">
+      <div class="ds-thread" data-thread-key="2019/12/28/master-git/" data-title="master-git" data-url="http://stardustman.github.io/2019/12/28/master-git/">
       </div>
     </div>
 
@@ -573,7 +565,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Wireshark-Windows-配置-SSL"><span class="nav-number">1.</span> <span class="nav-text">Wireshark Windows 配置 SSL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-SSLKEYLOGFILE-系统变量"><span class="nav-number">1.1.</span> <span class="nav-text">配置 SSLKEYLOGFILE 系统变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置-Wireshark"><span class="nav-number">1.2.</span> <span class="nav-text">配置 Wireshark</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#重启-Wireshark"><span class="nav-number">1.3.</span> <span class="nav-text">重启 Wireshark</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#过滤器查看"><span class="nav-number">2.</span> <span class="nav-text">过滤器查看</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#git-add-git-commit-git-branch-图解"><span class="nav-number">1.</span> <span class="nav-text">git add | git commit | git branch 图解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">2.</span> <span class="nav-text">Reference</span></a></li></ol></div>
             
 
           </div>
