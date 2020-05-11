@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+  
+  
+  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="os,three easy pieces,">
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
+
+
+
+
+
+
+<meta name="description" content="我们知道一个计算机 CPU 数量有限, 但是却可以同时跑数量远远多于 CPU 数量的程序. 其实这就是 virtualizing. 怎样进行 CPU 虚拟化呢? 通过抽象出 process 这个基本概念, 也就是 running program. 一个没有运行的程序, 也就是磁盘上的一堆指令集和一些数据. 通过 time sharing 让一个 process stop, 然后去 run 另外一">
+<meta name="keywords" content="os,three easy pieces">
+<meta property="og:type" content="article">
+<meta property="og:title" content="three-easy-pieces-4-process">
+<meta property="og:url" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/index.html">
+<meta property="og:site_name" content="stardustman">
+<meta property="og:description" content="我们知道一个计算机 CPU 数量有限, 但是却可以同时跑数量远远多于 CPU 数量的程序. 其实这就是 virtualizing. 怎样进行 CPU 虚拟化呢? 通过抽象出 process 这个基本概念, 也就是 running program. 一个没有运行的程序, 也就是磁盘上的一堆指令集和一些数据. 通过 time sharing 让一个 process stop, 然后去 run 另外一">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/physical-organization-of-a-modern-system.png">
+<meta property="og:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/loading-from-program-to-process.png">
+<meta property="og:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/load-process.svg">
+<meta property="og:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/process-state-transition.png">
+<meta property="og:updated_time" content="2020-01-14T12:27:59.945Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="three-easy-pieces-4-process">
+<meta name="twitter:description" content="我们知道一个计算机 CPU 数量有限, 但是却可以同时跑数量远远多于 CPU 数量的程序. 其实这就是 virtualizing. 怎样进行 CPU 虚拟化呢? 通过抽象出 process 这个基本概念, 也就是 running program. 一个没有运行的程序, 也就是磁盘上的一堆指令集和一些数据. 通过 time sharing 让一个 process stop, 然后去 run 另外一">
+<meta name="twitter:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/physical-organization-of-a-modern-system.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/">
+
+
+
+
+
+  <title>three-easy-pieces-4-process | stardustman</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">stardustman</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">three-easy-pieces-4-process</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-14T10:06:38+08:00">
+                2020-01-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/01/14/three-easy-pieces-4-process/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/01/14/three-easy-pieces-4-process/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>我们知道一个计算机 <code>CPU</code> 数量有限, 但是却可以同时跑数量远远多于 <code>CPU</code> 数量的程序. 其实这就是 <code>virtualizing</code>. 怎样进行 <code>CPU</code> 虚拟化呢? 通过抽象出 <code>process</code> 这个基本概念, 也就是 <code>running program</code>. 一个没有运行的程序, 也就是磁盘上的一堆指令集和一些数据. 通过 <code>time sharing</code> 让一个 <code>process stop</code>, 然后去 <code>run</code> 另外一个 <code>process</code>. 重复这个 <code>context switch</code> 过程, 可以让多个程序同时运行, 这就是在<code>virtualizing CPU</code>.<br><code>mechanisms</code> are low-level methods or protocols that implements a needed piece of functionality. 类似于 java 中的接口, 就是我要提供什么功能. 比如 <code>OS</code> 中的进程的 <code>context switch</code>这个机制.<br><code>policies</code> are algorithms for making some kind of decision within the OS.类似 java 中实现类, 怎么实现这个接口定义的方法. 比如 <code>OS</code> 中的进程调度策略就是为了实现进程 <code>context switch</code>.<br><code>mechanisms</code> 和 <code>policies</code> 分离, 和 java 中接口和实现非常相似. 实际上这也是软件设计的原则. <code>OS</code> 本身也是软件.</p>
+</blockquote>
+<h2 id="physical-organization-of-a-modern-system"><a href="#physical-organization-of-a-modern-system" class="headerlink" title="physical organization of a modern system"></a>physical organization of a modern system</h2><img src="/2020/01/14/three-easy-pieces-4-process/physical-organization-of-a-modern-system.png" title="现代计算机系统物理架构">
+
+<h2 id="the-abstracttion-a-process"><a href="#the-abstracttion-a-process" class="headerlink" title="the abstracttion: a process"></a>the abstracttion: a process</h2><h3 id="address-space"><a href="#address-space" class="headerlink" title="address space"></a>address space</h3><p>存放程序的 <code>instructions</code> 和 <code>data</code>.</p>
+<h3 id="program-counter"><a href="#program-counter" class="headerlink" title="program counter"></a>program counter</h3><p>程序寄存器, 为了实现 <code>process</code> 的 <code>stop</code> 和 <code>run</code>, 需要知道执行到哪一条指令了.</p>
+<h3 id="stack-pointer"><a href="#stack-pointer" class="headerlink" title="stack pointer"></a>stack pointer</h3><p>function parameters, local variables, return addresses</p>
+<h3 id="io"><a href="#io" class="headerlink" title="io"></a>io</h3><p>进程默认打开 <code>stdin(0)</code>, <code>stdout(1)</code>, <code>stderr(2)</code> 这三个 <code>file descriptor</code>.</p>
+<h2 id="process-API"><a href="#process-API" class="headerlink" title="process API"></a>process API</h2><h3 id="create"><a href="#create" class="headerlink" title="create"></a>create</h3><h3 id="destroy"><a href="#destroy" class="headerlink" title="destroy"></a>destroy</h3><p>kill a process or halt it</p>
+<h3 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h3><h3 id="miscellaneous-control"><a href="#miscellaneous-control" class="headerlink" title="miscellaneous control"></a>miscellaneous control</h3><p><em>suspend</em> process, stop it from running for a while<br><em>resume</em> process, contine it running</p>
+<h3 id="status"><a href="#status" class="headerlink" title="status"></a>status</h3><h2 id="process-creation-a-little-detail"><a href="#process-creation-a-little-detail" class="headerlink" title="process creation: a little detail"></a>process creation: a little detail</h2><img src="/2020/01/14/three-easy-pieces-4-process/loading-from-program-to-process.png">
+
+<p>把程序从磁盘加载到内存. 问题来了:</p>
+<ol>
+<li>是要全部加载到内存吗? (eagerly)</li>
+<li>还是部分加载到内存? (lazy, paging)</li>
+<li>抑或内存根本不够存放整个程序? (swapping)</li>
+<li>启动程序的必要代码和数据加载了吗? (一系列 run-time 设置)</li>
+<li>分配供函数执行的 run-time stack(or just stack). 在 C 语言中, 用来存放 <code>function parameters</code>, <code>local variables</code>, <code>return addresses</code>, 想一想 <code>main</code> 的函数参数 <code>argc</code>,<code>argv</code>, 应该就是 <code>OS</code> 初始化的.</li>
+<li>分配/回收 heap. (malloc 和 free).</li>
+<li>set up related I/O </li>
+<li>execute program, 跳到 entry point, 也就是 main().</li>
+</ol>
+<img src="/2020/01/14/three-easy-pieces-4-process/load-process.svg" title="程序加载执行流程">
+<h2 id="process-states"><a href="#process-states" class="headerlink" title="process states"></a>process states</h2><p>简单来说, 分为 3 种状态:</p>
+<ol>
+<li>running</li>
+</ol>
+<p><strong>a process is running on a processor, which means it is executing instructions</strong></p>
+<ol start="2">
+<li>ready</li>
+</ol>
+<p><strong>a process is ready to run but for some reason the OS has chosen not run it at this given moment</strong></p>
+<ol start="3">
+<li>blocked</li>
+</ol>
+<p><strong>a process has performmed some kind of operation that makes it not ready to run until some other event takes place. A common example: when a process initiates an I/O request to a disk, it becomes blocked and thus some other process can use the processor</strong></p>
+<img src="/2020/01/14/three-easy-pieces-4-process/process-state-transition.png" title="进程状态转换">
+
+<h2 id="data-structures"><a href="#data-structures" class="headerlink" title="data structures"></a>data structures</h2><blockquote>
+<p>以下是 xv6 这个 <code>MIT</code> 教学 <code>OS</code> 的 <a href="https://github.com/stardustman/xv6-public/blob/master/proc.h" target="_blank" rel="noopener">proc.h</a> </p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Per-CPU state</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cpu</span> &#123;</span></span><br><span class="line">  uchar apicid;                <span class="comment">// Local APIC ID </span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">context</span> *<span class="title">scheduler</span>;</span>   <span class="comment">// swtch() here to enter scheduler</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">taskstate</span> <span class="title">ts</span>;</span>         <span class="comment">// Used by x86 to find stack for interrupt</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">segdesc</span> <span class="title">gdt</span>[<span class="title">NSEGS</span>];</span>   <span class="comment">// x86 global descriptor table , 拿着 GDT 使用内存</span></span><br><span class="line">  <span class="keyword">volatile</span> uint started;       <span class="comment">// Has the CPU started?</span></span><br><span class="line">  <span class="keyword">int</span> ncli;                    <span class="comment">// Depth of pushcli nesting.</span></span><br><span class="line">  <span class="keyword">int</span> intena;                  <span class="comment">// Were interrupts enabled before pushcli?</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">proc</span>;</span>           <span class="comment">// The process running on this cpu or null</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="class"><span class="keyword">struct</span> <span class="title">cpu</span> <span class="title">cpus</span>[<span class="title">NCPU</span>];</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> ncpu;</span><br><span class="line"></span><br><span class="line"><span class="comment">//PAGEBREAK: 17</span></span><br><span class="line"><span class="comment">// Saved registers for kernel context switches.</span></span><br><span class="line"><span class="comment">// Don't need to save all the segment registers (%cs, etc),</span></span><br><span class="line"><span class="comment">// because they are constant across kernel contexts.</span></span><br><span class="line"><span class="comment">// Don't need to save %eax, %ecx, %edx, because the</span></span><br><span class="line"><span class="comment">// x86 convention is that the caller has saved them.</span></span><br><span class="line"><span class="comment">// Contexts are stored at the bottom of the stack they</span></span><br><span class="line"><span class="comment">// describe; the stack pointer is the address of the context.</span></span><br><span class="line"><span class="comment">// The layout of the context matches the layout of the stack in swtch.S</span></span><br><span class="line"><span class="comment">// at the "Switch stacks" comment. Switch doesn't save eip explicitly,</span></span><br><span class="line"><span class="comment">// but it is on the stack and allocproc() manipulates it.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">context</span> &#123;</span></span><br><span class="line">  uint edi;</span><br><span class="line">  uint esi;</span><br><span class="line">  uint ebx;</span><br><span class="line">  uint ebp;</span><br><span class="line">  uint eip;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> procstate &#123; UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Per-process state</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">proc</span> &#123;</span></span><br><span class="line">  uint sz;                     <span class="comment">// Size of process memory (bytes) 分配的内存大小</span></span><br><span class="line">  <span class="keyword">pde_t</span>* pgdir;                <span class="comment">// Page table  页表</span></span><br><span class="line">  <span class="keyword">char</span> *kstack;                <span class="comment">// Bottom of kernel stack for this process</span></span><br><span class="line">  <span class="keyword">enum</span> procstate state;        <span class="comment">// Process state 进程状态</span></span><br><span class="line">  <span class="keyword">int</span> pid;                     <span class="comment">// Process ID</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">parent</span>;</span>         <span class="comment">// Parent process 父进程</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">trapframe</span> *<span class="title">tf</span>;</span>        <span class="comment">// Trap frame for current syscall</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">context</span> *<span class="title">context</span>;</span>     <span class="comment">// swtch() here to run process</span></span><br><span class="line">  <span class="keyword">void</span> *chan;                  <span class="comment">// If non-zero, sleeping on chan</span></span><br><span class="line">  <span class="keyword">int</span> killed;                  <span class="comment">// If non-zero, have been killed</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">file</span> *<span class="title">ofile</span>[<span class="title">NOFILE</span>];</span>  <span class="comment">// Open files</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">inode</span> *<span class="title">cwd</span>;</span>           <span class="comment">// Current directory</span></span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">16</span>];               <span class="comment">// Process name (debugging)</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Process memory is laid out contiguously, low addresses first:</span></span><br><span class="line"><span class="comment">//   text</span></span><br><span class="line"><span class="comment">//   original data and bss</span></span><br><span class="line"><span class="comment">//   fixed-size stack</span></span><br><span class="line"><span class="comment">//   expandable heap</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h2><p>low-level(mechanisms) 实现进程功能<br>high-level(policies)  调度策略<br>机制和策略合在一起, 实现 CPU 的虚拟化</p>
+<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ol>
+<li><p><a href="https://mp.weixin.qq.com/s/USb5e2Zoc0LRgRShRpTYfg" target="_blank" rel="noopener">linux process</a></p>
+</li>
+<li><p><a href="http://pages.cs.wisc.edu/~remzi/OSTEP/Homework/homework.html" target="_blank" rel="noopener">three easy pieces</a></p>
+</li>
+<li><p><a href="https://www.computerhope.com/jargon/f/file-descriptor.htm" target="_blank" rel="noopener">file descriptor</a></p>
+</li>
+<li><p><a href="https://github.com/stardustman/xv6-public/blob/master/proc.h" target="_blank" rel="noopener">xv6-proc</a></p>
+</li>
+<li><p><a href="https://zhuanlan.zhihu.com/p/26464793" target="_blank" rel="noopener">中断</a></p>
+</li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="/images/wechar-subscriber.jpg" alt="stardustman wechat" style="width: 200px; max-width: 100%;">
+    <div>业精于勤， 荒于嬉。行成于思，毁于随。</div>
+</div>
+
+      </div>
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>Post author:</strong>
+    stardustman
+  </li>
+  <li class="post-copyright-link">
+    <strong>Post link:</strong>
+    <a href="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/" title="three-easy-pieces-4-process">http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice: </strong>
+    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
+  </li>
+   
+   
+
+
+
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/os/" rel="tag"># os</a>
+          
+            <a href="/tags/three-easy-pieces/" rel="tag"># three easy pieces</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/28/master-git/" rel="next" title="master-git">
+                <i class="fa fa-chevron-left"></i> master-git
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/04/10/algorithm-merge-sort/" rel="prev" title="algorithm-merge-sort">
+                algorithm-merge-sort <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div class="ds-thread" data-thread-key="2020/01/14/three-easy-pieces-4-process/" data-title="three-easy-pieces-4-process" data-url="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/">
+      </div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">stardustman</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#physical-organization-of-a-modern-system"><span class="nav-number">1.</span> <span class="nav-text">physical organization of a modern system</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#the-abstracttion-a-process"><span class="nav-number">2.</span> <span class="nav-text">the abstracttion: a process</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#address-space"><span class="nav-number">2.1.</span> <span class="nav-text">address space</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#program-counter"><span class="nav-number">2.2.</span> <span class="nav-text">program counter</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stack-pointer"><span class="nav-number">2.3.</span> <span class="nav-text">stack pointer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#io"><span class="nav-number">2.4.</span> <span class="nav-text">io</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#process-API"><span class="nav-number">3.</span> <span class="nav-text">process API</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#create"><span class="nav-number">3.1.</span> <span class="nav-text">create</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#destroy"><span class="nav-number">3.2.</span> <span class="nav-text">destroy</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#wait"><span class="nav-number">3.3.</span> <span class="nav-text">wait</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#miscellaneous-control"><span class="nav-number">3.4.</span> <span class="nav-text">miscellaneous control</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#status"><span class="nav-number">3.5.</span> <span class="nav-text">status</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#process-creation-a-little-detail"><span class="nav-number">4.</span> <span class="nav-text">process creation: a little detail</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#process-states"><span class="nav-number">5.</span> <span class="nav-text">process states</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#data-structures"><span class="nav-number">6.</span> <span class="nav-text">data structures</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#summary"><span class="nav-number">7.</span> <span class="nav-text">summary</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">8.</span> <span class="nav-text">reference</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+        <div class="back-to-top">
+          <i class="fa fa-arrow-up"></i>
+          
+            <span id="scrollpercent"><span>0</span>%</span>
+          
+        </div>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stardustman</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"your-duoshuo-shortname"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+  <div id="gitalk-container"></div>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: '',
+      clientSecret: '',
+      repo: 'hexo-comments',
+      owner: 'stardustman',
+      admin: [''],
+      id: location.pathname,
+      distractionFreeMode: 'false'
+    })
+    gitalk.render('gitalk-container')
+  </script>
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
+  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
+
+
+  
+
+</body>
+</html>
