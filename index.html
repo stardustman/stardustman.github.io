@@ -265,6 +265,288 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/13/os-banker-s-algorithm/" itemprop="url">os-banker's-algorithm</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-13T15:31:05+08:00">
+                2020-05-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/13/os-banker-s-algorithm/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/05/13/os-banker-s-algorithm/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h2><h3 id="银行家算法是什么"><a href="#银行家算法是什么" class="headerlink" title="银行家算法是什么"></a>银行家算法是什么</h3><p><code>银行家</code>主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，可以银行判定能不能按照某个顺序来给这批人放贷。类似的思路延伸到计算机世界，同理。操作系统给多个进程分配资源，<code>能不能找到一个顺序给这些进程分配资源，并逐渐回收资源？</code>从而满足多个进程的资源需求。采用银行家放贷和收贷的思路（这里排除利息，放多少贷，收多少钱。呵呵，哪有此种好事？）来分配和回收系统资源就是所谓的<code>银行家算法</code>。</p>
+<h3 id="银行家算法解决什么问题"><a href="#银行家算法解决什么问题" class="headerlink" title="银行家算法解决什么问题"></a>银行家算法解决什么问题</h3><p><code>resource allocation and deadlock avoidance algorithm</code>。银行家算法用来进行资源分配和避免死锁。</p>
+<h3 id="银行家算法怎样解决问题"><a href="#银行家算法怎样解决问题" class="headerlink" title="银行家算法怎样解决问题"></a>银行家算法怎样解决问题</h3><p>P0、P1、P2、P3、P4 5个进程，视为需要钱的 5 个人。<br>A、B、C 三种系统资源。分别视为是银行三种贵金属：金块、银块、铜块。</p>
+<h4 id="allocation-table-已放贷表"><a href="#allocation-table-已放贷表" class="headerlink" title="allocation table 已放贷表"></a>allocation table 已放贷表</h4><p>每个人已经借的金银铜个数列表</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">P1</td>
+<td align="center">2</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">P2</td>
+<td align="center">3</td>
+<td align="center">0</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P3</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">P4</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">2</td>
+</tr>
+</tbody></table>
+<h4 id="max-table-最大借贷表"><a href="#max-table-最大借贷表" class="headerlink" title="max table 最大借贷表"></a>max table 最大借贷表</h4><p>每个人需要金银铜最大个数列表</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P0</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">P1</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P2</td>
+<td align="center">9</td>
+<td align="center">0</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P3</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P4</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+</tbody></table>
+<h4 id="need-table-还需放贷表"><a href="#need-table-还需放贷表" class="headerlink" title="need table 还需放贷表"></a>need table 还需放贷表</h4><p>每个人还需要的金银铜个数列表。由 max table - allocation table 得到。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P0</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">P1</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P2</td>
+<td align="center">6</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">P3</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">P4</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<h4 id="available-table-剩余资源表"><a href="#available-table-剩余资源表" class="headerlink" title="available table 剩余资源表"></a>available table 剩余资源表</h4><p>银行还剩下的金银铜个数。</p>
+<table>
+<thead>
+<tr>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+</tbody></table>
+<h4 id="剩余系统资源分配顺序推演"><a href="#剩余系统资源分配顺序推演" class="headerlink" title="剩余系统资源分配顺序推演"></a>剩余系统资源分配顺序推演</h4><ol>
+<li>拿着 available table （剩余资源表），到 need table（还需放贷表） 比对。若 available table 的 A B C 满足 need table 的某一行（也就是 available table 每一列都大于等于 need table 的某一行的每一列）。说明可以分配给这个进程，标记这一行。同时回收这一行对应的 allocation table 中已经分配的 A B C。更新 available table 的 A B C。以此类推，继续比对 need table 中其他未标记的行。若最后 need table 所有行都有标记，说明存在一个给 P0、P1、P2、P3、P4 进程分配资源的顺序。</li>
+<li>拿着 available table 剩余资源表，不满足 need table 中任何一行。说明不存在一个给 P0、P1、P2、P3、P4 进程分配资源的顺序。系统有可能进入死锁。</li>
+</ol>
+<h4 id="银行家算法图解分析"><a href="#银行家算法图解分析" class="headerlink" title="银行家算法图解分析"></a>银行家算法图解分析</h4><img src="/2020/05/13/os-banker-s-algorithm/banks-algorithm.svg" title="银行家算法">
+
+<h3 id="有没有其他方法解决此问题"><a href="#有没有其他方法解决此问题" class="headerlink" title="有没有其他方法解决此问题"></a>有没有其他方法解决此问题</h3><h3 id="Banker’s-Algorithm-implemention"><a href="#Banker’s-Algorithm-implemention" class="headerlink" title="Banker’s Algorithm implemention"></a>Banker’s Algorithm implemention</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Banker's Algorithm </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// P0, P1, P2, P3, P4 are the Process names here </span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> n, m, i, j, k; </span><br><span class="line">    n = <span class="number">5</span>; <span class="comment">// Number of processes </span></span><br><span class="line">    m = <span class="number">3</span>; <span class="comment">// Number of resources </span></span><br><span class="line">    <span class="keyword">int</span> alloc[<span class="number">5</span>][<span class="number">3</span>] = &#123; &#123; <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span> &#125;, <span class="comment">// P0    // Allocation Matrix </span></span><br><span class="line">                        &#123; <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span> &#125;, <span class="comment">// P1 </span></span><br><span class="line">                        &#123; <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> &#125;, <span class="comment">// P2 </span></span><br><span class="line">                        &#123; <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span> &#125;, <span class="comment">// P3 </span></span><br><span class="line">                        &#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span> &#125; &#125;; <span class="comment">// P4 </span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> max[<span class="number">5</span>][<span class="number">3</span>] = &#123; &#123; <span class="number">7</span>, <span class="number">5</span>, <span class="number">3</span> &#125;, <span class="comment">// P0    // MAX Matrix </span></span><br><span class="line">                      &#123; <span class="number">3</span>, <span class="number">2</span>, <span class="number">2</span> &#125;, <span class="comment">// P1 </span></span><br><span class="line">                      &#123; <span class="number">9</span>, <span class="number">0</span>, <span class="number">2</span> &#125;, <span class="comment">// P2 </span></span><br><span class="line">                      &#123; <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span> &#125;, <span class="comment">// P3 </span></span><br><span class="line">                      &#123; <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span> &#125; &#125;; <span class="comment">// P4 </span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> avail[<span class="number">3</span>] = &#123; <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span> &#125;; <span class="comment">// Available Resources </span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> finished[n], ans[n], index = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; n; k++) &#123; </span><br><span class="line">        finished[k] = <span class="number">0</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">int</span> need[n][m]; </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123; </span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++) </span><br><span class="line">            <span class="comment">// 计算 need matrix</span></span><br><span class="line">            need[i][j] = max[i][j] - alloc[i][j]; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">int</span> y = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; <span class="number">5</span>; k++) &#123; </span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> (finished[i] == <span class="number">0</span>) &#123; </span><br><span class="line">  </span><br><span class="line">                <span class="keyword">int</span> flag = <span class="number">0</span>; </span><br><span class="line">                <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++) &#123; </span><br><span class="line">                    <span class="keyword">if</span> (need[i][j] &gt; avail[j])&#123; </span><br><span class="line">                        flag = <span class="number">1</span>; </span><br><span class="line">                         <span class="keyword">break</span>; </span><br><span class="line">                    &#125; </span><br><span class="line">                &#125; </span><br><span class="line">  </span><br><span class="line">                <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123; </span><br><span class="line">                    ans[index++] = i; </span><br><span class="line">                    <span class="keyword">for</span> (y = <span class="number">0</span>; y &lt; m; y++) </span><br><span class="line">                        avail[y] += alloc[i][y]; </span><br><span class="line">                    finished[i] = <span class="number">1</span>; </span><br><span class="line">                &#125; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Following is the SAFE Sequence\n"</span>); </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">" P%d -&gt;"</span>, ans[i]); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" P%d"</span>, ans[n - <span class="number">1</span>]); </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>); </span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://zh.wikipedia.org/wiki/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">银行家算法-wiki</a></li>
+<li><a href="https://www.geeksforgeeks.org/bankers-algorithm-in-operating-system-2/" target="_blank" rel="noopener">bankers-algorithm</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1999,141 +2281,7 @@
 
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><a href="https://raw.githubusercontent.com/moby/moby/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/contrib/mkimage/busybox-static" target="_blank" rel="noopener">busybox-static</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/11/22/bloomfilter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/22/bloomfilter/" itemprop="url">bloomfilter</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-22T09:05:04+08:00">
-                2019-11-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/11/22/bloomfilter/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/22/bloomfilter/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a href="https://www.jasondavies.com/bloomfilter/" target="_blank" rel="noopener">bloom filter</a></p>
-</li>
-<li><p><a href="https://llimllib.github.io/bloomfilter-tutorial/" target="_blank" rel="noopener">bloom filter</a></p>
-</li>
+<li><a href="http://jm.taobao.org/2016/05/12/introduction-to-docker/" target="_blank" rel="noopener">docker-intro</a></li>
 </ol>
 
           
@@ -2220,7 +2368,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2233,7 +2381,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">27</span>
+                  <span class="site-state-item-count">29</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
