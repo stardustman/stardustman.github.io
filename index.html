@@ -265,6 +265,156 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/18/data-structure-heap/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/18/data-structure-heap/" itemprop="url">data-structure-heap</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-05-18T15:24:05+08:00">
+                2020-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/05/18/data-structure-heap/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/05/18/data-structure-heap/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="线性-or-非线性"><a href="#线性-or-非线性" class="headerlink" title="线性 or 非线性"></a>线性 or 非线性</h3><p>数据结构可以分为两大类：线性结构和非线性结构。线性结构典型的就是数组和链表，非线性典型就是树了。复杂的数据结构基本上都是两者的组合。</p>
+<h3 id="binary-heap"><a href="#binary-heap" class="headerlink" title="binary heap"></a>binary heap</h3><p>二叉堆本质上就是个完全二叉树。但是却用数组来表示。为啥呢？因为数组的下标之间有关系，可以表示二叉树节点之间的层级关系。因为是 <code>完全二叉树</code>，这就保证了一维展开就是一个下标连续的数组，数组通过下标操作起来相当简洁。堆顶(root)也就就是数组第一个元素 <code>array[0]</code>，是最小元素，就是小顶堆。反之，大顶堆。</p>
+<h3 id="堆的自我调整"><a href="#堆的自我调整" class="headerlink" title="堆的自我调整"></a>堆的自我调整</h3><h4 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h4><p>新节点放在数组最后，然后对该节点进行上浮操作。</p>
+<h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><p>删除堆顶元素，最后一个节点放在堆顶，对此时的堆顶进行下沉操作。</p>
+<h4 id="构建二叉堆"><a href="#构建二叉堆" class="headerlink" title="构建二叉堆"></a>构建二叉堆</h4><p>所有的非叶子节点进行上浮操作。</p>
+<h4 id="二叉堆自我调整图解"><a href="#二叉堆自我调整图解" class="headerlink" title="二叉堆自我调整图解"></a>二叉堆自我调整图解</h4><img src="/2020/05/18/data-structure-heap/binary-heap.svg" title="二叉堆的自我调整">
+
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapOperator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自下而上，上浮</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">upAdjust</span><span class="params">(<span class="keyword">int</span> [] array)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 最后一个节点</span></span><br><span class="line">        <span class="keyword">int</span> childIndex = array.length - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 最后一个非叶子节点</span></span><br><span class="line">        <span class="keyword">int</span> parentIndex = (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> temp = array[childIndex];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &gt; <span class="number">0</span> &amp;&amp; temp &lt; array[parentIndex])&#123;</span><br><span class="line">            array[childIndex] = array[parentIndex];</span><br><span class="line">            childIndex = parentIndex;</span><br><span class="line">            parentIndex = (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[childIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自上而下，下沉</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">downAdjust</span><span class="params">(<span class="keyword">int</span> [] array, <span class="keyword">int</span> parentIndex, <span class="keyword">int</span> length)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = array[parentIndex];</span><br><span class="line">        <span class="keyword">int</span> childIndex = <span class="number">2</span> * parentIndex + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &lt; length)&#123;</span><br><span class="line">            <span class="comment">// 有右节点，且右节点小于左节点</span></span><br><span class="line">            <span class="keyword">if</span> (childIndex + <span class="number">1</span> &lt; length &amp;&amp; array[childIndex] &gt; array[childIndex + <span class="number">1</span>])&#123;</span><br><span class="line">                childIndex++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(temp &lt;= array[childIndex])&#123;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            array[parentIndex] = array[childIndex];</span><br><span class="line">            parentIndex = childIndex;</span><br><span class="line">            childIndex = <span class="number">2</span> * parentIndex + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[parentIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span>[] array)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = (array.length - <span class="number">1</span>)/ <span class="number">2</span>; i &gt;= <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            downAdjust(array, i, array.length - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span> [] array)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 先构建一个小顶堆，得到一个最小值。</span></span><br><span class="line">        <span class="comment">// i 为 parentIndex，左右子节点分别是 2 * i + 1, 2 * i + 2</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = (array.length - <span class="number">1</span> -<span class="number">2</span> ) / <span class="number">2</span>; i &gt;= <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            downAdjust(array, i, array.length);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 堆顶和目前堆的最后一个节点交换，重新构建堆。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = array.length - <span class="number">1</span>; i &gt; <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = array[i];</span><br><span class="line">            array[i] = array[<span class="number">0</span>];</span><br><span class="line">            array[<span class="number">0</span>] = temp;</span><br><span class="line">            downAdjust(array, <span class="number">0</span> , i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> [] array = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        upAdjust(array);</span><br><span class="line">        System.out.println(Arrays.toString(array));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] array2 = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">7</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>&#125;;</span><br><span class="line">        buildHeap(array2);</span><br><span class="line">        System.out.println(Arrays.toString(array2));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] array3 = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">7</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">100</span>&#125;;</span><br><span class="line">        heapSort(array3);</span><br><span class="line">        System.out.println(Arrays.toString(array3));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="优先级队列"><a href="#优先级队列" class="headerlink" title="优先级队列"></a>优先级队列</h3><p>不要被队列二字带偏，优先级队列的重点在优先级上。比如线程有优先级，优先级大的先执行。运算符也是有优先级的。怎样来实现这种优先级呢？用 <code>堆</code> 就可以。这里使用小顶堆，堆顶就是最小值，这里带入优先级的概念，值越小优先级越大。那么，从堆顶拿出来的节点就是优先级最大的，剩余的节点重新构造成小顶堆，保证堆顶是最小值。</p>
+<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><p><code>大顶堆</code>实现优先队列。每次只取最大值，取出一个堆顶，剩余节点重新构建大顶堆。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PriorityQueue</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] array;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PriorityQueue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.array = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">32</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">enQueue</span><span class="params">(<span class="keyword">int</span> key)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(size &gt;= array.length)&#123;</span><br><span class="line">            resize();</span><br><span class="line">        &#125;</span><br><span class="line">        array[size++] = key;</span><br><span class="line">        upAdjust();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">deQueue</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> heapTop = array[<span class="number">0</span>];</span><br><span class="line">        array[<span class="number">0</span>] = array[--size];</span><br><span class="line">        downAdjust();</span><br><span class="line">        <span class="keyword">return</span> heapTop;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">resize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> doubleSize = size &lt;&lt; <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">this</span>.array = Arrays.copyOf(<span class="keyword">this</span>.array,doubleSize);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自下而上</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">upAdjust</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="comment">// 拿到最后一个节点</span></span><br><span class="line">        <span class="keyword">int</span> childIndex = <span class="keyword">this</span>.size - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 最后一个非叶子节点</span></span><br><span class="line">        <span class="keyword">int</span> parentIndex = (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> temp = array[childIndex];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &gt; <span class="number">0</span> &amp;&amp; temp &gt; array[parentIndex])&#123;</span><br><span class="line">            array[childIndex] = array[parentIndex];</span><br><span class="line">            childIndex = parentIndex;</span><br><span class="line">            parentIndex = (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[childIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自上而下</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">downAdjust</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> parentIndex = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> temp = array[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> childIndex = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &lt; size)&#123;</span><br><span class="line">            <span class="comment">// 有右节点，且右节点大于左节点。拿到两个子节点的最大值。</span></span><br><span class="line">            <span class="keyword">if</span> (childIndex + <span class="number">1</span> &lt; size &amp;&amp; array[childIndex] &lt; array[childIndex + <span class="number">1</span>])&#123;</span><br><span class="line">                childIndex++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(temp &gt;= array[childIndex])&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            array[parentIndex] = array[childIndex];</span><br><span class="line">            parentIndex = childIndex;</span><br><span class="line">            childIndex = <span class="number">2</span> * parentIndex + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[parentIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        PriorityQueue priorityQueue = <span class="keyword">new</span> PriorityQueue();</span><br><span class="line">        priorityQueue.enQueue(<span class="number">30</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">100</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">50</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">300</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">130</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">430</span>);</span><br><span class="line">        System.out.println(priorityQueue.deQueue());</span><br><span class="line">        System.out.println(priorityQueue.deQueue());</span><br><span class="line">        System.out.println(priorityQueue.deQueue());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ol>
+<li><a href="https://visualgo.net/zh/heap" target="_blank" rel="noopener">visual heap</a></li>
+<li><a href="https://mp.weixin.qq.com/s/cq2EhVtOTzTVpNpLDXfeJg" target="_blank" rel="noopener">binary heap</a></li>
+<li><a href="https://mp.weixin.qq.com/s/8Bid1naBLtEjPoP-R4HkBg" target="_blank" rel="noopener">heap sort</a></li>
+<li><a href="https://mp.weixin.qq.com/s/4hXBw7sZ-NKs_asOQxS7gA" target="_blank" rel="noopener">priority queue</a></li>
+<li><a href="https://web.cecs.pdx.edu/~sheard/course/Cs163/Doc/FullvsComplete.html" target="_blank" rel="noopener">full binary tree vs complete binary tree</a></li>
+<li><a href="https://web.cecs.pdx.edu/~sheard/course/Cs163/Doc/HeapReview.html" target="_blank" rel="noopener">heap review</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -346,7 +496,7 @@
       
         
           
-            <h2 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h2><h3 id="银行家算法是什么"><a href="#银行家算法是什么" class="headerlink" title="银行家算法是什么"></a>银行家算法是什么</h3><p><code>银行家</code>主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，可以银行判定能不能按照某个顺序来给这批人放贷。类似的思路延伸到计算机世界，同理。操作系统给多个进程分配资源，<code>能不能找到一个顺序给这些进程分配资源，并逐渐回收资源？</code>从而满足多个进程的资源需求。采用银行家放贷和收贷的思路（这里排除利息，放多少贷，收多少钱。呵呵，哪有此种好事？）来分配和回收系统资源就是所谓的<code>银行家算法</code>。</p>
+            <h2 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h2><h3 id="银行家算法是什么"><a href="#银行家算法是什么" class="headerlink" title="银行家算法是什么"></a>银行家算法是什么</h3><p><code>银行家</code>主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，银行可以判定能不能按照某个顺序来给这批人放贷。类似的思路延伸到计算机世界，同理。操作系统给多个进程分配资源，<code>能不能找到一个顺序给这些进程分配资源，并逐渐回收资源？</code>从而满足多个进程的资源需求。采用银行家放贷和收贷的思路（这里排除利息，放多少贷，收多少钱。呵呵，哪有此种好事？）来分配和回收系统资源就是所谓的<code>银行家算法</code>。</p>
 <h3 id="银行家算法解决什么问题"><a href="#银行家算法解决什么问题" class="headerlink" title="银行家算法解决什么问题"></a>银行家算法解决什么问题</h3><p><code>resource allocation and deadlock avoidance algorithm</code>。银行家算法用来进行资源分配和避免死锁。</p>
 <h3 id="银行家算法怎样解决问题"><a href="#银行家算法怎样解决问题" class="headerlink" title="银行家算法怎样解决问题"></a>银行家算法怎样解决问题</h3><p>P0、P1、P2、P3、P4 5个进程，视为需要钱的 5 个人。<br>A、B、C 三种系统资源。分别视为是银行三种贵金属：金块、银块、铜块。</p>
 <h4 id="allocation-table-已放贷表"><a href="#allocation-table-已放贷表" class="headerlink" title="allocation table 已放贷表"></a>allocation table 已放贷表</h4><p>每个人已经借的金银铜个数列表</p>
@@ -2105,220 +2255,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/11/26/katacoda-what-is-a-container-image/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/11/26/katacoda-what-is-a-container-image/" itemprop="url">katacoda-what-is-a-container-image</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-11-26T20:12:23+08:00">
-                2019-11-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/11/26/katacoda-what-is-a-container-image/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/11/26/katacoda-what-is-a-container-image/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="container-image"><a href="#container-image" class="headerlink" title="container image"></a>container image</h2><blockquote>
-<p>A container image is a tar file containing tar files. Each of the tar file is a layer. Once all tar files have been extract into the same location then you have the container’s filesystem.<br><code>container image</code> 是一个 <code>tar</code> 文件. 每一个 <code>tar</code> 文件就是一个 layer</p>
-</blockquote>
-<h3 id="docker-pull-拉取一个镜像"><a href="#docker-pull-拉取一个镜像" class="headerlink" title="docker pull 拉取一个镜像"></a>docker pull 拉取一个镜像</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull redis:3.2.11-alpine</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>3.2.11-alpine: Pulling from library/redis<br>ff3a5c916c92: Pull complete<br>aae70a2e6027: Pull complete<br>87c655da471c: Pull complete<br>bc3141806bdc: Pull complete<br>53616fb426d9: Pull complete<br>9791c5883c6a: Pull complete<br>Digest: sha256:ebf1948b84dcaaa0f8a2849cce6f2548edb8862e2829e3e7d9e4cd5a324fb3b7<br>Status: Downloaded newer image for redis:3.2.11-alpine</p>
-</blockquote>
-<blockquote>
-<p>可以看到 redis:3.2.11-alpine 这个 image 拉取了 <em>ff3a5c916c92</em>,<br><em>aae70a2e6027</em>, <em>87c655da471c</em>, <em>bc3141806bdc</em>, <em>53616fb426d9</em>, <em>9791c5883c6a</em> 共 6 次.</p>
-</blockquote>
-<h3 id="docker-save-验证-image-分层"><a href="#docker-save-验证-image-分层" class="headerlink" title="docker save 验证 image 分层"></a>docker save 验证 image 分层</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker save --<span class="built_in">help</span></span><br><span class="line">Usage:  docker save [OPTIONS] IMAGE [IMAGE...]</span><br><span class="line">Save one or more images to a tar archive (streamed to STDOUT by default)</span><br><span class="line">Options:</span><br><span class="line">  -o, --output string   Write to a file, instead of STDOUT</span><br></pre></td></tr></table></figure>
-
-<h4 id="验证-redis-3-2-11-alpine-分层"><a href="#验证-redis-3-2-11-alpine-分层" class="headerlink" title="验证 redis:3.2.11-alpine 分层"></a>验证 redis:3.2.11-alpine 分层</h4><h5 id="docker-save-保存-image-为-tar-文件"><a href="#docker-save-保存-image-为-tar-文件" class="headerlink" title="docker save 保存 image 为 tar 文件"></a>docker save 保存 image 为 tar 文件</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  save  redis:3.2.11-alpine &gt; redis.tar</span><br></pre></td></tr></table></figure>
-
-<h5 id="解压-tar-文件"><a href="#解压-tar-文件" class="headerlink" title="解压 tar 文件"></a>解压 tar 文件</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf redis.tar</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">tree</span><br><span class="line">.</span><br><span class="line">├── 46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── 498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json // 这个 `image` 的配置文件</span><br><span class="line">├── da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── manifest.json</span><br><span class="line">├── redis.tar // docker save 的 tar 文件</span><br><span class="line">└── repositories</span><br></pre></td></tr></table></figure>
-
-<h5 id="查看解压后的-tar-文件"><a href="#查看解压后的-tar-文件" class="headerlink" title="查看解压后的 tar 文件"></a>查看解压后的 tar 文件</h5><blockquote>
-<p>ls<br>46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557<br>498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59<br>ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c<br>ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json<br>da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c<br>db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3<br>f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c<br>manifest.json<br>repositories</p>
-</blockquote>
-<h5 id="查看-manifest-json"><a href="#查看-manifest-json" class="headerlink" title="查看 manifest.json"></a>查看 manifest.json</h5><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        "Config":"ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json", // 整个 image 的配置文件</span><br><span class="line">        "RepoTags":[</span><br><span class="line">            "redis:3.2.11-alpine" // image 的 tag</span><br><span class="line">        ],</span><br><span class="line">        "Layers":[</span><br><span class="line">            "498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59/layer.tar", // 1</span><br><span class="line">            "ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c/layer.tar", // 2</span><br><span class="line">            "da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c/layer.tar", // 3</span><br><span class="line">            "db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3/layer.tar", // 4</span><br><span class="line">            "f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c/layer.tar", // 5</span><br><span class="line">            "46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557/layer.tar"  // 6</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>由上可知, <code>redis:3.2.11-alpine</code> 这个 <code>image</code> 有 6 个 <code>*layer.tar</code> 组成. 每一个 layer.tar 对应 image 一层.</p>
-</blockquote>
-<h5 id="查看-repositories"><a href="#查看-repositories" class="headerlink" title="查看 repositories"></a>查看 repositories</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat repositories</span><br></pre></td></tr></table></figure>
-
-<p>结果如下:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">"redis"</span>:&#123;<span class="attr">"3.2.11-alpine"</span>:<span class="string">"46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557"</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="创建一个空的-image"><a href="#创建一个空的-image" class="headerlink" title="创建一个空的 image"></a>创建一个空的 image</h3><blockquote>
-<p>build an image from scratch</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker import --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Usage:  docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]<br>Import the contents from a tarball to create a filesystem image<br>Options:<br>  -c, –change list      Apply Dockerfile instruction to the created image<br>  -m, –message string   Set commit message for imported image</p>
-</blockquote>
-<ol>
-<li>使用 docker import 生成一个空镜像<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar cv --files-from /dev/null | docker import - empty</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<p>生成的 <strong>empty</strong> 空镜像 ID 如下:<br>sha256:8880ab5b7953a69e0a9252cbeeb537f0667ec10d3f849289117f8434802c0c49</p>
-<ol start="2">
-<li>查看生成的镜像<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h3 id="Creating-Image-without-Dockerfile"><a href="#Creating-Image-without-Dockerfile" class="headerlink" title="Creating Image without Dockerfile"></a>Creating Image without Dockerfile</h3><ol>
-<li>得到 <code>BusyBox rootfs</code> </li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://raw.githubusercontent.com/moby/moby/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/contrib/mkimage/busybox-static &amp;&amp; chmod +x busybox-static</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>执行 ./busybox-static busybox</p>
-</li>
-<li><p>ls -lha busybox</p>
-</li>
-<li><p>向 busybox 添加一个版本信息</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> KatacodaPrivateBuild &gt; busybox/release</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>用 busybox 这个文件夹生成一个 image</li>
-</ol>
-<blockquote>
-<p>the directory can be converted into a tar and automatically imported into Docker as an image.</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -C busybox -c . | docker import - busybox</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>启动一个容器并查看 release 信息</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run busybox cat /release</span><br></pre></td></tr></table></figure>
-
-<h3 id="busy-static-shell-脚本分析"><a href="#busy-static-shell-脚本分析" class="headerlink" title="busy-static shell 脚本分析"></a>busy-static shell 脚本分析</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"><span class="built_in">set</span> -e <span class="comment">#  Exit immediately if a command exits with a non-zero status.</span></span><br><span class="line"></span><br><span class="line">rootfsDir=<span class="string">"<span class="variable">$1</span>"</span> <span class="comment"># $1 是第一个参数</span></span><br><span class="line"><span class="built_in">shift</span> <span class="comment"># 相当于 shift 1, 也就是把第一个参数丢掉, 后面的都前进一步</span></span><br><span class="line"></span><br><span class="line">busybox=<span class="string">"<span class="variable">$(which busybox 2&gt;/dev/null || true)</span>"</span> <span class="comment"># 拿到 busybox 的路径</span></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="string">"<span class="variable">$busybox</span>"</span> ]; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> &gt;&amp;2 <span class="string">'error: busybox: not found'</span></span><br><span class="line">	<span class="built_in">echo</span> &gt;&amp;2 <span class="string">'  install it with your distribution "busybox-static" package'</span></span><br><span class="line">	<span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> ! ldd <span class="string">"<span class="variable">$busybox</span>"</span> 2&gt;&amp;1 | grep -q <span class="string">'not a dynamic executable'</span>; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> &gt;&amp;2 <span class="string">"error: '<span class="variable">$busybox</span>' appears to be a dynamic executable"</span></span><br><span class="line">	<span class="built_in">echo</span> &gt;&amp;2 <span class="string">'  you should install your distribution "busybox-static" package instead'</span></span><br><span class="line">	<span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">mkdir -p <span class="string">"<span class="variable">$rootfsDir</span>/bin"</span> <span class="comment"># 创建 $rootfsDir/bin</span></span><br><span class="line">rm -f <span class="string">"<span class="variable">$rootfsDir</span>/bin/busybox"</span> <span class="comment"># just in case</span></span><br><span class="line">cp <span class="string">"<span class="variable">$busybox</span>"</span> <span class="string">"<span class="variable">$rootfsDir</span>/bin/busybox"</span></span><br><span class="line"></span><br><span class="line">(</span><br><span class="line">	<span class="built_in">cd</span> <span class="string">"<span class="variable">$rootfsDir</span>"</span></span><br><span class="line"></span><br><span class="line">	IFS=$<span class="string">'\n'</span></span><br><span class="line">	modules=( $(bin/busybox --list-modules) ) <span class="comment"># 得到 busybox 所有的模块</span></span><br><span class="line">	<span class="built_in">unset</span> IFS</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> module <span class="keyword">in</span> <span class="string">"<span class="variable">$&#123;modules[@]&#125;</span>"</span>; <span class="keyword">do</span></span><br><span class="line">		mkdir -p <span class="string">"<span class="variable">$(dirname "$module")</span>"</span></span><br><span class="line">        <span class="comment"># ln target linkname</span></span><br><span class="line">		ln -sf /bin/busybox <span class="string">"<span class="variable">$module</span>"</span> <span class="comment"># 强制创建符号链接</span></span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a href="https://raw.githubusercontent.com/moby/moby/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/contrib/mkimage/busybox-static" target="_blank" rel="noopener">busybox-static</a></li>
-<li><a href="http://jm.taobao.org/2016/05/12/introduction-to-docker/" target="_blank" rel="noopener">docker-intro</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2369,7 +2305,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2382,7 +2318,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

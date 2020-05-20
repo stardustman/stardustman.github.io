@@ -85,19 +85,19 @@
 
 
 
-<meta name="description" content="Banker’s Algorithm银行家算法是什么银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，可以银行判定能">
+<meta name="description" content="Banker’s Algorithm银行家算法是什么银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，银行可以判定能">
 <meta name="keywords" content="os,dead lock,recource allocation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="os-banker&#39;s-algorithm">
 <meta property="og:url" content="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="Banker’s Algorithm银行家算法是什么银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，可以银行判定能">
+<meta property="og:description" content="Banker’s Algorithm银行家算法是什么银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，银行可以判定能">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/banks-algorithm.svg">
-<meta property="og:updated_time" content="2020-05-13T10:38:09.394Z">
+<meta property="og:updated_time" content="2020-05-13T11:53:27.954Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="os-banker&#39;s-algorithm">
-<meta name="twitter:description" content="Banker’s Algorithm银行家算法是什么银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，可以银行判定能">
+<meta name="twitter:description" content="Banker’s Algorithm银行家算法是什么银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，银行可以判定能">
 <meta name="twitter:image" content="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/banks-algorithm.svg">
 
 
@@ -348,7 +348,7 @@
       
 
       
-        <h2 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h2><h3 id="银行家算法是什么"><a href="#银行家算法是什么" class="headerlink" title="银行家算法是什么"></a>银行家算法是什么</h3><p><code>银行家</code>主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，可以银行判定能不能按照某个顺序来给这批人放贷。类似的思路延伸到计算机世界，同理。操作系统给多个进程分配资源，<code>能不能找到一个顺序给这些进程分配资源，并逐渐回收资源？</code>从而满足多个进程的资源需求。采用银行家放贷和收贷的思路（这里排除利息，放多少贷，收多少钱。呵呵，哪有此种好事？）来分配和回收系统资源就是所谓的<code>银行家算法</code>。</p>
+        <h2 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h2><h3 id="银行家算法是什么"><a href="#银行家算法是什么" class="headerlink" title="银行家算法是什么"></a>银行家算法是什么</h3><p><code>银行家</code>主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，银行可以判定能不能按照某个顺序来给这批人放贷。类似的思路延伸到计算机世界，同理。操作系统给多个进程分配资源，<code>能不能找到一个顺序给这些进程分配资源，并逐渐回收资源？</code>从而满足多个进程的资源需求。采用银行家放贷和收贷的思路（这里排除利息，放多少贷，收多少钱。呵呵，哪有此种好事？）来分配和回收系统资源就是所谓的<code>银行家算法</code>。</p>
 <h3 id="银行家算法解决什么问题"><a href="#银行家算法解决什么问题" class="headerlink" title="银行家算法解决什么问题"></a>银行家算法解决什么问题</h3><p><code>resource allocation and deadlock avoidance algorithm</code>。银行家算法用来进行资源分配和避免死锁。</p>
 <h3 id="银行家算法怎样解决问题"><a href="#银行家算法怎样解决问题" class="headerlink" title="银行家算法怎样解决问题"></a>银行家算法怎样解决问题</h3><p>P0、P1、P2、P3、P4 5个进程，视为需要钱的 5 个人。<br>A、B、C 三种系统资源。分别视为是银行三种贵金属：金块、银块、铜块。</p>
 <h4 id="allocation-table-已放贷表"><a href="#allocation-table-已放贷表" class="headerlink" title="allocation table 已放贷表"></a>allocation table 已放贷表</h4><p>每个人已经借的金银铜个数列表</p>
@@ -577,6 +577,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2020/05/18/data-structure-heap/" rel="prev" title="data-structure-heap">
+                data-structure-heap <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -658,7 +662,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -671,7 +675,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

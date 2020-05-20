@@ -265,6 +265,154 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/06/24/asm-how-x86-64-arguments-pass/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/06/24/asm-how-x86-64-arguments-pass/" itemprop="url">asm-how-x86-64-arguments-pass</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-24T09:52:27+08:00">
+                2019-06-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/24/asm-how-x86-64-arguments-pass/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/24/asm-how-x86-64-arguments-pass/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="x86-64-下函数参数传递-汇编层面分析"><a href="#x86-64-下函数参数传递-汇编层面分析" class="headerlink" title="x86-64 下函数参数传递, 汇编层面分析"></a>x86-64 下函数参数传递, 汇编层面分析</h3><blockquote>
+<p>To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first of the extra parameters (really the seventh parameter) parameter will be stored at the lowest address (this inversion of parameters was historically used to allow functions to be passed a variable number of parameters).</p>
+</blockquote>
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="C-main"><a href="#C-main" class="headerlink" title="C main"></a>C main</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    result = testArgs(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Asm-main"><a href="#Asm-main" class="headerlink" title="Asm main"></a>Asm main</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $16, %rsp</span><br><span class="line">        movl    $0, -4(%rbp) //result</span><br><span class="line">        pushq   $8 // 最后一个参数</span><br><span class="line">        pushq   $7 // 倒数第二个参数</span><br><span class="line">        movl    $6, %r9d // 第六个参数</span><br><span class="line">        movl    $5, %r8d // 第五个参数</span><br><span class="line">        movl    $4, %ecx // 第四个参数</span><br><span class="line">        movl    $3, %edx // 第三个参数</span><br><span class="line">        movl    $2, %esi // 第二个参数</span><br><span class="line">        movl    $1, %edi // 第一个参数</span><br><span class="line">        call    testArgs(long, long, long, long, long, long, long, long)</span><br><span class="line">        addq    $16, %rsp // 回收分配的栈空间</span><br><span class="line">        movl    %eax, -4(%rbp)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<h3 id="C-testArgs"><a href="#C-testArgs" class="headerlink" title="C testArgs"></a>C testArgs</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">testArgs</span><span class="params">(<span class="keyword">long</span> a1,<span class="keyword">long</span> a2,<span class="keyword">long</span> a3,<span class="keyword">long</span> a4,<span class="keyword">long</span> a5,<span class="keyword">long</span> a6,<span class="keyword">long</span> a7,<span class="keyword">long</span> a8)</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> sum = <span class="number">0</span>;</span><br><span class="line">    sum = a1 + a2 + a3 + a4 +a5 + a6 + a7 + a8;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Asm-testArgs"><a href="#Asm-testArgs" class="headerlink" title="Asm testArgs"></a>Asm testArgs</h3><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">testArgs(long, long, long, long, long, long, long, long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        <span class="keyword">movq</span>    %rsp, %rbp</span><br><span class="line">        <span class="keyword">movq</span>    %rdi, -<span class="number">24</span>(%rbp) <span class="comment">; a1  栈底</span></span><br><span class="line">        <span class="keyword">movq</span>    %rsi, -<span class="number">32</span>(%rbp) <span class="comment">; a2</span></span><br><span class="line">        <span class="keyword">movq</span>    %rdx, -<span class="number">40</span>(%rbp) <span class="comment">; a3</span></span><br><span class="line">        <span class="keyword">movq</span>    %rcx, -<span class="number">48</span>(%rbp) <span class="comment">; a4</span></span><br><span class="line">        <span class="keyword">movq</span>    %r8, -<span class="number">56</span>(%rbp)  <span class="comment">; a5</span></span><br><span class="line">        <span class="keyword">movq</span>    %r9, -<span class="number">64</span>(%rbp)  <span class="comment">; a6</span></span><br><span class="line">        <span class="keyword">movq</span>    <span class="number">$0</span>, -<span class="number">8</span>(%rbp)    <span class="comment">; sum</span></span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">24</span>(%rbp), %rdx <span class="comment">; a1</span></span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">32</span>(%rbp), %rax <span class="comment">; a2</span></span><br><span class="line">        addq    %rax, %rdx      <span class="comment">; rdx = a1 + a2</span></span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">40</span>(%rbp), %rax <span class="comment">; a3</span></span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">48</span>(%rbp), %rax <span class="comment">; a4</span></span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">56</span>(%rbp), %rax <span class="comment">; a5</span></span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">64</span>(%rbp), %rax <span class="comment">; a6</span></span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        <span class="keyword">movq</span>    <span class="number">16</span>(%rbp), %rax  <span class="comment">; a7，其实是到 main 的栈帧里取的</span></span><br><span class="line">        addq    %rax, %rdx</span><br><span class="line">        <span class="keyword">movq</span>    <span class="number">24</span>(%rbp), %rax  <span class="comment">; a8，其实是到 main 的栈帧里取的</span></span><br><span class="line">        addq    %rdx, %rax</span><br><span class="line">        <span class="keyword">movq</span>    %rax, -<span class="number">8</span>(%rbp)  <span class="comment">; sum = rax</span></span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">8</span>(%rbp), %rax  <span class="comment">; rax = sum 也就是返回值</span></span><br><span class="line">        popq    %rbp</span><br><span class="line">        <span class="keyword">ret</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>综上可知，编译器默认会将所有的参数复制到栈上。</p>
+</blockquote>
+<h2 id="栈帧分析"><a href="#栈帧分析" class="headerlink" title="栈帧分析"></a>栈帧分析</h2><img src="/2019/06/24/asm-how-x86-64-arguments-pass/x86-64-arguments-pass.png" title="x86-64-arguments-pass">
+
+<blockquote>
+<p>上图是执行完 testArgs 前两句汇编的栈帧状态图.<br>分析:<br>testArgs 中 movq    16(%rbp), %rax  // 将 rbp + 16 地址处的数值(a7)复制到 rax<br>rbp + 16 的原因是: 参数 a7 是 main 准备的, 属于 main 的栈帧. 16 Bytes 包括 8 Bytes 的 Return address 和 8 Bytes 的 main 的 rbp.</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/06/17/tools-for-me/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1752,174 +1900,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/05/16/katacoda-building-docker-image/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/05/16/katacoda-building-docker-image/" itemprop="url">building-docker-image</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-16T17:33:01+08:00">
-                2019-05-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/05/16/katacoda-building-docker-image/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/16/katacoda-building-docker-image/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <blockquote>
-<p><strong><em>Docker images</em></strong> are built based on a Dockerfile. A Dockerfile defines <strong>all the steps</strong> required to create a Docker image with your application configured and ready to be run as a container. The image itself contains everything, from operating system to dependencies and configuration required to run your application.<br>Having everything within the image allows you to migrate images between different environments and be confident that if it works in one environment, then it will work in another.<br>The Dockerfile allows for images to be composable, enabling users to extend existing images instead of building from scratch. <em>By building on an existing image, you only need to define the steps to setup your application</em>. The base images can be basic operating system installations or configured systems which simply need some additional customisations.</p>
-</blockquote>
-<h1 id="Base-images"><a href="#Base-images" class="headerlink" title="Base images"></a>Base images</h1><blockquote>
-<p>All Docker images start from a base image. A base image is the same images from the Docker Registry which are used to start containers. Along with the image name, we can also include the image tag to indicate which particular version we want, <em>by default, this is latest</em>.<br>These base images are used as the foundation for your additional changes to run your application. For example, in this scenario, we require NGINX to be configured and running on the system before we can deploy our static HTML files. As such we want to use NGINX as our base image.<br>Dockerfile’s are simple text files with a command on each line. To define a base image we use the instruction <strong>FROM image-name:tag</strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br></pre></td></tr></table></figure>
-
-<h1 id="Running-commands"><a href="#Running-commands" class="headerlink" title="Running commands"></a>Running commands</h1><blockquote>
-<p>With the base image defined, we need to run various commands to configure our image. There are many commands to help with this, the main commands two are COPY and RUN.<br><strong><em>RUN</em></strong> command allows you to execute any command as you would at a command prompt, for example installing different application packages or running a build command. The results of the RUN are <strong>persisted</strong> to the image so it’s important not to leave any unnecessary or temporary files on the disk as these will be included in the image.<br><strong><em>COPY src dest</em></strong> allows you to copy files from the directory containing the Dockerfile to the container’s image. This is extremely useful for <strong>source code</strong> and assets that you want to be deployed inside your container<br><em>A new index.html file has been created for you which we want to serve from our container. On the next line after the <strong><em>FROM</em></strong> command, use the COPY command to copy index.html into a directory called <strong>/usr/share/nginx/</strong>html</em></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br></pre></td></tr></table></figure>
-
-<h1 id="Exposing-ports"><a href="#Exposing-ports" class="headerlink" title="Exposing ports"></a>Exposing ports</h1><blockquote>
-<p>With our files copied into our image and any dependencies downloaded, you need to define which port application needs to be accessible on.<br>Using the <strong><em>EXPOSE port</em></strong> command you tell Docker which ports should be open and can be bound too. You can define multiple ports on the single command, for example, EXPOSE 80 433 or EXPOSE 7000-8000</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br><span class="line"># web server to be accessible via port 80</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
-
-<h1 id="Default-commands"><a href="#Default-commands" class="headerlink" title="Default commands"></a>Default commands</h1><blockquote>
-<p>With the Docker image configured and having defined which ports we want accessible, we now need to define the command that launches the application.<br><em>The <strong><em>CMD</em></strong> line in a Dockerfile defines the default command to run when a container is launched.</em> If the command requires arguments then it’s recommended to use an array, for example [“cmd”, “-a”, “arga value”, “-b”, “argb-value”], which will be combined together and the command<br><strong>*cmd -a “arga value” -b argb-value</strong> would be run.<br>An alternative approach to CMD is ENTRYPOINT. While a CMD can be overridden when the container starts, a ENTRYPOINT defines a command which can have arguments passed to it when the container launches.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html /usr/share/nginx/html/index.html</span><br><span class="line"># web server to be accessible via port 80</span><br><span class="line">EXPOSE 80</span><br><span class="line"># The command to run NGINX is nginx -g daemon off;</span><br><span class="line">CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span><br></pre></td></tr></table></figure>
-
-<h1 id="Building-containers"><a href="#Building-containers" class="headerlink" title="Building containers"></a>Building containers</h1><blockquote>
-<p>After writing your Dockerfile you need to use <strong><em>docker build</em></strong> to turn it into an image. <em>The build command takes in a directory containing the Dockerfile, executes the steps and stores the image in your local Docker Engine.</em> If one fails because of an error then the build stops.<br>Using the docker build command to build the image. You can give the image a <strong><em>friendly name by using the -t name option.</em></strong></p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t my-nginx-image:latest</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Sending build context to Docker daemon  3.072kB<br>Step 1/5 : FROM nginx:1.11-alpine<br> —&gt; bedece1f06cc<br>Step 2/5 : COPY index.html /usr/share/nginx/html/index.html<br> —&gt; Using cache<br> —&gt; 2be98924804a<br>Step 3/5 : EXPOSE 80<br> —&gt; Using cache<br> —&gt; 233ea4308326<br>Step 4/5 : CMD [“nginx”, “-g”, “daemon off;”]<br> —&gt; Using cache<br> —&gt; 1a518260bb2b<br>Step 5/5 : CMD [“nginx”, “-g”, “daemon off;”]<br> —&gt; Using cache<br> —&gt; 563c68c52ed7<br>Successfully built 563c68c52ed7<br>Successfully tagged my-nginx-image:latest</p>
-</blockquote>
-<h1 id="Launching-new-image"><a href="#Launching-new-image" class="headerlink" title="Launching new image"></a>Launching new image</h1><blockquote>
-<p>NGINX is designed to run as a background service so you should include the option -d. To make the web server accessible, bind it to port 80 using p 80:80</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 my-nginx-image:latest</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>access the launched web server via the hostname docker. the command <strong><em>curl -i <a href="http://docker" target="_blank" rel="noopener">http://docker</a></em></strong> will return our index file via NGINX and the image we built.</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i http://docker</span><br></pre></td></tr></table></figure>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1970,7 +1950,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">34</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -1983,7 +1963,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">29</span>
+                  <span class="site-state-item-count">32</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
