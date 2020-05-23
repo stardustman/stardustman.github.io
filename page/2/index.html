@@ -2042,6 +2042,16 @@
 
 <img src="/2019/06/25/asm-clang-concepts/function-pointer.png" title="函数指针">
 
+
+<h1 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h1><blockquote>
+<p>编译器在背后搞鬼，自动为每一个 enum 常量进行编号。</p>
+</blockquote>
+<h2 id="c-代码"><a href="#c-代码" class="headerlink" title="c 代码"></a>c 代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> day&#123; monday, tuesday, wednesday,</span><br><span class="line">thursday, friday, saturday, sunday&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> color &#123;</span><br><span class="line">    RED=<span class="number">1</span>, YELLOW, GREEN</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">enum</span> day foo = friday;</span><br><span class="line">    <span class="keyword">enum</span> color color = GREEN;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="汇编分析-1"><a href="#汇编分析-1" class="headerlink" title="汇编分析"></a>汇编分析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $4, -4(%rbp) ; friday 编号为 4，默认从 0 开始编号。</span><br><span class="line">        movl    $3, -8(%rbp) ; GREEN 编号为 3</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+
+<img src="/2019/06/25/asm-clang-concepts/c-enum.png" title="c 枚举">
+
 <h1 id="references"><a href="#references" class="headerlink" title="references"></a>references</h1><ol>
 <li><a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)" target="_blank" rel="noopener">pointer</a></li>
 <li><a href="https://stackoverflow.com/questions/29790175/assembly-x86-leave-instruction/29790275" target="_blank" rel="noopener">lea instruction</a></li>
