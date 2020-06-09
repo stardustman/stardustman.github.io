@@ -72,7 +72,7 @@
 
 
 
-  <meta name="keywords" content="docker,">
+  <meta name="keywords" content="asm,x86,">
 
 
 
@@ -85,18 +85,20 @@
 
 
 
-<meta name="description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
-<meta name="keywords" content="docker">
+<meta name="description" content="x86 架构计算机是如何启动的？ 16-bit Processors and Segmentation (1978) The IA-32 architecture family was preceded by 16-bit processors, the 8086 and 8088. The 8086 has 16-bit registers and a 16-bit external data">
+<meta name="keywords" content="asm,x86">
 <meta property="og:type" content="article">
-<meta property="og:title" content="katacoda-deploying-first-docker-container">
-<meta property="og:url" content="http://stardustman.github.io/2019/05/16/katacoda-deploying-first-docker-container/index.html">
+<meta property="og:title" content="asm-how-computer-startup">
+<meta property="og:url" content="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
+<meta property="og:description" content="x86 架构计算机是如何启动的？ 16-bit Processors and Segmentation (1978) The IA-32 architecture family was preceded by 16-bit processors, the 8086 and 8088. The 8086 has 16-bit registers and a 16-bit external data">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-05-22T06:54:34.956Z">
+<meta property="og:image" content="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/real-address-mode-how-computer-startup.svg">
+<meta property="og:updated_time" content="2020-06-09T07:48:05.808Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="katacoda-deploying-first-docker-container">
-<meta name="twitter:description" content="Running a container background(detached)docker search image-name 1docker search redis  docker run options image-name:versionsolution1: default latest version 1docker run -d redis  solution2: version i">
+<meta name="twitter:title" content="asm-how-computer-startup">
+<meta name="twitter:description" content="x86 架构计算机是如何启动的？ 16-bit Processors and Segmentation (1978) The IA-32 architecture family was preceded by 16-bit processors, the 8086 and 8088. The 8086 has 16-bit registers and a 16-bit external data">
+<meta name="twitter:image" content="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/real-address-mode-how-computer-startup.svg">
 
 
 
@@ -126,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://stardustman.github.io/2019/05/16/katacoda-deploying-first-docker-container/">
+  <link rel="canonical" href="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/">
 
 
 
 
 
-  <title>katacoda-deploying-first-docker-container | stardustman</title>
+  <title>asm-how-computer-startup | stardustman</title>
   
 
 
@@ -269,7 +271,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/05/16/katacoda-deploying-first-docker-container/">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="stardustman">
@@ -286,7 +288,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">katacoda-deploying-first-docker-container</h1>
+          <h1 class="post-title" itemprop="name headline">asm-how-computer-startup</h1>
         
 
         <div class="post-meta">
@@ -298,8 +300,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-05-16T12:40:16+08:00">
-                2019-05-16
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-08T08:09:12+08:00">
+                2020-06-08
               </time>
             
 
@@ -317,8 +319,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/05/16/katacoda-deploying-first-docker-container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/05/16/katacoda-deploying-first-docker-container/" itemprop="commentCount"></span>
+                <a href="/2020/06/08/asm-how-computer-startup/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/06/08/asm-how-computer-startup/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -346,28 +348,33 @@
       
 
       
-        <h1 id="Running-a-container-background-detached"><a href="#Running-a-container-background-detached" class="headerlink" title="Running a container background(detached)"></a>Running a container background(detached)</h1><p><strong>docker search image-name</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search redis</span><br></pre></td></tr></table></figure>
+        <p><code>x86</code> 架构计算机是如何启动的？</p>
+<h2 id="16-bit-Processors-and-Segmentation-1978"><a href="#16-bit-Processors-and-Segmentation-1978" class="headerlink" title="16-bit Processors and Segmentation (1978)"></a>16-bit Processors and Segmentation (1978)</h2><blockquote>
+<p>The IA-32 architecture family was preceded by <code>16-bit processors</code>, the 8086 and 8088. The 8086 has <code>16-bit registers</code> and a <code>16-bit external data bus</code>, with <code>20-bit addressing giving a 1-MByte address space</code>. The 8088 is similar to the 8086 except it has an 8-bit external data bus.<br>The 8086/8088 introduced <code>segmentation</code> to the IA-32 architecture. With segmentation, a <code>16-bit segment register</code> contains a pointer to <code>a memory segment of up to 64 KBytes</code>. Using <code>four</code> segment registers at a time, 8086/8088 processors are able to address up to 256 KBytes <code>without</code> switching between segments. The 20-bit addresses that can be formed using a segment register and an additional 16-bit pointer provide a total address range of 1 MByte.</p>
+</blockquote>
+<p>8086 是整个 intel 系列处理器的老祖宗。所有后续的一系列处理器都兼容 8086。唉，这就是路径依赖啊。这是一个 16-bit 的处理器。寄存器也是 16-bit 的。but 却能寻址 20-bit 的地址空间，也就是 1M 的内存。怎样在 16-bit 的处理器上实现呢？很简单，将 1M 的空间分成多个 64K 的 segment。那怎样用 16-bit 的寄存器表示 20-bit 的地址呢？也很简单，用 2 个 16-bit 的寄存器组合得来的(register1,register2)。那怎样组合的呢？<code>address = register1 &lt;&lt; 4 + register2</code>。将 register1 &lt;&lt; 4 和 register2 用一个 20-bit 的加法器就能得到内存地址。这种方式就是所谓的 <code>real address mode</code>。也即是拿到的是真正的内存地址。x86 架构的计算机启动时会先进入 real address mode。</p>
+<h2 id="计算机启动前置知识"><a href="#计算机启动前置知识" class="headerlink" title="计算机启动前置知识"></a>计算机启动前置知识</h2><ol>
+<li>CPU 工作方式是: 从<code>内存</code>中取指、执行。</li>
+<li>内存是存储数据的地方，给出一个内存地址，可以得到该处的数据。</li>
+<li>CPU 从内存哪里取指令，由 <code>instruction pointer</code> 这个寄存器的值决定。这个值不断 +1，或者跳转(jump) 到某处。real address mode 下由 CS:IP 组合决定。</li>
+</ol>
+<h2 id="BIOS"><a href="#BIOS" class="headerlink" title="BIOS"></a>BIOS</h2><h3 id="BIOS-是啥"><a href="#BIOS-是啥" class="headerlink" title="BIOS 是啥"></a>BIOS 是啥</h3><p><code>BIOS</code> 是啥呢？一个软件而已。不像我们平时在 PC 上使用如 <code>QQ</code> 等软件是安装在硬盘上的。BIOS 安装在 ROM 中。这个软件干啥的呢？帮助计算机启动，开机时检测整个机器的硬件。计算机启动需要运行软件，软件运行需要计算机先启动。咳咳，成了先有鸡还是先有蛋了，这怎么行？所以需要 BIOS 这个在硬件上的软件来帮助，破除这种依赖。</p>
+<h3 id="BIOS-大小"><a href="#BIOS-大小" class="headerlink" title="BIOS 大小"></a>BIOS 大小</h3><p>通过 <code>dmidecode</code> 这个命令来查看。也就是读取 BIOS 的信息。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">root@aliyun:~<span class="comment"># dmidecode -t bios -q  # 方法一</span></span><br><span class="line">BIOS Information</span><br><span class="line">        Vendor: SeaBIOS</span><br><span class="line">        Version: 8c24b4c</span><br><span class="line">        Release Date: 04/01/2014</span><br><span class="line">        Address: 0xE8000</span><br><span class="line">        Runtime Size: 96 kB</span><br><span class="line">        ROM Size: 64 kB --- ROM Size，在此可以看到，BIOS 大小为 64K。</span><br><span class="line">        Characteristics:</span><br><span class="line">                BIOS characteristics not supported</span><br><span class="line">                Targeted content distribution is supported</span><br><span class="line">        BIOS Revision: 0.0</span><br><span class="line"></span><br><span class="line">root@aliyun:~<span class="comment"># cd /sys/class/dmi/id/  # 方法二</span></span><br><span class="line">root@aliyun:id<span class="comment"># ls</span></span><br><span class="line">bios_date          chassis_serial   modalias        product_serial   sys_vendor</span><br><span class="line">bios_vendor        chassis_type     power           product_uuid     uevent</span><br><span class="line">bios_version       chassis_vendor   product_family  product_version</span><br><span class="line">chassis_asset_tag  chassis_version  product_name    subsystem</span><br></pre></td></tr></table></figure>
 
-<p><strong>docker run options image-name:version</strong><br><strong>solution1: default latest version</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis</span><br></pre></td></tr></table></figure>
+<h2 id="x86-架构计算机启动流程"><a href="#x86-架构计算机启动流程" class="headerlink" title="x86 架构计算机启动流程"></a>x86 架构计算机启动流程</h2><img src="/2020/06/08/asm-how-computer-startup/real-address-mode-how-computer-startup.svg" title="计算机启动流程">
 
-<p><strong>solution2: version is 3.2</strong> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis:3.2</span><br></pre></td></tr></table></figure>
-
-<h1 id="Find-running-container"><a href="#Find-running-container" class="headerlink" title="Find running container"></a>Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
-
-<h1 id="Access-redis"><a href="#Access-redis" class="headerlink" title="Access redis"></a>Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre><p><strong>solution1: specify host port is 6379</strong><br><em>-p host-port:container-post</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure>
-
-<p><strong>solution2: specify randomly host port</strong><br><em>-p container-port</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisDynamic  -p 6379 redis:latest</span><br><span class="line">docker port redisDynamic 6379</span><br></pre></td></tr></table></figure>
-
-<h1 id="Persisting-data"><a href="#Persisting-data" class="headerlink" title="Persisting data"></a>Persisting data</h1><p><em>-v host-dir:container-dir</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v /opt/docker/data/redis:/data redis</span><br></pre></td></tr></table></figure>
-
-<h1 id="Running-a-container-foreground"><a href="#Running-a-container-foreground" class="headerlink" title="Running a container foreground"></a>Running a container foreground</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu bash</span><br></pre></td></tr></table></figure>
-
+<ol>
+<li><p>如上图所示，当按下 <code>power on</code> 之后，此时的 CPU 处于 real address mode。由硬件负责将 <code>BIOS 64K</code> 的内容加载到 <code>0xF0000 到 0xFFFFF</code>(64K 内存)。并将 <code>CS(code segment) 置为 0xF000</code>，<code>IP(instruction pointer) 置为 0xFFF0</code>。组合起来的内存地址 <code>PC</code> 就是 0xFFFF0。</p>
+</li>
+<li><p>此时 CPU 从 <code>PC = 0xFFFF0</code> 处开始取指、执行。那么从 <code>0xFFFF0 到 0xFFFFF</code> 只有 16Bytes。空间太小了，能放啥呢？但是可以跳到其他地方去执行啊。不错，这里存放的有一条指令是 <code>jmp far f000:e05b</code>, 组合起来就是 <code>0xfe05b</code>。注意这个地址可是在 <code>0xF0000 到 0xFFFFF</code> 范围之内，也就是这条指令跳转到 <code>BIOS 内部的代码</code>去执行。从 0xFE05B 到 0xFFFF0 将近 8K 内存，代码不少。</p>
+</li>
+<li><p>此时 CPU 从 <code>PC = 0xfe05b</code> 开始取值、执行。具体干啥呢？就是执行所谓的开机自检。检查计算机硬件。同时去找启动扇区，那什么才是启动扇区呢？若 0 盘 0 道 1 扇区最后两个字节分别是 0x55,0xaa，那就是启动区。很像 java class 文件中的魔数，就是标记一下。同时将找到的启动扇区(512Bytes) 复制到内存 <code>0x7C00 到 0x7DFF</code>(512Bytes) 处。最后会将 <code>CS 置为 0x0000， IP 置为 0x7C00</code>，组合起来就是 <code>0x7C00</code>。</p>
+</li>
+<li><p>此时 CPU 从 <code>PC = 0x7C00</code> 开始取值、执行。具体干啥呢？这就是开发人员可以决定的了。在启动扇区上可以是加载 OS Kernel 的代码，硬盘分区，boot loader 等。</p>
+</li>
+</ol>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>1.<a href="http://dewkumar.blogspot.com/2012/01/what-is-org-origin-directive-in.html" target="_blank" rel="noopener">x86-ORG</a><br>2. <a href="https://superuser.com/questions/806226/how-to-see-rom-size" target="_blank" rel="noopener">how-to-see-rom-size</a><br>3. <a href="http://smilejay.com/2013/02/bios-info-dmidecode/" target="_blank" rel="noopener">bios-info-dmidecode</a><br>4. <a href="https://en.wikipedia.org/wiki/System_Management_BIOS" target="_blank" rel="noopener">system-management-bios</a><br>5. <a href="http://www.ruanyifeng.com/blog/2013/02/booting.html" target="_blank" rel="noopener">计算机是如何启动的？</a><br>6. <a href="https://en.wikipedia.org/wiki/Master_boot_record" target="_blank" rel="noopener">多种 MBR 组织方式</a><br>7. <a href="https://mp.weixin.qq.com/s/g6m_r28bvyyWIu1CAzxLdg" target="_blank" rel="noopener">计算机是怎样启动的？</a></p>
 
       
     </div>
@@ -396,7 +403,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>Post link:</strong>
-    <a href="http://stardustman.github.io/2019/05/16/katacoda-deploying-first-docker-container/" title="katacoda-deploying-first-docker-container">http://stardustman.github.io/2019/05/16/katacoda-deploying-first-docker-container/</a>
+    <a href="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/" title="asm-how-computer-startup">http://stardustman.github.io/2020/06/08/asm-how-computer-startup/</a>
   </li>
   <li class="post-copyright-license">
     <strong>Copyright Notice: </strong>
@@ -416,7 +423,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/docker/" rel="tag"># docker</a>
+            <a href="/tags/asm/" rel="tag"># asm</a>
+          
+            <a href="/tags/x86/" rel="tag"># x86</a>
           
         </div>
       
@@ -429,8 +438,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/05/16/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2020/05/18/data-structure-heap/" rel="next" title="data-structure-heap">
+                <i class="fa fa-chevron-left"></i> data-structure-heap
               </a>
             
           </div>
@@ -438,10 +447,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/05/16/katacoda-deploy-static-website/" rel="prev" title="deploy-static-website">
-                deploy-static-website <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -472,7 +477,7 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/05/16/katacoda-deploying-first-docker-container/" data-title="katacoda-deploying-first-docker-container" data-url="http://stardustman.github.io/2019/05/16/katacoda-deploying-first-docker-container/">
+      <div class="ds-thread" data-thread-key="2020/06/08/asm-how-computer-startup/" data-title="asm-how-computer-startup" data-url="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/">
       </div>
     </div>
 
@@ -577,7 +582,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Running-a-container-background-detached"><span class="nav-number">1.</span> <span class="nav-text">Running a container background(detached)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Find-running-container"><span class="nav-number">2.</span> <span class="nav-text">Find running container</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Access-redis"><span class="nav-number">3.</span> <span class="nav-text">Access redis</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Persisting-data"><span class="nav-number">4.</span> <span class="nav-text">Persisting data</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Running-a-container-foreground"><span class="nav-number">5.</span> <span class="nav-text">Running a container foreground</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#16-bit-Processors-and-Segmentation-1978"><span class="nav-number">1.</span> <span class="nav-text">16-bit Processors and Segmentation (1978)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算机启动前置知识"><span class="nav-number">2.</span> <span class="nav-text">计算机启动前置知识</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BIOS"><span class="nav-number">3.</span> <span class="nav-text">BIOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#BIOS-是啥"><span class="nav-number">3.1.</span> <span class="nav-text">BIOS 是啥</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BIOS-大小"><span class="nav-number">3.2.</span> <span class="nav-text">BIOS 大小</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#x86-架构计算机启动流程"><span class="nav-number">4.</span> <span class="nav-text">x86 架构计算机启动流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">5.</span> <span class="nav-text">References</span></a></li></ol></div>
             
 
           </div>
