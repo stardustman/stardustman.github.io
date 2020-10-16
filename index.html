@@ -265,6 +265,166 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/06/12/data-structure-btree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/06/12/data-structure-btree/" itemprop="url">data-structure-btree</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-06-12T14:11:02+08:00">
+                2020-06-12
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2020/06/12/data-structure-btree/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/06/12/data-structure-btree/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="B-tree-特性"><a href="#B-tree-特性" class="headerlink" title="B-tree 特性"></a>B-tree 特性</h3><ol>
+<li>所有的 leaves 都在同一层级。</li>
+<li>B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。</li>
+<li>除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。</li>
+<li>所有的节点（包括 root）最多有 2t - 1 个 key。</li>
+<li>某一个节点的子节点的个数 = 这个节点的 key 的个数 + 1。</li>
+<li>一个节点的所有 key 从小到大排序。两个 key1 和 key2 之间的所有 child 都在 key1 和 key2 之间。</li>
+<li>B-Tree 从 root 节点 grow(扩张) 和 shrink(收缩)。</li>
+<li>search、insert、delete 时间复杂度是O(log n)。n 是 key 的总数。</li>
+</ol>
+<h3 id="t-3-为例来理解-B-tree"><a href="#t-3-为例来理解-B-tree" class="headerlink" title="t=3 为例来理解 B-tree"></a>t=3 为例来理解 B-tree</h3><ol>
+<li>每一个节点(root 除外) 至少有 t - 1 = 2 个 key。</li>
+<li>每一个节点最多有 2t - 1 = 5 个 key。节点 key 数量 = 5，称为节点满了。<br>问题来了，节点 key 个数大于 5 了咋办？拆分。什么时候来拆分呢？在向下遍历节点时发现满了，立即进行拆分。</li>
+</ol>
+<h4 id="B-Tree-insert-operation"><a href="#B-Tree-insert-operation" class="headerlink" title="B-Tree insert operation"></a>B-Tree insert operation</h4><h5 id="拆分已满节点"><a href="#拆分已满节点" class="headerlink" title="拆分已满节点"></a>拆分已满节点</h5><img src="/2020/06/12/data-structure-btree/btree-full-root-split.svg" title="btree-拆分已满节点">
+
+<ol>
+<li>如上图，节点1 已经满了，对此时的 root 节点进行拆分。</li>
+<li>创建节点2，s 节点，作为新的 root 节点，同时设置 s.child[0] = root。</li>
+<li>创建节点2，z 节点，将原来 root 节点一半的 key，复制到 z 节点。</li>
+<li>将 z 节点设置为 s 节点的 child。s.child[1] = z。</li>
+</ol>
+<h5 id="拆分已满节点-有子节点"><a href="#拆分已满节点-有子节点" class="headerlink" title="拆分已满节点(有子节点)"></a>拆分已满节点(有子节点)</h5><img src="/2020/06/12/data-structure-btree/btree-full-root-split2.svg" title="btree-拆分已满节点2">
+
+<p>B-Tree 是向上扩张的(grow)。可以看到所有的 key 都是在 leaf 节点插入的。节点的 key 值的数量一旦等于 2t - 1 = 5 时，就会对该节点进行拆分。所以这也是每一个节点(root 除外)至少有 t-1 = 2 个 key 的原因。</p>
+<h4 id="B-Tree-delete-operation"><a href="#B-Tree-delete-operation" class="headerlink" title="B-Tree delete operation"></a>B-Tree delete operation</h4><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a href="https://www.cs.usfca.edu/~galles/visualization/BTree.html" target="_blank" rel="noopener">BTree-visualization</a></li>
+<li><a href="https://www.geeksforgeeks.org/introduction-of-b-tree-2/" target="_blank" rel="noopener">BTree introduction</a></li>
+<li><a href="https://www.geeksforgeeks.org/insert-operation-in-b-tree/" target="_blank" rel="noopener">BTree insertion</a></li>
+<li><a href="https://www.geeksforgeeks.org/delete-operation-in-b-tree/" target="_blank" rel="noopener">BTree deletion</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1961,325 +2121,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/12/24/katacoda-what-is-a-container/" itemprop="url">katacoda-what-is-a-container</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-24T13:02:03+08:00">
-                2019-12-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/12/24/katacoda-what-is-a-container/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/12/24/katacoda-what-is-a-container/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="Processes"><a href="#Processes" class="headerlink" title="Processes"></a>Processes</h2><blockquote>
-<p>Containers are just normal Linux Processes with additional configuration applied.</p>
-</blockquote>
-<p>容器只是应用了附加配置的普通 Linux 进程。</p>
-<h3 id="redis-container"><a href="#redis-container" class="headerlink" title="redis container"></a>redis container</h3><h4 id="lanch-redis-server-process"><a href="#lanch-redis-server-process" class="headerlink" title="lanch redis-server process"></a>lanch redis-server process</h4><blockquote>
-<p>Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG…]<br>docker run –help<br>-d, –detach   Run container in background and print container ID<br>–name string  Assign a name to the container</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=db redis:alpine</span><br></pre></td></tr></table></figure>
-
-<p>在后台启动一个 <code>container name</code> 是 <code>db</code> 的容器, 并打印容器的 <code>ID</code></p>
-<blockquote>
-<p>Unable to find image ‘redis:alpine’ locally<br>alpine: Pulling from library/redis<br>63bc94deeb28: Pull complete<br>828e397560e3: Pull complete<br>5902d88df6c2: Pull complete<br>157b2c953c6d: Pull complete<br>b5212c16b59d: Pull complete<br>5f8f01031701: Pull complete<br>Digest: sha256:613ab7e1c0175cae18b69c291512e5e8f1129175f6617ff2126b7ac9a1e5c550<br>Status: Downloaded newer image for redis:alpine<br>0a5ceea3df52e200d45772c4507b20d7c95a97dcd3939cb33a8d5bc1b842e334</p>
-</blockquote>
-<h4 id="检验"><a href="#检验" class="headerlink" title="检验"></a>检验</h4><h5 id="pidof-lt-process-name-gt"><a href="#pidof-lt-process-name-gt" class="headerlink" title="pidof &lt;process-name&gt;"></a>pidof &lt;process-name&gt;</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pidof redis-server</span><br></pre></td></tr></table></figure>
-
-<h5 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep redis-server</span><br></pre></td></tr></table></figure>
-
-<h5 id="docker-top"><a href="#docker-top" class="headerlink" title="docker top "></a>docker top <container-name></container-name></h5><blockquote>
-<p>docker top can help us identify information about the process including the PID (Process ID) and PPID (Parent Process ID)</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker top db</span><br></pre></td></tr></table></figure>
-
-<h5 id="pstree"><a href="#pstree" class="headerlink" title="pstree"></a>pstree</h5><blockquote>
-<p>pstree will list all of the sub processes</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree -c -p -A $(pgrep dockerd)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Process-Directory"><a href="#Process-Directory" class="headerlink" title="Process Directory"></a>Process Directory</h2><blockquote>
-<p>Linux is just a series of magic files and contents, this makes it fun to explore and navigate to see what is happening under the covers, and in some cases, change the contents to see the results. The configuration for each process is defined within the /proc directory. If you know the process ID, then you can identify the configuration directory.</p>
-</blockquote>
-<p>每一个 <code>process</code> 的配置都定义在 <code>/proc</code> 文件夹下. 如果知道 <code>process ID</code>, 就能找到该进程的配置文件夹</p>
-<h3 id="redis-server-进程的配置"><a href="#redis-server-进程的配置" class="headerlink" title="redis-server 进程的配置"></a>redis-server 进程的配置</h3><h4 id="找到-redis-server-的-pid"><a href="#找到-redis-server-的-pid" class="headerlink" title="找到 redis-server 的 pid"></a>找到 redis-server 的 pid</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DBPID=$(pgrep redis-server)</span><br><span class="line"><span class="built_in">echo</span> Redis is <span class="variable">$DBPID</span></span><br><span class="line">ls /proc</span><br></pre></td></tr></table></figure>
-
-<h4 id="查看-redis-server-进程的环境变量"><a href="#查看-redis-server-进程的环境变量" class="headerlink" title="查看 redis-server 进程的环境变量"></a>查看 redis-server 进程的环境变量</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /proc/<span class="variable">$DBPID</span></span><br><span class="line">cat /proc/<span class="variable">$DBPID</span>/environ</span><br></pre></td></tr></table></figure>
-
-<p>结果如下:</p>
-<blockquote>
-<p>HOSTNAME=f3b9624ce46cSHLVL=2REDIS_DOWNLOAD_SHA=<br>61db74eabf6801f057fd24b590232f2f337d422280fd19486<br>eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sb<br>in:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br>REDIS_DOWNLOAD_URL=<a href="http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data" target="_blank" rel="noopener">http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data</a></p>
-</blockquote>
-<p>解析查看:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'HOSTNAME=5fba1658e4ceSHLVL=2REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binREDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data'</span>.match(<span class="regexp">/[A-Z]+=[^A-Z]*/g</span>) <span class="comment">// regexp 解析查看 key=value</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="docker-容器里执行-env-命令"><a href="#docker-容器里执行-env-命令" class="headerlink" title="docker 容器里执行 env 命令"></a>docker 容器里执行 env 命令</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it db env</span><br></pre></td></tr></table></figure>
-
-<p><code>env</code> 内容如下:</p>
-<blockquote>
-<p>PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br>HOSTNAME=f3b9624ce46c<br>TERM=xterm<br>REDIS_VERSION=5.0.7<br>REDIS_DOWNLOAD_URL=<a href="http://download.redis.io/releases/redis-5.0.7.tar.gz" target="_blank" rel="noopener">http://download.redis.io/releases/redis-5.0.7.tar.gz</a><br>REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82b<br>HOME=/root</p>
-</blockquote>
-<h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><blockquote>
-<p>One of the fundamental parts of a container is namespaces. The concept of namespaces is to limit what processes can see and access certain parts of the system, such as other network interfaces or processes<br>When a container is started, the container runtime, such as Docker, will create new namespaces to sandbox the process. By running a process in it’s own Pid namespace, it will look like it’s the only process on the system.</p>
-</blockquote>
-<ul>
-<li>Mount (mnt)</li>
-<li>Process (pid)</li>
-<li>Network (net)</li>
-<li>Interprocess Communication (ipc)</li>
-<li>UTS (hostnames) aka unix time-sharing system</li>
-<li>User ID (user)</li>
-<li>Control group (cgroup)</li>
-</ul>
-<h3 id="lanched-“contained”-processes"><a href="#lanched-“contained”-processes" class="headerlink" title="lanched “contained” processes"></a>lanched “contained” processes</h3><blockquote>
-<p>Without using a runtime such as Docker, a process can still operate within it’s own namespace. One tool to help is unshare.</p>
-</blockquote>
-<p>不用 <code>docker</code> 这个 <code>runtime</code>, 也可以用 <code>unshare</code> 这个工具来创建一个拥有自己的 <code>namespace</code> 的进程.</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unshare --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Run a program with some namespaces unshared from the parent.</p>
-</blockquote>
-<p>运行一个程序, 不共享父进程的某些 namespaces</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">unshare --fork --pid --mount-proc bash</span><br><span class="line">ps</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="namespace-是啥"><a href="#namespace-是啥" class="headerlink" title="namespace 是啥"></a>namespace 是啥</h3><blockquote>
-<p>Namespaces are inode locations on disk. this allows for processes to shared/reused the same namespace, allowing them to view and interact.</p>
-</blockquote>
-<p><code>namespace</code> 是硬盘上的 <code>inode</code>. 这允许 <code>processes</code> 共享/复用相同的 <code>namespace</code>, 允许进程之间可以互相看得到, 互相交流.</p>
-<h4 id="查看-redis-server-的所有-namespace"><a href="#查看-redis-server-的所有-namespace" class="headerlink" title="查看 redis-server 的所有 namespace"></a>查看 redis-server 的所有 namespace</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -liha /proc/<span class="variable">$DBPID</span>/ns</span><br></pre></td></tr></table></figure>
-
-<h4 id="attach-process-to-existing-NameSpaces"><a href="#attach-process-to-existing-NameSpaces" class="headerlink" title="attach process to existing NameSpaces"></a>attach process to existing NameSpaces</h4><blockquote>
-<p><code>nsenter</code> run a program with namespaces of other processes.</p>
-</blockquote>
-<p>在其他进程的 <code>namespace</code> 中运行一个程序</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">nsenter --help</span><br><span class="line">nsenter [options] [&lt;program&gt; [&lt;argument&gt;...]]</span><br><span class="line"> Options:</span><br><span class="line"> -a, --all              enter all namespaces</span><br><span class="line"> -t, --target &lt;pid&gt;     target process to get namespaces from</span><br><span class="line"> -m, --mount[=&lt;file&gt;]   enter mount namespace</span><br><span class="line"> -u, --uts[=&lt;file&gt;]     enter UTS namespace (hostname etc)</span><br><span class="line"> -i, --ipc[=&lt;file&gt;]     enter System V IPC namespace</span><br><span class="line"> -n, --net[=&lt;file&gt;]     enter network namespace</span><br><span class="line"> -p, --pid[=&lt;file&gt;]     enter pid namespace</span><br><span class="line"> -C, --cgroup[=&lt;file&gt;]  enter cgroup namespace</span><br><span class="line"> -U, --user[=&lt;file&gt;]    enter user namespace</span><br><span class="line"> -S, --setuid &lt;uid&gt;     set uid in entered namespace</span><br><span class="line"> -G, --setgid &lt;gid&gt;     set gid in entered namespace</span><br><span class="line">     --preserve-credentials do not touch uids or gids</span><br><span class="line"> -r, --root[=&lt;dir&gt;]     set the root directory</span><br><span class="line"> -w, --wd[=&lt;dir&gt;]       set the working directory</span><br><span class="line"> -F, --no-fork          do not fork before exec&apos;ing &lt;program&gt;</span><br><span class="line"> -Z, --follow-context   set SELinux context according to --target PID</span><br></pre></td></tr></table></figure>
-
- <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nsenter --target <span class="variable">$DBPID</span> --mount --uts --ipc --net --pid ps aux</span><br></pre></td></tr></table></figure>
-
-<p>在 <code>redis-server</code> 的 <code>mount</code>, <code>uts</code>, <code>ipc</code>, <code>net</code>, <code>pid</code> 这些命名空间里执行 <code>ps</code> 命令</p>
-<h4 id="share-namespaces-of-redis-server"><a href="#share-namespaces-of-redis-server" class="headerlink" title="share namespaces of redis-server"></a>share namespaces of redis-server</h4><blockquote>
-<p>With Docker, these namespaces can be shared using the syntax container:&lt;container-name&gt;. For example, the command below will connect nginx to the DB namespace</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=web --net=container:db nginx:alpine</span><br></pre></td></tr></table></figure>
-
-<p>启动 <code>nginx</code> 的容器. 共享 <code>redis-server</code> 的 <code>net</code> namespace</p>
-<ul>
-<li>查看 <code>nginx</code> 容器的 <code>net</code> 的 namespace</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lha /proc/<span class="variable">$WEBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>dr-x–x–x 2 systemd-network systemd-journal 0 Dec 24 13:40 .<br>dr-xr-xr-x 9 systemd-network systemd-journal 0 Dec 24 13:40 ..<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 cgroup -&gt; cgroup:[4026531835]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 ipc -&gt; ipc:[4026532225]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 mnt -&gt; mnt:[4026532223]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 net -&gt; net:[4026532160] – 注意这个是共享的 redis-server 的 net 命名空间<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 pid -&gt; pid:[4026532226]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 user -&gt; user:[4026531837]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 uts -&gt; uts:[4026532224]</p>
-</blockquote>
-<ul>
-<li>查看 <code>redis-server</code> 容器的 <code>net</code> 命名空间</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lha /proc/<span class="variable">$DBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>lrwxrwxrwx 1 999 packer 0 Dec 24 13:39 net -&gt; net:[4026532160]</p>
-</blockquote>
-<h2 id="CGroups"><a href="#CGroups" class="headerlink" title="CGroups"></a>CGroups</h2><blockquote>
-<p>CGroups limit the amount of resources a process can consume. These cgroups are values defined in particular files within the /proc directory.<br>CGroups 用来限制一个进程可以使用的资源的量. cgroups 的值被定义在 /proc 文件夹下的特定文件里.</p>
-</blockquote>
-<h3 id="查看-redis-server-的-CGroups"><a href="#查看-redis-server-的-CGroups" class="headerlink" title="查看 redis-server 的 CGroups"></a>查看 redis-server 的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/cgroup</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>得到 redis-server 的容器 ID</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DBID=$(docker ps --no-trunc | grep <span class="string">'db'</span> | awk <span class="string">'&#123;print $1&#125;'</span>)</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查看 redis-server 的 cpu stats 和 usages</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpuacct.stat</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查看 redis-server 的 cpu shares</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpu.shares</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>查看所有容器的 memory 的 docker cgroups 配置</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/fs/cgroup/memory/docker</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看所有的-CGroups"><a href="#查看所有的-CGroups" class="headerlink" title="查看所有的 CGroups"></a>查看所有的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/fs/cgroup</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置-cgroups"><a href="#配置-cgroups" class="headerlink" title="配置 cgroups"></a>配置 cgroups</h3><blockquote>
-<p>用 cgroups 配置 内存, memory quotes 存放在 memory.limit_in_bytes<br>这个文件</p>
-</blockquote>
-<ul>
-<li>容器默认没有内存限制</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stats db --no-strem ; 只查看一条信息</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>限制 db 这个容器的内存使用</li>
-</ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 8000000 &gt; /sys/fs/cgroup/memory/docker/<span class="variable">$DBID</span>/memory.limit_in_bytes</span><br></pre></td></tr></table></figure>
-
-<h2 id="Seccomp-限制可以使用的-syscall"><a href="#Seccomp-限制可以使用的-syscall" class="headerlink" title="Seccomp 限制可以使用的 syscall"></a>Seccomp 限制可以使用的 syscall</h2><blockquote>
-<p>When assigned to a process it means the process will be limited to a subset of the ability system calls. If it attempts to call a blocked system call is will recieve the error “Operation Not Allowed”. <a href="https://github.com/moby/moby/blob/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/profiles/seccomp/default.json" target="_blank" rel="noopener">容器默认可以使用的 syscall</a></p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/status</span><br><span class="line">cat /proc/<span class="variable">$DBPID</span>/status | grep Seccomp</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>The flag meaning are: 0: disabled 1: strict 2: filtering</p>
-</blockquote>
-<h2 id="Capabilities"><a href="#Capabilities" class="headerlink" title="Capabilities"></a>Capabilities</h2><blockquote>
-<p>Capabilities are groupings about what a process or user has permission to do. These Capabilities might cover multiple system calls or actions, such as changing the system time or hostname.</p>
-</blockquote>
-<ul>
-<li>查看 redis-server 的 Capabilities</li>
-</ul>
-<blockquote>
-<p>The status file also containers the Capabilities flag. A process can drop as many Capabilities as possible to ensure it’s secure.</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/status | grep ^Cap</span><br></pre></td></tr></table></figure>
-
-<p>结果如下:</p>
-<blockquote>
-<p>CapInh: 00000000a80425fb<br>CapPrm: 0000000000000000<br>CapEff: 0000000000000000<br>CapBnd: 00000000a80425fb<br>CapAmb: 0000000000000000</p>
-</blockquote>
-<ul>
-<li>解析 redis-server 的 flags</li>
-</ul>
-<blockquote>
-<p>The flags are stored as a bitmask that can be decoded with capsh</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">capsh --decode=00000000a80425fb</span><br></pre></td></tr></table></figure>
-
-<p>解析结果如下:</p>
-<blockquote>
-<p>0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,<br>cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,<br>cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,<br>cap_audit_write,cap_setfcap</p>
-</blockquote>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><p><a href="https://www.katacoda.com/courses/container-runtimes/what-is-a-container" target="_blank" rel="noopener">what is a container</a></p>
-</li>
-<li><p><a href="http://www.ruanyifeng.com/blog/2018/11/awk.html" target="_blank" rel="noopener">awk</a></p>
-</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2330,7 +2171,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2343,7 +2184,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>

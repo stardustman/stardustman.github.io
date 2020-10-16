@@ -265,6 +265,325 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/24/katacoda-what-is-a-container/" itemprop="url">katacoda-what-is-a-container</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-12-24T13:02:03+08:00">
+                2019-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/24/katacoda-what-is-a-container/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/12/24/katacoda-what-is-a-container/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body han-init-context" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Processes"><a href="#Processes" class="headerlink" title="Processes"></a>Processes</h2><blockquote>
+<p>Containers are just normal Linux Processes with additional configuration applied.</p>
+</blockquote>
+<p>容器只是应用了附加配置的普通 Linux 进程。</p>
+<h3 id="redis-container"><a href="#redis-container" class="headerlink" title="redis container"></a>redis container</h3><h4 id="lanch-redis-server-process"><a href="#lanch-redis-server-process" class="headerlink" title="lanch redis-server process"></a>lanch redis-server process</h4><blockquote>
+<p>Usage:  docker run [OPTIONS] IMAGE [COMMAND] [ARG…]<br>docker run –help<br>-d, –detach   Run container in background and print container ID<br>–name string  Assign a name to the container</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=db redis:alpine</span><br></pre></td></tr></table></figure>
+
+<p>在后台启动一个 <code>container name</code> 是 <code>db</code> 的容器, 并打印容器的 <code>ID</code></p>
+<blockquote>
+<p>Unable to find image ‘redis:alpine’ locally<br>alpine: Pulling from library/redis<br>63bc94deeb28: Pull complete<br>828e397560e3: Pull complete<br>5902d88df6c2: Pull complete<br>157b2c953c6d: Pull complete<br>b5212c16b59d: Pull complete<br>5f8f01031701: Pull complete<br>Digest: sha256:613ab7e1c0175cae18b69c291512e5e8f1129175f6617ff2126b7ac9a1e5c550<br>Status: Downloaded newer image for redis:alpine<br>0a5ceea3df52e200d45772c4507b20d7c95a97dcd3939cb33a8d5bc1b842e334</p>
+</blockquote>
+<h4 id="检验"><a href="#检验" class="headerlink" title="检验"></a>检验</h4><h5 id="pidof-lt-process-name-gt"><a href="#pidof-lt-process-name-gt" class="headerlink" title="pidof &lt;process-name&gt;"></a>pidof &lt;process-name&gt;</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pidof redis-server</span><br></pre></td></tr></table></figure>
+
+<h5 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep redis-server</span><br></pre></td></tr></table></figure>
+
+<h5 id="docker-top"><a href="#docker-top" class="headerlink" title="docker top "></a>docker top <container-name></container-name></h5><blockquote>
+<p>docker top can help us identify information about the process including the PID (Process ID) and PPID (Parent Process ID)</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker top db</span><br></pre></td></tr></table></figure>
+
+<h5 id="pstree"><a href="#pstree" class="headerlink" title="pstree"></a>pstree</h5><blockquote>
+<p>pstree will list all of the sub processes</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree -c -p -A $(pgrep dockerd)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Process-Directory"><a href="#Process-Directory" class="headerlink" title="Process Directory"></a>Process Directory</h2><blockquote>
+<p>Linux is just a series of magic files and contents, this makes it fun to explore and navigate to see what is happening under the covers, and in some cases, change the contents to see the results. The configuration for each process is defined within the /proc directory. If you know the process ID, then you can identify the configuration directory.</p>
+</blockquote>
+<p>每一个 <code>process</code> 的配置都定义在 <code>/proc</code> 文件夹下. 如果知道 <code>process ID</code>, 就能找到该进程的配置文件夹</p>
+<h3 id="redis-server-进程的配置"><a href="#redis-server-进程的配置" class="headerlink" title="redis-server 进程的配置"></a>redis-server 进程的配置</h3><h4 id="找到-redis-server-的-pid"><a href="#找到-redis-server-的-pid" class="headerlink" title="找到 redis-server 的 pid"></a>找到 redis-server 的 pid</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DBPID=$(pgrep redis-server)</span><br><span class="line"><span class="built_in">echo</span> Redis is <span class="variable">$DBPID</span></span><br><span class="line">ls /proc</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看-redis-server-进程的环境变量"><a href="#查看-redis-server-进程的环境变量" class="headerlink" title="查看 redis-server 进程的环境变量"></a>查看 redis-server 进程的环境变量</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /proc/<span class="variable">$DBPID</span></span><br><span class="line">cat /proc/<span class="variable">$DBPID</span>/environ</span><br></pre></td></tr></table></figure>
+
+<p>结果如下:</p>
+<blockquote>
+<p>HOSTNAME=f3b9624ce46cSHLVL=2REDIS_DOWNLOAD_SHA=<br>61db74eabf6801f057fd24b590232f2f337d422280fd19486<br>eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sb<br>in:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br>REDIS_DOWNLOAD_URL=<a href="http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data" target="_blank" rel="noopener">http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data</a></p>
+</blockquote>
+<p>解析查看:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'HOSTNAME=5fba1658e4ceSHLVL=2REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binREDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data'</span>.match(<span class="regexp">/[A-Z]+=[^A-Z]*/g</span>) <span class="comment">// regexp 解析查看 key=value</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="docker-容器里执行-env-命令"><a href="#docker-容器里执行-env-命令" class="headerlink" title="docker 容器里执行 env 命令"></a>docker 容器里执行 env 命令</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it db env</span><br></pre></td></tr></table></figure>
+
+<p><code>env</code> 内容如下:</p>
+<blockquote>
+<p>PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br>HOSTNAME=f3b9624ce46c<br>TERM=xterm<br>REDIS_VERSION=5.0.7<br>REDIS_DOWNLOAD_URL=<a href="http://download.redis.io/releases/redis-5.0.7.tar.gz" target="_blank" rel="noopener">http://download.redis.io/releases/redis-5.0.7.tar.gz</a><br>REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82b<br>HOME=/root</p>
+</blockquote>
+<h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><blockquote>
+<p>One of the fundamental parts of a container is namespaces. The concept of namespaces is to limit what processes can see and access certain parts of the system, such as other network interfaces or processes<br>When a container is started, the container runtime, such as Docker, will create new namespaces to sandbox the process. By running a process in it’s own Pid namespace, it will look like it’s the only process on the system.</p>
+</blockquote>
+<ul>
+<li>Mount (mnt)</li>
+<li>Process (pid)</li>
+<li>Network (net)</li>
+<li>Interprocess Communication (ipc)</li>
+<li>UTS (hostnames) aka unix time-sharing system</li>
+<li>User ID (user)</li>
+<li>Control group (cgroup)</li>
+</ul>
+<h3 id="lanched-“contained”-processes"><a href="#lanched-“contained”-processes" class="headerlink" title="lanched “contained” processes"></a>lanched “contained” processes</h3><blockquote>
+<p>Without using a runtime such as Docker, a process can still operate within it’s own namespace. One tool to help is unshare.</p>
+</blockquote>
+<p>不用 <code>docker</code> 这个 <code>runtime</code>, 也可以用 <code>unshare</code> 这个工具来创建一个拥有自己的 <code>namespace</code> 的进程.</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unshare --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>Run a program with some namespaces unshared from the parent.</p>
+</blockquote>
+<p>运行一个程序, 不共享父进程的某些 namespaces</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">unshare --fork --pid --mount-proc bash</span><br><span class="line">ps</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="namespace-是啥"><a href="#namespace-是啥" class="headerlink" title="namespace 是啥"></a>namespace 是啥</h3><blockquote>
+<p>Namespaces are inode locations on disk. this allows for processes to shared/reused the same namespace, allowing them to view and interact.</p>
+</blockquote>
+<p><code>namespace</code> 是硬盘上的 <code>inode</code>. 这允许 <code>processes</code> 共享/复用相同的 <code>namespace</code>, 允许进程之间可以互相看得到, 互相交流.</p>
+<h4 id="查看-redis-server-的所有-namespace"><a href="#查看-redis-server-的所有-namespace" class="headerlink" title="查看 redis-server 的所有 namespace"></a>查看 redis-server 的所有 namespace</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -liha /proc/<span class="variable">$DBPID</span>/ns</span><br></pre></td></tr></table></figure>
+
+<h4 id="attach-process-to-existing-NameSpaces"><a href="#attach-process-to-existing-NameSpaces" class="headerlink" title="attach process to existing NameSpaces"></a>attach process to existing NameSpaces</h4><blockquote>
+<p><code>nsenter</code> run a program with namespaces of other processes.</p>
+</blockquote>
+<p>在其他进程的 <code>namespace</code> 中运行一个程序</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">nsenter --help</span><br><span class="line">nsenter [options] [&lt;program&gt; [&lt;argument&gt;...]]</span><br><span class="line"> Options:</span><br><span class="line"> -a, --all              enter all namespaces</span><br><span class="line"> -t, --target &lt;pid&gt;     target process to get namespaces from</span><br><span class="line"> -m, --mount[=&lt;file&gt;]   enter mount namespace</span><br><span class="line"> -u, --uts[=&lt;file&gt;]     enter UTS namespace (hostname etc)</span><br><span class="line"> -i, --ipc[=&lt;file&gt;]     enter System V IPC namespace</span><br><span class="line"> -n, --net[=&lt;file&gt;]     enter network namespace</span><br><span class="line"> -p, --pid[=&lt;file&gt;]     enter pid namespace</span><br><span class="line"> -C, --cgroup[=&lt;file&gt;]  enter cgroup namespace</span><br><span class="line"> -U, --user[=&lt;file&gt;]    enter user namespace</span><br><span class="line"> -S, --setuid &lt;uid&gt;     set uid in entered namespace</span><br><span class="line"> -G, --setgid &lt;gid&gt;     set gid in entered namespace</span><br><span class="line">     --preserve-credentials do not touch uids or gids</span><br><span class="line"> -r, --root[=&lt;dir&gt;]     set the root directory</span><br><span class="line"> -w, --wd[=&lt;dir&gt;]       set the working directory</span><br><span class="line"> -F, --no-fork          do not fork before exec&apos;ing &lt;program&gt;</span><br><span class="line"> -Z, --follow-context   set SELinux context according to --target PID</span><br></pre></td></tr></table></figure>
+
+ <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nsenter --target <span class="variable">$DBPID</span> --mount --uts --ipc --net --pid ps aux</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>redis-server</code> 的 <code>mount</code>, <code>uts</code>, <code>ipc</code>, <code>net</code>, <code>pid</code> 这些命名空间里执行 <code>ps</code> 命令</p>
+<h4 id="share-namespaces-of-redis-server"><a href="#share-namespaces-of-redis-server" class="headerlink" title="share namespaces of redis-server"></a>share namespaces of redis-server</h4><blockquote>
+<p>With Docker, these namespaces can be shared using the syntax container:&lt;container-name&gt;. For example, the command below will connect nginx to the DB namespace</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name=web --net=container:db nginx:alpine</span><br></pre></td></tr></table></figure>
+
+<p>启动 <code>nginx</code> 的容器. 共享 <code>redis-server</code> 的 <code>net</code> namespace</p>
+<ul>
+<li>查看 <code>nginx</code> 容器的 <code>net</code> 的 namespace</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lha /proc/<span class="variable">$WEBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>dr-x–x–x 2 systemd-network systemd-journal 0 Dec 24 13:40 .<br>dr-xr-xr-x 9 systemd-network systemd-journal 0 Dec 24 13:40 ..<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 cgroup -&gt; cgroup:[4026531835]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 ipc -&gt; ipc:[4026532225]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 mnt -&gt; mnt:[4026532223]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 net -&gt; net:[4026532160] – 注意这个是共享的 redis-server 的 net 命名空间<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 pid -&gt; pid:[4026532226]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 user -&gt; user:[4026531837]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 uts -&gt; uts:[4026532224]</p>
+</blockquote>
+<ul>
+<li>查看 <code>redis-server</code> 容器的 <code>net</code> 命名空间</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lha /proc/<span class="variable">$DBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>lrwxrwxrwx 1 999 packer 0 Dec 24 13:39 net -&gt; net:[4026532160]</p>
+</blockquote>
+<h2 id="CGroups"><a href="#CGroups" class="headerlink" title="CGroups"></a>CGroups</h2><blockquote>
+<p>CGroups limit the amount of resources a process can consume. These cgroups are values defined in particular files within the /proc directory.<br>CGroups 用来限制一个进程可以使用的资源的量. cgroups 的值被定义在 /proc 文件夹下的特定文件里.</p>
+</blockquote>
+<h3 id="查看-redis-server-的-CGroups"><a href="#查看-redis-server-的-CGroups" class="headerlink" title="查看 redis-server 的 CGroups"></a>查看 redis-server 的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/cgroup</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>得到 redis-server 的容器 ID</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">DBID=$(docker ps --no-trunc | grep <span class="string">'db'</span> | awk <span class="string">'&#123;print $1&#125;'</span>)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看 redis-server 的 cpu stats 和 usages</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpuacct.stat</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看 redis-server 的 cpu shares</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpu.shares</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查看所有容器的 memory 的 docker cgroups 配置</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/fs/cgroup/memory/docker</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看所有的-CGroups"><a href="#查看所有的-CGroups" class="headerlink" title="查看所有的 CGroups"></a>查看所有的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/fs/cgroup</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置-cgroups"><a href="#配置-cgroups" class="headerlink" title="配置 cgroups"></a>配置 cgroups</h3><blockquote>
+<p>用 cgroups 配置 内存, memory quotes 存放在 memory.limit_in_bytes<br>这个文件</p>
+</blockquote>
+<ul>
+<li>容器默认没有内存限制</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker stats db --no-strem ; 只查看一条信息</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>限制 db 这个容器的内存使用</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 8000000 &gt; /sys/fs/cgroup/memory/docker/<span class="variable">$DBID</span>/memory.limit_in_bytes</span><br></pre></td></tr></table></figure>
+
+<h2 id="Seccomp-限制可以使用的-syscall"><a href="#Seccomp-限制可以使用的-syscall" class="headerlink" title="Seccomp 限制可以使用的 syscall"></a>Seccomp 限制可以使用的 syscall</h2><blockquote>
+<p>When assigned to a process it means the process will be limited to a subset of the ability system calls. If it attempts to call a blocked system call is will recieve the error “Operation Not Allowed”. <a href="https://github.com/moby/moby/blob/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/profiles/seccomp/default.json" target="_blank" rel="noopener">容器默认可以使用的 syscall</a></p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/status</span><br><span class="line">cat /proc/<span class="variable">$DBPID</span>/status | grep Seccomp</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>The flag meaning are: 0: disabled 1: strict 2: filtering</p>
+</blockquote>
+<h2 id="Capabilities"><a href="#Capabilities" class="headerlink" title="Capabilities"></a>Capabilities</h2><blockquote>
+<p>Capabilities are groupings about what a process or user has permission to do. These Capabilities might cover multiple system calls or actions, such as changing the system time or hostname.</p>
+</blockquote>
+<ul>
+<li>查看 redis-server 的 Capabilities</li>
+</ul>
+<blockquote>
+<p>The status file also containers the Capabilities flag. A process can drop as many Capabilities as possible to ensure it’s secure.</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/status | grep ^Cap</span><br></pre></td></tr></table></figure>
+
+<p>结果如下:</p>
+<blockquote>
+<p>CapInh: 00000000a80425fb<br>CapPrm: 0000000000000000<br>CapEff: 0000000000000000<br>CapBnd: 00000000a80425fb<br>CapAmb: 0000000000000000</p>
+</blockquote>
+<ul>
+<li>解析 redis-server 的 flags</li>
+</ul>
+<blockquote>
+<p>The flags are stored as a bitmask that can be decoded with capsh</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">capsh --decode=00000000a80425fb</span><br></pre></td></tr></table></figure>
+
+<p>解析结果如下:</p>
+<blockquote>
+<p>0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,<br>cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,<br>cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,<br>cap_audit_write,cap_setfcap</p>
+</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><p><a href="https://www.katacoda.com/courses/container-runtimes/what-is-a-container" target="_blank" rel="noopener">what is a container</a></p>
+</li>
+<li><p><a href="http://www.ruanyifeng.com/blog/2018/11/awk.html" target="_blank" rel="noopener">awk</a></p>
+</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/11/29/tomcat-http-cookie/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1769,223 +2088,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2019/07/06/asm-how-recursion-function-execute/" itemprop="url">asm-how-recursion-function-execute</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-06T16:35:51+08:00">
-                2019-07-06
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/06/asm-how-recursion-function-execute/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/06/asm-how-recursion-function-execute/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><blockquote>
-<p>第一个月初有一对刚诞生的兔子<br>第二个月之后(第三个月)它们可以生育<br>每月每对可生育的兔子会诞生下一对新兔子<br>兔子永不死<br>问第 n 月有多少对兔子?</p>
-</blockquote>
-<h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><blockquote>
-<p>假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新生育出的兔子对数等于所有在 n 月就已存在的 a 对.</p>
-</blockquote>
-<img src="/2019/07/06/asm-how-recursion-function-execute/fibonacci-sequence.png" title="fibonacci-sequence">
-
-<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="C-代码"><a href="#C-代码" class="headerlink" title="C 代码"></a>C 代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">    result = fib(<span class="number">4</span>);</span><br><span class="line">    <span class="comment">//printf("%d\n",result);</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Asm-代码"><a href="#Asm-代码" class="headerlink" title="Asm 代码"></a>Asm 代码</h2><h3 id="中间代码"><a href="#中间代码" class="headerlink" title="中间代码"></a>中间代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">fib(long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        pushq   %rbx</span><br><span class="line">        subq    $24, %rsp</span><br><span class="line">        movq    %rdi, -24(%rbp) // n</span><br><span class="line">        cmpq    $2, -24(%rbp)   // n - 2</span><br><span class="line">        jg      .L2 </span><br><span class="line">        movl    $1, %eax        // n &lt;= 2</span><br><span class="line">        jmp     .L3</span><br><span class="line">.L2:</span><br><span class="line">        movq    -24(%rbp), %rax // n</span><br><span class="line">        subq    $1, %rax // n - 1</span><br><span class="line">        movq    %rax, %rdi</span><br><span class="line">        call    fib(long)</span><br><span class="line"></span><br><span class="line">        movq    %rax, %rbx // </span><br><span class="line">        movq    -24(%rbp), %rax // n</span><br><span class="line">        subq    $2, %rax // n - 2</span><br><span class="line">        movq    %rax, %rdi</span><br><span class="line">        call    fib(long)</span><br><span class="line">        addq    %rbx, %rax</span><br><span class="line">.L3:</span><br><span class="line">        addq    $24, %rsp // 释放分配的栈空间</span><br><span class="line">        popq    %rbx</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $16, %rsp</span><br><span class="line">        movl    $3, %edi  // n = 3</span><br><span class="line">        call    fib(long)</span><br><span class="line">        movq    %rax, -8(%rbp) // result = fib(3)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
-
-<img src="/2019/07/06/asm-how-recursion-function-execute/fib-label.png">
-<h3 id="反编译可执行代码"><a href="#反编译可执行代码" class="headerlink" title="反编译可执行代码"></a>反编译可执行代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">fib(long):</span><br><span class="line">        push   %rbp</span><br><span class="line">        mov    %rsp,%rbp</span><br><span class="line">        push   %rbx</span><br><span class="line">        sub    $0x18,%rsp</span><br><span class="line">        mov    %rdi,-0x18(%rbp)</span><br><span class="line">        cmpq   $0x2,-0x18(%rbp)</span><br><span class="line">        jg     4004cd &lt;fib(long)+0x1b&gt; // 0x1b 是地址为 4004cd 这条指令之前的所有指令的字节数</span><br><span class="line">        mov    $0x1,%eax</span><br><span class="line">        jmp    4004f3 &lt;fib(long)+0x41&gt; // 0x41 是地址为 4004f3 这条指令之前的所有指令的字节数</span><br><span class="line">        mov    -0x18(%rbp),%rax</span><br><span class="line">        sub    $0x1,%rax</span><br><span class="line">        mov    %rax,%rdi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        mov    %rax,%rbx</span><br><span class="line">        mov    -0x18(%rbp),%rax</span><br><span class="line">        sub    $0x2,%rax</span><br><span class="line">        mov    %rax,%rdi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        add    %rbx,%rax</span><br><span class="line">        add    $0x18,%rsp</span><br><span class="line">        pop    %rbx</span><br><span class="line">        pop    %rbp</span><br><span class="line">        retq   </span><br><span class="line">main:</span><br><span class="line">        push   %rbp</span><br><span class="line">        mov    %rsp,%rbp</span><br><span class="line">        sub    $0x10,%rsp</span><br><span class="line">        movq   $0x0,-0x8(%rbp)</span><br><span class="line">        mov    $0x4,%edi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        mov    %rax,-0x8(%rbp)</span><br><span class="line">        mov    $0x0,%eax</span><br><span class="line">        leaveq </span><br><span class="line">        retq   </span><br><span class="line">        nop</span><br></pre></td></tr></table></figure>
-
-<img src="/2019/07/06/asm-how-recursion-function-execute/fib.png" title="fib">
-<blockquote>
-<p>fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.</p>
-</blockquote>
-<h2 id="调用栈调用顺序分析"><a href="#调用栈调用顺序分析" class="headerlink" title="调用栈调用顺序分析"></a>调用栈调用顺序分析</h2><h3 id="调用栈图解分析"><a href="#调用栈图解分析" class="headerlink" title="调用栈图解分析"></a>调用栈图解分析</h3><img src="/2019/07/06/asm-how-recursion-function-execute/fib(4)-call-stack.png" title="fib(4)调用栈分析">
-<h3 id="符合递归终止时调用栈执行顺序"><a href="#符合递归终止时调用栈执行顺序" class="headerlink" title="符合递归终止时调用栈执行顺序"></a>符合递归终止时调用栈执行顺序</h3><blockquote>
-<p>fib(3) = fib(2) + fib(1), 就符合递归退出的条件.</p>
-</blockquote>
-<h4 id="代码执行顺序"><a href="#代码执行顺序" class="headerlink" title="代码执行顺序"></a>代码执行顺序</h4><img src="/2019/07/06/asm-how-recursion-function-execute/fib(3)-execute-sequence.png" title="第一次执行到fib(3)调用流程">
-
-<h4 id="二叉树后序遍历的视角来分析"><a href="#二叉树后序遍历的视角来分析" class="headerlink" title="二叉树后序遍历的视角来分析"></a>二叉树后序遍历的视角来分析</h4><blockquote>
-<p>递归终止条件:<br>fib(2) = 1 视为左叶子节点<br>fib(1) = 1 视为右叶子节点<br>fib(3) = fib(2) + fib(1) 视为父节点</p>
-</blockquote>
-<img src="/2019/07/06/asm-how-recursion-function-execute/fib(3)-execute-squence-treefy.png" title="符合递归退出代码执行流程">
-<blockquote>
-<p>fib(3) 调用 fib(2), 计算出参数 n = 2. 进入左叶子节点.<br>fib(2) 返回 fib(3), fib(2) 的返回值 rax = 1, 复制给 rbx.<br>fib(3) 调用 fib(1), 计算出参数 n = 1. 进入右叶子节点.<br>fib(1) 返回 fib(3), fib(1) 的返回值 rax = 1<br>fib(3) 计算 fib(3) = fib(2) + fib(1) = rbx + rax = 1 + 1 = 2</p>
-</blockquote>
-<h4 id="栈帧的创建和销毁-二叉树后序遍历"><a href="#栈帧的创建和销毁-二叉树后序遍历" class="headerlink" title="栈帧的创建和销毁-二叉树后序遍历"></a>栈帧的创建和销毁-二叉树后序遍历</h4><blockquote>
-<p>fib(n) = fib(n-1) + fib(n-2)(n &gt; 2) 递归调用可以看作是栈帧按照二叉树按照后续遍历的顺序动态的创建和销毁.<br>着色方框为创建的栈帧<br>白色方框为销毁的栈帧或者还未创建的栈帧<br>方框由白色变为着色: 栈帧创建<br>方框由着色变为白色: 栈帧销毁</p>
-</blockquote>
-<img src="/2019/07/06/asm-how-recursion-function-execute/fib-dynamic-stack-frame.png" title="fib(5) 调用栈-栈帧的动态创建和销毁">
-<blockquote>
-<p>从图中可以看出假如 main 调用 fib(5), 会一直调用到 f(2) 才会终止. 则调用栈状态如图 0. 此时递归最大的栈深度是 4, 如果 n 值过大, 会很容易发生 Stack Overflow 这种错误. 比方说 fib(1000) 会一直创建到 fib(2) 这个栈帧, 递归才会开始返回.<br>fib(2) 返回 1 给 fib(3), fib(3) 保存这个返回值. f(2) 栈帧销毁. 如图 1.<br>fib(3) 调用 fib(2) 如图 2.<br>fib(2) 返回 1 给 fib(3), fib(3) 将 fib(2)返回值和 fib(1) 的返回值相加. 如图 3.<br>fib(3) 返回 fib(2)返回值和 fib(1) 的返回值相加的结果. 如图 4.</p>
-</blockquote>
-<h5 id="效率低原因分析"><a href="#效率低原因分析" class="headerlink" title="效率低原因分析"></a>效率低原因分析</h5><blockquote>
-<p>计算的结果并没有保存. 每一次进入递归之后都是从基本的 fib(2) 和 fib(1) 向上返回. 中间伴随着大量的栈帧创建和销毁, 以及重复的函数计算.函数栈帧的创建和销毁是耗时的操作, 这可就很慢了.<br>fib(n) 开辟栈帧总数量可以表示为: sum(n) = 2^(n - 2) + 1 (n &gt;= 3).<br>时间复杂度是: O(2^n)</p>
-</blockquote>
-<h5 id="运行时间测试"><a href="#运行时间测试" class="headerlink" title="运行时间测试"></a>运行时间测试</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LENGTH 51</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">clock_t</span> beginTime,endTime;</span><br><span class="line">    beginTime = clock();</span><br><span class="line">    result = fib(LENGTH - <span class="number">1</span>);</span><br><span class="line">    endTime = clock();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Running Time %f Seconds\n"</span>,(<span class="keyword">double</span>)(endTime - beginTime)/CLOCKS_PER_SEC);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" %d :: %lu \n"</span>, LENGTH - <span class="number">1</span>, result);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>fib(n) 开辟栈帧总数量可以表示为: sum(n) = 2^(n - 2) + 1 (n &gt;= 3).<br>时间复杂度是: O(2^n)<br>fib(50) 开辟栈帧总量是: sum(50) = 2^(48) + 1<br>时间复杂度是: O(2 ^ 50)<br>计算 fib(50) 费了 65 秒左右</p>
-</blockquote>
-<h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><blockquote>
-<p>用数组保存已经计算出来的 fib(n) 的结果. 修改计算逻辑, 如果 fib(n) 已经被计算, 直接使用, 不再进入递归计算.<br>这可不就是有拿空间换时间的感觉.</p>
-</blockquote>
-<h2 id="优化递归"><a href="#优化递归" class="headerlink" title="优化递归"></a>优化递归</h2><h3 id="空间换时间优化代码"><a href="#空间换时间优化代码" class="headerlink" title="空间换时间优化代码"></a>空间换时间优化代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> LENGTH 51</span></span><br><span class="line"><span class="comment">// 计算 fib(50)</span></span><br><span class="line"><span class="comment">// 全局的用来保存 fib(n)(n &gt; 2) 计算结果的数组.</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> result[LENGTH];</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="comment">// fib(n) 已经被计算, 那就直接返回.</span></span><br><span class="line">    <span class="keyword">if</span>(result[n] != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> result[n];</span><br><span class="line">    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 保存 fib(n) 的计算结果</span></span><br><span class="line">       result[n] =  fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">    &#125; </span><br><span class="line">   <span class="keyword">return</span> result[n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">clock_t</span> beginTime,endTime;</span><br><span class="line">    <span class="comment">// 由于 1, 1, 2, 3, 5 ..... 都是大于 0 的结果, 全部初始化为 0, 相当于都没有计算结果.</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; LENGTH ; i++)&#123;</span><br><span class="line">        result[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// fib(1) 的计算结果为 1</span></span><br><span class="line">    result[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// fib(2) 的计算结果为 1</span></span><br><span class="line">    result[<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">    beginTime = clock();</span><br><span class="line">    fib(LENGTH - <span class="number">1</span>);</span><br><span class="line">    endTime = clock();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Running Time %f Seconds\n"</span>,(<span class="keyword">double</span>)(endTime - beginTime)/CLOCKS_PER_SEC);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; LENGTH; i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">" %i :: %lu \n"</span>, i, result[i]);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="优化递归函数栈帧"><a href="#优化递归函数栈帧" class="headerlink" title="优化递归函数栈帧"></a>优化递归函数栈帧</h3><img src="/2019/07/06/asm-how-recursion-function-execute/fib-optimize-stack-frame.png" title="fib(5)递归栈帧">
-<blockquote>
-<p>着色方框-开辟销毁的栈帧<br>白色方框-不用开辟的栈帧<br>优化后的 fib(n) 开辟栈帧总数量可以表示为: sum(n) = (n - 2)(n &gt;= 3).<br>时间复杂度是: O(n)<br>计算 fib(50) 开辟栈帧总数量是: sum(50) = 48<br>fib(50) = 3996334433<br>时间复杂度是 O(50), 结果几乎秒算.<br>unsigned long result[LENGTH];<br>拿空间换时间, 其实这句话有问题的, 拿出来空间, 计算逻辑也是要优化的. </p>
-</blockquote>
-<h3 id="尾递归优化"><a href="#尾递归优化" class="headerlink" title="尾递归优化"></a>尾递归优化</h3><h4 id="非优化递归"><a href="#非优化递归" class="headerlink" title="非优化递归"></a>非优化递归</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>这里 fib(n-1) 和 fib(n-2) 与 fib(n) 其实根本不是同一个函数.<br>三者的逻辑其实不同, 但是函数之间有依赖.</p>
-</blockquote>
-<h4 id="优化递归-1"><a href="#优化递归-1" class="headerlink" title="优化递归"></a>优化递归</h4><blockquote>
-<p>尾递归的实现, 往往需要改写递归函数, 确保最后一步只调用自身. 做到这一点的方法, 就是把所有用到的内部变量改写成函数的参数.<br>尾调用的概念非常简单, 一句话就能说清楚, 就是指某个函数的最后一步是调用另一个函数.</p>
-</blockquote>
-<h5 id="中间变量改成函数的参数"><a href="#中间变量改成函数的参数" class="headerlink" title="中间变量改成函数的参数"></a>中间变量改成函数的参数</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n, <span class="keyword">unsigned</span> <span class="keyword">long</span> prev, <span class="keyword">unsigned</span> <span class="keyword">long</span> sum )</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">3</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fib(n<span class="number">-1</span>, sum , prev + sum); <span class="comment">// 尾调用</span></span><br><span class="line">&#125;</span><br><span class="line">&gt; 这里 fib(n<span class="number">-1</span>, sum , prev + sum) 的才是和 fib(<span class="keyword">unsigned</span> <span class="keyword">long</span> n, <span class="keyword">unsigned</span> <span class="keyword">long</span> prev, <span class="keyword">unsigned</span> <span class="keyword">long</span> sum ) 完全一样的函数.</span><br></pre></td></tr></table></figure>
-
-<h5 id="包装一层"><a href="#包装一层" class="headerlink" title="包装一层"></a>包装一层</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span>   <span class="title">fibonacc</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// 1 : fib(2)</span></span><br><span class="line">    <span class="comment">// 2 : fib(2) + fib(1) = fib(3)</span></span><br><span class="line">    <span class="keyword">return</span> fib(n, <span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>计算结果保存在参数里.</p>
-</blockquote>
-<h5 id="fib-n-汇编代码分析"><a href="#fib-n-汇编代码分析" class="headerlink" title="fib(n) 汇编代码分析"></a>fib(n) 汇编代码分析</h5><img src="/2019/07/06/asm-how-recursion-function-execute/fib-tail-recursion.png" title="fib(n) 尾递归汇编代码">
-<blockquote>
-<p>尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n &lt;= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.</p>
-</blockquote>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><blockquote>
-<p>用简单的一句话,递归就是调用函数本身. 这句话是相当不负责任的. 递归函数在汇编级别的调用自己, 尽管调用的是自己, 递归的函数名尽管相同, 但是函数返回地址是不相同的. 这也意味着其实逻辑完全可能不一样.<br>结合栈帧的创建和销毁, 就可以理解 <code>Stack Overflow</code> 这种错误.</p>
-</blockquote>
-<p>References</p>
-<ol>
-<li><a href="https://stackoverflow.com/questions/21440403/what-does-the-cmpq-instruction-do" target="_blank" rel="noopener">asm-cmpq</a></li>
-<li><a href="https://www.aldeid.com/wiki/X86-assembly/Instructions/jg" target="_blank" rel="noopener">asm-jg</a></li>
-<li><a href="http://faydoc.tripod.com/cpu/jg.htm" target="_blank" rel="noopener">asm-jp-table</a></li>
-<li><a href="https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97" target="_blank" rel="noopener">斐波那契数列</a></li>
-<li><a href="https://godbolt.org/" target="_blank" rel="noopener">asm-tool</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2015/04/tail-call.html" target="_blank" rel="noopener">尾调用(tail-call)之尾递归</a></li>
-<li><a href="https://mp.weixin.qq.com/s/GncAsmZ1dZKyNMOwN5-sjw" target="_blank" rel="noopener">动态规划</a></li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2036,7 +2138,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">35</span>
+                  <span class="site-state-item-count">36</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
@@ -2049,7 +2151,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">32</span>
+                  <span class="site-state-item-count">33</span>
                   <span class="site-state-item-name">tags</span>
                 </a>
               </div>
