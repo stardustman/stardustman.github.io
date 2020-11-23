@@ -1,98 +1,35 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang>
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="en">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-
-
-  
-  
-  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="asm,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
-
-
-
-
-
-
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"stardustman.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.0.2","exturl":false,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
 <meta name="description" content="斐波那契数列问题描述 第一个月初有一对刚诞生的兔子第二个月之后(第三个月)它们可以生育每月每对可生育的兔子会诞生下一对新兔子兔子永不死问第 n 月有多少对兔子?  图解 假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新">
-<meta name="keywords" content="asm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="asm-how-recursion-function-execute">
 <meta property="og:url" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/index.html">
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="斐波那契数列问题描述 第一个月初有一对刚诞生的兔子第二个月之后(第三个月)它们可以生育每月每对可生育的兔子会诞生下一对新兔子兔子永不死问第 n 月有多少对兔子?  图解 假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/fibonacci-sequence.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/fib-label.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/fib.png">
@@ -102,318 +39,332 @@
 <meta property="og:image" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/fib-dynamic-stack-frame.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/fib-optimize-stack-frame.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/fib-tail-recursion.png">
-<meta property="og:updated_time" content="2019-12-27T05:07:37.203Z">
+<meta property="article:published_time" content="2019-07-06T08:35:51.000Z">
+<meta property="article:modified_time" content="2019-12-27T05:07:37.203Z">
+<meta property="article:author" content="stardustman">
+<meta property="article:tag" content="asm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="asm-how-recursion-function-execute">
-<meta name="twitter:description" content="斐波那契数列问题描述 第一个月初有一对刚诞生的兔子第二个月之后(第三个月)它们可以生育每月每对可生育的兔子会诞生下一对新兔子兔子永不死问第 n 月有多少对兔子?  图解 假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新">
 <meta name="twitter:image" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/fibonacci-sequence.png">
 
 
+<link rel="canonical" href="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/">
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
-
-
-
-  <link rel="canonical" href="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/">
-
-
-
-
-
-  <title>asm-how-recursion-function-execute | stardustman</title>
+<title>asm-how-recursion-function-execute | stardustman</title>
   
 
 
 
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
 
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
 
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
 
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
 
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">stardustman</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">stardustman</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            About
-          </a>
-        </li>
-      
-        
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            Tags
-          </a>
-        </li>
-      
-        
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
 
-      
-    </ul>
-  
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
-  
+  </li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97"><span class="nav-number">1.</span> <span class="nav-text">斐波那契数列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AE%E9%A2%98%E6%8F%8F%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E8%A7%A3"><span class="nav-number">1.2.</span> <span class="nav-text">图解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">2.</span> <span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E4%BB%A3%E7%A0%81"><span class="nav-number">2.1.</span> <span class="nav-text">C 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Asm-%E4%BB%A3%E7%A0%81"><span class="nav-number">2.2.</span> <span class="nav-text">Asm 代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%A3%E7%A0%81"><span class="nav-number">2.2.1.</span> <span class="nav-text">中间代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91%E5%8F%AF%E6%89%A7%E8%A1%8C%E4%BB%A3%E7%A0%81"><span class="nav-number">2.2.2.</span> <span class="nav-text">反编译可执行代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E6%A0%88%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F%E5%88%86%E6%9E%90"><span class="nav-number">2.3.</span> <span class="nav-text">调用栈调用顺序分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B0%83%E7%94%A8%E6%A0%88%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90"><span class="nav-number">2.3.1.</span> <span class="nav-text">调用栈图解分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%A6%E5%90%88%E9%80%92%E5%BD%92%E7%BB%88%E6%AD%A2%E6%97%B6%E8%B0%83%E7%94%A8%E6%A0%88%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.3.2.</span> <span class="nav-text">符合递归终止时调用栈执行顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">代码执行顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E5%8F%89%E6%A0%91%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E7%9A%84%E8%A7%86%E8%A7%92%E6%9D%A5%E5%88%86%E6%9E%90"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">二叉树后序遍历的视角来分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%88%E5%B8%A7%E7%9A%84%E5%88%9B%E5%BB%BA%E5%92%8C%E9%94%80%E6%AF%81-%E4%BA%8C%E5%8F%89%E6%A0%91%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">栈帧的创建和销毁-二叉树后序遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%95%88%E7%8E%87%E4%BD%8E%E5%8E%9F%E5%9B%A0%E5%88%86%E6%9E%90"><span class="nav-number">2.3.2.3.1.</span> <span class="nav-text">效率低原因分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C%E6%97%B6%E9%97%B4%E6%B5%8B%E8%AF%95"><span class="nav-number">2.3.2.3.2.</span> <span class="nav-text">运行时间测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">2.3.2.3.3.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E9%80%92%E5%BD%92"><span class="nav-number">2.4.</span> <span class="nav-text">优化递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A9%BA%E9%97%B4%E6%8D%A2%E6%97%B6%E9%97%B4%E4%BC%98%E5%8C%96%E4%BB%A3%E7%A0%81"><span class="nav-number">2.4.1.</span> <span class="nav-text">空间换时间优化代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E9%80%92%E5%BD%92%E5%87%BD%E6%95%B0%E6%A0%88%E5%B8%A7"><span class="nav-number">2.4.2.</span> <span class="nav-text">优化递归函数栈帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B0%BE%E9%80%92%E5%BD%92%E4%BC%98%E5%8C%96"><span class="nav-number">2.4.3.</span> <span class="nav-text">尾递归优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%9D%9E%E4%BC%98%E5%8C%96%E9%80%92%E5%BD%92"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">非优化递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E9%80%92%E5%BD%92-1"><span class="nav-number">2.4.3.2.</span> <span class="nav-text">优化递归</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B8%AD%E9%97%B4%E5%8F%98%E9%87%8F%E6%94%B9%E6%88%90%E5%87%BD%E6%95%B0%E7%9A%84%E5%8F%82%E6%95%B0"><span class="nav-number">2.4.3.2.1.</span> <span class="nav-text">中间变量改成函数的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%8C%85%E8%A3%85%E4%B8%80%E5%B1%82"><span class="nav-number">2.4.3.2.2.</span> <span class="nav-text">包装一层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fib-n-%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">2.4.3.2.3.</span> <span class="nav-text">fib(n) 汇编代码分析</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">2.5.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">stardustman</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+        <div class="back-to-top animated">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/stardustman" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="stardustman">
     </span>
-
-    
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          asm-how-recursion-function-execute
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">asm-how-recursion-function-execute</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-07-06T16:35:51+08:00">
-                2019-07-06
-              </time>
-            
+      <time title="Created: 2019-07-06 16:35:51" itemprop="dateCreated datePublished" datetime="2019-07-06T16:35:51+08:00">2019-07-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2019-12-27 13:07:37" itemprop="dateModified" datetime="2019-12-27T13:07:37+08:00">2019-12-27</time>
+      </span>
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/07/06/asm-how-recursion-function-execute/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/07/06/asm-how-recursion-function-execute/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>5.5k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>5 mins.</span>
+    </span>
+</div>
 
         </div>
       </header>
-    
 
     
     
     
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
+    <div class="post-body" itemprop="articleBody">
         <h1 id="斐波那契数列"><a href="#斐波那契数列" class="headerlink" title="斐波那契数列"></a>斐波那契数列</h1><h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><blockquote>
 <p>第一个月初有一对刚诞生的兔子<br>第二个月之后(第三个月)它们可以生育<br>每月每对可生育的兔子会诞生下一对新兔子<br>兔子永不死<br>问第 n 月有多少对兔子?</p>
 </blockquote>
 <h2 id="图解"><a href="#图解" class="headerlink" title="图解"></a>图解</h2><blockquote>
 <p>假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新生育出的兔子对数等于所有在 n 月就已存在的 a 对.</p>
 </blockquote>
-<img src="/2019/07/06/asm-how-recursion-function-execute/fibonacci-sequence.png" title="fibonacci-sequence">
+<img src="/2019/07/06/asm-how-recursion-function-execute/fibonacci-sequence.png" class="" title="fibonacci-sequence">
 
-<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="C-代码"><a href="#C-代码" class="headerlink" title="C 代码"></a>C 代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">    result = fib(<span class="number">4</span>);</span><br><span class="line">    <span class="comment">//printf("%d\n",result);</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="Asm-代码"><a href="#Asm-代码" class="headerlink" title="Asm 代码"></a>Asm 代码</h2><h3 id="中间代码"><a href="#中间代码" class="headerlink" title="中间代码"></a>中间代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">fib(long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        pushq   %rbx</span><br><span class="line">        subq    $24, %rsp</span><br><span class="line">        movq    %rdi, -24(%rbp) // n</span><br><span class="line">        cmpq    $2, -24(%rbp)   // n - 2</span><br><span class="line">        jg      .L2 </span><br><span class="line">        movl    $1, %eax        // n &lt;= 2</span><br><span class="line">        jmp     .L3</span><br><span class="line">.L2:</span><br><span class="line">        movq    -24(%rbp), %rax // n</span><br><span class="line">        subq    $1, %rax // n - 1</span><br><span class="line">        movq    %rax, %rdi</span><br><span class="line">        call    fib(long)</span><br><span class="line"></span><br><span class="line">        movq    %rax, %rbx // </span><br><span class="line">        movq    -24(%rbp), %rax // n</span><br><span class="line">        subq    $2, %rax // n - 2</span><br><span class="line">        movq    %rax, %rdi</span><br><span class="line">        call    fib(long)</span><br><span class="line">        addq    %rbx, %rax</span><br><span class="line">.L3:</span><br><span class="line">        addq    $24, %rsp // 释放分配的栈空间</span><br><span class="line">        popq    %rbx</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $16, %rsp</span><br><span class="line">        movl    $3, %edi  // n = 3</span><br><span class="line">        call    fib(long)</span><br><span class="line">        movq    %rax, -8(%rbp) // result = fib(3)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
-
-<img src="/2019/07/06/asm-how-recursion-function-execute/fib-label.png">
-<h3 id="反编译可执行代码"><a href="#反编译可执行代码" class="headerlink" title="反编译可执行代码"></a>反编译可执行代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">fib(long):</span><br><span class="line">        push   %rbp</span><br><span class="line">        mov    %rsp,%rbp</span><br><span class="line">        push   %rbx</span><br><span class="line">        sub    $0x18,%rsp</span><br><span class="line">        mov    %rdi,-0x18(%rbp)</span><br><span class="line">        cmpq   $0x2,-0x18(%rbp)</span><br><span class="line">        jg     4004cd &lt;fib(long)+0x1b&gt; // 0x1b 是地址为 4004cd 这条指令之前的所有指令的字节数</span><br><span class="line">        mov    $0x1,%eax</span><br><span class="line">        jmp    4004f3 &lt;fib(long)+0x41&gt; // 0x41 是地址为 4004f3 这条指令之前的所有指令的字节数</span><br><span class="line">        mov    -0x18(%rbp),%rax</span><br><span class="line">        sub    $0x1,%rax</span><br><span class="line">        mov    %rax,%rdi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        mov    %rax,%rbx</span><br><span class="line">        mov    -0x18(%rbp),%rax</span><br><span class="line">        sub    $0x2,%rax</span><br><span class="line">        mov    %rax,%rdi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        add    %rbx,%rax</span><br><span class="line">        add    $0x18,%rsp</span><br><span class="line">        pop    %rbx</span><br><span class="line">        pop    %rbp</span><br><span class="line">        retq   </span><br><span class="line">main:</span><br><span class="line">        push   %rbp</span><br><span class="line">        mov    %rsp,%rbp</span><br><span class="line">        sub    $0x10,%rsp</span><br><span class="line">        movq   $0x0,-0x8(%rbp)</span><br><span class="line">        mov    $0x4,%edi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        mov    %rax,-0x8(%rbp)</span><br><span class="line">        mov    $0x0,%eax</span><br><span class="line">        leaveq </span><br><span class="line">        retq   </span><br><span class="line">        nop</span><br></pre></td></tr></table></figure>
-
-<img src="/2019/07/06/asm-how-recursion-function-execute/fib.png" title="fib">
+<h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="C-代码"><a href="#C-代码" class="headerlink" title="C 代码"></a>C 代码</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">    result = fib(<span class="number">4</span>);</span><br><span class="line">    <span class="comment">//printf(&quot;%d\n&quot;,result);</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Asm-代码"><a href="#Asm-代码" class="headerlink" title="Asm 代码"></a>Asm 代码</h2><h3 id="中间代码"><a href="#中间代码" class="headerlink" title="中间代码"></a>中间代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">fib(long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        pushq   %rbx</span><br><span class="line">        subq    $24, %rsp</span><br><span class="line">        movq    %rdi, -24(%rbp) &#x2F;&#x2F; n</span><br><span class="line">        cmpq    $2, -24(%rbp)   &#x2F;&#x2F; n - 2</span><br><span class="line">        jg      .L2 </span><br><span class="line">        movl    $1, %eax        &#x2F;&#x2F; n &lt;&#x3D; 2</span><br><span class="line">        jmp     .L3</span><br><span class="line">.L2:</span><br><span class="line">        movq    -24(%rbp), %rax &#x2F;&#x2F; n</span><br><span class="line">        subq    $1, %rax &#x2F;&#x2F; n - 1</span><br><span class="line">        movq    %rax, %rdi</span><br><span class="line">        call    fib(long)</span><br><span class="line"></span><br><span class="line">        movq    %rax, %rbx &#x2F;&#x2F; </span><br><span class="line">        movq    -24(%rbp), %rax &#x2F;&#x2F; n</span><br><span class="line">        subq    $2, %rax &#x2F;&#x2F; n - 2</span><br><span class="line">        movq    %rax, %rdi</span><br><span class="line">        call    fib(long)</span><br><span class="line">        addq    %rbx, %rax</span><br><span class="line">.L3:</span><br><span class="line">        addq    $24, %rsp &#x2F;&#x2F; 释放分配的栈空间</span><br><span class="line">        popq    %rbx</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $16, %rsp</span><br><span class="line">        movl    $3, %edi  &#x2F;&#x2F; n &#x3D; 3</span><br><span class="line">        call    fib(long)</span><br><span class="line">        movq    %rax, -8(%rbp) &#x2F;&#x2F; result &#x3D; fib(3)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<img src="/2019/07/06/asm-how-recursion-function-execute/fib-label.png" class="">
+<h3 id="反编译可执行代码"><a href="#反编译可执行代码" class="headerlink" title="反编译可执行代码"></a>反编译可执行代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">fib(long):</span><br><span class="line">        push   %rbp</span><br><span class="line">        mov    %rsp,%rbp</span><br><span class="line">        push   %rbx</span><br><span class="line">        sub    $0x18,%rsp</span><br><span class="line">        mov    %rdi,-0x18(%rbp)</span><br><span class="line">        cmpq   $0x2,-0x18(%rbp)</span><br><span class="line">        jg     4004cd &lt;fib(long)+0x1b&gt; &#x2F;&#x2F; 0x1b 是地址为 4004cd 这条指令之前的所有指令的字节数</span><br><span class="line">        mov    $0x1,%eax</span><br><span class="line">        jmp    4004f3 &lt;fib(long)+0x41&gt; &#x2F;&#x2F; 0x41 是地址为 4004f3 这条指令之前的所有指令的字节数</span><br><span class="line">        mov    -0x18(%rbp),%rax</span><br><span class="line">        sub    $0x1,%rax</span><br><span class="line">        mov    %rax,%rdi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        mov    %rax,%rbx</span><br><span class="line">        mov    -0x18(%rbp),%rax</span><br><span class="line">        sub    $0x2,%rax</span><br><span class="line">        mov    %rax,%rdi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        add    %rbx,%rax</span><br><span class="line">        add    $0x18,%rsp</span><br><span class="line">        pop    %rbx</span><br><span class="line">        pop    %rbp</span><br><span class="line">        retq   </span><br><span class="line">main:</span><br><span class="line">        push   %rbp</span><br><span class="line">        mov    %rsp,%rbp</span><br><span class="line">        sub    $0x10,%rsp</span><br><span class="line">        movq   $0x0,-0x8(%rbp)</span><br><span class="line">        mov    $0x4,%edi</span><br><span class="line">        callq  4004b2 &lt;fib(long)&gt;</span><br><span class="line">        mov    %rax,-0x8(%rbp)</span><br><span class="line">        mov    $0x0,%eax</span><br><span class="line">        leaveq </span><br><span class="line">        retq   </span><br><span class="line">        nop</span><br></pre></td></tr></table></figure>
+<img src="/2019/07/06/asm-how-recursion-function-execute/fib.png" class="" title="fib">
 <blockquote>
 <p>fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.</p>
 </blockquote>
-<h2 id="调用栈调用顺序分析"><a href="#调用栈调用顺序分析" class="headerlink" title="调用栈调用顺序分析"></a>调用栈调用顺序分析</h2><h3 id="调用栈图解分析"><a href="#调用栈图解分析" class="headerlink" title="调用栈图解分析"></a>调用栈图解分析</h3><img src="/2019/07/06/asm-how-recursion-function-execute/fib(4)-call-stack.png" title="fib(4)调用栈分析">
+<h2 id="调用栈调用顺序分析"><a href="#调用栈调用顺序分析" class="headerlink" title="调用栈调用顺序分析"></a>调用栈调用顺序分析</h2><h3 id="调用栈图解分析"><a href="#调用栈图解分析" class="headerlink" title="调用栈图解分析"></a>调用栈图解分析</h3><img src="/2019/07/06/asm-how-recursion-function-execute/fib(4)-call-stack.png" class="" title="fib(4)调用栈分析">
 <h3 id="符合递归终止时调用栈执行顺序"><a href="#符合递归终止时调用栈执行顺序" class="headerlink" title="符合递归终止时调用栈执行顺序"></a>符合递归终止时调用栈执行顺序</h3><blockquote>
 <p>fib(3) = fib(2) + fib(1), 就符合递归退出的条件.</p>
 </blockquote>
-<h4 id="代码执行顺序"><a href="#代码执行顺序" class="headerlink" title="代码执行顺序"></a>代码执行顺序</h4><img src="/2019/07/06/asm-how-recursion-function-execute/fib(3)-execute-sequence.png" title="第一次执行到fib(3)调用流程">
+<h4 id="代码执行顺序"><a href="#代码执行顺序" class="headerlink" title="代码执行顺序"></a>代码执行顺序</h4><img src="/2019/07/06/asm-how-recursion-function-execute/fib(3)-execute-sequence.png" class="" title="第一次执行到fib(3)调用流程">
 
 <h4 id="二叉树后序遍历的视角来分析"><a href="#二叉树后序遍历的视角来分析" class="headerlink" title="二叉树后序遍历的视角来分析"></a>二叉树后序遍历的视角来分析</h4><blockquote>
 <p>递归终止条件:<br>fib(2) = 1 视为左叶子节点<br>fib(1) = 1 视为右叶子节点<br>fib(3) = fib(2) + fib(1) 视为父节点</p>
 </blockquote>
-<img src="/2019/07/06/asm-how-recursion-function-execute/fib(3)-execute-squence-treefy.png" title="符合递归退出代码执行流程">
+<img src="/2019/07/06/asm-how-recursion-function-execute/fib(3)-execute-squence-treefy.png" class="" title="符合递归退出代码执行流程">
 <blockquote>
 <p>fib(3) 调用 fib(2), 计算出参数 n = 2. 进入左叶子节点.<br>fib(2) 返回 fib(3), fib(2) 的返回值 rax = 1, 复制给 rbx.<br>fib(3) 调用 fib(1), 计算出参数 n = 1. 进入右叶子节点.<br>fib(1) 返回 fib(3), fib(1) 的返回值 rax = 1<br>fib(3) 计算 fib(3) = fib(2) + fib(1) = rbx + rax = 1 + 1 = 2</p>
 </blockquote>
 <h4 id="栈帧的创建和销毁-二叉树后序遍历"><a href="#栈帧的创建和销毁-二叉树后序遍历" class="headerlink" title="栈帧的创建和销毁-二叉树后序遍历"></a>栈帧的创建和销毁-二叉树后序遍历</h4><blockquote>
 <p>fib(n) = fib(n-1) + fib(n-2)(n &gt; 2) 递归调用可以看作是栈帧按照二叉树按照后续遍历的顺序动态的创建和销毁.<br>着色方框为创建的栈帧<br>白色方框为销毁的栈帧或者还未创建的栈帧<br>方框由白色变为着色: 栈帧创建<br>方框由着色变为白色: 栈帧销毁</p>
 </blockquote>
-<img src="/2019/07/06/asm-how-recursion-function-execute/fib-dynamic-stack-frame.png" title="fib(5) 调用栈-栈帧的动态创建和销毁">
+<img src="/2019/07/06/asm-how-recursion-function-execute/fib-dynamic-stack-frame.png" class="" title="fib(5) 调用栈-栈帧的动态创建和销毁">
 <blockquote>
 <p>从图中可以看出假如 main 调用 fib(5), 会一直调用到 f(2) 才会终止. 则调用栈状态如图 0. 此时递归最大的栈深度是 4, 如果 n 值过大, 会很容易发生 Stack Overflow 这种错误. 比方说 fib(1000) 会一直创建到 fib(2) 这个栈帧, 递归才会开始返回.<br>fib(2) 返回 1 给 fib(3), fib(3) 保存这个返回值. f(2) 栈帧销毁. 如图 1.<br>fib(3) 调用 fib(2) 如图 2.<br>fib(2) 返回 1 给 fib(3), fib(3) 将 fib(2)返回值和 fib(1) 的返回值相加. 如图 3.<br>fib(3) 返回 fib(2)返回值和 fib(1) 的返回值相加的结果. 如图 4.</p>
 </blockquote>
 <h5 id="效率低原因分析"><a href="#效率低原因分析" class="headerlink" title="效率低原因分析"></a>效率低原因分析</h5><blockquote>
 <p>计算的结果并没有保存. 每一次进入递归之后都是从基本的 fib(2) 和 fib(1) 向上返回. 中间伴随着大量的栈帧创建和销毁, 以及重复的函数计算.函数栈帧的创建和销毁是耗时的操作, 这可就很慢了.<br>fib(n) 开辟栈帧总数量可以表示为: sum(n) = 2^(n - 2) + 1 (n &gt;= 3).<br>时间复杂度是: O(2^n)</p>
 </blockquote>
-<h5 id="运行时间测试"><a href="#运行时间测试" class="headerlink" title="运行时间测试"></a>运行时间测试</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LENGTH 51</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">clock_t</span> beginTime,endTime;</span><br><span class="line">    beginTime = clock();</span><br><span class="line">    result = fib(LENGTH - <span class="number">1</span>);</span><br><span class="line">    endTime = clock();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Running Time %f Seconds\n"</span>,(<span class="keyword">double</span>)(endTime - beginTime)/CLOCKS_PER_SEC);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">" %d :: %lu \n"</span>, LENGTH - <span class="number">1</span>, result);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h5 id="运行时间测试"><a href="#运行时间测试" class="headerlink" title="运行时间测试"></a>运行时间测试</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> LENGTH 51</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="keyword">long</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">clock_t</span> beginTime,endTime;</span><br><span class="line">    beginTime = clock();</span><br><span class="line">    result = fib(LENGTH - <span class="number">1</span>);</span><br><span class="line">    endTime = clock();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Running Time %f Seconds\n&quot;</span>,(<span class="keyword">double</span>)(endTime - beginTime)/CLOCKS_PER_SEC);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; %d :: %lu \n&quot;</span>, LENGTH - <span class="number">1</span>, result);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>fib(n) 开辟栈帧总数量可以表示为: sum(n) = 2^(n - 2) + 1 (n &gt;= 3).<br>时间复杂度是: O(2^n)<br>fib(50) 开辟栈帧总量是: sum(50) = 2^(48) + 1<br>时间复杂度是: O(2 ^ 50)<br>计算 fib(50) 费了 65 秒左右</p>
 </blockquote>
 <h5 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h5><blockquote>
 <p>用数组保存已经计算出来的 fib(n) 的结果. 修改计算逻辑, 如果 fib(n) 已经被计算, 直接使用, 不再进入递归计算.<br>这可不就是有拿空间换时间的感觉.</p>
 </blockquote>
-<h2 id="优化递归"><a href="#优化递归" class="headerlink" title="优化递归"></a>优化递归</h2><h3 id="空间换时间优化代码"><a href="#空间换时间优化代码" class="headerlink" title="空间换时间优化代码"></a>空间换时间优化代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> LENGTH 51</span></span><br><span class="line"><span class="comment">// 计算 fib(50)</span></span><br><span class="line"><span class="comment">// 全局的用来保存 fib(n)(n &gt; 2) 计算结果的数组.</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> result[LENGTH];</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="comment">// fib(n) 已经被计算, 那就直接返回.</span></span><br><span class="line">    <span class="keyword">if</span>(result[n] != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> result[n];</span><br><span class="line">    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 保存 fib(n) 的计算结果</span></span><br><span class="line">       result[n] =  fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">    &#125; </span><br><span class="line">   <span class="keyword">return</span> result[n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">clock_t</span> beginTime,endTime;</span><br><span class="line">    <span class="comment">// 由于 1, 1, 2, 3, 5 ..... 都是大于 0 的结果, 全部初始化为 0, 相当于都没有计算结果.</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; LENGTH ; i++)&#123;</span><br><span class="line">        result[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// fib(1) 的计算结果为 1</span></span><br><span class="line">    result[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// fib(2) 的计算结果为 1</span></span><br><span class="line">    result[<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">    beginTime = clock();</span><br><span class="line">    fib(LENGTH - <span class="number">1</span>);</span><br><span class="line">    endTime = clock();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"Running Time %f Seconds\n"</span>,(<span class="keyword">double</span>)(endTime - beginTime)/CLOCKS_PER_SEC);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; LENGTH; i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">" %i :: %lu \n"</span>, i, result[i]);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="优化递归函数栈帧"><a href="#优化递归函数栈帧" class="headerlink" title="优化递归函数栈帧"></a>优化递归函数栈帧</h3><img src="/2019/07/06/asm-how-recursion-function-execute/fib-optimize-stack-frame.png" title="fib(5)递归栈帧">
+<h2 id="优化递归"><a href="#优化递归" class="headerlink" title="优化递归"></a>优化递归</h2><h3 id="空间换时间优化代码"><a href="#空间换时间优化代码" class="headerlink" title="空间换时间优化代码"></a>空间换时间优化代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;time.h&gt;</span></span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">define</span> LENGTH 51</span></span><br><span class="line"><span class="comment">// 计算 fib(50)</span></span><br><span class="line"><span class="comment">// 全局的用来保存 fib(n)(n &gt; 2) 计算结果的数组.</span></span><br><span class="line"><span class="keyword">unsigned</span> <span class="keyword">long</span> result[LENGTH];</span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="comment">// fib(n) 已经被计算, 那就直接返回.</span></span><br><span class="line">    <span class="keyword">if</span>(result[n] != <span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> result[n];</span><br><span class="line">    &#125; <span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="comment">// 保存 fib(n) 的计算结果</span></span><br><span class="line">       result[n] =  fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">    &#125; </span><br><span class="line">   <span class="keyword">return</span> result[n];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">clock_t</span> beginTime,endTime;</span><br><span class="line">    <span class="comment">// 由于 1, 1, 2, 3, 5 ..... 都是大于 0 的结果, 全部初始化为 0, 相当于都没有计算结果.</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; LENGTH ; i++)&#123;</span><br><span class="line">        result[i] = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// fib(1) 的计算结果为 1</span></span><br><span class="line">    result[<span class="number">1</span>] = <span class="number">1</span>;</span><br><span class="line">    <span class="comment">// fib(2) 的计算结果为 1</span></span><br><span class="line">    result[<span class="number">2</span>] = <span class="number">1</span>;</span><br><span class="line">    beginTime = clock();</span><br><span class="line">    fib(LENGTH - <span class="number">1</span>);</span><br><span class="line">    endTime = clock();</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Running Time %f Seconds\n&quot;</span>,(<span class="keyword">double</span>)(endTime - beginTime)/CLOCKS_PER_SEC);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; LENGTH; i++)&#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot; %i :: %lu \n&quot;</span>, i, result[i]);</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="优化递归函数栈帧"><a href="#优化递归函数栈帧" class="headerlink" title="优化递归函数栈帧"></a>优化递归函数栈帧</h3><img src="/2019/07/06/asm-how-recursion-function-execute/fib-optimize-stack-frame.png" class="" title="fib(5)递归栈帧">
 <blockquote>
 <p>着色方框-开辟销毁的栈帧<br>白色方框-不用开辟的栈帧<br>优化后的 fib(n) 开辟栈帧总数量可以表示为: sum(n) = (n - 2)(n &gt;= 3).<br>时间复杂度是: O(n)<br>计算 fib(50) 开辟栈帧总数量是: sum(50) = 48<br>fib(50) = 3996334433<br>时间复杂度是 O(50), 结果几乎秒算.<br>unsigned long result[LENGTH];<br>拿空间换时间, 其实这句话有问题的, 拿出来空间, 计算逻辑也是要优化的. </p>
 </blockquote>
 <h3 id="尾递归优化"><a href="#尾递归优化" class="headerlink" title="尾递归优化"></a>尾递归优化</h3><h4 id="非优化递归"><a href="#非优化递归" class="headerlink" title="非优化递归"></a>非优化递归</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">   <span class="keyword">return</span> fib(n<span class="number">-1</span>) + fib(n<span class="number">-2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>这里 fib(n-1) 和 fib(n-2) 与 fib(n) 其实根本不是同一个函数.<br>三者的逻辑其实不同, 但是函数之间有依赖.</p>
 </blockquote>
@@ -421,13 +372,11 @@
 <p>尾递归的实现, 往往需要改写递归函数, 确保最后一步只调用自身. 做到这一点的方法, 就是把所有用到的内部变量改写成函数的参数.<br>尾调用的概念非常简单, 一句话就能说清楚, 就是指某个函数的最后一步是调用另一个函数.</p>
 </blockquote>
 <h5 id="中间变量改成函数的参数"><a href="#中间变量改成函数的参数" class="headerlink" title="中间变量改成函数的参数"></a>中间变量改成函数的参数</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span> <span class="title">fib</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n, <span class="keyword">unsigned</span> <span class="keyword">long</span> prev, <span class="keyword">unsigned</span> <span class="keyword">long</span> sum )</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(n &lt;= <span class="number">3</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> sum;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fib(n<span class="number">-1</span>, sum , prev + sum); <span class="comment">// 尾调用</span></span><br><span class="line">&#125;</span><br><span class="line">&gt; 这里 fib(n<span class="number">-1</span>, sum , prev + sum) 的才是和 fib(<span class="keyword">unsigned</span> <span class="keyword">long</span> n, <span class="keyword">unsigned</span> <span class="keyword">long</span> prev, <span class="keyword">unsigned</span> <span class="keyword">long</span> sum ) 完全一样的函数.</span><br></pre></td></tr></table></figure>
-
 <h5 id="包装一层"><a href="#包装一层" class="headerlink" title="包装一层"></a>包装一层</h5><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">long</span>   <span class="title">fibonacc</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">long</span> n)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>( n &lt;= <span class="number">2</span>)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">    &#125; </span><br><span class="line">    <span class="comment">// 1 : fib(2)</span></span><br><span class="line">    <span class="comment">// 2 : fib(2) + fib(1) = fib(3)</span></span><br><span class="line">    <span class="keyword">return</span> fib(n, <span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p>计算结果保存在参数里.</p>
 </blockquote>
-<h5 id="fib-n-汇编代码分析"><a href="#fib-n-汇编代码分析" class="headerlink" title="fib(n) 汇编代码分析"></a>fib(n) 汇编代码分析</h5><img src="/2019/07/06/asm-how-recursion-function-execute/fib-tail-recursion.png" title="fib(n) 尾递归汇编代码">
+<h5 id="fib-n-汇编代码分析"><a href="#fib-n-汇编代码分析" class="headerlink" title="fib(n) 汇编代码分析"></a>fib(n) 汇编代码分析</h5><img src="/2019/07/06/asm-how-recursion-function-execute/fib-tail-recursion.png" class="" title="fib(n) 尾递归汇编代码">
 <blockquote>
 <p>尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n &lt;= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.</p>
 </blockquote>
@@ -436,300 +385,111 @@
 </blockquote>
 <p>References</p>
 <ol>
-<li><a href="https://stackoverflow.com/questions/21440403/what-does-the-cmpq-instruction-do" target="_blank" rel="noopener">asm-cmpq</a></li>
-<li><a href="https://www.aldeid.com/wiki/X86-assembly/Instructions/jg" target="_blank" rel="noopener">asm-jg</a></li>
-<li><a href="http://faydoc.tripod.com/cpu/jg.htm" target="_blank" rel="noopener">asm-jp-table</a></li>
-<li><a href="https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97" target="_blank" rel="noopener">斐波那契数列</a></li>
-<li><a href="https://godbolt.org/" target="_blank" rel="noopener">asm-tool</a></li>
-<li><a href="http://www.ruanyifeng.com/blog/2015/04/tail-call.html" target="_blank" rel="noopener">尾调用(tail-call)之尾递归</a></li>
-<li><a href="https://mp.weixin.qq.com/s/GncAsmZ1dZKyNMOwN5-sjw" target="_blank" rel="noopener">动态规划</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/21440403/what-does-the-cmpq-instruction-do">asm-cmpq</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.aldeid.com/wiki/X86-assembly/Instructions/jg">asm-jg</a></li>
+<li><a target="_blank" rel="noopener" href="http://faydoc.tripod.com/cpu/jg.htm">asm-jp-table</a></li>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97">斐波那契数列</a></li>
+<li><a target="_blank" rel="noopener" href="https://godbolt.org/">asm-tool</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2015/04/tail-call.html">尾调用(tail-call)之尾递归</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/GncAsmZ1dZKyNMOwN5-sjw">动态规划</a></li>
 </ol>
 
-      
     </div>
-    
-    
-    
 
     
-      <div>
-        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/images/wechar-subscriber.jpg" alt="stardustman wechat" style="width: 200px; max-width: 100%;">
-    <div>业精于勤， 荒于嬉。行成于思，毁于随。</div>
-</div>
-
-      </div>
     
-
-    
-
-    
-      <div>
-        <ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>Post author:</strong>
-    stardustman
-  </li>
-  <li class="post-copyright-link">
-    <strong>Post link:</strong>
-    <a href="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/" title="asm-how-recursion-function-execute">http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>Copyright Notice: </strong>
-    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
-  </li>
-   
-   
-
-
-
-</ul>
-
-      </div>
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/asm/" rel="tag"># asm</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/06/25/asm-clang-concepts/" rel="next" title="asm-clang-concepts">
-                <i class="fa fa-chevron-left"></i> asm-clang-concepts
-              </a>
-            
+          <div class="post-tags">
+              <a href="/tags/asm/" rel="tag"># asm</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/17/clang-structure/" rel="prev" title="clang-structure">
-                clang-structure <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/07/06/asm-how-recursion-function-execute/" data-title="asm-how-recursion-function-execute" data-url="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/">
-      </div>
-    </div>
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">stardustman</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">36</span>
-                  <span class="site-state-item-name">posts</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/25/asm-clang-concepts/" rel="prev" title="asm-clang-concepts">
+                  <i class="fa fa-chevron-left"></i> asm-clang-concepts
                 </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
-                  <span class="site-state-item-name">tags</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
             </div>
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#斐波那契数列"><span class="nav-number">1.</span> <span class="nav-text">斐波那契数列</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题描述"><span class="nav-number">1.1.</span> <span class="nav-text">问题描述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#图解"><span class="nav-number">1.2.</span> <span class="nav-text">图解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#代码分析"><span class="nav-number">2.</span> <span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码"><span class="nav-number">2.1.</span> <span class="nav-text">C 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Asm-代码"><span class="nav-number">2.2.</span> <span class="nav-text">Asm 代码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#中间代码"><span class="nav-number">2.2.1.</span> <span class="nav-text">中间代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#反编译可执行代码"><span class="nav-number">2.2.2.</span> <span class="nav-text">反编译可执行代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#调用栈调用顺序分析"><span class="nav-number">2.3.</span> <span class="nav-text">调用栈调用顺序分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#调用栈图解分析"><span class="nav-number">2.3.1.</span> <span class="nav-text">调用栈图解分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#符合递归终止时调用栈执行顺序"><span class="nav-number">2.3.2.</span> <span class="nav-text">符合递归终止时调用栈执行顺序</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代码执行顺序"><span class="nav-number">2.3.2.1.</span> <span class="nav-text">代码执行顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二叉树后序遍历的视角来分析"><span class="nav-number">2.3.2.2.</span> <span class="nav-text">二叉树后序遍历的视角来分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#栈帧的创建和销毁-二叉树后序遍历"><span class="nav-number">2.3.2.3.</span> <span class="nav-text">栈帧的创建和销毁-二叉树后序遍历</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#效率低原因分析"><span class="nav-number">2.3.2.3.1.</span> <span class="nav-text">效率低原因分析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#运行时间测试"><span class="nav-number">2.3.2.3.2.</span> <span class="nav-text">运行时间测试</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决方法"><span class="nav-number">2.3.2.3.3.</span> <span class="nav-text">解决方法</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#优化递归"><span class="nav-number">2.4.</span> <span class="nav-text">优化递归</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#空间换时间优化代码"><span class="nav-number">2.4.1.</span> <span class="nav-text">空间换时间优化代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化递归函数栈帧"><span class="nav-number">2.4.2.</span> <span class="nav-text">优化递归函数栈帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#尾递归优化"><span class="nav-number">2.4.3.</span> <span class="nav-text">尾递归优化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#非优化递归"><span class="nav-number">2.4.3.1.</span> <span class="nav-text">非优化递归</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#优化递归-1"><span class="nav-number">2.4.3.2.</span> <span class="nav-text">优化递归</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#中间变量改成函数的参数"><span class="nav-number">2.4.3.2.1.</span> <span class="nav-text">中间变量改成函数的参数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#包装一层"><span class="nav-number">2.4.3.2.2.</span> <span class="nav-text">包装一层</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#fib-n-汇编代码分析"><span class="nav-number">2.4.3.2.3.</span> <span class="nav-text">fib(n) 汇编代码分析</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结论"><span class="nav-number">2.5.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2019/07/17/clang-structure/" rel="next" title="clang-structure">
+                  clang-structure <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-        <div class="back-to-top">
-          <i class="fa fa-arrow-up"></i>
-          
-            <span id="scrollpercent"><span>0</span>%</span>
-          
-        </div>
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">stardustman</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-        
 
 
 
 
 
-
-
-        
-      </div>
-    </footer>
-
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
 </script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stardustman</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Symbols count total">184k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:48</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
 
 
 
@@ -743,162 +503,6 @@
 
 
 
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"your-duoshuo-shortname"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: '',
-      clientSecret: '',
-      repo: 'hexo-comments',
-      owner: 'stardustman',
-      admin: [''],
-      id: location.pathname,
-      distractionFreeMode: 'false'
-    })
-    gitalk.render('gitalk-container')
-  </script>
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
-
-
-  
 
 </body>
 </html>

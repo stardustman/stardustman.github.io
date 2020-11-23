@@ -1,98 +1,35 @@
 <!DOCTYPE html>
-
-
-
-  
-
-
-<html class="theme-next gemini use-motion" lang>
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="en">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
 
 
 
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
 
-
-
-  
-  
-  <link rel="stylesheet" media="all" href="/lib/Han/dist/han.min.css?v=3.3">
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
-
-
-
-
-
-  <meta name="keywords" content="asm,">
-
-
-
-
-
-  <link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
-
-
-
-
-
-
-<meta name="description" content="C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&amp;amp;T 风格. 编译器是 gcc-x86-64-9.1 指针 A pointer is a programming language object that stores the memory address of another value located in computer memory. A pointer re">
-<meta name="keywords" content="asm">
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"stardustman.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.0.2","exturl":false,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+  </script>
+<meta name="description" content="C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&amp;T 风格. 编译器是 gcc-x86-64-9.1 指针 A pointer is a programming language object that stores the memory address of another value located in computer memory. A pointer re">
 <meta property="og:type" content="article">
 <meta property="og:title" content="asm-clang-concepts">
 <meta property="og:url" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&amp;amp;T 风格. 编译器是 gcc-x86-64-9.1 指针 A pointer is a programming language object that stores the memory address of another value located in computer memory. A pointer re">
-<meta property="og:locale" content="default">
+<meta property="og:description" content="C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&amp;T 风格. 编译器是 gcc-x86-64-9.1 指针 A pointer is a programming language object that stores the memory address of another value located in computer memory. A pointer re">
+<meta property="og:locale" content="en_US">
 <meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/address-modes.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/swap-c-asm.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/swap-pointer.png">
@@ -102,260 +39,280 @@
 <meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/variable_shadowing.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/function-pointer.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/c-enum.png">
-<meta property="og:updated_time" content="2020-05-23T01:58:04.198Z">
+<meta property="article:published_time" content="2019-06-25T08:57:59.000Z">
+<meta property="article:modified_time" content="2020-05-23T01:58:04.198Z">
+<meta property="article:author" content="stardustman">
+<meta property="article:tag" content="asm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="asm-clang-concepts">
-<meta name="twitter:description" content="C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&amp;amp;T 风格. 编译器是 gcc-x86-64-9.1 指针 A pointer is a programming language object that stores the memory address of another value located in computer memory. A pointer re">
 <meta name="twitter:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/address-modes.png">
 
 
+<link rel="canonical" href="http://stardustman.github.io/2019/06/25/asm-clang-concepts/">
 
-<script type="text/javascript" id="hexo.configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Gemini',
-    version: '5.1.4',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":true,"scrollpercent":true,"onmobile":false},
-    fancybox: true,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    duoshuo: {
-      userId: '0',
-      author: 'Author'
-    },
-    algolia: {
-      applicationID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
   };
 </script>
-
-
-
-  <link rel="canonical" href="http://stardustman.github.io/2019/06/25/asm-clang-concepts/">
-
-
-
-
-
-  <title>asm-clang-concepts | stardustman</title>
+<title>asm-clang-concepts | stardustman</title>
   
 
 
 
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
 
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
 
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
 
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
 
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left page-post-detail">
-    <div class="headband"></div>
-
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
-
-    <div class="custom-logo-site-title">
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">stardustman</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
-      
-        <p class="site-subtitle"></p>
-      
   </div>
 
-  <div class="site-nav-toggle">
-    <button>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">stardustman</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
   </div>
 </div>
 
+
+
 <nav class="site-nav">
-  
-
-  
-    <ul id="menu" class="menu">
-      
-        
+  <ul class="main-menu menu">
         <li class="menu-item menu-item-home">
-          <a href="/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
-            
-            Home
-          </a>
-        </li>
-      
-        
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
         <li class="menu-item menu-item-about">
-          <a href="/about/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
-            
-            About
-          </a>
-        </li>
-      
-        
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
         <li class="menu-item menu-item-tags">
-          <a href="/tags/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
-            
-            Tags
-          </a>
-        </li>
-      
-        
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
         <li class="menu-item menu-item-categories">
-          <a href="/categories/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
-            
-            Categories
-          </a>
-        </li>
-      
-        
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
-          <a href="/archives/" rel="section">
-            
-              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
-            
-            Archives
-          </a>
-        </li>
-      
 
-      
-    </ul>
-  
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
-  
+  </li>
+  </ul>
 </nav>
 
 
 
- </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8C%87%E9%92%88"><span class="nav-number">1.</span> <span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%9C%B0%E5%9D%80"><span class="nav-number">1.1.</span> <span class="nav-text">变量地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%84%E5%AD%98%E5%99%A8%E9%97%B4%E6%8E%A5%E5%AF%BB%E5%9D%80"><span class="nav-number">1.2.</span> <span class="nav-text">寄存器间接寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#movq-operand-combinations"><span class="nav-number">1.3.</span> <span class="nav-text">movq operand combinations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#swap"><span class="nav-number">1.4.1.</span> <span class="nav-text">swap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main"><span class="nav-number">1.4.2.</span> <span class="nav-text">main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E5%B8%A7%E5%88%86%E6%9E%90"><span class="nav-number">1.4.3.</span> <span class="nav-text">栈帧分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%87%BD%E6%95%B0%E8%BF%94%E5%9B%9E%E5%80%BC"><span class="nav-number">1.4.4.</span> <span class="nav-text">函数返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">1.4.5.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E8%BD%AC%E5%8C%96"><span class="nav-number">2.</span> <span class="nav-text">数据类型转化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B4%E6%95%B0%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">整数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x86-64-registers"><span class="nav-number">2.1.1.</span> <span class="nav-text">x86-64 registers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IA32-registers"><span class="nav-number">2.1.2.</span> <span class="nav-text">IA32 registers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90-1"><span class="nav-number">2.1.3.</span> <span class="nav-text">代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA-1"><span class="nav-number">2.1.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#array"><span class="nav-number">3.</span> <span class="nav-text">array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">3.1.</span> <span class="nav-text">C代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sumArray"><span class="nav-number">3.1.1.</span> <span class="nav-text">sumArray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sumMatrix"><span class="nav-number">3.1.2.</span> <span class="nav-text">sumMatrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-1"><span class="nav-number">3.1.3.</span> <span class="nav-text">main</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Asm-%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">3.2.</span> <span class="nav-text">Asm 代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sumArray-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">sumArray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asm-sumMatrix"><span class="nav-number">3.2.2.</span> <span class="nav-text">Asm sumMatrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asm-main"><span class="nav-number">3.2.3.</span> <span class="nav-text">Asm main</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#struct"><span class="nav-number">4.</span> <span class="nav-text">struct</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Analysis"><span class="nav-number">4.1.</span> <span class="nav-text">Code Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C"><span class="nav-number">4.1.1.</span> <span class="nav-text">C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asm"><span class="nav-number">4.1.2.</span> <span class="nav-text">Asm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variable-Shadowing"><span class="nav-number">5.</span> <span class="nav-text">Variable Shadowing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E4%BB%A3%E7%A0%81"><span class="nav-number">5.1.</span> <span class="nav-text">C 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81"><span class="nav-number">5.2.</span> <span class="nav-text">汇编代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">5.3.</span> <span class="nav-text">汇编代码分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#funcation-pointer"><span class="nav-number">6.</span> <span class="nav-text">funcation pointer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-%E4%BB%A3%E7%A0%81-1"><span class="nav-number">6.1.</span> <span class="nav-text">C 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E5%88%86%E6%9E%90"><span class="nav-number">6.2.</span> <span class="nav-text">汇编分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#enum"><span class="nav-number">7.</span> <span class="nav-text">enum</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-%E4%BB%A3%E7%A0%81"><span class="nav-number">7.1.</span> <span class="nav-text">c 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B1%87%E7%BC%96%E5%88%86%E6%9E%90-1"><span class="nav-number">7.2.</span> <span class="nav-text">汇编分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">8.</span> <span class="nav-text">references</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">stardustman</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </section>
+      </div>
+        <div class="back-to-top animated">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
-    <main id="main" class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          <div id="content" class="content">
-            
-
-  <div id="posts" class="posts-expand">
     
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/stardustman" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
 
   
 
-  
+
+<div class="post-block">
   
   
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/06/25/asm-clang-concepts/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content>
       <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="stardustman">
     </span>
-
-    
       <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          asm-clang-concepts
+        </h1>
 
-        
-        
-          <h1 class="post-title" itemprop="name headline">asm-clang-concepts</h1>
-        
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-06-25T16:57:59+08:00">
-                2019-06-25
-              </time>
-            
+      <time title="Created: 2019-06-25 16:57:59" itemprop="dateCreated datePublished" datetime="2019-06-25T16:57:59+08:00">2019-06-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2020-05-23 09:58:04" itemprop="dateModified" datetime="2020-05-23T09:58:04+08:00">2020-05-23</time>
+      </span>
 
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2019/06/25/asm-clang-concepts/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/06/25/asm-clang-concepts/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>11k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>10 mins.</span>
+    </span>
+</div>
 
         </div>
       </header>
-    
 
     
     
     
-    <div class="post-body han-init-context" itemprop="articleBody">
-
-      
-      
-
-      
+    <div class="post-body" itemprop="articleBody">
         <p>C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&amp;T 风格. 编译器是 gcc-x86-64-9.1</p>
 <h1 id="指针"><a href="#指针" class="headerlink" title="指针"></a>指针</h1><blockquote>
 <p>A <code>pointer</code> is a programming language object that stores the memory address of another value located in computer memory.<br> A pointer references a location in memory, and obtaining the value stored at that location is known as dereferencing the pointer.</p>
@@ -366,19 +323,19 @@
 <h2 id="寄存器间接寻址"><a href="#寄存器间接寻址" class="headerlink" title="寄存器间接寻址"></a>寄存器间接寻址</h2><blockquote>
 <p>movq    (%rax), %rdx<br>将 rax 的值(X)指向的内存地址处的值复制到 rdx. 此时 rax 的值(X)就是指针, 所谓指针在汇编层面就是将一个内存地址放到寄存器, 利用寄存器间接寻址去获取这个地址的数值. 这就是 C 语言里指针的本质. </p>
 </blockquote>
-<h2 id="movq-operand-combinations"><a href="#movq-operand-combinations" class="headerlink" title="movq operand combinations"></a>movq operand combinations</h2><img src="/2019/06/25/asm-clang-concepts/address-modes.png" title="movq operand combinations">
+<h2 id="movq-operand-combinations"><a href="#movq-operand-combinations" class="headerlink" title="movq operand combinations"></a>movq operand combinations</h2><img src="/2019/06/25/asm-clang-concepts/address-modes.png" class="" title="movq operand combinations">
 
 <h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> *pa, <span class="keyword">int</span> *pb)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = *pa; </span><br><span class="line">    *pa = *pb;</span><br><span class="line">    *pb = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">swap(int*, int*):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp) ; 将变量 a(10) 的地址(&amp;a)复制到 rbp - 24 地址处, 参数 pa</span><br><span class="line">        movq    %rsi, -32(%rbp) ; 将变量 b(100) 的地址(&amp;b)复制到 rbp - 32 地址处, 参数 pb </span><br><span class="line">        movq    -24(%rbp), %rax ; 将 rbp - 24 指向的内存地址的数值(也就是变量 a 的地址)复制到 rax</span><br><span class="line">        movl    (%rax), %eax    ; 将 rax 指向的内存地址的值 10(也就是变量 a) 复制到 eax, int a 4 Bytes 需要 32 bit 的 eax 即可.</span><br><span class="line">        movl    %eax, -4(%rbp)  ; 将 eax 的值 10 (也就是变量 a) 复制到 rbp - 4 指向的内存地址处, 完成 temp = *pa;</span><br><span class="line">        movq    -32(%rbp), %rax ; 将 rbp - 32 指向的内存地址的值(也就是变量 b 的地址) 的地址复制到 rax</span><br><span class="line">        movl    (%rax), %edx    ; 将 rax 的值指向的内存地址出的值 100(也就是变量 b) 复制到 edx, int b 4 Bytes 需要 32 bit 的 eax 即可.</span><br><span class="line">        movq    -24(%rbp), %rax ; 将 rbp - 24 指向的内存地址的值(也就是变量 a 的地址)复制到 rax</span><br><span class="line">        movl    %edx, (%rax)    ; 将 edx 的值 100 (也就是变量 b)复制到 rax 指向的地址处(也就是变量 a 的地址), 完成 *pa = *pb</span><br><span class="line">        movq    -32(%rbp), %rax ; 将 rbp - 32 指向的内存地址的值(也就是变量 b 的地址)复制到 rax</span><br><span class="line">        movl    -4(%rbp), %edx  ; 将 rbp - 4 指向的内存地址的值 10 复制到 edx</span><br><span class="line">        movl    %edx, (%rax)    ; 将 edx 的值 10 复制到 rax 指向的地址处(也就是变量 b 的地址), 完成 *pb = temp</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">swap(int*, int*):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp) ; 将变量 a(10) 的地址(&amp;a)复制到 rbp - 24 地址处, 参数 pa</span><br><span class="line">        movq    %rsi, -32(%rbp) ; 将变量 b(100) 的地址(&amp;b)复制到 rbp - 32 地址处, 参数 pb </span><br><span class="line">        movq    -24(%rbp), %rax ; 将 rbp - 24 指向的内存地址的数值(也就是变量 a 的地址)复制到 rax</span><br><span class="line">        movl    (%rax), %eax    ; 将 rax 指向的内存地址的值 10(也就是变量 a) 复制到 eax, int a 4 Bytes 需要 32 bit 的 eax 即可.</span><br><span class="line">        movl    %eax, -4(%rbp)  ; 将 eax 的值 10 (也就是变量 a) 复制到 rbp - 4 指向的内存地址处, 完成 temp &#x3D; *pa;</span><br><span class="line">        movq    -32(%rbp), %rax ; 将 rbp - 32 指向的内存地址的值(也就是变量 b 的地址) 的地址复制到 rax</span><br><span class="line">        movl    (%rax), %edx    ; 将 rax 的值指向的内存地址出的值 100(也就是变量 b) 复制到 edx, int b 4 Bytes 需要 32 bit 的 eax 即可.</span><br><span class="line">        movq    -24(%rbp), %rax ; 将 rbp - 24 指向的内存地址的值(也就是变量 a 的地址)复制到 rax</span><br><span class="line">        movl    %edx, (%rax)    ; 将 edx 的值 100 (也就是变量 b)复制到 rax 指向的地址处(也就是变量 a 的地址), 完成 *pa &#x3D; *pb</span><br><span class="line">        movq    -32(%rbp), %rax ; 将 rbp - 32 指向的内存地址的值(也就是变量 b 的地址)复制到 rax</span><br><span class="line">        movl    -4(%rbp), %edx  ; 将 rbp - 4 指向的内存地址的值 10 复制到 edx</span><br><span class="line">        movl    %edx, (%rax)    ; 将 edx 的值 10 复制到 rax 指向的地址处(也就是变量 b 的地址), 完成 *pb &#x3D; temp</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
 <h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">    <span class="keyword">int</span> b = <span class="number">100</span>;</span><br><span class="line">    swap(&amp;a,&amp;b);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp ; 保存调用者的 rbp</span><br><span class="line">        movq    %rsp, %rbp ; 开辟 main 函数的栈帧</span><br><span class="line">        subq    $16, %rsp  ; 分配 main 的栈空间 16 bytes</span><br><span class="line">        movl    $10, -4(%rbp) ; 将变量 a 复制到 rbp - 4 指向的地址处.(int a, 4 bytes)</span><br><span class="line">        movl    $100, -8(%rbp) ; 将变量 b 复制到 rbp - 8 指向的地址处.(int b, 4 bytes)</span><br><span class="line">        leaq    -8(%rbp), %rdx ; 将 rbp - 8 的值复制到 rdx 寄存器(int b 变量的地址)</span><br><span class="line">        leaq    -4(%rbp), %rax ; 将 rbp - 4 的值复制到 rax 寄存器(int a 变量的地址)</span><br><span class="line">        movq    %rdx, %rsi ; 复制 rdx(第二个参数: 变量 b 的地址) 到 rsi 寄存器</span><br><span class="line">        movq    %rax, %rdi ; 复制 rax(第一个参数: 变量 a 的地址) 到 rdi 寄存器</span><br><span class="line">        call    swap(int*, int*)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave   ; 等价于 1. mov %rbp, %rsp(回收分配的栈空间) 2.pop %rbp(恢复 main 的 rbp)</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
-<img src="/2019/06/25/asm-clang-concepts/swap-c-asm.png" title="swap-c-asm">
+<img src="/2019/06/25/asm-clang-concepts/swap-c-asm.png" class="" title="swap-c-asm">
 
-<h3 id="栈帧分析"><a href="#栈帧分析" class="headerlink" title="栈帧分析"></a>栈帧分析</h3><img src="/2019/06/25/asm-clang-concepts/swap-pointer.png" title="main-swap-call-stack">
+<h3 id="栈帧分析"><a href="#栈帧分析" class="headerlink" title="栈帧分析"></a>栈帧分析</h3><img src="/2019/06/25/asm-clang-concepts/swap-pointer.png" class="" title="main-swap-call-stack">
 
 <blockquote>
 <p>该图是 swap 执行完 int temp = *pa 后的状态.</p>
@@ -389,11 +346,11 @@
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><blockquote>
 <p>指针本质就是寄存器间接寻址. 函数传参其实传的都是数值而已, 本质上都是数值的副本. </p>
 </blockquote>
-<h1 id="数据类型转化"><a href="#数据类型转化" class="headerlink" title="数据类型转化"></a>数据类型转化</h1><h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><h3 id="x86-64-registers"><a href="#x86-64-registers" class="headerlink" title="x86-64 registers"></a>x86-64 registers</h3><img src="/2019/06/25/asm-clang-concepts/x86-64-registers.png">
+<h1 id="数据类型转化"><a href="#数据类型转化" class="headerlink" title="数据类型转化"></a>数据类型转化</h1><h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><h3 id="x86-64-registers"><a href="#x86-64-registers" class="headerlink" title="x86-64 registers"></a>x86-64 registers</h3><img src="/2019/06/25/asm-clang-concepts/x86-64-registers.png" class="">
 
-<h3 id="IA32-registers"><a href="#IA32-registers" class="headerlink" title="IA32 registers"></a>IA32 registers</h3><img src="/2019/06/25/asm-clang-concepts/IA32-registers.png">
+<h3 id="IA32-registers"><a href="#IA32-registers" class="headerlink" title="IA32 registers"></a>IA32 registers</h3><img src="/2019/06/25/asm-clang-concepts/IA32-registers.png" class="">
 
-<h3 id="代码分析-1"><a href="#代码分析-1" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testTypeConvert</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">long</span> i64bit = <span class="number">1844674407370955199</span>;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">int</span> i32bit = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)i64bit;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">short</span> i16bit = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)i32bit;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">char</span> i8bit = (<span class="keyword">unsigned</span> <span class="keyword">char</span>)i16bit;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"%ld\n"</span>,i64bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"%ld\n"</span>,i32bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,i16bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,i8bit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="代码分析-1"><a href="#代码分析-1" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testTypeConvert</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">long</span> i64bit = <span class="number">1844674407370955199</span>;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">int</span> i32bit = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)i64bit;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">short</span> i16bit = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)i32bit;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">char</span> i8bit = (<span class="keyword">unsigned</span> <span class="keyword">char</span>)i16bit;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span>,i64bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span>,i32bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,i16bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,i8bit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">testTypeConvert():</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movabsq $1844674407370955199, %rax ;‭00011001 10011001 10011001 10011001 10011001 10011001 10011001 10111111‬</span><br><span class="line">        movq    %rax, -8(%rbp)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movl    %eax, -12(%rbp) ; 10011001 10011001 10011001 10111111‬ (2576980415)</span><br><span class="line">        movl    -12(%rbp), %eax</span><br><span class="line">        movw    %ax, -14(%rbp) ; 10011001 10111111‬(39359)</span><br><span class="line">        movzwl  -14(%rbp), %eax ; 00000000 00000000 10011001 10111111‬ (zero extend)</span><br><span class="line">        movb    %al, -15(%rbp) ; 10111111‬(191)</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
@@ -404,12 +361,12 @@
 
 <h3 id="main-1"><a href="#main-1" class="headerlink" title="main"></a>main</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> sum = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> sum1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">long</span> a[<span class="number">5</span>] = &#123;<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>,<span class="number">44</span>,<span class="number">55</span>&#125;;</span><br><span class="line">    <span class="keyword">int</span> matrix[<span class="number">2</span>][<span class="number">3</span>] = &#123;&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>&#125;,&#123;<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>&#125;&#125;;</span><br><span class="line"></span><br><span class="line">    sum = sumArray(a, <span class="number">5</span>);</span><br><span class="line">    sum1 = sumMatrix(matrix);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="Asm-代码分析"><a href="#Asm-代码分析" class="headerlink" title="Asm 代码分析"></a>Asm 代码分析</h2><h3 id="sumArray-1"><a href="#sumArray-1" class="headerlink" title="sumArray"></a>sumArray</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">sumArray(long*, long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp) ; &amp;a[0]</span><br><span class="line">        movq    %rsi, -32(%rbp) ; length of a</span><br><span class="line">        movl    $0, -4(%rbp) ; sum</span><br><span class="line">        movl    $0, -8(%rbp) ; i</span><br><span class="line">.L3:</span><br><span class="line">        movl    -8(%rbp), %eax ; i</span><br><span class="line">        cltq</span><br><span class="line">        cmpq    %rax, -32(%rbp) ; cmpq i, length 其实也就是 i - length</span><br><span class="line">        jle     .L2</span><br><span class="line">        movl    -8(%rbp), %eax ; i</span><br><span class="line">        cltq</span><br><span class="line">        leaq    0(,%rax,8), %rdx ; rdx = 0 + 8 * i </span><br><span class="line">        movq    -24(%rbp), %rax  ; rax = &amp;a[0]</span><br><span class="line">        addq    %rdx, %rax       ; rax = &amp;a[0] + (0 + 8 * i), 地址增加 8 * i</span><br><span class="line">        movq    (%rax), %rax     ; rax = a[i]</span><br><span class="line">        movl    %eax, %edx       ; edx = a[i]</span><br><span class="line">        movl    -4(%rbp), %eax   ; eax = sum</span><br><span class="line">        addl    %edx, %eax       ; eax = a[i] + sum</span><br><span class="line">        movl    %eax, -4(%rbp)   </span><br><span class="line">        addl    $1, -8(%rbp)    ; i = i + 1</span><br><span class="line">        jmp     .L3</span><br><span class="line">.L2:</span><br><span class="line">        movl    -4(%rbp), %eax ; eax = sum</span><br><span class="line">        cltq</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<h2 id="Asm-代码分析"><a href="#Asm-代码分析" class="headerlink" title="Asm 代码分析"></a>Asm 代码分析</h2><h3 id="sumArray-1"><a href="#sumArray-1" class="headerlink" title="sumArray"></a>sumArray</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">sumArray(long*, long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp) ; &amp;a[0]</span><br><span class="line">        movq    %rsi, -32(%rbp) ; length of a</span><br><span class="line">        movl    $0, -4(%rbp) ; sum</span><br><span class="line">        movl    $0, -8(%rbp) ; i</span><br><span class="line">.L3:</span><br><span class="line">        movl    -8(%rbp), %eax ; i</span><br><span class="line">        cltq</span><br><span class="line">        cmpq    %rax, -32(%rbp) ; cmpq i, length 其实也就是 i - length</span><br><span class="line">        jle     .L2</span><br><span class="line">        movl    -8(%rbp), %eax ; i</span><br><span class="line">        cltq</span><br><span class="line">        leaq    0(,%rax,8), %rdx ; rdx &#x3D; 0 + 8 * i </span><br><span class="line">        movq    -24(%rbp), %rax  ; rax &#x3D; &amp;a[0]</span><br><span class="line">        addq    %rdx, %rax       ; rax &#x3D; &amp;a[0] + (0 + 8 * i), 地址增加 8 * i</span><br><span class="line">        movq    (%rax), %rax     ; rax &#x3D; a[i]</span><br><span class="line">        movl    %eax, %edx       ; edx &#x3D; a[i]</span><br><span class="line">        movl    -4(%rbp), %eax   ; eax &#x3D; sum</span><br><span class="line">        addl    %edx, %eax       ; eax &#x3D; a[i] + sum</span><br><span class="line">        movl    %eax, -4(%rbp)   </span><br><span class="line">        addl    $1, -8(%rbp)    ; i &#x3D; i + 1</span><br><span class="line">        jmp     .L3</span><br><span class="line">.L2:</span><br><span class="line">        movl    -4(%rbp), %eax ; eax &#x3D; sum</span><br><span class="line">        cltq</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>通过 a[i] 访问数组的方法, 与具体的数据类型有关<br>movl    -8(%rbp), %eax ; i<br>cltq    ; convert long(32 bit) to quad(64 bit)<br>leaq    0(,%rax,8), %rdx ; rdx = 0 + 8 * i , 比例寻址. 8 是比例因子,也就是数据类型的字节数,long 8 bytes.<br>movq    -24(%rbp), %rax  ; rax = &amp;a[0]<br>addq    %rdx, %rax       ; rax = &amp;a[0] + (0 + 8 * i), 地址增加 8 * i<br>movq    (%rax), %rax     ; rax = a[i]</p>
 </blockquote>
-<h3 id="Asm-sumMatrix"><a href="#Asm-sumMatrix" class="headerlink" title="Asm sumMatrix"></a>Asm sumMatrix</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">sumMatrix(int (*) [3]):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp) ; &amp;matrix[0][0]</span><br><span class="line">        movl    $0, -4(%rbp) ; sum = 0</span><br><span class="line">        movl    $0, -8(%rbp) ;i = 0</span><br><span class="line">        movl    $0, -12(%rbp);j = 0</span><br><span class="line">; 循环体开始</span><br><span class="line">.L9:</span><br><span class="line">        cmpl    $1, -8(%rbp) ; i - 1</span><br><span class="line">        jg      .L6 ; i - 1 &gt; 0 ;也就是 i = 2 时跳到 .L6, 退出循环. 否则进入内部循环.</span><br><span class="line">.L8:</span><br><span class="line">        cmpl    $2, -12(%rbp) ; cmpl 2, j</span><br><span class="line">        jg      .L7 ; j - 2 &gt; 0 ;也就是 j = 3 时,内部循环结束, 跳到 .L7. 改变 i, 进入下一轮循环</span><br><span class="line">        movl    -8(%rbp), %eax ; eax = i</span><br><span class="line">        movslq  %eax, %rdx ; rdx = i</span><br><span class="line">        movq    %rdx, %rax ; rax = i</span><br><span class="line">        addq    %rax, %rax ; rax = i + i</span><br><span class="line">        addq    %rdx, %rax ; rax = i + (i + i)</span><br><span class="line">        salq    $2, %rax ; rax = 2 * 2 * 3 * i rax 算术左移 2 位</span><br><span class="line">        movq    %rax, %rdx ; rdx = 12 * i</span><br><span class="line">        movq    -24(%rbp), %rax ; rax = &amp;matrix[0][0]</span><br><span class="line">        addq    %rax, %rdx ; rdx = &amp;matrix[0][0] + 12 * i</span><br><span class="line">        movl    -12(%rbp), %eax ; eax = j</span><br><span class="line">        cltq</span><br><span class="line">        movl    (%rdx,%rax,4), %eax ; 4 * rax + rdx = &amp;matrix[0][0] + 12 * i + 4 * j), 也就是 &amp;matrix[i][j]. eax = matrix[i][j]</span><br><span class="line">        addl    %eax, -4(%rbp) ; sum = sum + eax</span><br><span class="line">        addl    $1, -12(%rbp)  ; j = j + 1</span><br><span class="line">        jmp     .L8</span><br><span class="line">.L7:</span><br><span class="line">        addl    $1, -8(%rbp) ; i = i + 1</span><br><span class="line">        jmp     .L9</span><br><span class="line">.L6:</span><br><span class="line">        movl    -4(%rbp), %eax ; eax = sum</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<h3 id="Asm-sumMatrix"><a href="#Asm-sumMatrix" class="headerlink" title="Asm sumMatrix"></a>Asm sumMatrix</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">sumMatrix(int (*) [3]):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp) ; &amp;matrix[0][0]</span><br><span class="line">        movl    $0, -4(%rbp) ; sum &#x3D; 0</span><br><span class="line">        movl    $0, -8(%rbp) ;i &#x3D; 0</span><br><span class="line">        movl    $0, -12(%rbp);j &#x3D; 0</span><br><span class="line">; 循环体开始</span><br><span class="line">.L9:</span><br><span class="line">        cmpl    $1, -8(%rbp) ; i - 1</span><br><span class="line">        jg      .L6 ; i - 1 &gt; 0 ;也就是 i &#x3D; 2 时跳到 .L6, 退出循环. 否则进入内部循环.</span><br><span class="line">.L8:</span><br><span class="line">        cmpl    $2, -12(%rbp) ; cmpl 2, j</span><br><span class="line">        jg      .L7 ; j - 2 &gt; 0 ;也就是 j &#x3D; 3 时,内部循环结束, 跳到 .L7. 改变 i, 进入下一轮循环</span><br><span class="line">        movl    -8(%rbp), %eax ; eax &#x3D; i</span><br><span class="line">        movslq  %eax, %rdx ; rdx &#x3D; i</span><br><span class="line">        movq    %rdx, %rax ; rax &#x3D; i</span><br><span class="line">        addq    %rax, %rax ; rax &#x3D; i + i</span><br><span class="line">        addq    %rdx, %rax ; rax &#x3D; i + (i + i)</span><br><span class="line">        salq    $2, %rax ; rax &#x3D; 2 * 2 * 3 * i rax 算术左移 2 位</span><br><span class="line">        movq    %rax, %rdx ; rdx &#x3D; 12 * i</span><br><span class="line">        movq    -24(%rbp), %rax ; rax &#x3D; &amp;matrix[0][0]</span><br><span class="line">        addq    %rax, %rdx ; rdx &#x3D; &amp;matrix[0][0] + 12 * i</span><br><span class="line">        movl    -12(%rbp), %eax ; eax &#x3D; j</span><br><span class="line">        cltq</span><br><span class="line">        movl    (%rdx,%rax,4), %eax ; 4 * rax + rdx &#x3D; &amp;matrix[0][0] + 12 * i + 4 * j), 也就是 &amp;matrix[i][j]. eax &#x3D; matrix[i][j]</span><br><span class="line">        addl    %eax, -4(%rbp) ; sum &#x3D; sum + eax</span><br><span class="line">        addl    $1, -12(%rbp)  ; j &#x3D; j + 1</span><br><span class="line">        jmp     .L8</span><br><span class="line">.L7:</span><br><span class="line">        addl    $1, -8(%rbp) ; i &#x3D; i + 1</span><br><span class="line">        jmp     .L9</span><br><span class="line">.L6:</span><br><span class="line">        movl    -4(%rbp), %eax ; eax &#x3D; sum</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>int matrix[i][j]<br> movl    -8(%rbp), %eax // eax = i<br> movslq  %eax, %rdx // rdx = i<br> movq    %rdx, %rax ; rax = i<br> addq    %rax, %rax ; rax = i + i<br> addq    %rdx, %rax ; rax = i + (i + i)<br> salq    $2, %rax ; rax = 2 * 2 * 3 * i rax 算术左移 2 位<br> movq    %rax, %rdx ; rdx = 12 * i<br> movq    -24(%rbp), %rax ; rax = &amp;matrix[0][0]<br> addq    %rax, %rdx ; rdx = &amp;matrix[0][0] + 12 * i<br> movl    -12(%rbp), %eax ; eax = j<br> cltq<br> movl    (%rdx,%rax,4), %eax ; 4 * rax + rdx = 4 * j + &amp;matrix[0][0] + 12 * i ), 也就是 &amp;matrix[i][j]. eax = matrix[i][j]. sizeOf(int) = 4<br>在 main 中可知 matrix[0][0],matrix[0][1] … matrix[1][1],matrix[1][2]顺序排列<br>当 i = 0, j = 0 时 4 * 0 + &amp;matrix[0][0] + 12 * 0 = &amp;matrix[0][0]<br>当 i = 0, j = 1 时 4 * 1 + &amp;matrix[0][0] + 12 * 0 = &amp;matrix[0][1]<br>当 i = 1, j = 0 时 4 * 0 + &amp;matrix[0][0] + 12 * 1, 此时是 &amp;matrix[0][0] + 12,<br>二维数组每一行的字节总数是: 3(每一行 3 个 int) * 4(int 数据大小), 此时的地址是 &amp;matrix[1][0]<br>C 语言中二维数组作为函数参数传递时, 一定要给出列的数目, 不需要行数. 因为根据列数和数据类型的大小,就能算出下一行的第一个数据偏移起始位置. 偏移量 = 列数 * sizeOf(Data type)  </p>
@@ -424,7 +381,7 @@
 </blockquote>
 <h2 id="Code-Analysis"><a href="#Code-Analysis" class="headerlink" title="Code Analysis"></a>Code Analysis</h2><h3 id="C"><a href="#C" class="headerlink" title="C"></a>C</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Student</span>&#123;</span></span><br><span class="line">    <span class="keyword">long</span> id;</span><br><span class="line">    <span class="keyword">long</span> score;</span><br><span class="line">    <span class="keyword">long</span> age;</span><br><span class="line"></span><br><span class="line">&#125; Student;</span><br><span class="line">; 结构体指针作为参数</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testStruct</span><span class="params">(Student* s)</span></span>&#123;</span><br><span class="line">    s-&gt;id = <span class="number">10</span>;</span><br><span class="line">    s-&gt;score = <span class="number">100</span>;</span><br><span class="line">    s-&gt;age = <span class="number">1000</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">; 返回结构体</span><br><span class="line"><span class="function">Student <span class="title">buildStruct</span><span class="params">(<span class="keyword">long</span> id, <span class="keyword">long</span> score, <span class="keyword">long</span> age)</span></span>&#123;</span><br><span class="line">    Student s;</span><br><span class="line">    s.id = id;</span><br><span class="line">    s.score = score;</span><br><span class="line">    s.age = age;</span><br><span class="line">    <span class="keyword">return</span> s;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Student s ;</span><br><span class="line">    Student ss;</span><br><span class="line">    s.id = <span class="number">1</span>;</span><br><span class="line">    s.score = <span class="number">10</span>;</span><br><span class="line">    s.age = <span class="number">100</span>;</span><br><span class="line">    testStruct(&amp;s);</span><br><span class="line">    ss = buildStruct(<span class="number">11</span>,<span class="number">22</span>,<span class="number">33</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h3 id="Asm"><a href="#Asm" class="headerlink" title="Asm"></a>Asm</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">testStruct(Student*):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -8(%rbp) ; s 的地址</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    $10, (%rax) ; s-&gt;id = 10</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    $100, 8(%rax) ; s-&gt;score = 100</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    $1000, 16(%rax) ; s-&gt;age = 1000</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br><span class="line">buildStruct(long, long, long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -8(%rbp) ; main 中隐性变量 ss 的地址(rbp(main) - 96)</span><br><span class="line">        movq    %rsi, -16(%rbp) ; id</span><br><span class="line">        movq    %rdx, -24(%rbp) ; score</span><br><span class="line">        movq    %rcx, -32(%rbp) ; age</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    -16(%rbp), %rdx ; id</span><br><span class="line">        movq    %rdx, (%rax)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    -24(%rbp), %rdx  ; score</span><br><span class="line">        movq    %rdx, 8(%rax)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    -32(%rbp), %rdx ; age</span><br><span class="line">        movq    %rdx, 16(%rax) </span><br><span class="line">        nop</span><br><span class="line">        movq    -8(%rbp), %rax ; main 中隐性变量 ss 的地址</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $96, %rsp ; 分配栈空间</span><br><span class="line">        movq    $1, -32(%rbp) ; id</span><br><span class="line">        movq    $10, -24(%rbp) ; score</span><br><span class="line">        movq    $100, -16(%rbp) ; age</span><br><span class="line">        leaq    -32(%rbp), %rax ; 结构体起始地址,也就是第一个字节的内存地址</span><br><span class="line">        movq    %rax, %rdi ; 这个就类似 Java 中的 this 指针了</span><br><span class="line">        call    testStruct(Student*)</span><br><span class="line"></span><br><span class="line">        leaq    -96(%rbp), %rax ; 隐性的变量 ss 起始地址</span><br><span class="line">        movl    $33, %ecx </span><br><span class="line">        movl    $22, %edx</span><br><span class="line">        movl    $11, %esi</span><br><span class="line">        movq    %rax, %rdi ; 隐形的参数, 像不像 Java 里的 this 啊. 编译器动的手脚.</span><br><span class="line">        call    buildStruct(long, long, long)</span><br><span class="line"></span><br><span class="line">        movq    -96(%rbp), %rax ; ss.id</span><br><span class="line">        movq    -88(%rbp), %rdx ; ss.score</span><br><span class="line">        movq    %rax, -64(%rbp) </span><br><span class="line">        movq    %rdx, -56(%rbp) </span><br><span class="line">        movq    -80(%rbp), %rax ; ss.age</span><br><span class="line">        movq    %rax, -48(%rbp)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<h3 id="Asm"><a href="#Asm" class="headerlink" title="Asm"></a>Asm</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line">testStruct(Student*):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -8(%rbp) ; s 的地址</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    $10, (%rax) ; s-&gt;id &#x3D; 10</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    $100, 8(%rax) ; s-&gt;score &#x3D; 100</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    $1000, 16(%rax) ; s-&gt;age &#x3D; 1000</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br><span class="line">buildStruct(long, long, long):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -8(%rbp) ; main 中隐性变量 ss 的地址(rbp(main) - 96)</span><br><span class="line">        movq    %rsi, -16(%rbp) ; id</span><br><span class="line">        movq    %rdx, -24(%rbp) ; score</span><br><span class="line">        movq    %rcx, -32(%rbp) ; age</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    -16(%rbp), %rdx ; id</span><br><span class="line">        movq    %rdx, (%rax)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    -24(%rbp), %rdx  ; score</span><br><span class="line">        movq    %rdx, 8(%rax)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movq    -32(%rbp), %rdx ; age</span><br><span class="line">        movq    %rdx, 16(%rax) </span><br><span class="line">        nop</span><br><span class="line">        movq    -8(%rbp), %rax ; main 中隐性变量 ss 的地址</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $96, %rsp ; 分配栈空间</span><br><span class="line">        movq    $1, -32(%rbp) ; id</span><br><span class="line">        movq    $10, -24(%rbp) ; score</span><br><span class="line">        movq    $100, -16(%rbp) ; age</span><br><span class="line">        leaq    -32(%rbp), %rax ; 结构体起始地址,也就是第一个字节的内存地址</span><br><span class="line">        movq    %rax, %rdi ; 这个就类似 Java 中的 this 指针了</span><br><span class="line">        call    testStruct(Student*)</span><br><span class="line"></span><br><span class="line">        leaq    -96(%rbp), %rax ; 隐性的变量 ss 起始地址</span><br><span class="line">        movl    $33, %ecx </span><br><span class="line">        movl    $22, %edx</span><br><span class="line">        movl    $11, %esi</span><br><span class="line">        movq    %rax, %rdi ; 隐形的参数, 像不像 Java 里的 this 啊. 编译器动的手脚.</span><br><span class="line">        call    buildStruct(long, long, long)</span><br><span class="line"></span><br><span class="line">        movq    -96(%rbp), %rax ; ss.id</span><br><span class="line">        movq    -88(%rbp), %rdx ; ss.score</span><br><span class="line">        movq    %rax, -64(%rbp) </span><br><span class="line">        movq    %rdx, -56(%rbp) </span><br><span class="line">        movq    -80(%rbp), %rax ; ss.age</span><br><span class="line">        movq    %rax, -48(%rbp)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>结构体使用的是一块连续的内存地址. 结构体指针也就是结构体第一个字节的地址.</p>
@@ -434,11 +391,10 @@
 </blockquote>
 <h2 id="C-代码"><a href="#C-代码" class="headerlink" title="C 代码"></a>C 代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_variable_shadow</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="comment">// 代码块开始</span></span><br><span class="line">        &#123; </span><br><span class="line">            <span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">            <span class="keyword">int</span> b = a + <span class="number">1000</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 代码块结束</span></span><br><span class="line">    <span class="keyword">int</span> c = a + <span class="number">10000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="汇编代码"><a href="#汇编代码" class="headerlink" title="汇编代码"></a>汇编代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">test_variable_shadow():</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $10, -4(%rbp)   ; int a = 10</span><br><span class="line">        movl    $100, -8(%rbp)  ; int a = 100</span><br><span class="line">        movl    -8(%rbp), %eax</span><br><span class="line">        addl    $1000, %eax</span><br><span class="line">        movl    %eax, -12(%rbp) ; int b = a + 1000 代码块里的 a</span><br><span class="line">        movl    -4(%rbp), %eax</span><br><span class="line">        addl    $10000, %eax    </span><br><span class="line">        movl    %eax, -16(%rbp) ; int c = a + 10000</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<h2 id="汇编代码"><a href="#汇编代码" class="headerlink" title="汇编代码"></a>汇编代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">test_variable_shadow():</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $10, -4(%rbp)   ; int a &#x3D; 10</span><br><span class="line">        movl    $100, -8(%rbp)  ; int a &#x3D; 100</span><br><span class="line">        movl    -8(%rbp), %eax</span><br><span class="line">        addl    $1000, %eax</span><br><span class="line">        movl    %eax, -12(%rbp) ; int b &#x3D; a + 1000 代码块里的 a</span><br><span class="line">        movl    -4(%rbp), %eax</span><br><span class="line">        addl    $10000, %eax    </span><br><span class="line">        movl    %eax, -16(%rbp) ; int c &#x3D; a + 10000</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<img src="/2019/06/25/asm-clang-concepts/c-variable-shadow.png" class="">
 
-<img src="/2019/06/25/asm-clang-concepts/c-variable-shadow.png">
-
-<h2 id="汇编代码分析"><a href="#汇编代码分析" class="headerlink" title="汇编代码分析"></a>汇编代码分析</h2><img src="/2019/06/25/asm-clang-concepts/variable_shadowing.png" title="块级变量隐藏">
+<h2 id="汇编代码分析"><a href="#汇编代码分析" class="headerlink" title="汇编代码分析"></a>汇编代码分析</h2><img src="/2019/06/25/asm-clang-concepts/variable_shadowing.png" class="" title="块级变量隐藏">
 
 <h1 id="funcation-pointer"><a href="#funcation-pointer" class="headerlink" title="funcation pointer"></a>funcation pointer</h1><blockquote>
 <p>A function pointer can be declared as: (return type of function) (*name of pointer) (type of function arguments)</p>
@@ -447,314 +403,124 @@
 
 <h2 id="汇编分析"><a href="#汇编分析" class="headerlink" title="汇编分析"></a>汇编分析</h2><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add</span>(<span class="keyword">int</span>, <span class="keyword">int</span>):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        <span class="keyword">movq</span>    %rsp, %rbp</span><br><span class="line">        movl    %edi, -<span class="number">4</span>(%rbp)</span><br><span class="line">        movl    %esi, -<span class="number">8</span>(%rbp)</span><br><span class="line">        movl    -<span class="number">4</span>(%rbp), %edx</span><br><span class="line">        movl    -<span class="number">8</span>(%rbp), %eax</span><br><span class="line">        addl    %edx, %eax</span><br><span class="line">        popq    %rbp</span><br><span class="line">        <span class="keyword">ret</span></span><br><span class="line"><span class="symbol">main:</span></span><br><span class="line">        pushq   %rbp <span class="comment">; 保存调用者的 rbp</span></span><br><span class="line">        <span class="keyword">movq</span>    %rsp, %rbp <span class="comment">; 开辟 main 的栈帧</span></span><br><span class="line">        subq    <span class="number">$16</span>, %rsp  <span class="comment">; 分配栈帧空间</span></span><br><span class="line">        <span class="keyword">movq</span>    $<span class="keyword">add</span>(<span class="keyword">int</span>, <span class="keyword">int</span>), -<span class="number">8</span>(%rbp) <span class="comment">; 将 add(int, int) 第一条指令的地址保存在 rbp - 8 这个位置处</span></span><br><span class="line">        movl    <span class="number">$3</span>, %esi <span class="comment">; 从右往左保存第一个参数</span></span><br><span class="line">        movl    <span class="number">$2</span>, %edi <span class="comment">; 从右往左保存第二个参数</span></span><br><span class="line">        <span class="keyword">call</span>    <span class="keyword">add</span>(<span class="keyword">int</span>, <span class="keyword">int</span>) <span class="comment">; 正常的 call 调用</span></span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">8</span>(%rbp), %rax <span class="comment">; 将 add(int, int) 的地址复制到 rax 寄存器</span></span><br><span class="line">        movl    <span class="number">$3</span>, %esi <span class="comment">; 从右往左保存第一个参数</span></span><br><span class="line">        movl    <span class="number">$2</span>, %edi <span class="comment">; 从右往左保存第二个参数</span></span><br><span class="line">        <span class="keyword">call</span>    *%rax    <span class="comment">; 通过函数指针调用函数</span></span><br><span class="line">        movl    <span class="number">$0</span>, %eax</span><br><span class="line">        <span class="keyword">leave</span></span><br><span class="line">        <span class="keyword">ret</span></span><br></pre></td></tr></table></figure>
 
-<img src="/2019/06/25/asm-clang-concepts/function-pointer.png" title="函数指针">
+<img src="/2019/06/25/asm-clang-concepts/function-pointer.png" class="" title="函数指针">
 
 
 <h1 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h1><blockquote>
 <p>编译器在背后搞鬼，自动为每一个 enum 常量进行编号。</p>
 </blockquote>
-<h2 id="c-代码"><a href="#c-代码" class="headerlink" title="c 代码"></a>c 代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> day&#123; monday, tuesday, wednesday,</span><br><span class="line">thursday, friday, saturday, sunday&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">enum</span> color &#123;</span><br><span class="line">    RED=<span class="number">1</span>, YELLOW, GREEN</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">enum</span> day foo = friday;</span><br><span class="line">    <span class="keyword">enum</span> color color = GREEN;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="c-代码"><a href="#c-代码" class="headerlink" title="c 代码"></a>c 代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">day</span>&#123;</span> monday, tuesday, wednesday,</span><br><span class="line">thursday, friday, saturday, sunday&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">color</span> &#123;</span></span><br><span class="line">    RED=<span class="number">1</span>, YELLOW, GREEN</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">day</span> <span class="title">foo</span> =</span> friday;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">color</span> <span class="title">color</span> =</span> GREEN;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="汇编分析-1"><a href="#汇编分析-1" class="headerlink" title="汇编分析"></a>汇编分析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $4, -4(%rbp) ; friday 编号为 4，默认从 0 开始编号。</span><br><span class="line">        movl    $3, -8(%rbp) ; GREEN 编号为 3</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
-
-<img src="/2019/06/25/asm-clang-concepts/c-enum.png" title="c 枚举">
+<img src="/2019/06/25/asm-clang-concepts/c-enum.png" class="" title="c 枚举">
 
 <h1 id="references"><a href="#references" class="headerlink" title="references"></a>references</h1><ol>
-<li><a href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)" target="_blank" rel="noopener">pointer</a></li>
-<li><a href="https://stackoverflow.com/questions/29790175/assembly-x86-leave-instruction/29790275" target="_blank" rel="noopener">lea instruction</a></li>
-<li><a href="https://aaronbloomfield.github.io/pdr/book/x86-64bit-ccc-chapter.pdf" target="_blank" rel="noopener">x86 c call convention</a></li>
-<li><a href="https://www.cs.auckland.ac.nz/references/macvax/op-codes/Instructions/movz.html" target="_blank" rel="noopener">opcode-movz</a></li>
-<li><a href="http://faydoc.tripod.com/cpu/movsd.htm" target="_blank" rel="noopener">movsd</a></li>
-<li><a href="https://www.geeksforgeeks.org/pass-2d-array-parameter-c/" target="_blank" rel="noopener">pass-2d-array-parameter-c</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Variable_shadowing" target="_blank" rel="noopener">Variable Shadowing</a></li>
-<li><a href="https://www.thegeekstuff.com/2012/01/advanced-c-pointers" target="_blank" rel="noopener">function pointer</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)">pointer</a></li>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/29790175/assembly-x86-leave-instruction/29790275">lea instruction</a></li>
+<li><a target="_blank" rel="noopener" href="https://aaronbloomfield.github.io/pdr/book/x86-64bit-ccc-chapter.pdf">x86 c call convention</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cs.auckland.ac.nz/references/macvax/op-codes/Instructions/movz.html">opcode-movz</a></li>
+<li><a target="_blank" rel="noopener" href="http://faydoc.tripod.com/cpu/movsd.htm">movsd</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/pass-2d-array-parameter-c/">pass-2d-array-parameter-c</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Variable_shadowing">Variable Shadowing</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.thegeekstuff.com/2012/01/advanced-c-pointers">function pointer</a></li>
 </ol>
 
-      
     </div>
-    
-    
-    
 
     
-      <div>
-        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
-    <img id="wechat_subscriber_qcode" src="/images/wechar-subscriber.jpg" alt="stardustman wechat" style="width: 200px; max-width: 100%;">
-    <div>业精于勤， 荒于嬉。行成于思，毁于随。</div>
-</div>
-
-      </div>
     
-
-    
-
-    
-      <div>
-        <ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>Post author:</strong>
-    stardustman
-  </li>
-  <li class="post-copyright-link">
-    <strong>Post link:</strong>
-    <a href="http://stardustman.github.io/2019/06/25/asm-clang-concepts/" title="asm-clang-concepts">http://stardustman.github.io/2019/06/25/asm-clang-concepts/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>Copyright Notice: </strong>
-    All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 3.0</a> unless stating additionally.
-  </li>
-   
-   
-
-
-
-</ul>
-
-      </div>
     
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/asm/" rel="tag"># asm</a>
-          
-        </div>
-      
-
-      
-      
-      
-
-      
-        <div class="post-nav">
-          <div class="post-nav-next post-nav-item">
-            
-              <a href="/2019/06/24/asm-how-x86-64-arguments-pass/" rel="next" title="asm-how-x86-64-arguments-pass">
-                <i class="fa fa-chevron-left"></i> asm-how-x86-64-arguments-pass
-              </a>
-            
+          <div class="post-tags">
+              <a href="/tags/asm/" rel="tag"># asm</a>
           </div>
 
-          <span class="post-nav-divider"></span>
-
-          <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/06/asm-how-recursion-function-execute/" rel="prev" title="asm-how-recursion-function-execute">
-                asm-how-recursion-function-execute <i class="fa fa-chevron-right"></i>
-              </a>
-            
-          </div>
-        </div>
-      
-
-      
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-
-    <div class="post-spread">
-      
-    </div>
-  </div>
-
-
-          </div>
-          
-
-
-          
-
-  
-    <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/06/25/asm-clang-concepts/" data-title="asm-clang-concepts" data-url="http://stardustman.github.io/2019/06/25/asm-clang-concepts/">
-      </div>
-    </div>
-
-  
-
-
-
-        </div>
         
-          
-  
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
-  </div>
 
-  <aside id="sidebar" class="sidebar">
-    
-    <div class="sidebar-inner">
-
-      
-
-      
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
-
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">stardustman</p>
-              <p class="site-description motion-element" itemprop="description"></p>
-          </div>
-
-          <nav class="site-state motion-element">
-
-            
-              <div class="site-state-item site-state-posts">
-              
-                <a href="/archives/">
-              
-                  <span class="site-state-item-count">36</span>
-                  <span class="site-state-item-name">posts</span>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/06/24/asm-how-x86-64-arguments-pass/" rel="prev" title="asm-how-x86-64-arguments-pass">
+                  <i class="fa fa-chevron-left"></i> asm-how-x86-64-arguments-pass
                 </a>
-              </div>
-            
-
-            
-
-            
-              
-              
-              <div class="site-state-item site-state-tags">
-                <a href="/tags/index.html">
-                  <span class="site-state-item-count">33</span>
-                  <span class="site-state-item-name">tags</span>
-                </a>
-              </div>
-            
-
-          </nav>
-
-          
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
             </div>
-          
-
-          
-
-          
-          
-
-          
-          
-
-          
-
-        </div>
-      </section>
-
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#指针"><span class="nav-number">1.</span> <span class="nav-text">指针</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#变量地址"><span class="nav-number">1.1.</span> <span class="nav-text">变量地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#寄存器间接寻址"><span class="nav-number">1.2.</span> <span class="nav-text">寄存器间接寻址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#movq-operand-combinations"><span class="nav-number">1.3.</span> <span class="nav-text">movq operand combinations</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码分析"><span class="nav-number">1.4.</span> <span class="nav-text">代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#swap"><span class="nav-number">1.4.1.</span> <span class="nav-text">swap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main"><span class="nav-number">1.4.2.</span> <span class="nav-text">main</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#栈帧分析"><span class="nav-number">1.4.3.</span> <span class="nav-text">栈帧分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数返回值"><span class="nav-number">1.4.4.</span> <span class="nav-text">函数返回值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论"><span class="nav-number">1.4.5.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#数据类型转化"><span class="nav-number">2.</span> <span class="nav-text">数据类型转化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#整数类型"><span class="nav-number">2.1.</span> <span class="nav-text">整数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#x86-64-registers"><span class="nav-number">2.1.1.</span> <span class="nav-text">x86-64 registers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#IA32-registers"><span class="nav-number">2.1.2.</span> <span class="nav-text">IA32 registers</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码分析-1"><span class="nav-number">2.1.3.</span> <span class="nav-text">代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结论-1"><span class="nav-number">2.1.4.</span> <span class="nav-text">结论</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#array"><span class="nav-number">3.</span> <span class="nav-text">array</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C代码分析"><span class="nav-number">3.1.</span> <span class="nav-text">C代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sumArray"><span class="nav-number">3.1.1.</span> <span class="nav-text">sumArray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sumMatrix"><span class="nav-number">3.1.2.</span> <span class="nav-text">sumMatrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#main-1"><span class="nav-number">3.1.3.</span> <span class="nav-text">main</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Asm-代码分析"><span class="nav-number">3.2.</span> <span class="nav-text">Asm 代码分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sumArray-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">sumArray</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asm-sumMatrix"><span class="nav-number">3.2.2.</span> <span class="nav-text">Asm sumMatrix</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asm-main"><span class="nav-number">3.2.3.</span> <span class="nav-text">Asm main</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#struct"><span class="nav-number">4.</span> <span class="nav-text">struct</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Code-Analysis"><span class="nav-number">4.1.</span> <span class="nav-text">Code Analysis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#C"><span class="nav-number">4.1.1.</span> <span class="nav-text">C</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Asm"><span class="nav-number">4.1.2.</span> <span class="nav-text">Asm</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variable-Shadowing"><span class="nav-number">5.</span> <span class="nav-text">Variable Shadowing</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码"><span class="nav-number">5.1.</span> <span class="nav-text">C 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编代码"><span class="nav-number">5.2.</span> <span class="nav-text">汇编代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编代码分析"><span class="nav-number">5.3.</span> <span class="nav-text">汇编代码分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#funcation-pointer"><span class="nav-number">6.</span> <span class="nav-text">funcation pointer</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#C-代码-1"><span class="nav-number">6.1.</span> <span class="nav-text">C 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编分析"><span class="nav-number">6.2.</span> <span class="nav-text">汇编分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#enum"><span class="nav-number">7.</span> <span class="nav-text">enum</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-代码"><span class="nav-number">7.1.</span> <span class="nav-text">c 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汇编分析-1"><span class="nav-number">7.2.</span> <span class="nav-text">汇编分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#references"><span class="nav-number">8.</span> <span class="nav-text">references</span></a></li></ol></div>
-            
-
+            <div class="post-nav-item">
+                <a href="/2019/07/06/asm-how-recursion-function-execute/" rel="next" title="asm-how-recursion-function-execute">
+                  asm-how-recursion-function-execute <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-        </section>
-      <!--/noindex-->
-      
-
-      
-        <div class="back-to-top">
-          <i class="fa fa-arrow-up"></i>
-          
-            <span id="scrollpercent"><span>0</span>%</span>
-          
-        </div>
-      
-
-    </div>
-  </aside>
-
-
-        
-      </div>
-    </main>
-
-    <footer id="footer" class="footer">
-      <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-user"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">stardustman</span>
-
-  
+    </footer>
+  </article>
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
-
-
-
-  <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
-
-
-
-
-        
 
 
 
 
 
-
-
-        
-      </div>
-    </footer>
-
-    
-
-    
-
-  </div>
-
-  
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
   }
 </script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
 
 
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">stardustman</span>
+</div>
+<div class="wordcount">
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-chart-line"></i>
+    </span>
+    <span title="Symbols count total">184k</span>
+  </span>
+  <span class="post-meta-item">
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    <span title="Reading time total">2:48</span>
+  </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
 
 
 
@@ -768,162 +534,6 @@
 
 
 
-
-
-
-
-
-
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
-
-
-
-  
-  
-
-
-  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
-
-  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
-
-
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
-
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
-
-
-
-  
-
-  
-    
-  
-
-  <script type="text/javascript">
-    var duoshuoQuery = {short_name:"your-duoshuo-shortname"};
-    (function() {
-      var ds = document.createElement('script');
-      ds.type = 'text/javascript';ds.async = true;
-      ds.id = 'duoshuo-script';
-      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-      ds.charset = 'UTF-8';
-      (document.getElementsByTagName('head')[0]
-      || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-  </script>
-
-  
-    
-    
-    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
-    <script src="/js/src/hook-duoshuo.js"></script>
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
-  <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
-  <div id="gitalk-container"></div>
-  <script type="text/javascript">
-    var gitalk = new Gitalk({
-      clientID: '',
-      clientSecret: '',
-      repo: 'hexo-comments',
-      owner: 'stardustman',
-      admin: [''],
-      id: location.pathname,
-      distractionFreeMode: 'false'
-    })
-    gitalk.render('gitalk-container')
-  </script>
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-  <script type="text/javascript" src="/js/src/js.cookie.js?v=5.1.4"></script>
-  <script type="text/javascript" src="/js/src/scroll-cookie.js?v=5.1.4"></script>
-
-
-  
 
 </body>
 </html>
