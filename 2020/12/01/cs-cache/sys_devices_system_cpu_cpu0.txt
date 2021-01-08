@@ -1,0 +1,48 @@
+root@aliyun:~# cd /sys/devices/system/cpu/cpu0/cache
+root@aliyun:cache# ls
+index0  index1  index2  index3  power  uevent
+root@aliyun:cache# cd index0
+root@aliyun:index0# ls
+coherency_line_size  level           physical_line_partition  shared_cpu_list  size  uevent
+id                   number_of_sets  power                    shared_cpu_map   type  ways_of_associativity
+root@aliyun:index0# cat level # 一级缓存
+1
+root@aliyun:index0# cat size  # 一级缓存大小
+32K
+root@aliyun:index0# cat coherency_line_size # 一级缓存行大小
+64
+root@aliyun:index0# cat number_of_sets      # 组数
+64
+root@aliyun:index0# cat type  # 一级缓存类型
+Data
+root@aliyun:index0# cd ../index1
+root@aliyun:index1# cat level
+1
+root@aliyun:index1# cat size
+32K
+root@aliyun:index1# cat coherency_line_size
+64
+root@aliyun:index1# cat number_of_sets
+64
+root@aliyun:index1# cat type
+Instruction
+root@aliyun:index1# cd ../index2
+root@aliyun:index2# cat level
+2
+root@aliyun:index2# cat size
+1024K
+root@aliyun:index2# cat coherency_line_size
+64
+root@aliyun:index2# cat number_of_sets
+1024
+root@aliyun:index2# cat type
+Unified
+root@aliyun:index2# cd ../index3
+root@aliyun:index3# cat level
+3
+root@aliyun:index3# cat coherency_line_size
+64
+root@aliyun:index3# cat number_of_sets
+49152
+root@aliyun:index3# cat type
+Unified
