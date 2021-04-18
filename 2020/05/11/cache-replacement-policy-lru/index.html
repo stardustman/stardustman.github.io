@@ -30,14 +30,14 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="Cachecache为啥要有 Cache 呢？根本原因是各种存储速度不匹配。或者为了加快某个过程，直接将多次转换的转换结果直接缓存起来，便于再次使用时直接绕开这些转换过程。典型的就是 MMU 的地址翻译过程，直接将虚拟地址多次转换的最后结果，也就是物理地址，直接缓存到 TLB 中，下次再次访问同一个虚拟地址，直接从虚拟地址拿到物理地址，绕开多次转换过程，这可不就提高了速度。CPU 的速度比 Mem">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/lru.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/lru.svg">
 <meta property="article:published_time" content="2020-05-11T00:39:15.000Z">
-<meta property="article:modified_time" content="2020-05-11T03:13:30.435Z">
+<meta property="article:modified_time" content="2021-01-24T01:58:56.124Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="cache replacement">
 <meta property="article:tag" content="LRU">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/lru.svg">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/lru.svg">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/">
@@ -197,14 +197,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -280,10 +280,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2020-05-11 08:39:15 / Modified: 11:13:30" itemprop="dateCreated datePublished" datetime="2020-05-11T08:39:15+08:00">2020-05-11</time>
+      <time title="Created: 2020-05-11 08:39:15" itemprop="dateCreated datePublished" datetime="2020-05-11T08:39:15+08:00">2020-05-11</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-24 09:58:56" itemprop="dateModified" datetime="2021-01-24T09:58:56+08:00">2021-01-24</time>
+      </span>
 
   
       </div>
@@ -322,8 +328,7 @@
 <li>virtual page 已在缓存队列中，将代表 virtual page 的队列节点移动到队首。</li>
 <li> virtual page 不在缓存队列中，<em>移除队尾队列节点</em>，添加代表这个 virtual page 的队列节点到队首。</li>
 </ol>
-<h4 id="LRU-图解"><a href="#LRU-图解" class="headerlink" title="LRU 图解"></a>LRU 图解</h4><img src="/2020/05/11/cache-replacement-policy-lru/lru.svg" class="" title="least recently used"> 
-
+<h4 id="LRU-图解"><a href="#LRU-图解" class="headerlink" title="LRU 图解"></a>LRU 图解</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/lru.svg" alt="lru"></p>
 <p>可以看到一直是对<code>缓存队列队首</code>操作。<br>1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</p>
 <ol>
 <li>访问 page 1，缓存队列中没有，page 1 放到队首。</li>
@@ -369,8 +374,8 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2020/04/23/network-dns/" rel="prev" title="network-dns">
-                  <i class="fa fa-chevron-left"></i> network-dns
+                <a href="/2020/05/09/network-dhcp/" rel="prev" title="network-dhcp">
+                  <i class="fa fa-chevron-left"></i> network-dhcp
                 </a>
             </div>
             <div class="post-nav-item">
@@ -430,13 +435,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">194k</span>
+    <span title="Symbols count total">201k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">3:03</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

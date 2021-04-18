@@ -30,17 +30,17 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="我们知道一个计算机 CPU 数量有限, 但是却可以同时跑数量远远多于 CPU 数量的程序. 其实这就是 virtualizing. 怎样进行 CPU 虚拟化呢? 通过抽象出 process 这个基本概念, 也就是 running program. 一个没有运行的程序, 也就是磁盘上的一堆指令集和一些数据. 通过 time sharing 让一个 process stop, 然后去 run 另外一">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/physical-organization-of-a-modern-system.png">
-<meta property="og:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/loading-from-program-to-process.png">
-<meta property="og:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/load-process.svg">
-<meta property="og:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/process-state-transition.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/physical-organization-of-a-modern-system.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/loading-from-program-to-process.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/load-process.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/process-state-transition.png">
 <meta property="article:published_time" content="2020-01-14T02:06:38.000Z">
-<meta property="article:modified_time" content="2020-01-14T12:27:59.945Z">
+<meta property="article:modified_time" content="2021-01-14T05:58:23.450Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="os">
 <meta property="article:tag" content="three easy pieces">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/physical-organization-of-a-modern-system.png">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/physical-organization-of-a-modern-system.png">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/">
@@ -200,14 +200,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,10 +283,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2020-01-14 10:06:38 / Modified: 20:27:59" itemprop="dateCreated datePublished" datetime="2020-01-14T10:06:38+08:00">2020-01-14</time>
+      <time title="Created: 2020-01-14 10:06:38" itemprop="dateCreated datePublished" datetime="2020-01-14T10:06:38+08:00">2020-01-14</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-14 13:58:23" itemprop="dateModified" datetime="2021-01-14T13:58:23+08:00">2021-01-14</time>
+      </span>
 
   
       </div>
@@ -317,17 +323,14 @@
         <blockquote>
 <p>我们知道一个计算机 <code>CPU</code> 数量有限, 但是却可以同时跑数量远远多于 <code>CPU</code> 数量的程序. 其实这就是 <code>virtualizing</code>. 怎样进行 <code>CPU</code> 虚拟化呢? 通过抽象出 <code>process</code> 这个基本概念, 也就是 <code>running program</code>. 一个没有运行的程序, 也就是磁盘上的一堆指令集和一些数据. 通过 <code>time sharing</code> 让一个 <code>process stop</code>, 然后去 <code>run</code> 另外一个 <code>process</code>. 重复这个 <code>context switch</code> 过程, 可以让多个程序同时运行, 这就是在<code>virtualizing CPU</code>.<br><code>mechanisms</code> are low-level methods or protocols that implements a needed piece of functionality. 类似于 java 中的接口, 就是我要提供什么功能. 比如 <code>OS</code> 中的进程的 <code>context switch</code>这个机制.<br><code>policies</code> are algorithms for making some kind of decision within the OS.类似 java 中实现类, 怎么实现这个接口定义的方法. 比如 <code>OS</code> 中的进程调度策略就是为了实现进程 <code>context switch</code>.<br><code>mechanisms</code> 和 <code>policies</code> 分离, 和 java 中接口和实现非常相似. 实际上这也是软件设计的原则. <code>OS</code> 本身也是软件.</p>
 </blockquote>
-<h2 id="physical-organization-of-a-modern-system"><a href="#physical-organization-of-a-modern-system" class="headerlink" title="physical organization of a modern system"></a>physical organization of a modern system</h2><img src="/2020/01/14/three-easy-pieces-4-process/physical-organization-of-a-modern-system.png" class="" title="现代计算机系统物理架构">
-
+<h2 id="physical-organization-of-a-modern-system"><a href="#physical-organization-of-a-modern-system" class="headerlink" title="physical organization of a modern system"></a>physical organization of a modern system</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/physical-organization-of-a-modern-system.png" alt="现代计算机系统物理架构"></p>
 <h2 id="the-abstracttion-a-process"><a href="#the-abstracttion-a-process" class="headerlink" title="the abstracttion: a process"></a>the abstracttion: a process</h2><h3 id="address-space"><a href="#address-space" class="headerlink" title="address space"></a>address space</h3><p>存放程序的 <code>instructions</code> 和 <code>data</code>.</p>
 <h3 id="program-counter"><a href="#program-counter" class="headerlink" title="program counter"></a>program counter</h3><p>程序寄存器, 为了实现 <code>process</code> 的 <code>stop</code> 和 <code>run</code>, 需要知道执行到哪一条指令了.</p>
 <h3 id="stack-pointer"><a href="#stack-pointer" class="headerlink" title="stack pointer"></a>stack pointer</h3><p>function parameters, local variables, return addresses</p>
 <h3 id="io"><a href="#io" class="headerlink" title="io"></a>io</h3><p>进程默认打开 <code>stdin(0)</code>, <code>stdout(1)</code>, <code>stderr(2)</code> 这三个 <code>file descriptor</code>.</p>
 <h2 id="process-API"><a href="#process-API" class="headerlink" title="process API"></a>process API</h2><h3 id="create"><a href="#create" class="headerlink" title="create"></a>create</h3><h3 id="destroy"><a href="#destroy" class="headerlink" title="destroy"></a>destroy</h3><p>kill a process or halt it</p>
 <h3 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h3><h3 id="miscellaneous-control"><a href="#miscellaneous-control" class="headerlink" title="miscellaneous control"></a>miscellaneous control</h3><p><em>suspend</em> process, stop it from running for a while<br><em>resume</em> process, contine it running</p>
-<h3 id="status"><a href="#status" class="headerlink" title="status"></a>status</h3><h2 id="process-creation-a-little-detail"><a href="#process-creation-a-little-detail" class="headerlink" title="process creation: a little detail"></a>process creation: a little detail</h2><img src="/2020/01/14/three-easy-pieces-4-process/loading-from-program-to-process.png" class="">
-
-<p>把程序从磁盘加载到内存. 问题来了:</p>
+<h3 id="status"><a href="#status" class="headerlink" title="status"></a>status</h3><h2 id="process-creation-a-little-detail"><a href="#process-creation-a-little-detail" class="headerlink" title="process creation: a little detail"></a>process creation: a little detail</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/loading-from-program-to-process.png" alt="loading-from-program-to-process.png"><br>把程序从磁盘加载到内存. 问题来了:</p>
 <ol>
 <li>是要全部加载到内存吗? (eagerly)</li>
 <li>还是部分加载到内存? (lazy, paging)</li>
@@ -338,7 +341,7 @@
 <li>set up related I/O </li>
 <li>execute program, 跳到 entry point, 也就是 main().</li>
 </ol>
-<img src="/2020/01/14/three-easy-pieces-4-process/load-process.svg" class="" title="程序加载执行流程">
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/load-process.svg" alt="程序加载执行流程"></p>
 <h2 id="process-states"><a href="#process-states" class="headerlink" title="process states"></a>process states</h2><p>简单来说, 分为 3 种状态:</p>
 <ol>
 <li>running</li>
@@ -352,8 +355,7 @@
 <li>blocked</li>
 </ol>
 <p><strong>a process has performmed some kind of operation that makes it not ready to run until some other event takes place. A common example: when a process initiates an I/O request to a disk, it becomes blocked and thus some other process can use the processor</strong></p>
-<img src="/2020/01/14/three-easy-pieces-4-process/process-state-transition.png" class="" title="进程状态转换">
-
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/process-state-transition.png" alt="process-state-transition"></p>
 <h2 id="data-structures"><a href="#data-structures" class="headerlink" title="data structures"></a>data structures</h2><blockquote>
 <p>以下是 xv6 这个 <code>MIT</code> 教学 <code>OS</code> 的 <a target="_blank" rel="noopener" href="https://github.com/stardustman/xv6-public/blob/master/proc.h">proc.h</a> </p>
 </blockquote>
@@ -450,13 +452,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">194k</span>
+    <span title="Symbols count total">201k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">3:03</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

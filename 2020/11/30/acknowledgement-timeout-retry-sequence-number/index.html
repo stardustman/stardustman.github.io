@@ -23,16 +23,16 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"stardustman.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.0.2","exturl":false,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
-<meta name="description" content="TCP 要解决的问题    references tcp-congestion-control tcp-congestion-control-ppt">
+<meta name="description" content="TCP 要解决的问题 references tcp-congestion-control tcp-congestion-control-ppt">
 <meta property="og:type" content="article">
 <meta property="og:title" content="acknowledgement-timeout-retry-sequence-number">
 <meta property="og:url" content="http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="TCP 要解决的问题    references tcp-congestion-control tcp-congestion-control-ppt">
+<meta property="og:description" content="TCP 要解决的问题 references tcp-congestion-control tcp-congestion-control-ppt">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/notions_tcp.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/notions_tcp.svg">
 <meta property="article:published_time" content="2020-11-30T02:54:57.000Z">
-<meta property="article:modified_time" content="2020-11-30T08:38:17.453Z">
+<meta property="article:modified_time" content="2021-01-14T06:17:33.157Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="notion">
 <meta property="article:tag" content="ack">
@@ -40,7 +40,7 @@
 <meta property="article:tag" content="retry">
 <meta property="article:tag" content="sequence-number">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/notions_tcp.svg">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/notions_tcp.svg">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/">
@@ -200,14 +200,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,10 +283,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2020-11-30 10:54:57 / Modified: 16:38:17" itemprop="dateCreated datePublished" datetime="2020-11-30T10:54:57+08:00">2020-11-30</time>
+      <time title="Created: 2020-11-30 10:54:57" itemprop="dateCreated datePublished" datetime="2020-11-30T10:54:57+08:00">2020-11-30</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-14 14:17:33" itemprop="dateModified" datetime="2021-01-14T14:17:33+08:00">2021-01-14</time>
+      </span>
 
   
       </div>
@@ -314,10 +320,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="TCP-要解决的问题"><a href="#TCP-要解决的问题" class="headerlink" title="TCP 要解决的问题"></a>TCP 要解决的问题</h3><img src="/2020/11/30/acknowledgement-timeout-retry-sequence-number/notions_tcp.svg" class="" title="notions_tcp">
-
-
-
+        <h3 id="TCP-要解决的问题"><a href="#TCP-要解决的问题" class="headerlink" title="TCP 要解决的问题"></a>TCP 要解决的问题</h3><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/notions_tcp.svg" alt="notions_tcp"></p>
 <h2 id="references"><a href="#references" class="headerlink" title="references"></a>references</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/tcp-congestion-control/">tcp-congestion-control</a></li>
 <li><a target="_blank" rel="noopener" href="https://web.cs.wpi.edu/~rek/Undergrad_Nets/B06/TCP_Congestion_Control.ppt">tcp-congestion-control-ppt</a></li>
@@ -403,13 +406,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">194k</span>
+    <span title="Symbols count total">201k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">3:03</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

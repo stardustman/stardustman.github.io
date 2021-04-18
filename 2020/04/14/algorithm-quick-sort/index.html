@@ -30,13 +30,13 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="quick sortC 代码12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758#include &lt;stdio.h&gt;int partition(int* array, int startIndex, int endIndex)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://stardustman.github.io/2020/04/14/algorithm-quick-sort/quick-sort-partition-flow-chart.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/quick-sort-partition-flow-chart.svg">
 <meta property="article:published_time" content="2020-04-14T12:02:16.000Z">
-<meta property="article:modified_time" content="2020-05-10T11:53:44.142Z">
+<meta property="article:modified_time" content="2021-01-14T06:19:50.444Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="algorithm,sort">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stardustman.github.io/2020/04/14/algorithm-quick-sort/quick-sort-partition-flow-chart.svg">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/quick-sort-partition-flow-chart.svg">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2020/04/14/algorithm-quick-sort/">
@@ -196,14 +196,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -287,7 +287,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-05-10 19:53:44" itemprop="dateModified" datetime="2020-05-10T19:53:44+08:00">2020-05-10</time>
+        <time title="Modified: 2021-01-14 14:19:50" itemprop="dateModified" datetime="2021-01-14T14:19:50+08:00">2021-01-14</time>
       </span>
 
   
@@ -324,12 +324,7 @@
 
 <h3 id="partition-分析"><a href="#partition-分析" class="headerlink" title="partition 分析"></a>partition 分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Before:: [4, 7, 6, 5, 3, 2, 8, 1]</span><br><span class="line">第 1 次 partition [3, 1, 2, 4, 5, 6, 8, 7]  returned index is: 3</span><br><span class="line">第 2 次 partition [2, 1, 3, 4, 5, 6, 8, 7]  returned index is: 2</span><br><span class="line">第 3 次 partition [1, 2, 3, 4, 5, 6, 8, 7]  returned index is: 1</span><br><span class="line">第 4 次 partition [1, 2, 3, 4, 5, 6, 8, 7]  returned index is: 4</span><br><span class="line">第 5 次 partition [1, 2, 3, 4, 5, 6, 8, 7]  returned index is: 5</span><br><span class="line">第 6 次 partition [1, 2, 3, 4, 5, 6, 7, 8]  returned index is: 7</span><br><span class="line"> After:: [1, 2, 3, 4, 5, 6, 7, 8]</span><br></pre></td></tr></table></figure>
 
-<h4 id="partition-逻辑图解"><a href="#partition-逻辑图解" class="headerlink" title="partition 逻辑图解"></a>partition 逻辑图解</h4><img src="/2020/04/14/algorithm-quick-sort/quick-sort-partition-flow-chart.svg" class="" title="quick-sort-partition-flow-chart">
-
-
-
-
-
+<h4 id="partition-逻辑图解"><a href="#partition-逻辑图解" class="headerlink" title="partition 逻辑图解"></a>partition 逻辑图解</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/quick-sort-partition-flow-chart.svg" alt="quick-sort-partition-flow-chart "></p>
 <h3 id="系统调用-strace-分析"><a href="#系统调用-strace-分析" class="headerlink" title="系统调用 strace 分析"></a>系统调用 strace 分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">root@aliyun:~# strace -Ti .&#x2F;quickSort </span><br><span class="line">[00007f2ee3f68e37] execve(&quot;.&#x2F;quickSort&quot;, [&quot;.&#x2F;quickSort&quot;], 0x7ffffe4dc528 &#x2F;* 27 vars *&#x2F;) &#x3D; 0 &lt;0.000122&gt;</span><br><span class="line">[00007f0045366ec9] brk(NULL)            &#x3D; 0x55e15d32b000 &lt;0.000006&gt;</span><br><span class="line">[00007f004535a7de] access(&quot;&#x2F;etc&#x2F;ld.so.nohwcap&quot;, F_OK) &#x3D; -1 ENOENT (No such file or directory) &lt;0.000010&gt;</span><br><span class="line">[00007f0045367e27] access(&quot;&#x2F;etc&#x2F;ld.so.preload&quot;, R_OK) &#x3D; -1 ENOENT (No such file or directory) &lt;0.000007&gt;</span><br><span class="line">[00007f0045367cdd] openat(AT_FDCWD, &quot;&#x2F;etc&#x2F;ld.so.cache&quot;, O_RDONLY|O_CLOEXEC) &#x3D; 3 &lt;0.000008&gt;</span><br><span class="line">[00007f0045367c43] fstat(3, &#123;st_mode&#x3D;S_IFREG|0644, st_size&#x3D;39490, ...&#125;) &#x3D; 0 &lt;0.000006&gt;</span><br><span class="line">[00007f0045367f43] mmap(NULL, 39490, PROT_READ, MAP_PRIVATE, 3, 0) &#x3D; 0x7f0045568000 &lt;0.000009&gt;</span><br><span class="line">[00007f0045367ed7] close(3)             &#x3D; 0 &lt;0.000005&gt;</span><br><span class="line">[00007f0045363139] access(&quot;&#x2F;etc&#x2F;ld.so.nohwcap&quot;, F_OK) &#x3D; -1 ENOENT (No such file or directory) &lt;0.000008&gt;</span><br><span class="line">[00007f0045367cdd] openat(AT_FDCWD, &quot;&#x2F;lib&#x2F;x86_64-linux-gnu&#x2F;libc.so.6&quot;, O_RDONLY|O_CLOEXEC) &#x3D; 3 &lt;0.000012&gt;</span><br><span class="line">[00007f0045367da4] read(3, &quot;\177ELF\2\1\1\3\0\0\0\0\0\0\0\0\3\0&gt;\0\1\0\0\0\260\34\2\0\0\0\0\0&quot;..., 832) &#x3D; 832 &lt;0.000007&gt;</span><br><span class="line">[00007f0045367c43] fstat(3, &#123;st_mode&#x3D;S_IFREG|0755, st_size&#x3D;2030544, ...&#125;) &#x3D; 0 &lt;0.000006&gt;</span><br><span class="line">[00007f0045367f43] mmap(NULL, 8192, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_ANONYMOUS, -1, 0) &#x3D; 0x7f0045566000 &lt;0.000007&gt;</span><br><span class="line">[00007f0045367f43] mmap(NULL, 4131552, PROT_READ|PROT_EXEC, MAP_PRIVATE|MAP_DENYWRITE, 3, 0) &#x3D; 0x7f0044f5a000 &lt;0.000008&gt;</span><br><span class="line">[00007f0045367ff7] mprotect(0x7f0045141000, 2097152, PROT_NONE) &#x3D; 0 &lt;0.000012&gt;</span><br><span class="line">[00007f0045367f43] mmap(0x7f0045341000, 24576, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_DENYWRITE, 3, 0x1e7000) &#x3D; 0x7f0045341000 &lt;0.000011&gt;</span><br><span class="line">[00007f0045367f43] mmap(0x7f0045347000, 15072, PROT_READ|PROT_WRITE, MAP_PRIVATE|MAP_FIXED|MAP_ANONYMOUS, -1, 0) &#x3D; 0x7f0045347000 &lt;0.000008&gt;</span><br><span class="line">[00007f0045367ed7] close(3)             &#x3D; 0 &lt;0.000007&gt;</span><br><span class="line">[00007f004534c024] arch_prctl(ARCH_SET_FS, 0x7f00455674c0) &#x3D; 0 &lt;0.000006&gt;</span><br><span class="line">[00007f0045367ff7] mprotect(0x7f0045341000, 16384, PROT_READ) &#x3D; 0 &lt;0.000009&gt;</span><br><span class="line">[00007f0045367ff7] mprotect(0x55e15d271000, 4096, PROT_READ) &#x3D; 0 &lt;0.000008&gt;</span><br><span class="line">[00007f0045367ff7] mprotect(0x7f0045572000, 4096, PROT_READ) &#x3D; 0 &lt;0.000011&gt;</span><br><span class="line">[00007f0045367fd7] munmap(0x7f0045568000, 39490) &#x3D; 0 &lt;0.000015&gt;</span><br><span class="line">[00007f00450697c3] fstat(1, &#123;st_mode&#x3D;S_IFCHR|0600, st_rdev&#x3D;makedev(136, 0), ...&#125;) &#x3D; 0 &lt;0.000006&gt;</span><br><span class="line">[00007f00450704b9] brk(NULL)            &#x3D; 0x55e15d32b000 &lt;0.000006&gt;</span><br><span class="line">[00007f00450704b9] brk(0x55e15d34c000)  &#x3D; 0x55e15d34c000 &lt;0.000007&gt;</span><br><span class="line">[00007f004506a154] write(1, &quot;1 2 3 4 5 6 7 8 &quot;, 161 2 3 4 5 6 7 8 ) &#x3D; 16 &lt;0.000024&gt;</span><br><span class="line">[00007f004503ee06] exit_group(0)        &#x3D; ?</span><br><span class="line">[????????????????] +++ exited with 0 +++</span><br></pre></td></tr></table></figure>
 
 <h3 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h3><ol>
@@ -414,13 +409,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">194k</span>
+    <span title="Symbols count total">201k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">3:03</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

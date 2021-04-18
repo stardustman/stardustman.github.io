@@ -30,16 +30,16 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="线性 or 非线性数据结构可以分为两大类：线性结构和非线性结构。线性结构典型的就是数组和链表，非线性典型就是树了。复杂的数据结构基本上都是两者的组合。 binary heap二叉堆本质上就是个完全二叉树。但是却用数组来表示。为啥呢？因为数组的下标之间有关系，可以表示二叉树节点之间的层级关系。因为是 完全二叉树，这就保证了一维展开就是一个下标连续的数组，数组通过下标操作起来相当简洁。堆顶(root)">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://stardustman.github.io/2020/05/18/data-structure-heap/binary-heap.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/binary-heap.svg">
 <meta property="article:published_time" content="2020-05-18T07:24:05.000Z">
-<meta property="article:modified_time" content="2020-05-28T03:59:33.170Z">
+<meta property="article:modified_time" content="2021-01-24T02:10:09.229Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="data structure">
 <meta property="article:tag" content="binary heap">
 <meta property="article:tag" content="priority queue">
 <meta property="article:tag" content="heap sort">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stardustman.github.io/2020/05/18/data-structure-heap/binary-heap.svg">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/binary-heap.svg">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2020/05/18/data-structure-heap/">
@@ -199,14 +199,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -290,7 +290,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-05-28 11:59:33" itemprop="dateModified" datetime="2020-05-28T11:59:33+08:00">2020-05-28</time>
+        <time title="Modified: 2021-01-24 10:10:09" itemprop="dateModified" datetime="2021-01-24T10:10:09+08:00">2021-01-24</time>
       </span>
 
   
@@ -301,7 +301,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>4.2k</span>
+      <span>4.3k</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -324,8 +324,7 @@
 <h3 id="堆的自我调整"><a href="#堆的自我调整" class="headerlink" title="堆的自我调整"></a>堆的自我调整</h3><h4 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h4><p>新节点放在数组最后，然后对该节点进行上浮操作。</p>
 <h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><p>删除堆顶元素，最后一个节点放在堆顶，对此时的堆顶进行下沉操作。</p>
 <h4 id="构建二叉堆"><a href="#构建二叉堆" class="headerlink" title="构建二叉堆"></a>构建二叉堆</h4><p>所有的非叶子节点进行上浮操作。</p>
-<h4 id="二叉堆自我调整图解"><a href="#二叉堆自我调整图解" class="headerlink" title="二叉堆自我调整图解"></a>二叉堆自我调整图解</h4><img src="/2020/05/18/data-structure-heap/binary-heap.svg" class="" title="二叉堆的自我调整">
-
+<h4 id="二叉堆自我调整图解"><a href="#二叉堆自我调整图解" class="headerlink" title="二叉堆自我调整图解"></a>二叉堆自我调整图解</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/binary-heap.svg" alt="binary-heap"> #(二叉堆的自我调整)</p>
 <h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeapOperator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自下而上，上浮</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">upAdjust</span><span class="params">(<span class="keyword">int</span> [] array)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 最后一个节点</span></span><br><span class="line">        <span class="keyword">int</span> childIndex = array.length - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 最后一个非叶子节点</span></span><br><span class="line">        <span class="keyword">int</span> parentIndex = (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">int</span> temp = array[childIndex];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &gt; <span class="number">0</span> &amp;&amp; temp &lt; array[parentIndex])&#123;</span><br><span class="line">            array[childIndex] = array[parentIndex];</span><br><span class="line">            childIndex = parentIndex;</span><br><span class="line">            parentIndex = (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[childIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自上而下，下沉</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">downAdjust</span><span class="params">(<span class="keyword">int</span> [] array, <span class="keyword">int</span> parentIndex, <span class="keyword">int</span> length)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> temp = array[parentIndex];</span><br><span class="line">        <span class="keyword">int</span> childIndex = <span class="number">2</span> * parentIndex + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &lt; length)&#123;</span><br><span class="line">            <span class="comment">// 有右节点，且右节点小于左节点</span></span><br><span class="line">            <span class="keyword">if</span> (childIndex + <span class="number">1</span> &lt; length &amp;&amp; array[childIndex] &gt; array[childIndex + <span class="number">1</span>])&#123;</span><br><span class="line">                childIndex++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(temp &lt;= array[childIndex])&#123;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            array[parentIndex] = array[childIndex];</span><br><span class="line">            parentIndex = childIndex;</span><br><span class="line">            childIndex = <span class="number">2</span> * parentIndex + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[parentIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span>  <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title">buildHeap</span><span class="params">(<span class="keyword">int</span>[] array)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = (array.length - <span class="number">1</span>)/ <span class="number">2</span>; i &gt;= <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            downAdjust(array, i, array.length - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">heapSort</span><span class="params">(<span class="keyword">int</span> [] array)</span></span>&#123;</span><br><span class="line">        <span class="comment">// 先构建一个小顶堆，得到一个最小值。</span></span><br><span class="line">        <span class="comment">// i 为 parentIndex，左右子节点分别是 2 * i + 1, 2 * i + 2</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = (array.length - <span class="number">1</span> -<span class="number">2</span> ) / <span class="number">2</span>; i &gt;= <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            downAdjust(array, i, array.length);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 堆顶和目前堆的最后一个节点交换，重新构建堆。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = array.length - <span class="number">1</span>; i &gt; <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            <span class="keyword">int</span> temp = array[i];</span><br><span class="line">            array[i] = array[<span class="number">0</span>];</span><br><span class="line">            array[<span class="number">0</span>] = temp;</span><br><span class="line">            downAdjust(array, <span class="number">0</span> , i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> [] array = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        upAdjust(array);</span><br><span class="line">        System.out.println(Arrays.toString(array));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] array2 = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">7</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>&#125;;</span><br><span class="line">        buildHeap(array2);</span><br><span class="line">        System.out.println(Arrays.toString(array2));</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span>[] array3 = <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">7</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">100</span>&#125;;</span><br><span class="line">        heapSort(array3);</span><br><span class="line">        System.out.println(Arrays.toString(array3));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="优先级队列"><a href="#优先级队列" class="headerlink" title="优先级队列"></a>优先级队列</h3><p>不要被队列二字带偏，优先级队列的重点在优先级上。比如线程有优先级，优先级大的先执行。运算符也是有优先级的。怎样来实现这种优先级呢？用 <code>堆</code> 就可以。这里使用小顶堆，堆顶就是最小值，这里带入优先级的概念，值越小优先级越大。那么，从堆顶拿出来的节点就是优先级最大的，剩余的节点重新构造成小顶堆，保证堆顶是最小值。</p>
@@ -422,13 +421,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">194k</span>
+    <span title="Symbols count total">201k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">3:03</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

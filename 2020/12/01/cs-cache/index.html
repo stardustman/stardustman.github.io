@@ -30,16 +30,17 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="There can be many caches stacked on top of each other.Cache 可以一层一层累积。   if you miss in one you try in the “lower level cache”Lower level, mean higher number.在上层的 Cache miss 了，可以在下层的 Cache 去找。依次类推。 Th">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://stardustman.github.io/2020/12/01/cs-cache/cache_organization.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/cache_organization.svg">
 <meta property="og:image" content="http://stardustman.github.io/2020/12/01/cs-cache/cache-2-ways-cache.svg">
-<meta property="og:image" content="http://stardustman.github.io/2020/12/01/cs-cache/cache-memory-address-type.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/cache-2-ways-cache.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/cache-memory-address-type.svg">
 <meta property="article:published_time" content="2020-12-01T00:40:29.000Z">
-<meta property="article:modified_time" content="2020-12-13T11:51:57.592Z">
+<meta property="article:modified_time" content="2021-01-24T02:05:12.115Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="notion">
 <meta property="article:tag" content="cache">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stardustman.github.io/2020/12/01/cs-cache/cache_organization.svg">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/cache_organization.svg">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2020/12/01/cs-cache/">
@@ -199,14 +200,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -290,7 +291,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-12-13 19:51:57" itemprop="dateModified" datetime="2020-12-13T19:51:57+08:00">2020-12-13</time>
+        <time title="Modified: 2021-01-24 10:05:12" itemprop="dateModified" datetime="2021-01-24T10:05:12+08:00">2021-01-24</time>
       </span>
 
   
@@ -356,24 +357,19 @@
 <li>Focuses on temporal locality.</li>
 <li>If there is little spatial locality, large cache lines waste<br>space and bandwidth.<br>聚焦在时间局部性上，如果没有较好的空间局部性，提前 <code>fetch</code> 了数据，那就浪费了空间和带宽。</li>
 </ol>
-<img src="/2020/12/01/cs-cache/cache_organization.svg" class="" title="cache 组织方式">
-
-
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache_organization.svg" alt="cache_organization"> #(cache 组织方式)</p>
 <h3 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h3><p>内存地址 32bits。</p>
 <h4 id="1024-cache-lines-32-Bytes-per-line"><a href="#1024-cache-lines-32-Bytes-per-line" class="headerlink" title="1024 cache lines, 32 Bytes per line."></a>1024 cache lines, 32 Bytes per line.</h4><p>index bits = log2(1024) = 10<br>offset bits = log2(32) = 5<br>tags bits = 32 - index - offset = 17</p>
 <h4 id="32KB-cache-64byte-lines"><a href="#32KB-cache-64byte-lines" class="headerlink" title="32KB cache, 64byte lines"></a>32KB cache, 64byte lines</h4><p>index bits = log2(32KB / 64Bytes) = 9<br>offset bits = log2(64) = 6<br>tags bits = 32 - 9 - 6 = 17</p>
 <h4 id="set-是干什么的？"><a href="#set-是干什么的？" class="headerlink" title="set 是干什么的？"></a>set 是干什么的？</h4><p>(set) <code>Associativity</code> means providing <code>more than one</code> place for a cache line to live.<br>One group of lines corresponds to each index</p>
 <ol>
 <li>it is called a “set”</li>
-<li><code>Each lin</code>e in a set is called a <code>“way”</code></li>
+<li><code>Each line</code> in a set is called a <code>“way”</code></li>
 <li>N-Way associativity requires N parallel comparators<br>set = ？</li>
 </ol>
 <img src="/2020/12/01/cs-cache/cache-2-ways-cache.svg" class="" title="2-ways-cache">
-
-<h3 id="cache-哪一种-address？"><a href="#cache-哪一种-address？" class="headerlink" title="cache 哪一种 address？"></a>cache 哪一种 address？</h3><h4 id="virtual-memory-address"><a href="#virtual-memory-address" class="headerlink" title="virtual memory address"></a>virtual memory address</h4><h4 id="physical-memory-address"><a href="#physical-memory-address" class="headerlink" title="physical memory address"></a>physical memory address</h4><img src="/2020/12/01/cs-cache/cache-memory-address-type.svg" class="" title="cache 哪一种 memory address">
-
-
-
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache-2-ways-cache.svg" alt="2-ways-cache"></p>
+<h3 id="cache-哪一种-address？"><a href="#cache-哪一种-address？" class="headerlink" title="cache 哪一种 address？"></a>cache 哪一种 address？</h3><h4 id="virtual-memory-address"><a href="#virtual-memory-address" class="headerlink" title="virtual memory address"></a>virtual memory address</h4><h4 id="physical-memory-address"><a href="#physical-memory-address" class="headerlink" title="physical memory address"></a>physical memory address</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache-memory-address-type.svg" alt="cache-memory-address-type"> #(缓存类型)</p>
 <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/wi12/cse141-a/Slides/09_Cache_intro.pdf">CSE141-Caching-Intro</a></li>
 <li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/07/09_CSE141-Caching.pdf">CSE141-Caching</a></li>
@@ -467,13 +463,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">194k</span>
+    <span title="Symbols count total">201k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">3:03</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

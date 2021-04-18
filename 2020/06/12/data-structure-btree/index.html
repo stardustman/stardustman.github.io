@@ -30,15 +30,15 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="B-tree 特性 所有的 leaves 都在同一层级。 B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。 除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。 所有的节点（包括 root）最多有 2t - 1 个 key。 某一个节点的子节点的个数 &#x3D; 这个节点的 key 的个数 + 1。 一个节">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://stardustman.github.io/2020/06/12/data-structure-btree/btree-full-root-split.svg">
-<meta property="og:image" content="http://stardustman.github.io/2020/06/12/data-structure-btree/btree-full-root-split2.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split2.svg">
 <meta property="article:published_time" content="2020-06-12T06:11:02.000Z">
-<meta property="article:modified_time" content="2020-06-27T02:08:31.352Z">
+<meta property="article:modified_time" content="2021-01-24T02:08:49.003Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="data structure">
 <meta property="article:tag" content="BTree">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stardustman.github.io/2020/06/12/data-structure-btree/btree-full-root-split.svg">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split.svg">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2020/06/12/data-structure-btree/">
@@ -198,14 +198,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -289,7 +289,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-06-27 10:08:31" itemprop="dateModified" datetime="2020-06-27T10:08:31+08:00">2020-06-27</time>
+        <time title="Modified: 2021-01-24 10:08:49" itemprop="dateModified" datetime="2021-01-24T10:08:49+08:00">2021-01-24</time>
       </span>
 
   
@@ -300,7 +300,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>785</span>
+      <span>816</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -332,16 +332,14 @@
 <li>每一个节点(root 除外) 至少有 t - 1 = 2 个 key。</li>
 <li>每一个节点最多有 2t - 1 = 5 个 key。节点 key 数量 = 5，称为节点满了。<br>问题来了，节点 key 个数大于 5 了咋办？拆分。什么时候来拆分呢？在向下遍历节点时发现满了，立即进行拆分。</li>
 </ol>
-<h4 id="B-Tree-insert-operation"><a href="#B-Tree-insert-operation" class="headerlink" title="B-Tree insert operation"></a>B-Tree insert operation</h4><h5 id="拆分已满节点"><a href="#拆分已满节点" class="headerlink" title="拆分已满节点"></a>拆分已满节点</h5><img src="/2020/06/12/data-structure-btree/btree-full-root-split.svg" class="" title="btree-拆分已满节点">
-
+<h4 id="B-Tree-insert-operation"><a href="#B-Tree-insert-operation" class="headerlink" title="B-Tree insert operation"></a>B-Tree insert operation</h4><h5 id="拆分已满节点"><a href="#拆分已满节点" class="headerlink" title="拆分已满节点"></a>拆分已满节点</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split.svg" alt="btree-full-root-split"> #(btree-拆分已满节点)</p>
 <ol>
 <li>如上图，节点1 已经满了，对此时的 root 节点进行拆分。</li>
 <li>创建节点2，s 节点，作为新的 root 节点，同时设置 s.child[0] = root。</li>
 <li>创建节点2，z 节点，将原来 root 节点一半的 key，复制到 z 节点。</li>
 <li>将 z 节点设置为 s 节点的 child。s.child[1] = z。</li>
 </ol>
-<h5 id="拆分已满节点-有子节点"><a href="#拆分已满节点-有子节点" class="headerlink" title="拆分已满节点(有子节点)"></a>拆分已满节点(有子节点)</h5><img src="/2020/06/12/data-structure-btree/btree-full-root-split2.svg" class="" title="btree-拆分已满节点2">
-
+<h5 id="拆分已满节点-有子节点"><a href="#拆分已满节点-有子节点" class="headerlink" title="拆分已满节点(有子节点)"></a>拆分已满节点(有子节点)</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split2.svg" alt=" btree-full-root-split2"> #(btree-拆分已满节点2)</p>
 <p>B-Tree 是向上扩张的(grow)。可以看到所有的 key 都是在 leaf 节点插入的。节点的 key 值的数量一旦等于 2t - 1 = 5 时，就会对该节点进行拆分。所以这也是每一个节点(root 除外)至少有 t-1 = 2 个 key 的原因。</p>
 <h4 id="B-Tree-delete-operation"><a href="#B-Tree-delete-operation" class="headerlink" title="B-Tree delete operation"></a>B-Tree delete operation</h4><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/BTree.html">BTree-visualization</a></li>
@@ -427,13 +425,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">194k</span>
+    <span title="Symbols count total">201k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">3:03</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

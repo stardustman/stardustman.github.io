@@ -30,21 +30,21 @@
 <meta property="og:site_name" content="stardustman">
 <meta property="og:description" content="C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&amp;T 风格. 编译器是 gcc-x86-64-9.1 指针 A pointer is a programming language object that stores the memory address of another value located in computer memory. A pointer re">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/address-modes.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/swap-c-asm.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/swap-pointer.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/x86-64-registers.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/IA32-registers.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/c-variable-shadow.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/variable_shadowing.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/function-pointer.png">
-<meta property="og:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/c-enum.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/address-modes.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/swap-c-asm.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/swap-pointer.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-registers.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/IA32-registers.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/c-variable-shadow.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/variable_shadowing.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/function-pointer.png">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/c-enum.png">
 <meta property="article:published_time" content="2019-06-25T08:57:59.000Z">
-<meta property="article:modified_time" content="2020-05-23T01:58:04.198Z">
+<meta property="article:modified_time" content="2021-01-14T06:25:07.983Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="asm">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://stardustman.github.io/2019/06/25/asm-clang-concepts/address-modes.png">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/address-modes.png">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2019/06/25/asm-clang-concepts/">
@@ -204,14 +204,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">42</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">41</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -295,7 +295,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-05-23 09:58:04" itemprop="dateModified" datetime="2020-05-23T09:58:04+08:00">2020-05-23</time>
+        <time title="Modified: 2021-01-14 14:25:07" itemprop="dateModified" datetime="2021-01-14T14:25:07+08:00">2021-01-14</time>
       </span>
 
   
@@ -334,8 +334,7 @@
 <h2 id="寄存器间接寻址"><a href="#寄存器间接寻址" class="headerlink" title="寄存器间接寻址"></a>寄存器间接寻址</h2><blockquote>
 <p>movq    (%rax), %rdx<br>将 rax 的值(X)指向的内存地址处的值复制到 rdx. 此时 rax 的值(X)就是指针, 所谓指针在汇编层面就是将一个内存地址放到寄存器, 利用寄存器间接寻址去获取这个地址的数值. 这就是 C 语言里指针的本质. </p>
 </blockquote>
-<h2 id="movq-operand-combinations"><a href="#movq-operand-combinations" class="headerlink" title="movq operand combinations"></a>movq operand combinations</h2><img src="/2019/06/25/asm-clang-concepts/address-modes.png" class="" title="movq operand combinations">
-
+<h2 id="movq-operand-combinations"><a href="#movq-operand-combinations" class="headerlink" title="movq operand combinations"></a>movq operand combinations</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/address-modes.png" alt="movq operand combinations"></p>
 <h2 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h2><h3 id="swap"><a href="#swap" class="headerlink" title="swap"></a>swap</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> *pa, <span class="keyword">int</span> *pb)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> temp = *pa; </span><br><span class="line">    *pa = *pb;</span><br><span class="line">    *pb = temp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">swap(int*, int*):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movq    %rdi, -24(%rbp) ; 将变量 a(10) 的地址(&amp;a)复制到 rbp - 24 地址处, 参数 pa</span><br><span class="line">        movq    %rsi, -32(%rbp) ; 将变量 b(100) 的地址(&amp;b)复制到 rbp - 32 地址处, 参数 pb </span><br><span class="line">        movq    -24(%rbp), %rax ; 将 rbp - 24 指向的内存地址的数值(也就是变量 a 的地址)复制到 rax</span><br><span class="line">        movl    (%rax), %eax    ; 将 rax 指向的内存地址的值 10(也就是变量 a) 复制到 eax, int a 4 Bytes 需要 32 bit 的 eax 即可.</span><br><span class="line">        movl    %eax, -4(%rbp)  ; 将 eax 的值 10 (也就是变量 a) 复制到 rbp - 4 指向的内存地址处, 完成 temp &#x3D; *pa;</span><br><span class="line">        movq    -32(%rbp), %rax ; 将 rbp - 32 指向的内存地址的值(也就是变量 b 的地址) 的地址复制到 rax</span><br><span class="line">        movl    (%rax), %edx    ; 将 rax 的值指向的内存地址出的值 100(也就是变量 b) 复制到 edx, int b 4 Bytes 需要 32 bit 的 eax 即可.</span><br><span class="line">        movq    -24(%rbp), %rax ; 将 rbp - 24 指向的内存地址的值(也就是变量 a 的地址)复制到 rax</span><br><span class="line">        movl    %edx, (%rax)    ; 将 edx 的值 100 (也就是变量 b)复制到 rax 指向的地址处(也就是变量 a 的地址), 完成 *pa &#x3D; *pb</span><br><span class="line">        movq    -32(%rbp), %rax ; 将 rbp - 32 指向的内存地址的值(也就是变量 b 的地址)复制到 rax</span><br><span class="line">        movl    -4(%rbp), %edx  ; 将 rbp - 4 指向的内存地址的值 10 复制到 edx</span><br><span class="line">        movl    %edx, (%rax)    ; 将 edx 的值 10 复制到 rax 指向的地址处(也就是变量 b 的地址), 完成 *pb &#x3D; temp</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
@@ -344,10 +343,8 @@
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp ; 保存调用者的 rbp</span><br><span class="line">        movq    %rsp, %rbp ; 开辟 main 函数的栈帧</span><br><span class="line">        subq    $16, %rsp  ; 分配 main 的栈空间 16 bytes</span><br><span class="line">        movl    $10, -4(%rbp) ; 将变量 a 复制到 rbp - 4 指向的地址处.(int a, 4 bytes)</span><br><span class="line">        movl    $100, -8(%rbp) ; 将变量 b 复制到 rbp - 8 指向的地址处.(int b, 4 bytes)</span><br><span class="line">        leaq    -8(%rbp), %rdx ; 将 rbp - 8 的值复制到 rdx 寄存器(int b 变量的地址)</span><br><span class="line">        leaq    -4(%rbp), %rax ; 将 rbp - 4 的值复制到 rax 寄存器(int a 变量的地址)</span><br><span class="line">        movq    %rdx, %rsi ; 复制 rdx(第二个参数: 变量 b 的地址) 到 rsi 寄存器</span><br><span class="line">        movq    %rax, %rdi ; 复制 rax(第一个参数: 变量 a 的地址) 到 rdi 寄存器</span><br><span class="line">        call    swap(int*, int*)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave   ; 等价于 1. mov %rbp, %rsp(回收分配的栈空间) 2.pop %rbp(恢复 main 的 rbp)</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
-<img src="/2019/06/25/asm-clang-concepts/swap-c-asm.png" class="" title="swap-c-asm">
-
-<h3 id="栈帧分析"><a href="#栈帧分析" class="headerlink" title="栈帧分析"></a>栈帧分析</h3><img src="/2019/06/25/asm-clang-concepts/swap-pointer.png" class="" title="main-swap-call-stack">
-
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/swap-c-asm.png" alt="swap-c-asm"></p>
+<h3 id="栈帧分析"><a href="#栈帧分析" class="headerlink" title="栈帧分析"></a>栈帧分析</h3><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/swap-pointer.png" alt="main-swap-call-stack"></p>
 <blockquote>
 <p>该图是 swap 执行完 int temp = *pa 后的状态.</p>
 </blockquote>
@@ -357,10 +354,8 @@
 <h3 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h3><blockquote>
 <p>指针本质就是寄存器间接寻址. 函数传参其实传的都是数值而已, 本质上都是数值的副本. </p>
 </blockquote>
-<h1 id="数据类型转化"><a href="#数据类型转化" class="headerlink" title="数据类型转化"></a>数据类型转化</h1><h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><h3 id="x86-64-registers"><a href="#x86-64-registers" class="headerlink" title="x86-64 registers"></a>x86-64 registers</h3><img src="/2019/06/25/asm-clang-concepts/x86-64-registers.png" class="">
-
-<h3 id="IA32-registers"><a href="#IA32-registers" class="headerlink" title="IA32 registers"></a>IA32 registers</h3><img src="/2019/06/25/asm-clang-concepts/IA32-registers.png" class="">
-
+<h1 id="数据类型转化"><a href="#数据类型转化" class="headerlink" title="数据类型转化"></a>数据类型转化</h1><h2 id="整数类型"><a href="#整数类型" class="headerlink" title="整数类型"></a>整数类型</h2><h3 id="x86-64-registers"><a href="#x86-64-registers" class="headerlink" title="x86-64 registers"></a>x86-64 registers</h3><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-registers.png" alt="x86-64-registers"></p>
+<h3 id="IA32-registers"><a href="#IA32-registers" class="headerlink" title="IA32 registers"></a>IA32 registers</h3><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/IA32-registers.png" alt="IA32-registers"></p>
 <h3 id="代码分析-1"><a href="#代码分析-1" class="headerlink" title="代码分析"></a>代码分析</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">testTypeConvert</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">long</span> i64bit = <span class="number">1844674407370955199</span>;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">int</span> i32bit = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)i64bit;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">short</span> i16bit = (<span class="keyword">unsigned</span> <span class="keyword">int</span>)i32bit;</span><br><span class="line">     <span class="keyword">unsigned</span> <span class="keyword">char</span> i8bit = (<span class="keyword">unsigned</span> <span class="keyword">char</span>)i16bit;</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span>,i64bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%ld\n&quot;</span>,i32bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,i16bit);</span><br><span class="line">     <span class="built_in">printf</span>(<span class="string">&quot;%d\n&quot;</span>,i8bit);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">testTypeConvert():</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movabsq $1844674407370955199, %rax ;‭00011001 10011001 10011001 10011001 10011001 10011001 10011001 10111111‬</span><br><span class="line">        movq    %rax, -8(%rbp)</span><br><span class="line">        movq    -8(%rbp), %rax</span><br><span class="line">        movl    %eax, -12(%rbp) ; 10011001 10011001 10011001 10111111‬ (2576980415)</span><br><span class="line">        movl    -12(%rbp), %eax</span><br><span class="line">        movw    %ax, -14(%rbp) ; 10011001 10111111‬(39359)</span><br><span class="line">        movzwl  -14(%rbp), %eax ; 00000000 00000000 10011001 10111111‬ (zero extend)</span><br><span class="line">        movb    %al, -15(%rbp) ; 10111111‬(191)</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
@@ -403,10 +398,8 @@
 <h2 id="C-代码"><a href="#C-代码" class="headerlink" title="C 代码"></a>C 代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">test_variable_shadow</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">10</span>;</span><br><span class="line">        <span class="comment">// 代码块开始</span></span><br><span class="line">        &#123; </span><br><span class="line">            <span class="keyword">int</span> a = <span class="number">100</span>;</span><br><span class="line">            <span class="keyword">int</span> b = a + <span class="number">1000</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 代码块结束</span></span><br><span class="line">    <span class="keyword">int</span> c = a + <span class="number">10000</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="汇编代码"><a href="#汇编代码" class="headerlink" title="汇编代码"></a>汇编代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">test_variable_shadow():</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $10, -4(%rbp)   ; int a &#x3D; 10</span><br><span class="line">        movl    $100, -8(%rbp)  ; int a &#x3D; 100</span><br><span class="line">        movl    -8(%rbp), %eax</span><br><span class="line">        addl    $1000, %eax</span><br><span class="line">        movl    %eax, -12(%rbp) ; int b &#x3D; a + 1000 代码块里的 a</span><br><span class="line">        movl    -4(%rbp), %eax</span><br><span class="line">        addl    $10000, %eax    </span><br><span class="line">        movl    %eax, -16(%rbp) ; int c &#x3D; a + 10000</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
-<img src="/2019/06/25/asm-clang-concepts/c-variable-shadow.png" class="">
-
-<h2 id="汇编代码分析"><a href="#汇编代码分析" class="headerlink" title="汇编代码分析"></a>汇编代码分析</h2><img src="/2019/06/25/asm-clang-concepts/variable_shadowing.png" class="" title="块级变量隐藏">
-
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/c-variable-shadow.png" alt="c-variable-shadow"></p>
+<h2 id="汇编代码分析"><a href="#汇编代码分析" class="headerlink" title="汇编代码分析"></a>汇编代码分析</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/variable_shadowing.png" alt="块级变量隐藏"></p>
 <h1 id="funcation-pointer"><a href="#funcation-pointer" class="headerlink" title="funcation pointer"></a>funcation pointer</h1><blockquote>
 <p>A function pointer can be declared as: (return type of function) (*name of pointer) (type of function arguments)</p>
 </blockquote>
@@ -414,17 +407,15 @@
 
 <h2 id="汇编分析"><a href="#汇编分析" class="headerlink" title="汇编分析"></a>汇编分析</h2><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add</span>(<span class="keyword">int</span>, <span class="keyword">int</span>):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        <span class="keyword">movq</span>    %rsp, %rbp</span><br><span class="line">        movl    %edi, -<span class="number">4</span>(%rbp)</span><br><span class="line">        movl    %esi, -<span class="number">8</span>(%rbp)</span><br><span class="line">        movl    -<span class="number">4</span>(%rbp), %edx</span><br><span class="line">        movl    -<span class="number">8</span>(%rbp), %eax</span><br><span class="line">        addl    %edx, %eax</span><br><span class="line">        popq    %rbp</span><br><span class="line">        <span class="keyword">ret</span></span><br><span class="line"><span class="symbol">main:</span></span><br><span class="line">        pushq   %rbp <span class="comment">; 保存调用者的 rbp</span></span><br><span class="line">        <span class="keyword">movq</span>    %rsp, %rbp <span class="comment">; 开辟 main 的栈帧</span></span><br><span class="line">        subq    <span class="number">$16</span>, %rsp  <span class="comment">; 分配栈帧空间</span></span><br><span class="line">        <span class="keyword">movq</span>    $<span class="keyword">add</span>(<span class="keyword">int</span>, <span class="keyword">int</span>), -<span class="number">8</span>(%rbp) <span class="comment">; 将 add(int, int) 第一条指令的地址保存在 rbp - 8 这个位置处</span></span><br><span class="line">        movl    <span class="number">$3</span>, %esi <span class="comment">; 从右往左保存第一个参数</span></span><br><span class="line">        movl    <span class="number">$2</span>, %edi <span class="comment">; 从右往左保存第二个参数</span></span><br><span class="line">        <span class="keyword">call</span>    <span class="keyword">add</span>(<span class="keyword">int</span>, <span class="keyword">int</span>) <span class="comment">; 正常的 call 调用</span></span><br><span class="line">        <span class="keyword">movq</span>    -<span class="number">8</span>(%rbp), %rax <span class="comment">; 将 add(int, int) 的地址复制到 rax 寄存器</span></span><br><span class="line">        movl    <span class="number">$3</span>, %esi <span class="comment">; 从右往左保存第一个参数</span></span><br><span class="line">        movl    <span class="number">$2</span>, %edi <span class="comment">; 从右往左保存第二个参数</span></span><br><span class="line">        <span class="keyword">call</span>    *%rax    <span class="comment">; 通过函数指针调用函数</span></span><br><span class="line">        movl    <span class="number">$0</span>, %eax</span><br><span class="line">        <span class="keyword">leave</span></span><br><span class="line">        <span class="keyword">ret</span></span><br></pre></td></tr></table></figure>
 
-<img src="/2019/06/25/asm-clang-concepts/function-pointer.png" class="" title="函数指针">
-
-
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/function-pointer.png" alt="函数指针"></p>
 <h1 id="enum"><a href="#enum" class="headerlink" title="enum"></a>enum</h1><blockquote>
 <p>编译器在背后搞鬼，自动为每一个 enum 常量进行编号。</p>
 </blockquote>
 <h2 id="c-代码"><a href="#c-代码" class="headerlink" title="c 代码"></a>c 代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">day</span>&#123;</span> monday, tuesday, wednesday,</span><br><span class="line">thursday, friday, saturday, sunday&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">color</span> &#123;</span></span><br><span class="line">    RED=<span class="number">1</span>, YELLOW, GREEN</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">day</span> <span class="title">foo</span> =</span> friday;</span><br><span class="line">    <span class="class"><span class="keyword">enum</span> <span class="title">color</span> <span class="title">color</span> =</span> GREEN;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="汇编分析-1"><a href="#汇编分析-1" class="headerlink" title="汇编分析"></a>汇编分析</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $4, -4(%rbp) ; friday 编号为 4，默认从 0 开始编号。</span><br><span class="line">        movl    $3, -8(%rbp) ; GREEN 编号为 3</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
-<img src="/2019/06/25/asm-clang-concepts/c-enum.png" class="" title="c 枚举">
 
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/c-enum.png" alt=" 枚举"></p>
 <h1 id="references"><a href="#references" class="headerlink" title="references"></a>references</h1><ol>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Pointer_(computer_programming)">pointer</a></li>
 <li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/29790175/assembly-x86-leave-instruction/29790275">lea instruction</a></li>
@@ -512,13 +503,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">194k</span>
+    <span title="Symbols count total">201k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">2:56</span>
+    <span title="Reading time total">3:03</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
