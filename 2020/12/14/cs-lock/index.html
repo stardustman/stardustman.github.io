@@ -36,9 +36,10 @@
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-spin-lock-spin-forever.svg">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-spin-lock-priority-inversion.svg">
 <meta property="article:published_time" content="2020-12-14T07:20:26.000Z">
-<meta property="article:modified_time" content="2021-04-18T12:41:23.529Z">
+<meta property="article:modified_time" content="2021-05-23T13:29:45.775Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="lock">
+<meta property="article:tag" content="synchronization">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-lock-1.svg">
 
@@ -200,14 +201,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">49</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -291,7 +292,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-04-18 20:41:23" itemprop="dateModified" datetime="2021-04-18T20:41:23+08:00">2021-04-18</time>
+        <time title="Modified: 2021-05-23 21:29:45" itemprop="dateModified" datetime="2021-05-23T21:29:45+08:00">2021-05-23</time>
       </span>
 
   
@@ -351,7 +352,7 @@
 <li>上图可见，由于中断的存在，在1.检测锁是否被占用 2.获取锁 这两个步骤之间，可能被打断，这样两个线程都获取了这个锁。<code>这不符合锁的基本功能，没有提供互斥</code>。无法保证临界区，任意时刻只有一个线程在执行。</li>
 <li>如果一个线程 T1 已经获取了锁，另外一个线程 T2 在获取锁时，会在 L1 处不停的判断锁的状态，这就是在 L1 处 Spin，这就是所谓的 Spin Lock。</li>
 </ol>
-<h3 id="test-and-set-atomic-exchange-构建锁"><a href="#test-and-set-atomic-exchange-构建锁" class="headerlink" title="test-and-set(atomic exchange) 构建锁"></a>test-and-set(atomic exchange) 构建锁</h3><p>因为只是简单的 Loads/Stores(Reads/Writes) 不能构建出 Lock。所以引入和支持构建 Lock 的 test-and-set 指令。在 x86 下，指令是 <a target="_blank" rel="noopener" href="https://www.felixcloutier.com/x86/xchg">xchg</a>。Exchanges the contents of the destination (first) and source (second) operands. The operands can be <code>two general-purpose registers</code> or a <code>register and a memory location</code>. If a memory operand is referenced, the processor’s locking protocol is automatically implemented for the duration of the exchange operation, <code>regardless of the presence or absence of the LOCK prefix or of the value of the IOPL</code>. </p>
+<h3 id="test-and-set-atomic-exchange-构建锁"><a href="#test-and-set-atomic-exchange-构建锁" class="headerlink" title="test-and-set(atomic exchange) 构建锁"></a>test-and-set(atomic exchange) 构建锁</h3><p>因为只是简单的 Loads/Stores(Reads/Writes) 不能构建出 Lock。所以引入和支持构建 Lock 的 test-and-set 指令。在 x86 下，指令是 <a target="_blank" rel="noopener" href="https://www.felixcloutier.com/x86/xchg">xchg</a>。Exchanges the contents of the destination (first) and source (second) operands. The operands can be <code>two general-purpose registers</code> or a <code>register and a memory location</code>. If a memory operand is referenced, the processor’s locking protocol is automatically implemented for the duration of the exchange operation, <code>regardless of the presence or absence of the LOCK prefix or of the value of the IOPL</code>. 用 <code>xchg</code> 原子交换来实现。</p>
 <h4 id="C-语言表示-test-and-set-语义"><a href="#C-语言表示-test-and-set-语义" class="headerlink" title="C 语言表示 test-and-set 语义"></a>C 语言表示 test-and-set 语义</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">TestAndSet</span><span class="params">(<span class="keyword">int</span> *old_ptr, <span class="keyword">int</span> <span class="keyword">new</span>)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> old = *old_ptr; <span class="comment">// fetch old value at old_ptr, Read</span></span><br><span class="line">    *old_ptr = <span class="keyword">new</span>; <span class="comment">// store ’new’ into old_ptr, Write</span></span><br><span class="line">    <span class="keyword">return</span> old; <span class="comment">// return the old value</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h4 id="test-and-set-构建锁"><a href="#test-and-set-构建锁" class="headerlink" title="test-and-set 构建锁"></a>test-and-set 构建锁</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> __<span class="title">lock_t</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> flag; <span class="comment">// lock 状态</span></span><br><span class="line">&#125; <span class="keyword">lock_t</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">lock_t</span> *lock)</span></span>&#123;</span><br><span class="line">    <span class="comment">// 0 -&gt; lock is available</span></span><br><span class="line">    <span class="comment">// 1 -&gt; held</span></span><br><span class="line">    lock-&gt;flag = <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">lock</span><span class="params">(<span class="keyword">lock_t</span> *lock)</span></span>&#123;</span><br><span class="line">    <span class="keyword">while</span>(TestAndSet(lock-&gt;flag, <span class="number">1</span>) == <span class="number">1</span>)&#123; <span class="comment">// 检测锁是否被占用,同时将 flag 设置为 1(L1)</span></span><br><span class="line">        ; <span class="comment">// spin-wait(do noting)(L2)</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">unlock</span><span class="params">(<span class="keyword">lock_t</span> *lock)</span></span>&#123;</span><br><span class="line">    lock-&gt;flag = <span class="number">0</span>; <span class="comment">// 释放锁(U1)</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -411,6 +412,7 @@
     <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/lock/" rel="tag"><i class="fa fa-tag"></i> lock</a>
+              <a href="/tags/synchronization/" rel="tag"><i class="fa fa-tag"></i> synchronization</a>
           </div>
 
         
@@ -478,13 +480,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">201k</span>
+    <span title="Symbols count total">203k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:03</span>
+    <span title="Reading time total">3:05</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

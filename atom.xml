@@ -6,7 +6,7 @@
   <link href="http://stardustman.github.io/atom.xml" rel="self"/>
   
   <link href="http://stardustman.github.io/"/>
-  <updated>2021-03-09T09:20:19.815Z</updated>
+  <updated>2021-05-25T04:38:06.257Z</updated>
   <id>http://stardustman.github.io/</id>
   
   <author>
@@ -15,6 +15,71 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>cs-semaphores</title>
+    <link href="http://stardustman.github.io/2021/05/25/cs-semaphores/"/>
+    <id>http://stardustman.github.io/2021/05/25/cs-semaphores/</id>
+    <published>2021-05-25T04:38:06.000Z</published>
+    <updated>2021-05-25T04:38:06.257Z</updated>
+    
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>asm-pointers-and-memory</title>
+    <link href="http://stardustman.github.io/2021/04/28/asm-pointers-and-memory/"/>
+    <id>http://stardustman.github.io/2021/04/28/asm-pointers-and-memory/</id>
+    <published>2021-04-28T08:04:36.000Z</published>
+    <updated>2021-06-14T06:09:41.268Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Basic-Pointer&quot;&gt;&lt;a href=&quot;#Basic-Pointer&quot; class=&quot;headerlink&quot; title=&quot;Basic Pointer&quot;&gt;&lt;/a&gt;Basic Pointer&lt;/h2&gt;&lt;h3 id=&quot;为啥需要-Pointer？&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="pointers" scheme="http://stardustman.github.io/tags/pointers/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>cs-condition-variables</title>
+    <link href="http://stardustman.github.io/2021/04/18/cs-condition-variables/"/>
+    <id>http://stardustman.github.io/2021/04/18/cs-condition-variables/</id>
+    <published>2021-04-18T12:44:09.000Z</published>
+    <updated>2021-05-28T02:23:14.633Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;condition-variable-是啥？&quot;&gt;&lt;a href=&quot;#condition-variable-是啥？&quot; class=&quot;headerlink&quot; title=&quot;condition variable 是啥？&quot;&gt;&lt;/a&gt;condition variable</summary>
+        
+      
+    
+    
+    
+    
+    <category term="condition variable " scheme="http://stardustman.github.io/tags/condition-variable/"/>
+    
+    <category term="synchronization" scheme="http://stardustman.github.io/tags/synchronization/"/>
+    
+    <category term="queue" scheme="http://stardustman.github.io/tags/queue/"/>
+    
+    <category term="state" scheme="http://stardustman.github.io/tags/state/"/>
+    
+  </entry>
   
   <entry>
     <title>cs-english-words</title>
@@ -46,7 +111,7 @@
     <link href="http://stardustman.github.io/2020/12/14/cs-lock/"/>
     <id>http://stardustman.github.io/2020/12/14/cs-lock/</id>
     <published>2020-12-14T07:20:26.000Z</published>
-    <updated>2021-04-18T12:41:23.529Z</updated>
+    <updated>2021-05-23T13:29:45.775Z</updated>
     
     
       
@@ -61,6 +126,8 @@
     
     
     <category term="lock" scheme="http://stardustman.github.io/tags/lock/"/>
+    
+    <category term="synchronization" scheme="http://stardustman.github.io/tags/synchronization/"/>
     
   </entry>
   
@@ -457,81 +524,6 @@
     <category term="os" scheme="http://stardustman.github.io/tags/os/"/>
     
     <category term="three easy pieces" scheme="http://stardustman.github.io/tags/three-easy-pieces/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>master-git</title>
-    <link href="http://stardustman.github.io/2019/12/28/master-git/"/>
-    <id>http://stardustman.github.io/2019/12/28/master-git/</id>
-    <published>2019-12-28T05:15:29.000Z</published>
-    <updated>2021-01-14T05:49:38.131Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;git-init&quot;&gt;&lt;a href=&quot;#git-init&quot; class=&quot;headerlink&quot; title=&quot;git init&quot;&gt;&lt;/a&gt;git init&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;Create an empty Git repository</summary>
-        
-      
-    
-    
-    
-    
-    <category term="git" scheme="http://stardustman.github.io/tags/git/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>katacoda-what-is-a-container</title>
-    <link href="http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/"/>
-    <id>http://stardustman.github.io/2019/12/24/katacoda-what-is-a-container/</id>
-    <published>2019-12-24T05:02:03.000Z</published>
-    <updated>2019-12-25T06:43:50.671Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;Processes&quot;&gt;&lt;a href=&quot;#Processes&quot; class=&quot;headerlink&quot; title=&quot;Processes&quot;&gt;&lt;/a&gt;Processes&lt;/h2&gt;&lt;blockquote&gt;
-&lt;p&gt;Containers are just normal</summary>
-        
-      
-    
-    
-    
-    
-    <category term="docker" scheme="http://stardustman.github.io/tags/docker/"/>
-    
-    <category term="container" scheme="http://stardustman.github.io/tags/container/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>tomcat-http-cookie</title>
-    <link href="http://stardustman.github.io/2019/11/29/tomcat-http-cookie/"/>
-    <id>http://stardustman.github.io/2019/11/29/tomcat-http-cookie/</id>
-    <published>2019-11-29T06:29:51.000Z</published>
-    <updated>2019-11-29T06:54:39.397Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;figure class=&quot;highlight java&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span</summary>
-        
-      
-    
-    
-    
-    
-    <category term="tomcat" scheme="http://stardustman.github.io/tags/tomcat/"/>
-    
-    <category term="http" scheme="http://stardustman.github.io/tags/http/"/>
     
   </entry>
   
