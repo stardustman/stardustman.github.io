@@ -6,7 +6,7 @@
   <link href="http://stardustman.github.io/atom.xml" rel="self"/>
   
   <link href="http://stardustman.github.io/"/>
-  <updated>2021-05-25T04:38:06.257Z</updated>
+  <updated>2021-06-18T08:02:58.615Z</updated>
   <id>http://stardustman.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>java-keyword-volatile</title>
+    <link href="http://stardustman.github.io/2021/06/18/java-keyword-volatile/"/>
+    <id>http://stardustman.github.io/2021/06/18/java-keyword-volatile/</id>
+    <published>2021-06-18T06:54:23.000Z</published>
+    <updated>2021-06-18T08:02:58.615Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;References&quot;&gt;&lt;a href=&quot;#References&quot; class=&quot;headerlink&quot; title=&quot;References&quot;&gt;&lt;/a&gt;References&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="volatile" scheme="http://stardustman.github.io/tags/volatile/"/>
+    
+    <category term="separate component" scheme="http://stardustman.github.io/tags/separate-component/"/>
+    
+    <category term="dependency" scheme="http://stardustman.github.io/tags/dependency/"/>
+    
+    <category term="diagram" scheme="http://stardustman.github.io/tags/diagram/"/>
+    
+  </entry>
   
   <entry>
     <title>cs-semaphores</title>
@@ -125,9 +155,9 @@
     
     
     
-    <category term="lock" scheme="http://stardustman.github.io/tags/lock/"/>
-    
     <category term="synchronization" scheme="http://stardustman.github.io/tags/synchronization/"/>
+    
+    <category term="lock" scheme="http://stardustman.github.io/tags/lock/"/>
     
   </entry>
   
@@ -196,7 +226,7 @@
     <link href="http://stardustman.github.io/2020/11/26/data-and-metadata/"/>
     <id>http://stardustman.github.io/2020/11/26/data-and-metadata/</id>
     <published>2020-11-26T08:18:52.000Z</published>
-    <updated>2020-11-27T08:59:02.518Z</updated>
+    <updated>2021-01-08T03:09:08.064Z</updated>
     
     
       
@@ -498,32 +528,6 @@
     <category term="algorithm" scheme="http://stardustman.github.io/tags/algorithm/"/>
     
     <category term="sort" scheme="http://stardustman.github.io/tags/sort/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>three-easy-pieces-4-process</title>
-    <link href="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/"/>
-    <id>http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/</id>
-    <published>2020-01-14T02:06:38.000Z</published>
-    <updated>2021-01-14T05:58:23.450Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;我们知道一个计算机 &lt;code&gt;CPU&lt;/code&gt; 数量有限, 但是却可以同时跑数量远远多于 &lt;code&gt;CPU&lt;/code&gt; 数量的程序. 其实这就是 &lt;code&gt;virtualizing&lt;/code&gt;. 怎样进行</summary>
-        
-      
-    
-    
-    
-    
-    <category term="os" scheme="http://stardustman.github.io/tags/os/"/>
-    
-    <category term="three easy pieces" scheme="http://stardustman.github.io/tags/three-easy-pieces/"/>
     
   </entry>
   

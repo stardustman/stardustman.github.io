@@ -188,14 +188,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">47</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">49</span>
+        <span class="site-state-item-count">53</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -238,6 +238,121 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/06/12/data-structure-btree/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/06/12/data-structure-btree/" class="post-title-link" itemprop="url">data-structure-btree</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-06-12 14:11:02" itemprop="dateCreated datePublished" datetime="2020-06-12T14:11:02+08:00">2020-06-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-24 10:08:49" itemprop="dateModified" datetime="2021-01-24T10:08:49+08:00">2021-01-24</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>816</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="B-tree-特性"><a href="#B-tree-特性" class="headerlink" title="B-tree 特性"></a>B-tree 特性</h3><ol>
+<li>所有的 leaves 都在同一层级。</li>
+<li>B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。</li>
+<li>除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。</li>
+<li>所有的节点（包括 root）最多有 2t - 1 个 key。</li>
+<li>某一个节点的子节点的个数 = 这个节点的 key 的个数 + 1。</li>
+<li>一个节点的所有 key 从小到大排序。两个 key1 和 key2 之间的所有 child 都在 key1 和 key2 之间。</li>
+<li>B-Tree 从 root 节点 grow(扩张) 和 shrink(收缩)。</li>
+<li>search、insert、delete 时间复杂度是O(log n)。n 是 key 的总数。</li>
+</ol>
+<h3 id="t-3-为例来理解-B-tree"><a href="#t-3-为例来理解-B-tree" class="headerlink" title="t=3 为例来理解 B-tree"></a>t=3 为例来理解 B-tree</h3><ol>
+<li>每一个节点(root 除外) 至少有 t - 1 = 2 个 key。</li>
+<li>每一个节点最多有 2t - 1 = 5 个 key。节点 key 数量 = 5，称为节点满了。<br>问题来了，节点 key 个数大于 5 了咋办？拆分。什么时候来拆分呢？在向下遍历节点时发现满了，立即进行拆分。</li>
+</ol>
+<h4 id="B-Tree-insert-operation"><a href="#B-Tree-insert-operation" class="headerlink" title="B-Tree insert operation"></a>B-Tree insert operation</h4><h5 id="拆分已满节点"><a href="#拆分已满节点" class="headerlink" title="拆分已满节点"></a>拆分已满节点</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split.svg" alt="btree-full-root-split"> #(btree-拆分已满节点)</p>
+<ol>
+<li>如上图，节点1 已经满了，对此时的 root 节点进行拆分。</li>
+<li>创建节点2，s 节点，作为新的 root 节点，同时设置 s.child[0] = root。</li>
+<li>创建节点2，z 节点，将原来 root 节点一半的 key，复制到 z 节点。</li>
+<li>将 z 节点设置为 s 节点的 child。s.child[1] = z。</li>
+</ol>
+<h5 id="拆分已满节点-有子节点"><a href="#拆分已满节点-有子节点" class="headerlink" title="拆分已满节点(有子节点)"></a>拆分已满节点(有子节点)</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split2.svg" alt=" btree-full-root-split2"> #(btree-拆分已满节点2)</p>
+<p>B-Tree 是向上扩张的(grow)。可以看到所有的 key 都是在 leaf 节点插入的。节点的 key 值的数量一旦等于 2t - 1 = 5 时，就会对该节点进行拆分。所以这也是每一个节点(root 除外)至少有 t-1 = 2 个 key 的原因。</p>
+<h4 id="B-Tree-delete-operation"><a href="#B-Tree-delete-operation" class="headerlink" title="B-Tree delete operation"></a>B-Tree delete operation</h4><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/BTree.html">BTree-visualization</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/introduction-of-b-tree-2/">BTree introduction</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/insert-operation-in-b-tree/">BTree insertion</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/delete-operation-in-b-tree/">BTree deletion</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1353,146 +1468,6 @@
 <li><a target="_blank" rel="noopener" href="https://c9x.me/x86/html/file_module_x86_id_330.html">xor</a></li>
 <li><a target="_blank" rel="noopener" href="https://cs.nyu.edu/courses/fall11/CSCI-GA.2130-001/x64-intro.pdf">x64-into</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/885uGVhlffWAxjgIEW-TiA">归并排序</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/01/14/three-easy-pieces-4-process/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/01/14/three-easy-pieces-4-process/" class="post-title-link" itemprop="url">three-easy-pieces-4-process</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-01-14 10:06:38" itemprop="dateCreated datePublished" datetime="2020-01-14T10:06:38+08:00">2020-01-14</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-01-14 13:58:23" itemprop="dateModified" datetime="2021-01-14T13:58:23+08:00">2021-01-14</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>3.7k</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>3 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>我们知道一个计算机 <code>CPU</code> 数量有限, 但是却可以同时跑数量远远多于 <code>CPU</code> 数量的程序. 其实这就是 <code>virtualizing</code>. 怎样进行 <code>CPU</code> 虚拟化呢? 通过抽象出 <code>process</code> 这个基本概念, 也就是 <code>running program</code>. 一个没有运行的程序, 也就是磁盘上的一堆指令集和一些数据. 通过 <code>time sharing</code> 让一个 <code>process stop</code>, 然后去 <code>run</code> 另外一个 <code>process</code>. 重复这个 <code>context switch</code> 过程, 可以让多个程序同时运行, 这就是在<code>virtualizing CPU</code>.<br><code>mechanisms</code> are low-level methods or protocols that implements a needed piece of functionality. 类似于 java 中的接口, 就是我要提供什么功能. 比如 <code>OS</code> 中的进程的 <code>context switch</code>这个机制.<br><code>policies</code> are algorithms for making some kind of decision within the OS.类似 java 中实现类, 怎么实现这个接口定义的方法. 比如 <code>OS</code> 中的进程调度策略就是为了实现进程 <code>context switch</code>.<br><code>mechanisms</code> 和 <code>policies</code> 分离, 和 java 中接口和实现非常相似. 实际上这也是软件设计的原则. <code>OS</code> 本身也是软件.</p>
-</blockquote>
-<h2 id="physical-organization-of-a-modern-system"><a href="#physical-organization-of-a-modern-system" class="headerlink" title="physical organization of a modern system"></a>physical organization of a modern system</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/physical-organization-of-a-modern-system.png" alt="现代计算机系统物理架构"></p>
-<h2 id="the-abstracttion-a-process"><a href="#the-abstracttion-a-process" class="headerlink" title="the abstracttion: a process"></a>the abstracttion: a process</h2><h3 id="address-space"><a href="#address-space" class="headerlink" title="address space"></a>address space</h3><p>存放程序的 <code>instructions</code> 和 <code>data</code>.</p>
-<h3 id="program-counter"><a href="#program-counter" class="headerlink" title="program counter"></a>program counter</h3><p>程序寄存器, 为了实现 <code>process</code> 的 <code>stop</code> 和 <code>run</code>, 需要知道执行到哪一条指令了.</p>
-<h3 id="stack-pointer"><a href="#stack-pointer" class="headerlink" title="stack pointer"></a>stack pointer</h3><p>function parameters, local variables, return addresses</p>
-<h3 id="io"><a href="#io" class="headerlink" title="io"></a>io</h3><p>进程默认打开 <code>stdin(0)</code>, <code>stdout(1)</code>, <code>stderr(2)</code> 这三个 <code>file descriptor</code>.</p>
-<h2 id="process-API"><a href="#process-API" class="headerlink" title="process API"></a>process API</h2><h3 id="create"><a href="#create" class="headerlink" title="create"></a>create</h3><h3 id="destroy"><a href="#destroy" class="headerlink" title="destroy"></a>destroy</h3><p>kill a process or halt it</p>
-<h3 id="wait"><a href="#wait" class="headerlink" title="wait"></a>wait</h3><h3 id="miscellaneous-control"><a href="#miscellaneous-control" class="headerlink" title="miscellaneous control"></a>miscellaneous control</h3><p><em>suspend</em> process, stop it from running for a while<br><em>resume</em> process, contine it running</p>
-<h3 id="status"><a href="#status" class="headerlink" title="status"></a>status</h3><h2 id="process-creation-a-little-detail"><a href="#process-creation-a-little-detail" class="headerlink" title="process creation: a little detail"></a>process creation: a little detail</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/loading-from-program-to-process.png" alt="loading-from-program-to-process.png"><br>把程序从磁盘加载到内存. 问题来了:</p>
-<ol>
-<li>是要全部加载到内存吗? (eagerly)</li>
-<li>还是部分加载到内存? (lazy, paging)</li>
-<li>抑或内存根本不够存放整个程序? (swapping)</li>
-<li>启动程序的必要代码和数据加载了吗? (一系列 run-time 设置)</li>
-<li>分配供函数执行的 run-time stack(or just stack). 在 C 语言中, 用来存放 <code>function parameters</code>, <code>local variables</code>, <code>return addresses</code>, 想一想 <code>main</code> 的函数参数 <code>argc</code>,<code>argv</code>, 应该就是 <code>OS</code> 初始化的.</li>
-<li>分配/回收 heap. (malloc 和 free).</li>
-<li>set up related I/O </li>
-<li>execute program, 跳到 entry point, 也就是 main().</li>
-</ol>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/load-process.svg" alt="程序加载执行流程"></p>
-<h2 id="process-states"><a href="#process-states" class="headerlink" title="process states"></a>process states</h2><p>简单来说, 分为 3 种状态:</p>
-<ol>
-<li>running</li>
-</ol>
-<p><strong>a process is running on a processor, which means it is executing instructions</strong></p>
-<ol start="2">
-<li>ready</li>
-</ol>
-<p><strong>a process is ready to run but for some reason the OS has chosen not run it at this given moment</strong></p>
-<ol start="3">
-<li>blocked</li>
-</ol>
-<p><strong>a process has performmed some kind of operation that makes it not ready to run until some other event takes place. A common example: when a process initiates an I/O request to a disk, it becomes blocked and thus some other process can use the processor</strong></p>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/process-state-transition.png" alt="process-state-transition"></p>
-<h2 id="data-structures"><a href="#data-structures" class="headerlink" title="data structures"></a>data structures</h2><blockquote>
-<p>以下是 xv6 这个 <code>MIT</code> 教学 <code>OS</code> 的 <a target="_blank" rel="noopener" href="https://github.com/stardustman/xv6-public/blob/master/proc.h">proc.h</a> </p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Per-CPU state</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">cpu</span> &#123;</span></span><br><span class="line">  uchar apicid;                <span class="comment">// Local APIC ID </span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">context</span> *<span class="title">scheduler</span>;</span>   <span class="comment">// swtch() here to enter scheduler</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">taskstate</span> <span class="title">ts</span>;</span>         <span class="comment">// Used by x86 to find stack for interrupt</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">segdesc</span> <span class="title">gdt</span>[<span class="title">NSEGS</span>];</span>   <span class="comment">// x86 global descriptor table , 拿着 GDT 使用内存</span></span><br><span class="line">  <span class="keyword">volatile</span> uint started;       <span class="comment">// Has the CPU started?</span></span><br><span class="line">  <span class="keyword">int</span> ncli;                    <span class="comment">// Depth of pushcli nesting.</span></span><br><span class="line">  <span class="keyword">int</span> intena;                  <span class="comment">// Were interrupts enabled before pushcli?</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">proc</span>;</span>           <span class="comment">// The process running on this cpu or null</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="class"><span class="keyword">struct</span> <span class="title">cpu</span> <span class="title">cpus</span>[<span class="title">NCPU</span>];</span></span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> ncpu;</span><br><span class="line"></span><br><span class="line"><span class="comment">//PAGEBREAK: 17</span></span><br><span class="line"><span class="comment">// Saved registers for kernel context switches.</span></span><br><span class="line"><span class="comment">// Don&#x27;t need to save all the segment registers (%cs, etc),</span></span><br><span class="line"><span class="comment">// because they are constant across kernel contexts.</span></span><br><span class="line"><span class="comment">// Don&#x27;t need to save %eax, %ecx, %edx, because the</span></span><br><span class="line"><span class="comment">// x86 convention is that the caller has saved them.</span></span><br><span class="line"><span class="comment">// Contexts are stored at the bottom of the stack they</span></span><br><span class="line"><span class="comment">// describe; the stack pointer is the address of the context.</span></span><br><span class="line"><span class="comment">// The layout of the context matches the layout of the stack in swtch.S</span></span><br><span class="line"><span class="comment">// at the &quot;Switch stacks&quot; comment. Switch doesn&#x27;t save eip explicitly,</span></span><br><span class="line"><span class="comment">// but it is on the stack and allocproc() manipulates it.</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">context</span> &#123;</span></span><br><span class="line">  uint edi;</span><br><span class="line">  uint esi;</span><br><span class="line">  uint ebx;</span><br><span class="line">  uint ebp;</span><br><span class="line">  uint eip;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">enum</span> <span class="title">procstate</span> &#123;</span> UNUSED, EMBRYO, SLEEPING, RUNNABLE, RUNNING, ZOMBIE &#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Per-process state</span></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">proc</span> &#123;</span></span><br><span class="line">  uint sz;                     <span class="comment">// Size of process memory (bytes) 分配的内存大小</span></span><br><span class="line">  <span class="keyword">pde_t</span>* pgdir;                <span class="comment">// Page table  页表</span></span><br><span class="line">  <span class="keyword">char</span> *kstack;                <span class="comment">// Bottom of kernel stack for this process</span></span><br><span class="line">  <span class="class"><span class="keyword">enum</span> <span class="title">procstate</span> <span class="title">state</span>;</span>        <span class="comment">// Process state 进程状态</span></span><br><span class="line">  <span class="keyword">int</span> pid;                     <span class="comment">// Process ID</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">proc</span> *<span class="title">parent</span>;</span>         <span class="comment">// Parent process 父进程</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">trapframe</span> *<span class="title">tf</span>;</span>        <span class="comment">// Trap frame for current syscall</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">context</span> *<span class="title">context</span>;</span>     <span class="comment">// swtch() here to run process</span></span><br><span class="line">  <span class="keyword">void</span> *chan;                  <span class="comment">// If non-zero, sleeping on chan</span></span><br><span class="line">  <span class="keyword">int</span> killed;                  <span class="comment">// If non-zero, have been killed</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">file</span> *<span class="title">ofile</span>[<span class="title">NOFILE</span>];</span>  <span class="comment">// Open files</span></span><br><span class="line">  <span class="class"><span class="keyword">struct</span> <span class="title">inode</span> *<span class="title">cwd</span>;</span>           <span class="comment">// Current directory</span></span><br><span class="line">  <span class="keyword">char</span> name[<span class="number">16</span>];               <span class="comment">// Process name (debugging)</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// Process memory is laid out contiguously, low addresses first:</span></span><br><span class="line"><span class="comment">//   text</span></span><br><span class="line"><span class="comment">//   original data and bss</span></span><br><span class="line"><span class="comment">//   fixed-size stack</span></span><br><span class="line"><span class="comment">//   expandable heap</span></span><br></pre></td></tr></table></figure>
-
-<h2 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h2><p>low-level(mechanisms) 实现进程功能<br>high-level(policies)  调度策略<br>机制和策略合在一起, 实现 CPU 的虚拟化</p>
-<h2 id="reference"><a href="#reference" class="headerlink" title="reference"></a>reference</h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/USb5e2Zoc0LRgRShRpTYfg">linux process</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="http://pages.cs.wisc.edu/~remzi/OSTEP/Homework/homework.html">three easy pieces</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://www.computerhope.com/jargon/f/file-descriptor.htm">file descriptor</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://github.com/stardustman/xv6-public/blob/master/proc.h">xv6-proc</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/26464793">中断</a></p>
-</li>
 </ol>
 
       
