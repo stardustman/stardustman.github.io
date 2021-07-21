@@ -270,10 +270,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-06-18 14:54:23 / Modified: 16:02:58" itemprop="dateCreated datePublished" datetime="2021-06-18T14:54:23+08:00">2021-06-18</time>
+      <time title="Created: 2021-06-18 14:54:23" itemprop="dateCreated datePublished" datetime="2021-06-18T14:54:23+08:00">2021-06-18</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-21 09:18:21" itemprop="dateModified" datetime="2021-07-21T09:18:21+08:00">2021-07-21</time>
+      </span>
 
   
       </div>
@@ -283,7 +289,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>104</span>
+      <span>139</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -301,11 +307,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+          <h2 id="可见性问题"><a href="#可见性问题" class="headerlink" title="可见性问题"></a>可见性问题</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/java/java-volatile.svg" alt="thread stack frame"></p>
+<h2 id="可见性问题思路"><a href="#可见性问题思路" class="headerlink" title="可见性问题思路"></a>可见性问题思路</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/java/thread-visibility.svg" alt="线程可见性问题思路"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://teachcomputerscience.com/von-neumann-harvard-architecture/">von-neumann-harvard-architecture</a></li>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Out-of-order_execution">out-of-order-execution(dynamic execution)</a></li>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Instruction_scheduling">Instruction_scheduling</a></li>
-<li><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-035-computer-language-engineering-spring-2010/lecture-notes/MIT6_035S10_lec13.pdf"></a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41872203">X86/GCC memory fence的一些见解</a></li>
 </ol>
 
       
@@ -443,7 +451,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-06-14 14:09:41" itemprop="dateModified" datetime="2021-06-14T14:09:41+08:00">2021-06-14</time>
+        <time title="Modified: 2021-07-21 08:48:32" itemprop="dateModified" datetime="2021-07-21T08:48:32+08:00">2021-07-21</time>
       </span>
 
   
@@ -512,7 +520,7 @@
 </li>
 </ol>
 <h5 id="disadvantage-of-locals"><a href="#disadvantage-of-locals" class="headerlink" title="disadvantage of locals"></a>disadvantage of locals</h5><ol>
-<li>short lifetime. 生命周期非常严格，同栈帧生命周期一样。(heap memory 解决)</li>
+<li>short lifetime. 和栈帧同生共死。(heap memory 解决)</li>
 <li>restricted communication。caller’s parameter -&gt; callee 单向通信。(reference parameter 解决) </li>
 </ol>
 <h3 id="heap-dynamic-memory"><a href="#heap-dynamic-memory" class="headerlink" title="heap/dynamic memory"></a>heap/dynamic memory</h3><p>malloc()<br>free()</p>

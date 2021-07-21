@@ -6,7 +6,7 @@
   <link href="http://stardustman.github.io/atom.xml" rel="self"/>
   
   <link href="http://stardustman.github.io/"/>
-  <updated>2021-06-18T08:02:58.615Z</updated>
+  <updated>2021-07-21T01:18:21.351Z</updated>
   <id>http://stardustman.github.io/</id>
   
   <author>
@@ -21,15 +21,14 @@
     <link href="http://stardustman.github.io/2021/06/18/java-keyword-volatile/"/>
     <id>http://stardustman.github.io/2021/06/18/java-keyword-volatile/</id>
     <published>2021-06-18T06:54:23.000Z</published>
-    <updated>2021-06-18T08:02:58.615Z</updated>
+    <updated>2021-07-21T01:18:21.351Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h2 id=&quot;References&quot;&gt;&lt;a href=&quot;#References&quot; class=&quot;headerlink&quot; title=&quot;References&quot;&gt;&lt;/a&gt;References&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;a</summary>
+    <summary type="html">&lt;h2 id=&quot;可见性问题&quot;&gt;&lt;a href=&quot;#可见性问题&quot; class=&quot;headerlink&quot; title=&quot;可见性问题&quot;&gt;&lt;/a&gt;可见性问题&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
         
       
     
@@ -64,7 +63,7 @@
     <link href="http://stardustman.github.io/2021/04/28/asm-pointers-and-memory/"/>
     <id>http://stardustman.github.io/2021/04/28/asm-pointers-and-memory/</id>
     <published>2021-04-28T08:04:36.000Z</published>
-    <updated>2021-06-14T06:09:41.268Z</updated>
+    <updated>2021-07-21T00:48:32.360Z</updated>
     
     
       
@@ -434,15 +433,14 @@
     <link href="http://stardustman.github.io/2020/04/27/data-structure-red-black-tree/"/>
     <id>http://stardustman.github.io/2020/04/27/data-structure-red-black-tree/</id>
     <published>2020-04-27T00:50:28.000Z</published>
-    <updated>2021-01-08T08:48:32.404Z</updated>
+    <updated>2021-07-19T01:17:10.146Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h2 id=&quot;References&quot;&gt;&lt;a href=&quot;#References&quot; class=&quot;headerlink&quot; title=&quot;References&quot;&gt;&lt;/a&gt;References&lt;/h2&gt;&lt;ol&gt;
-&lt;li&gt;&lt;a</summary>
+    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://gitee.com/stardustman/pictrues/raw/master/img/datastructure/2-3-tree-read-black-tree-2-3-tree.svg&quot; alt=&quot;2-3tree</summary>
         
       
     

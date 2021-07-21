@@ -23,21 +23,24 @@
     var NexT = window.NexT || {};
     var CONFIG = {"hostname":"stardustman.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.0.2","exturl":false,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
   </script>
-<meta name="description" content="References von-neumann-harvard-architecture out-of-order-execution(dynamic execution) Instruction_scheduling">
+<meta name="description" content="可见性问题 可见性问题思路 References von-neumann-harvard-architecture out-of-order-execution(dynamic execution) Instruction_scheduling X86&#x2F;GCC memory fence的一些见解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java-keyword-volatile">
 <meta property="og:url" content="http://stardustman.github.io/2021/06/18/java-keyword-volatile/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="References von-neumann-harvard-architecture out-of-order-execution(dynamic execution) Instruction_scheduling">
+<meta property="og:description" content="可见性问题 可见性问题思路 References von-neumann-harvard-architecture out-of-order-execution(dynamic execution) Instruction_scheduling X86&#x2F;GCC memory fence的一些见解">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/java/java-volatile.svg">
+<meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/java/thread-visibility.svg">
 <meta property="article:published_time" content="2021-06-18T06:54:23.000Z">
-<meta property="article:modified_time" content="2021-06-18T08:02:58.615Z">
+<meta property="article:modified_time" content="2021-07-21T01:18:21.351Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="volatile">
 <meta property="article:tag" content="separate component">
 <meta property="article:tag" content="dependency">
 <meta property="article:tag" content="diagram">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/java/java-volatile.svg">
 
 
 <link rel="canonical" href="http://stardustman.github.io/2021/06/18/java-keyword-volatile/">
@@ -183,7 +186,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">1.</span> <span class="nav-text">References</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%81%E6%80%A7%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">可见性问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E8%A7%81%E6%80%A7%E9%97%AE%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">可见性问题思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">3.</span> <span class="nav-text">References</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -280,10 +283,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">Posted on</span>
-      
 
-      <time title="Created: 2021-06-18 14:54:23 / Modified: 16:02:58" itemprop="dateCreated datePublished" datetime="2021-06-18T14:54:23+08:00">2021-06-18</time>
+      <time title="Created: 2021-06-18 14:54:23" itemprop="dateCreated datePublished" datetime="2021-06-18T14:54:23+08:00">2021-06-18</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-07-21 09:18:21" itemprop="dateModified" datetime="2021-07-21T09:18:21+08:00">2021-07-21</time>
+      </span>
 
   
       </div>
@@ -293,7 +302,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>104</span>
+      <span>139</span>
     </span>
     <span class="post-meta-item" title="Reading time">
       <span class="post-meta-item-icon">
@@ -311,11 +320,13 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+        <h2 id="可见性问题"><a href="#可见性问题" class="headerlink" title="可见性问题"></a>可见性问题</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/java/java-volatile.svg" alt="thread stack frame"></p>
+<h2 id="可见性问题思路"><a href="#可见性问题思路" class="headerlink" title="可见性问题思路"></a>可见性问题思路</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/java/thread-visibility.svg" alt="线程可见性问题思路"></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://teachcomputerscience.com/von-neumann-harvard-architecture/">von-neumann-harvard-architecture</a></li>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Out-of-order_execution">out-of-order-execution(dynamic execution)</a></li>
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Instruction_scheduling">Instruction_scheduling</a></li>
-<li><a target="_blank" rel="noopener" href="https://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-035-computer-language-engineering-spring-2010/lecture-notes/MIT6_035S10_lec13.pdf"></a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/41872203">X86/GCC memory fence的一些见解</a></li>
 </ol>
 
     </div>
