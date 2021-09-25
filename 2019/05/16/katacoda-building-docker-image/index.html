@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -31,7 +31,7 @@
 <meta property="og:description" content="Docker images are built based on a Dockerfile. A Dockerfile defines all the steps required to create a Docker image with your application configured and ready to be run as a container. The image itse">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-05-16T09:33:01.000Z">
-<meta property="article:modified_time" content="2019-05-22T06:55:50.576Z">
+<meta property="article:modified_time" content="2019-05-22T06:55:52.000Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -285,7 +285,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-05-22 14:55:50" itemprop="dateModified" datetime="2019-05-22T14:55:50+08:00">2019-05-22</time>
+        <time title="Modified: 2019-05-22 14:55:52" itemprop="dateModified" datetime="2019-05-22T14:55:52+08:00">2019-05-22</time>
       </span>
 
   
@@ -315,26 +315,26 @@
     
     <div class="post-body" itemprop="articleBody">
         <blockquote>
-<p><strong><em>Docker images</em></strong> are built based on a Dockerfile. A Dockerfile defines <strong>all the steps</strong> required to create a Docker image with your application configured and ready to be run as a container. The image itself contains everything, from operating system to dependencies and configuration required to run your application.<br>Having everything within the image allows you to migrate images between different environments and be confident that if it works in one environment, then it will work in another.<br>The Dockerfile allows for images to be composable, enabling users to extend existing images instead of building from scratch. <em>By building on an existing image, you only need to define the steps to setup your application</em>. The base images can be basic operating system installations or configured systems which simply need some additional customisations.</p>
+<p><em><strong>Docker images</strong></em> are built based on a Dockerfile. A Dockerfile defines <strong>all the steps</strong> required to create a Docker image with your application configured and ready to be run as a container. The image itself contains everything, from operating system to dependencies and configuration required to run your application.<br>Having everything within the image allows you to migrate images between different environments and be confident that if it works in one environment, then it will work in another.<br>The Dockerfile allows for images to be composable, enabling users to extend existing images instead of building from scratch. <em>By building on an existing image, you only need to define the steps to setup your application</em>. The base images can be basic operating system installations or configured systems which simply need some additional customisations.</p>
 </blockquote>
 <h1 id="Base-images"><a href="#Base-images" class="headerlink" title="Base images"></a>Base images</h1><blockquote>
 <p>All Docker images start from a base image. A base image is the same images from the Docker Registry which are used to start containers. Along with the image name, we can also include the image tag to indicate which particular version we want, <em>by default, this is latest</em>.<br>These base images are used as the foundation for your additional changes to run your application. For example, in this scenario, we require NGINX to be configured and running on the system before we can deploy our static HTML files. As such we want to use NGINX as our base image.<br>Dockerfile’s are simple text files with a command on each line. To define a base image we use the instruction <strong>FROM image-name:tag</strong></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br></pre></td></tr></table></figure>
 <h1 id="Running-commands"><a href="#Running-commands" class="headerlink" title="Running commands"></a>Running commands</h1><blockquote>
-<p>With the base image defined, we need to run various commands to configure our image. There are many commands to help with this, the main commands two are COPY and RUN.<br><strong><em>RUN</em></strong> command allows you to execute any command as you would at a command prompt, for example installing different application packages or running a build command. The results of the RUN are <strong>persisted</strong> to the image so it’s important not to leave any unnecessary or temporary files on the disk as these will be included in the image.<br><strong><em>COPY src dest</em></strong> allows you to copy files from the directory containing the Dockerfile to the container’s image. This is extremely useful for <strong>source code</strong> and assets that you want to be deployed inside your container<br><em>A new index.html file has been created for you which we want to serve from our container. On the next line after the **</em>FROM*** command, use the COPY command to copy index.html into a directory called *<em>/usr/share/nginx/**html</em></p>
+<p>With the base image defined, we need to run various commands to configure our image. There are many commands to help with this, the main commands two are COPY and RUN.<br><em><strong>RUN</strong></em> command allows you to execute any command as you would at a command prompt, for example installing different application packages or running a build command. The results of the RUN are <strong>persisted</strong> to the image so it’s important not to leave any unnecessary or temporary files on the disk as these will be included in the image.<br><em><strong>COPY src dest</strong></em> allows you to copy files from the directory containing the Dockerfile to the container’s image. This is extremely useful for <strong>source code</strong> and assets that you want to be deployed inside your container<br>*A new index.html file has been created for you which we want to serve from our container. On the next line after the <em><strong>FROM</strong></em> command, use the COPY command to copy index.html into a directory called **/usr/share/nginx/*<em>html</em></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html</span><br></pre></td></tr></table></figure>
 <h1 id="Exposing-ports"><a href="#Exposing-ports" class="headerlink" title="Exposing ports"></a>Exposing ports</h1><blockquote>
-<p>With our files copied into our image and any dependencies downloaded, you need to define which port application needs to be accessible on.<br>Using the <strong><em>EXPOSE port</em></strong> command you tell Docker which ports should be open and can be bound too. You can define multiple ports on the single command, for example, EXPOSE 80 433 or EXPOSE 7000-8000</p>
+<p>With our files copied into our image and any dependencies downloaded, you need to define which port application needs to be accessible on.<br>Using the <em><strong>EXPOSE port</strong></em> command you tell Docker which ports should be open and can be bound too. You can define multiple ports on the single command, for example, EXPOSE 80 433 or EXPOSE 7000-8000</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html</span><br><span class="line"># web server to be accessible via port 80</span><br><span class="line">EXPOSE 80</span><br></pre></td></tr></table></figure>
 <h1 id="Default-commands"><a href="#Default-commands" class="headerlink" title="Default commands"></a>Default commands</h1><blockquote>
-<p>With the Docker image configured and having defined which ports we want accessible, we now need to define the command that launches the application.<br><em>The **</em>CMD*** line in a Dockerfile defines the default command to run when a container is launched.* If the command requires arguments then it’s recommended to use an array, for example [“cmd”, “-a”, “arga value”, “-b”, “argb-value”], which will be combined together and the command<br>*<strong>cmd -a “arga value” -b argb-value</strong> would be run.<br>An alternative approach to CMD is ENTRYPOINT. While a CMD can be overridden when the container starts, a ENTRYPOINT defines a command which can have arguments passed to it when the container launches.</p>
+<p>With the Docker image configured and having defined which ports we want accessible, we now need to define the command that launches the application.<br><em>The <em><strong>CMD</strong></em> line in a Dockerfile defines the default command to run when a container is launched.</em> If the command requires arguments then it’s recommended to use an array, for example [“cmd”, “-a”, “arga value”, “-b”, “argb-value”], which will be combined together and the command<br>*<strong>cmd -a “arga value” -b argb-value</strong> would be run.<br>An alternative approach to CMD is ENTRYPOINT. While a CMD can be overridden when the container starts, a ENTRYPOINT defines a command which can have arguments passed to it when the container launches.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FROM nginx:1.11-alpine</span><br><span class="line">COPY index.html &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html&#x2F;index.html</span><br><span class="line"># web server to be accessible via port 80</span><br><span class="line">EXPOSE 80</span><br><span class="line"># The command to run NGINX is nginx -g daemon off;</span><br><span class="line">CMD [&quot;nginx&quot;, &quot;-g&quot;, &quot;daemon off;&quot;]</span><br></pre></td></tr></table></figure>
 <h1 id="Building-containers"><a href="#Building-containers" class="headerlink" title="Building containers"></a>Building containers</h1><blockquote>
-<p>After writing your Dockerfile you need to use <strong><em>docker build</em></strong> to turn it into an image. <em>The build command takes in a directory containing the Dockerfile, executes the steps and stores the image in your local Docker Engine.</em> If one fails because of an error then the build stops.<br>Using the docker build command to build the image. You can give the image a <strong><em>friendly name by using the -t name option.</em></strong></p>
+<p>After writing your Dockerfile you need to use <em><strong>docker build</strong></em> to turn it into an image. <em>The build command takes in a directory containing the Dockerfile, executes the steps and stores the image in your local Docker Engine.</em> If one fails because of an error then the build stops.<br>Using the docker build command to build the image. You can give the image a <em><strong>friendly name by using the -t name option.</strong></em></p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker build -t my-nginx-image:latest</span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -345,7 +345,7 @@
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 my-nginx-image:latest</span><br></pre></td></tr></table></figure>
 <blockquote>
-<p>access the launched web server via the hostname docker. the command <strong><em>curl -i <a target="_blank" rel="noopener" href="http://docker/">http://docker</a></em></strong> will return our index file via NGINX and the image we built.</p>
+<p>access the launched web server via the hostname docker. the command <em><strong>curl -i <a target="_blank" rel="noopener" href="http://docker/">http://docker</a></strong></em> will return our index file via NGINX and the image we built.</p>
 </blockquote>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -i http:&#x2F;&#x2F;docker</span><br></pre></td></tr></table></figure>
     </div>
@@ -382,6 +382,13 @@
 
 
 
+    
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="stardustman/comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -424,13 +431,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">203k</span>
+    <span title="Symbols count total">205k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:05</span>
+    <span title="Reading time total">3:07</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

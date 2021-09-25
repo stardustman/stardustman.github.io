@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -31,7 +31,7 @@
 <meta property="og:description" content="开发环境 CentOS-7-x86_64-Minimal-1810 hadoop-3.2.0 jdk8 vmware 链接克隆 5 台虚拟机 192.168.126.133 s101 192.168.126.134 s102 192.168.126.135 s103 192.168.126.136 s104 192.168.126.137 s105  环境配置centos7-minimal 配置静">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-07-22T02:40:05.000Z">
-<meta property="article:modified_time" content="2019-07-22T09:12:14.364Z">
+<meta property="article:modified_time" content="2019-07-22T09:12:16.000Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="hadoop">
 <meta name="twitter:card" content="summary">
@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -279,7 +279,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2019-07-22 10:40:05 / Modified: 17:12:14" itemprop="dateCreated datePublished" datetime="2019-07-22T10:40:05+08:00">2019-07-22</time>
+      <time title="Created: 2019-07-22 10:40:05 / Modified: 17:12:16" itemprop="dateCreated datePublished" datetime="2019-07-22T10:40:05+08:00">2019-07-22</time>
     </span>
 
   
@@ -321,9 +321,7 @@
 </ol>
 <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="centos7-minimal-配置静态-ip"><a href="#centos7-minimal-配置静态-ip" class="headerlink" title="centos7-minimal 配置静态 ip"></a>centos7-minimal 配置静态 ip</h3><ol>
 <li>vim /etc/sysconfig/network-scripts/ifcfg-ens33</li>
-<li>静态ip配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">TYPE&#x3D;Ethernet</span><br><span class="line">PROXY_METHOD&#x3D;none</span><br><span class="line">BROWSER_ONLY&#x3D;no</span><br><span class="line">BOOTPROTO&#x3D;static #need</span><br><span class="line">DEFROUTE&#x3D;yes</span><br><span class="line">IPV4_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6INIT&#x3D;yes</span><br><span class="line">IPV6_AUTOCONF&#x3D;yes</span><br><span class="line">IPV6_DEFROUTE&#x3D;yes</span><br><span class="line">IPV6_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6_ADDR_GEN_MODE&#x3D;stable-privacy</span><br><span class="line">NAME&#x3D;ens33</span><br><span class="line">UUID&#x3D;f5fd61b8-7255-4de9-ae68-5047e1586589</span><br><span class="line">DEVICE&#x3D;ens33</span><br><span class="line">ONBOOT&#x3D;yes</span><br><span class="line">NM_CONTROLLED&#x3D;no #need</span><br><span class="line">IPADDR&#x3D;192.168.126.137 #need</span><br><span class="line">NETMASK&#x3D;255.255.255.0 #need</span><br><span class="line">GATEWAY&#x3D;192.168.126.2 #need</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>静态ip配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">TYPE&#x3D;Ethernet</span><br><span class="line">PROXY_METHOD&#x3D;none</span><br><span class="line">BROWSER_ONLY&#x3D;no</span><br><span class="line">BOOTPROTO&#x3D;static #need</span><br><span class="line">DEFROUTE&#x3D;yes</span><br><span class="line">IPV4_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6INIT&#x3D;yes</span><br><span class="line">IPV6_AUTOCONF&#x3D;yes</span><br><span class="line">IPV6_DEFROUTE&#x3D;yes</span><br><span class="line">IPV6_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6_ADDR_GEN_MODE&#x3D;stable-privacy</span><br><span class="line">NAME&#x3D;ens33</span><br><span class="line">UUID&#x3D;f5fd61b8-7255-4de9-ae68-5047e1586589</span><br><span class="line">DEVICE&#x3D;ens33</span><br><span class="line">ONBOOT&#x3D;yes</span><br><span class="line">NM_CONTROLLED&#x3D;no #need</span><br><span class="line">IPADDR&#x3D;192.168.126.137 #need</span><br><span class="line">NETMASK&#x3D;255.255.255.0 #need</span><br><span class="line">GATEWAY&#x3D;192.168.126.2 #need</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><ol>
 <li>vim /etc/profile 添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;soft&#x2F;java8</span><br><span class="line">export PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin</span><br><span class="line">export CLASSPATH&#x3D;.:$JAVA_HOME&#x2F;jre&#x2F;lib:$JAVA_HOME&#x2F;lib:$JAVA_HOME&#x2F;lib&#x2F;tools.jar</span><br></pre></td></tr></table></figure></li>
@@ -375,6 +373,13 @@
 
 
 
+    
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="stardustman/comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -417,13 +422,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">203k</span>
+    <span title="Symbols count total">205k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:05</span>
+    <span title="Reading time total">3:07</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

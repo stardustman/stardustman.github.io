@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -188,14 +188,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -247,6 +247,404 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/09/19/select-poll-epoll/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/19/select-poll-epoll/" class="post-title-link" itemprop="url">select_poll_epoll</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-19 14:43:18" itemprop="dateCreated datePublished" datetime="2019-09-19T14:43:18+08:00">2019-09-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-14 13:55:56" itemprop="dateModified" datetime="2021-01-14T13:55:56+08:00">2021-01-14</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>2k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>2 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>弄清楚 I/O Multiplexing 和 Linux 中 select, poll, epoll 之间的关系.</p>
+</blockquote>
+<h2 id="multiplexer"><a href="#multiplexer" class="headerlink" title="multiplexer"></a>multiplexer</h2><blockquote>
+<p><code>Multiplexer</code> is a combinational circuit that has maximum of 2^n data inputs, <code>n</code> <code>selection lines</code> and <code>single output line</code>. One of these data inputs will be connected to the output based on the values of selection lines.<br>Since there are <code>n</code> selection lines, there will be 2^n possible combinations of zeros and ones. So, each combination will select only one data input. Multiplexer is also called as Mux.<br>聚合多个输入, 通过 selection lines 来选择一个输出. </p>
+</blockquote>
+<h3 id="4x1-Multiplexer-分析"><a href="#4x1-Multiplexer-分析" class="headerlink" title="4x1 Multiplexer 分析"></a>4x1 Multiplexer 分析</h3><blockquote>
+<p>聚合 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 这 4 个输入, 通过 S1 和 S0 来选择一个输出.</p>
+</blockquote>
+<h3 id="Block-diagram-of-4x1-Multiplexer"><a href="#Block-diagram-of-4x1-Multiplexer" class="headerlink" title="Block diagram of 4x1 Multiplexer"></a>Block diagram of 4x1 Multiplexer</h3><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/4x1_Multiplexer.png" alt="4x1_Multiplexer"></p>
+<h3 id="Y-output-输出值的分析"><a href="#Y-output-输出值的分析" class="headerlink" title="Y(output) 输出值的分析"></a>Y<sub>(output)</sub> 输出值的分析</h3><h4 id="S1-0-S0-0-时-Y-的值由-I0-决定"><a href="#S1-0-S0-0-时-Y-的值由-I0-决定" class="headerlink" title="S1 = 0, S0 = 0 时 Y 的值由 I0 决定"></a>S<sub>1</sub> = 0, S<sub>0</sub> = 0 时 Y 的值由 I<sub>0</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I0.png" alt="multiplexers_S1_S0_I0"></p>
+<blockquote>
+<p>S1 = 0, S0 = 0. 此时的 I1, I2, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I0 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I0.</p>
+</blockquote>
+<h4 id="S1-0-S0-1-时-Y-的值由-I1-决定"><a href="#S1-0-S0-1-时-Y-的值由-I1-决定" class="headerlink" title="S1 = 0, S0 = 1 时 Y 的值由 I1 决定"></a>S<sub>1</sub> = 0, S<sub>0</sub> = 1 时 Y 的值由 I<sub>1</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I1.png" alt="multiplexers_S1_S0_I1"></p>
+<blockquote>
+<p>S1 = 0, S0 = 1. 此时的 I0, I2, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I1 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I1.</p>
+</blockquote>
+<h4 id="S1-1-S0-0-时-Y-的值由-I2-决定"><a href="#S1-1-S0-0-时-Y-的值由-I2-决定" class="headerlink" title="S1 = 1, S0 = 0 时 Y 的值由 I2 决定"></a>S<sub>1</sub> = 1, S<sub>0</sub> = 0 时 Y 的值由 I<sub>2</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I2.png" alt="multiplexers_S1_S0_I2"></p>
+<blockquote>
+<p>S1 = 1, S0 = 0. 此时的 I0, I1, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I2 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I2.</p>
+</blockquote>
+<h4 id="S1-1-S1-0-时-Y-的值由-I3-决定"><a href="#S1-1-S1-0-时-Y-的值由-I3-决定" class="headerlink" title="S1 = 1, S1 = 0 时 Y 的值由 I3 决定"></a>S<sub>1</sub> = 1, S<sub>1</sub> = 0 时 Y 的值由 I<sub>3</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I3.png" alt="multiplexers_S1_S0_I3"></p>
+<blockquote>
+<p>S1 = 1, S0 = 1. 此时的 I0, I1, I2, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I3 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I3.</p>
+</blockquote>
+<h3 id="Truth-table-of-4x1-Multiplexer"><a href="#Truth-table-of-4x1-Multiplexer" class="headerlink" title="Truth table of 4x1 Multiplexer"></a>Truth table of 4x1 Multiplexer</h3><table>
+<thead>
+<tr>
+<th>S1(高位)</th>
+<th>S0(低位)</th>
+<th>S1S0(值)</th>
+<th>Y</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>0</td>
+<td>0</td>
+<td>I<sub>0</sub></td>
+</tr>
+<tr>
+<td>0</td>
+<td>1</td>
+<td>1</td>
+<td>I<sub>1</sub></td>
+</tr>
+<tr>
+<td>1</td>
+<td>0</td>
+<td>2</td>
+<td>I<sub>2</sub></td>
+</tr>
+<tr>
+<td>1</td>
+<td>1</td>
+<td>3</td>
+<td>I<sub>3</sub></td>
+</tr>
+</tbody></table>
+<h3 id="Multiplexer-Mux"><a href="#Multiplexer-Mux" class="headerlink" title="Multiplexer (Mux)"></a>Multiplexer (Mux)</h3><blockquote>
+<p>4x1 Multiplexer 相当于提供了一种映射, Y = I<sub>(S1S0)</sub>.<br>通过组合S<sub>1</sub> 和 S<sub>0</sub> 的值, 可以直接得到 I<sub>S1S0</sub> 的值.也就是通过 4x1 Multiplexer 输出的 Y 值是 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 之一.</p>
+</blockquote>
+<h2 id="I-O-Multiplexing"><a href="#I-O-Multiplexing" class="headerlink" title="I/O Multiplexing"></a>I/O Multiplexing</h2><blockquote>
+<p>I/O multiplexing 这里面的 multiplexing 指的其实是在单个线程通过记录跟踪每一个 Sock(I/O 流)的状态.<br>select, poll, epoll 都是 I/O multiplexing的具体的实现, 之所以有这三个存在，其实是他们出现是有先后顺序的.</p>
+</blockquote>
+<h2 id="I-O-Multiplexing-和-Multiplexer"><a href="#I-O-Multiplexing-和-Multiplexer" class="headerlink" title="I/O Multiplexing 和 Multiplexer"></a>I/O Multiplexing 和 Multiplexer</h2><blockquote>
+<p>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 视为 4 个 I/O 流. 值为 1 时, 视为一个 I/O 流. 4x1 Multiplexer 作为硬件实现的 I/O multiplexing. 可以周期性的设置S<sub>1</sub> 和 S<sub>0</sub> 的值, 通过监测 Y 的输出, 得到 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 的输入.</p>
+</blockquote>
+<img src="/2019/09/19/select-poll-epoll/multiplexers_S1_S0_I0.png" class="" title="multiplexers_S1_S0_I0">
+
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>select 被实现以后, 很快就暴露出了很多问题.</p>
+<ul>
+<li>select 会修改传入的参数数组, 这个对于一个需要调用很多次的函数, 是非常不友好的.</li>
+<li>select 如果任何一个 sock(I/O stream) 出现了数据, select 仅仅会返回, 但是并不会告诉你是那个 sock 上有数,于是你只能自己一个一个的找.<blockquote>
+<p>相当于监测到 <code>Mutiplexer</code> 的 Y = 1, 但是不知道 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>哪一个的输入是 1. 也就是不告诉 S<sub>1</sub> 和 S<sub>0</sub>的值, 那就只好再去具体查看一次.<br>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>的值.</p>
+</blockquote>
+</li>
+<li>select 只能监视 1024 个链接. 相当于实现了一个 1024x1 的 Mutiplexer. 只能有1024 个输入.</li>
+<li>select 不是线程安全的.</li>
+</ul>
+<h3 id="poll"><a href="#poll" class="headerlink" title="poll"></a>poll</h3><blockquote>
+<p>修复版的 select</p>
+</blockquote>
+<ul>
+<li>poll 去掉了 1024 个链接的限制</li>
+</ul>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 可以说是 I/O 多路复用最新的一个实现, epoll 修复了 poll 和 select 绝大部分问题, 比如:</p>
+<ul>
+<li>epoll 现在是线程安全的。</li>
+<li>epoll 现在不仅告诉你 sock 组里面数据，还会告诉你具体哪个 sock 有数据, 你不用自己去找了.<blockquote>
+<p>相当于监测到  <code>Mutiplexer</code> 的 Y = 1, 且告知了此时的 S<sub>1</sub> 和 S<sub>0</sub> 的值, 通过组合就可以知道是哪一个具体的输入是 1 了.</p>
+</blockquote>
+</li>
+</ul>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/digital_circuits/digital_circuits_multiplexers.htm">circuits_multiplexers</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/digital_circuits/digital_circuits_demultiplexers.htm">circuits_demultiplexers</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64138532">epoll的本质</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/32163005">I/O multiplexing</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/09/10/wireshark/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/10/wireshark/" class="post-title-link" itemprop="url">wireshark</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-10 09:51:07" itemprop="dateCreated datePublished" datetime="2019-09-10T09:51:07+08:00">2019-09-10</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-14 13:44:56" itemprop="dateModified" datetime="2021-01-14T13:44:56+08:00">2021-01-14</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>130</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Wireshark-Windows-配置-SSL"><a href="#Wireshark-Windows-配置-SSL" class="headerlink" title="Wireshark Windows 配置 SSL"></a>Wireshark Windows 配置 SSL</h2><blockquote>
+<p>Version 3.0.3</p>
+</blockquote>
+<h3 id="配置-SSLKEYLOGFILE-系统变量"><a href="#配置-SSLKEYLOGFILE-系统变量" class="headerlink" title="配置 SSLKEYLOGFILE 系统变量"></a>配置 SSLKEYLOGFILE 系统变量</h3><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/SSLKEYLOGFILE.png" alt="系统变量 SSLKEYLOGFILE"></p>
+<h3 id="配置-Wireshark"><a href="#配置-Wireshark" class="headerlink" title="配置 Wireshark"></a>配置 Wireshark</h3><blockquote>
+<p>编辑 -&gt; 首选项 -&gt; Protocols -&gt; TLS<br><img src="https://gitee.com/stardustman/pictrues/raw/master/img/wireshark_tls_logfile.png" alt="Wireshark 配置 TLS logfile"></p>
+</blockquote>
+<h3 id="重启-Wireshark"><a href="#重启-Wireshark" class="headerlink" title="重启 Wireshark"></a>重启 Wireshark</h3><h2 id="过滤器查看"><a href="#过滤器查看" class="headerlink" title="过滤器查看"></a>过滤器查看</h2><blockquote>
+<p>视图 -&gt; 内部 -&gt; 支持的协议</p>
+</blockquote>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/09/03/docker-practice/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/09/03/docker-practice/" class="post-title-link" itemprop="url">docker-practice</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-09-03 14:20:16" itemprop="dateCreated datePublished" datetime="2019-09-03T14:20:16+08:00">2019-09-03</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-24 10:15:20" itemprop="dateModified" datetime="2021-01-24T10:15:20+08:00">2021-01-24</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>13k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>12 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>Centos7 Linux<br>运行的 Docker 容器是: mssql-node-docker-demo-app </p>
+</blockquote>
+<h2 id="docker-info"><a href="#docker-info" class="headerlink" title="docker info"></a>docker info</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/docker-info.png" alt="docker-info"> #(docker-info)</p>
+<h2 id="docker-inspect"><a href="#docker-inspect" class="headerlink" title="docker inspect"></a>docker inspect</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">&quot;Id&quot;</span>: <span class="string">&quot;405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Created&quot;</span>: <span class="string">&quot;2019-08-01T02:57:14.067532309Z&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Path&quot;</span>: <span class="string">&quot;/bin/sh&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Args&quot;</span>: [</span><br><span class="line">            <span class="string">&quot;-c&quot;</span>,</span><br><span class="line">            <span class="string">&quot;/bin/bash ./entrypoint.sh&quot;</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;State&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;Status&quot;</span>: <span class="string">&quot;running&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Running&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">&quot;Paused&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;Restarting&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;OOMKilled&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;Dead&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;Pid&quot;</span>: <span class="number">12164</span>,</span><br><span class="line">            <span class="attr">&quot;ExitCode&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;Error&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;StartedAt&quot;</span>: <span class="string">&quot;2019-08-22T06:08:43.334320939Z&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;FinishedAt&quot;</span>: <span class="string">&quot;2019-08-21T09:25:32.130119566Z&quot;</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;Image&quot;</span>: <span class="string">&quot;sha256:e600f86aa4e2aced43a193a28aa507651bfb77daa09ca8dbf286451a630cf27e&quot;</span>, <span class="comment">// node-web-app 的 docker 镜像 id</span></span><br><span class="line">        <span class="attr">&quot;ResolvConfPath&quot;</span>: <span class="string">&quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;HostnamePath&quot;</span>: <span class="string">&quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;HostsPath&quot;</span>: <span class="string">&quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;LogPath&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;Name&quot;</span>: <span class="string">&quot;/friendly_hamilton&quot;</span>, <span class="comment">// docker container 的名称</span></span><br><span class="line">        <span class="attr">&quot;RestartCount&quot;</span>: <span class="number">0</span>,</span><br><span class="line">        <span class="attr">&quot;Driver&quot;</span>: <span class="string">&quot;overlay2&quot;</span>, <span class="comment">// storage driver</span></span><br><span class="line">        <span class="attr">&quot;MountLabel&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;ProcessLabel&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;AppArmorProfile&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">        <span class="attr">&quot;ExecIDs&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">        <span class="attr">&quot;HostConfig&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;Binds&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;ContainerIDFile&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;LogConfig&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;Type&quot;</span>: <span class="string">&quot;journald&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;Config&quot;</span>: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;NetworkMode&quot;</span>: <span class="string">&quot;default&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;PortBindings&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;1433/tcp&quot;</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">&quot;HostIp&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                        <span class="attr">&quot;HostPort&quot;</span>: <span class="string">&quot;1433&quot;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">&quot;8080/tcp&quot;</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">&quot;HostIp&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                        <span class="attr">&quot;HostPort&quot;</span>: <span class="string">&quot;8080&quot;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;RestartPolicy&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;Name&quot;</span>: <span class="string">&quot;no&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;MaximumRetryCount&quot;</span>: <span class="number">0</span></span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;AutoRemove&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;VolumeDriver&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;VolumesFrom&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;CapAdd&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;CapDrop&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;Dns&quot;</span>: [],</span><br><span class="line">            <span class="attr">&quot;DnsOptions&quot;</span>: [],</span><br><span class="line">            <span class="attr">&quot;DnsSearch&quot;</span>: [],</span><br><span class="line">            <span class="attr">&quot;ExtraHosts&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;GroupAdd&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;IpcMode&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Cgroup&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Links&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;OomScoreAdj&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;PidMode&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Privileged&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;PublishAllPorts&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;ReadonlyRootfs&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;SecurityOpt&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;UTSMode&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;UsernsMode&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;ShmSize&quot;</span>: <span class="number">67108864</span>,</span><br><span class="line">            <span class="attr">&quot;Runtime&quot;</span>: <span class="string">&quot;docker-runc&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;ConsoleSize&quot;</span>: [</span><br><span class="line">                <span class="number">0</span>,</span><br><span class="line">                <span class="number">0</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;Isolation&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;CpuShares&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;Memory&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;NanoCpus&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;CgroupParent&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;BlkioWeight&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;BlkioWeightDevice&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;BlkioDeviceReadBps&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;BlkioDeviceWriteBps&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;BlkioDeviceReadIOps&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;BlkioDeviceWriteIOps&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;CpuPeriod&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;CpuQuota&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;CpuRealtimePeriod&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;CpuRealtimeRuntime&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;CpusetCpus&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;CpusetMems&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Devices&quot;</span>: [],</span><br><span class="line">            <span class="attr">&quot;DiskQuota&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;KernelMemory&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;MemoryReservation&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;MemorySwap&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;MemorySwappiness&quot;</span>: <span class="number">-1</span>,</span><br><span class="line">            <span class="attr">&quot;OomKillDisable&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;PidsLimit&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;Ulimits&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;CpuCount&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;CpuPercent&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;IOMaximumIOps&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;IOMaximumBandwidth&quot;</span>: <span class="number">0</span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;GraphDriver&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;Name&quot;</span>: <span class="string">&quot;overlay2&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Data&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;LowerDir&quot;</span>: <span class="string">&quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2-init/diff:/var/lib/docker/overlay2/83b7194d94d42c0ef8f78a2f4105cc7a7a215a8e885b695a933a8f8212db9cfa/diff:/var/lib/docker/overlay2/9549118d3883d39414fadf0dc17e654d1408878be3296b294711ee65ef336b98/diff:/var/lib/docker/overlay2/8e85764472e79d42f469dd3681883cd415e85098d6c42fb3dd239471212f87b3/diff:/var/lib/docker/overlay2/8dc8ec519bade76b07994adc690d1e6fcad408147835198a250b4c66c489a151/diff:/var/lib/docker/overlay2/b07d1c7463b2a4ff25f7800729381fdf5b036c12a065973b9d079580c3a50a5e/diff:/var/lib/docker/overlay2/60c9257cc9d8a7ac4b66d1c4cae5ff994471976f0a344f8ac1856a4fba7b290e/diff:/var/lib/docker/overlay2/2a00c5b47427e151e000ffe05de8121e956dbf15b0d356cfc9ad2754dc5554d5/diff:/var/lib/docker/overlay2/3495bcc2d508cbdad81b1f3eb49645fe0eb05caf0e99fbb6310d40fbdd8118a2/diff:/var/lib/docker/overlay2/9df322481c6f8b91b3583016634664e6ad991b8b846a9585385227a02b898770/diff:/var/lib/docker/overlay2/163747850da2115bac28b39ac6d2e08ca5c0e409fe6cae624155f8e61489aacd/diff:/var/lib/docker/overlay2/52405978404b67e0a67ba95cb12682d0e8a8ae781fd2b21dc2ab94197e97c38b/diff:/var/lib/docker/overlay2/c987c31253bca839eb789feb3e4fe7bc247b1e88dc88c67e2b4209fc26025fe8/diff:/var/lib/docker/overlay2/ed663d4b2fffda783f9b69e5eb7c139f34142e0e2d868460a3c1e1d925ec3e7e/diff:/var/lib/docker/overlay2/a0e3d07a65b7ee70d3869fa41418ecf71056b9ac0ba1182170621c83c77bba94/diff:/var/lib/docker/overlay2/aa4c66b37aae4e55a94aa60ac763a60851af34271ccb1a80f547e3d90e7ac2bf/diff:/var/lib/docker/overlay2/527b1a014d302c1fe835d778be6cd008de6741d290fbc0f2e64e3f25f7a7b8d0/diff&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;MergedDir&quot;</span>: <span class="string">&quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/merged&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;UpperDir&quot;</span>: <span class="string">&quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/diff&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;WorkDir&quot;</span>: <span class="string">&quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/work&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;Mounts&quot;</span>: [</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="attr">&quot;Type&quot;</span>: <span class="string">&quot;volume&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;Name&quot;</span>: <span class="string">&quot;7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;Source&quot;</span>: <span class="string">&quot;/var/lib/docker/volumes/7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834/_data&quot;</span>, <span class="comment">// host 主机的被挂在的目录</span></span><br><span class="line">                <span class="attr">&quot;Destination&quot;</span>: <span class="string">&quot;/var/opt/mssql&quot;</span>, <span class="comment">// Volume 挂载点</span></span><br><span class="line">                <span class="attr">&quot;Driver&quot;</span>: <span class="string">&quot;local&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;Mode&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;RW&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">                <span class="attr">&quot;Propagation&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;Config&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;Hostname&quot;</span>: <span class="string">&quot;405a378d6f88&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Domainname&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;User&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;AttachStdin&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;AttachStdout&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;AttachStderr&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;ExposedPorts&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;1433/tcp&quot;</span>: &#123;&#125;,</span><br><span class="line">                <span class="attr">&quot;8080/tcp&quot;</span>: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;Tty&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;OpenStdin&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;StdinOnce&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;Env&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;ACCEPT_EULA=Y&quot;</span>,</span><br><span class="line">                <span class="string">&quot;SA_PASSWORD=Yukon900&quot;</span>,</span><br><span class="line">                <span class="string">&quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;Cmd&quot;</span>: [</span><br><span class="line">                <span class="string">&quot;/bin/sh&quot;</span>,</span><br><span class="line">                <span class="string">&quot;-c&quot;</span>,</span><br><span class="line">                <span class="string">&quot;/bin/bash ./entrypoint.sh&quot;</span></span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">&quot;ArgsEscaped&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">            <span class="attr">&quot;Image&quot;</span>: <span class="string">&quot;node-web-app&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Volumes&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;/var/opt/mssql&quot;</span>: &#123;&#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;WorkingDir&quot;</span>: <span class="string">&quot;/usr/src/app&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Entrypoint&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;OnBuild&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;Labels&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;com.microsoft.product&quot;</span>: <span class="string">&quot;Microsoft SQL Server&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;com.microsoft.version&quot;</span>: <span class="string">&quot;14.0.3048.4&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;vendor&quot;</span>: <span class="string">&quot;Microsoft&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">&quot;NetworkSettings&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;Bridge&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;SandboxID&quot;</span>: <span class="string">&quot;d21ee4834e9078042da65677d8db9717748eb7f86a6954c5e4eee29636159aa7&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;HairpinMode&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">            <span class="attr">&quot;LinkLocalIPv6Address&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;LinkLocalIPv6PrefixLen&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;Ports&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;1433/tcp&quot;</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">&quot;HostIp&quot;</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">                        <span class="attr">&quot;HostPort&quot;</span>: <span class="string">&quot;1433&quot;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ],</span><br><span class="line">                <span class="attr">&quot;8080/tcp&quot;</span>: [</span><br><span class="line">                    &#123;</span><br><span class="line">                        <span class="attr">&quot;HostIp&quot;</span>: <span class="string">&quot;0.0.0.0&quot;</span>,</span><br><span class="line">                        <span class="attr">&quot;HostPort&quot;</span>: <span class="string">&quot;8080&quot;</span></span><br><span class="line">                    &#125;</span><br><span class="line">                ]</span><br><span class="line">            &#125;,</span><br><span class="line">            <span class="attr">&quot;SandboxKey&quot;</span>: <span class="string">&quot;/var/run/docker/netns/d21ee4834e90&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;SecondaryIPAddresses&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;SecondaryIPv6Addresses&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">&quot;EndpointID&quot;</span>: <span class="string">&quot;46dac1ff81a297ede919100e0d06a743b845e34b802b54bca8cb8f02dcd33c85&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Gateway&quot;</span>: <span class="string">&quot;172.17.0.1&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;GlobalIPv6Address&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;GlobalIPv6PrefixLen&quot;</span>: <span class="number">0</span>,</span><br><span class="line">            <span class="attr">&quot;IPAddress&quot;</span>: <span class="string">&quot;172.17.0.2&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;IPPrefixLen&quot;</span>: <span class="number">16</span>,</span><br><span class="line">            <span class="attr">&quot;IPv6Gateway&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;MacAddress&quot;</span>: <span class="string">&quot;02:42:ac:11:00:02&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Networks&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;bridge&quot;</span>: &#123;</span><br><span class="line">                    <span class="attr">&quot;IPAMConfig&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">                    <span class="attr">&quot;Links&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">                    <span class="attr">&quot;Aliases&quot;</span>: <span class="literal">null</span>,</span><br><span class="line">                    <span class="attr">&quot;NetworkID&quot;</span>: <span class="string">&quot;a8af0599996912141c3f2ce4b0a2bcc48eea9164a35672aac6307333450acb6b&quot;</span>, <span class="comment">//a8af05999969 </span></span><br><span class="line">                    <span class="attr">&quot;EndpointID&quot;</span>: <span class="string">&quot;46dac1ff81a297ede919100e0d06a743b845e34b802b54bca8cb8f02dcd33c85&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;Gateway&quot;</span>: <span class="string">&quot;172.17.0.1&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;IPAddress&quot;</span>: <span class="string">&quot;172.17.0.2&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;IPPrefixLen&quot;</span>: <span class="number">16</span>,</span><br><span class="line">                    <span class="attr">&quot;IPv6Gateway&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;GlobalIPv6Address&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">                    <span class="attr">&quot;GlobalIPv6PrefixLen&quot;</span>: <span class="number">0</span>,</span><br><span class="line">                    <span class="attr">&quot;MacAddress&quot;</span>: <span class="string">&quot;02:42:ac:11:00:02&quot;</span> </span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="docker-volume"><a href="#docker-volume" class="headerlink" title="docker volume"></a>docker volume</h2><h3 id="mount"><a href="#mount" class="headerlink" title="mount"></a>mount</h3><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&quot;Mounts&quot;: [</span><br><span class="line">         &#123;</span><br><span class="line">             <span class="attr">&quot;Type&quot;</span>: <span class="string">&quot;volume&quot;</span>,</span><br><span class="line">             <span class="attr">&quot;Name&quot;</span>: <span class="string">&quot;7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834&quot;</span>,</span><br><span class="line">             <span class="attr">&quot;Source&quot;</span>: <span class="string">&quot;/var/lib/docker/volumes/7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834/_data&quot;</span>, <span class="comment">// host 主机的被挂载的目录</span></span><br><span class="line">             <span class="attr">&quot;Destination&quot;</span>: <span class="string">&quot;/var/opt/mssql&quot;</span>, <span class="comment">// Volume 挂载点</span></span><br><span class="line">             <span class="attr">&quot;Driver&quot;</span>: <span class="string">&quot;local&quot;</span>,</span><br><span class="line">             <span class="attr">&quot;Mode&quot;</span>: <span class="string">&quot;&quot;</span>,</span><br><span class="line">             <span class="attr">&quot;RW&quot;</span>: <span class="literal">true</span>,</span><br><span class="line">             <span class="attr">&quot;Propagation&quot;</span>: <span class="string">&quot;&quot;</span></span><br><span class="line">         &#125;</span><br><span class="line">     ]</span><br></pre></td></tr></table></figure>
+
+<h2 id="Local-Docker-container-网络"><a href="#Local-Docker-container-网络" class="headerlink" title="Local Docker container 网络"></a>Local Docker container 网络</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;ResolvConfPath&quot;</span>: <span class="string">&quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf&quot;</span>,</span><br><span class="line"><span class="attr">&quot;HostnamePath&quot;</span>: <span class="string">&quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname&quot;</span>,</span><br><span class="line"><span class="attr">&quot;HostsPath&quot;</span>: <span class="string">&quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts&quot;</span>,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/local-var-lib-docker-container.png" alt="local-var-lib-docker-container"> #(本地存储的容器的网络配置)</p>
+<h2 id="Container-网络配置"><a href="#Container-网络配置" class="headerlink" title="Container 网络配置"></a>Container 网络配置</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/container-etc.png" alt="container-etc"> #(容器的网络配置)</p>
+<h2 id="Docker-Images-分层"><a href="#Docker-Images-分层" class="headerlink" title="Docker Images 分层"></a>Docker Images 分层</h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line"><span class="attr">&quot;GraphDriver&quot;</span>: &#123;</span><br><span class="line">            <span class="attr">&quot;Name&quot;</span>: <span class="string">&quot;overlay2&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;Data&quot;</span>: &#123;</span><br><span class="line">                <span class="attr">&quot;LowerDir&quot;</span>: <span class="string">&quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2-init/diff:/var/lib/docker/overlay2/83b7194d94d42c0ef8f78a2f4105cc7a7a215a8e885b695a933a8f8212db9cfa/diff:/var/lib/docker/overlay2/9549118d3883d39414fadf0dc17e654d1408878be3296b294711ee65ef336b98/diff:/var/lib/docker/overlay2/8e85764472e79d42f469dd3681883cd415e85098d6c42fb3dd239471212f87b3/diff:/var/lib/docker/overlay2/8dc8ec519bade76b07994adc690d1e6fcad408147835198a250b4c66c489a151/diff:/var/lib/docker/overlay2/b07d1c7463b2a4ff25f7800729381fdf5b036c12a065973b9d079580c3a50a5e/diff:/var/lib/docker/overlay2/60c9257cc9d8a7ac4b66d1c4cae5ff994471976f0a344f8ac1856a4fba7b290e/diff:/var/lib/docker/overlay2/2a00c5b47427e151e000ffe05de8121e956dbf15b0d356cfc9ad2754dc5554d5/diff:/var/lib/docker/overlay2/3495bcc2d508cbdad81b1f3eb49645fe0eb05caf0e99fbb6310d40fbdd8118a2/diff:/var/lib/docker/overlay2/9df322481c6f8b91b3583016634664e6ad991b8b846a9585385227a02b898770/diff:/var/lib/docker/overlay2/163747850da2115bac28b39ac6d2e08ca5c0e409fe6cae624155f8e61489aacd/diff:/var/lib/docker/overlay2/52405978404b67e0a67ba95cb12682d0e8a8ae781fd2b21dc2ab94197e97c38b/diff:/var/lib/docker/overlay2/c987c31253bca839eb789feb3e4fe7bc247b1e88dc88c67e2b4209fc26025fe8/diff:/var/lib/docker/overlay2/ed663d4b2fffda783f9b69e5eb7c139f34142e0e2d868460a3c1e1d925ec3e7e/diff:/var/lib/docker/overlay2/a0e3d07a65b7ee70d3869fa41418ecf71056b9ac0ba1182170621c83c77bba94/diff:/var/lib/docker/overlay2/aa4c66b37aae4e55a94aa60ac763a60851af34271ccb1a80f547e3d90e7ac2bf/diff:/var/lib/docker/overlay2/527b1a014d302c1fe835d778be6cd008de6741d290fbc0f2e64e3f25f7a7b8d0/diff&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;MergedDir&quot;</span>: <span class="string">&quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/merged&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;UpperDir&quot;</span>: <span class="string">&quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/diff&quot;</span>,</span><br><span class="line">                <span class="attr">&quot;WorkDir&quot;</span>: <span class="string">&quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/work&quot;</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="MergedDir"><a href="#MergedDir" class="headerlink" title="MergedDir"></a>MergedDir</h3><blockquote>
+<p>这个 MergedDir 层就是一个 Linux 镜像 </p>
+</blockquote>
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/merged-dir.png" alt="merged-dir"> #( 镜像 Merged 层)</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/twright-msft/mssql-node-docker-demo-app/blob/master/Dockerfile">mssql-node-docker-demo-app</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://docs.docker.com/storage/storagedriver/">storage driver</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://medium.com/better-programming/about-var-run-docker-sock-3bfd276e12fd">var-run-docker-sock</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/boling_cavalry/article/details/92846483">docker 的 /var/run/docker.sock 参数</a></p>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/07/22/hadoop-environment-setup/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -272,7 +670,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2019-07-22 10:40:05 / Modified: 17:12:14" itemprop="dateCreated datePublished" datetime="2019-07-22T10:40:05+08:00">2019-07-22</time>
+      <time title="Created: 2019-07-22 10:40:05 / Modified: 17:12:16" itemprop="dateCreated datePublished" datetime="2019-07-22T10:40:05+08:00">2019-07-22</time>
     </span>
 
   
@@ -314,9 +712,7 @@
 </ol>
 <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><h3 id="centos7-minimal-配置静态-ip"><a href="#centos7-minimal-配置静态-ip" class="headerlink" title="centos7-minimal 配置静态 ip"></a>centos7-minimal 配置静态 ip</h3><ol>
 <li>vim /etc/sysconfig/network-scripts/ifcfg-ens33</li>
-<li>静态ip配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">TYPE&#x3D;Ethernet</span><br><span class="line">PROXY_METHOD&#x3D;none</span><br><span class="line">BROWSER_ONLY&#x3D;no</span><br><span class="line">BOOTPROTO&#x3D;static #need</span><br><span class="line">DEFROUTE&#x3D;yes</span><br><span class="line">IPV4_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6INIT&#x3D;yes</span><br><span class="line">IPV6_AUTOCONF&#x3D;yes</span><br><span class="line">IPV6_DEFROUTE&#x3D;yes</span><br><span class="line">IPV6_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6_ADDR_GEN_MODE&#x3D;stable-privacy</span><br><span class="line">NAME&#x3D;ens33</span><br><span class="line">UUID&#x3D;f5fd61b8-7255-4de9-ae68-5047e1586589</span><br><span class="line">DEVICE&#x3D;ens33</span><br><span class="line">ONBOOT&#x3D;yes</span><br><span class="line">NM_CONTROLLED&#x3D;no #need</span><br><span class="line">IPADDR&#x3D;192.168.126.137 #need</span><br><span class="line">NETMASK&#x3D;255.255.255.0 #need</span><br><span class="line">GATEWAY&#x3D;192.168.126.2 #need</span><br></pre></td></tr></table></figure>
-
-</li>
+<li>静态ip配置<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">TYPE&#x3D;Ethernet</span><br><span class="line">PROXY_METHOD&#x3D;none</span><br><span class="line">BROWSER_ONLY&#x3D;no</span><br><span class="line">BOOTPROTO&#x3D;static #need</span><br><span class="line">DEFROUTE&#x3D;yes</span><br><span class="line">IPV4_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6INIT&#x3D;yes</span><br><span class="line">IPV6_AUTOCONF&#x3D;yes</span><br><span class="line">IPV6_DEFROUTE&#x3D;yes</span><br><span class="line">IPV6_FAILURE_FATAL&#x3D;no</span><br><span class="line">IPV6_ADDR_GEN_MODE&#x3D;stable-privacy</span><br><span class="line">NAME&#x3D;ens33</span><br><span class="line">UUID&#x3D;f5fd61b8-7255-4de9-ae68-5047e1586589</span><br><span class="line">DEVICE&#x3D;ens33</span><br><span class="line">ONBOOT&#x3D;yes</span><br><span class="line">NM_CONTROLLED&#x3D;no #need</span><br><span class="line">IPADDR&#x3D;192.168.126.137 #need</span><br><span class="line">NETMASK&#x3D;255.255.255.0 #need</span><br><span class="line">GATEWAY&#x3D;192.168.126.2 #need</span><br></pre></td></tr></table></figure></li>
 </ol>
 <h3 id="JDK"><a href="#JDK" class="headerlink" title="JDK"></a>JDK</h3><ol>
 <li>vim /etc/profile 添加<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export JAVA_HOME&#x3D;&#x2F;soft&#x2F;java8</span><br><span class="line">export PATH&#x3D;$PATH:$JAVA_HOME&#x2F;bin</span><br><span class="line">export CLASSPATH&#x3D;.:$JAVA_HOME&#x2F;jre&#x2F;lib:$JAVA_HOME&#x2F;lib:$JAVA_HOME&#x2F;lib&#x2F;tools.jar</span><br></pre></td></tr></table></figure></li>
@@ -384,7 +780,7 @@
       <span class="post-meta-item-text">Posted on</span>
       
 
-      <time title="Created: 2019-07-17 10:48:46 / Modified: 10:50:34" itemprop="dateCreated datePublished" datetime="2019-07-17T10:48:46+08:00">2019-07-17</time>
+      <time title="Created: 2019-07-17 10:48:46 / Modified: 10:50:36" itemprop="dateCreated datePublished" datetime="2019-07-17T10:48:46+08:00">2019-07-17</time>
     </span>
 
   
@@ -473,7 +869,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-01-24 09:36:56" itemprop="dateModified" datetime="2021-01-24T09:36:56+08:00">2021-01-24</time>
+        <time title="Modified: 2021-01-24 09:36:58" itemprop="dateModified" datetime="2021-01-24T09:36:58+08:00">2021-01-24</time>
       </span>
 
   
@@ -639,7 +1035,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-01-14 14:25:07" itemprop="dateModified" datetime="2021-01-14T14:25:07+08:00">2021-01-14</time>
+        <time title="Modified: 2021-01-14 14:25:08" itemprop="dateModified" datetime="2021-01-14T14:25:08+08:00">2021-01-14</time>
       </span>
 
   
@@ -827,7 +1223,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-17 13:49:08" itemprop="dateModified" datetime="2021-05-17T13:49:08+08:00">2021-05-17</time>
+        <time title="Modified: 2021-09-11 16:03:04" itemprop="dateModified" datetime="2021-09-11T16:03:04+08:00">2021-09-11</time>
       </span>
 
   
@@ -861,7 +1257,8 @@
 </blockquote>
 <h1 id="代码分析"><a href="#代码分析" class="headerlink" title="代码分析"></a>代码分析</h1><h2 id="C-main"><a href="#C-main" class="headerlink" title="C main"></a>C main</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    result = testArgs(<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<h3 id="Asm-main"><a href="#Asm-main" class="headerlink" title="Asm main"></a>Asm main</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $16, %rsp</span><br><span class="line">        movl    $0, -4(%rbp) &#x2F;&#x2F;result</span><br><span class="line">        pushq   $8 &#x2F;&#x2F; 最后一个参数</span><br><span class="line">        pushq   $7 &#x2F;&#x2F; 倒数第二个参数</span><br><span class="line">        movl    $6, %r9d &#x2F;&#x2F; 第六个参数</span><br><span class="line">        movl    $5, %r8d &#x2F;&#x2F; 第五个参数</span><br><span class="line">        movl    $4, %ecx &#x2F;&#x2F; 第四个参数</span><br><span class="line">        movl    $3, %edx &#x2F;&#x2F; 第三个参数</span><br><span class="line">        movl    $2, %esi &#x2F;&#x2F; 第二个参数</span><br><span class="line">        movl    $1, %edi &#x2F;&#x2F; 第一个参数</span><br><span class="line">        call    testArgs(long, long, long, long, long, long, long, long)</span><br><span class="line">        addq    $16, %rsp &#x2F;&#x2F; 回收分配的栈空间</span><br><span class="line">        movl    %eax, -4(%rbp)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
+<h3 id="Asm-main"><a href="#Asm-main" class="headerlink" title="Asm main"></a>Asm main</h3><p>gcc -o main main.c</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        subq    $16, %rsp</span><br><span class="line">        movl    $0, -4(%rbp) &#x2F;&#x2F;result</span><br><span class="line">        pushq   $8 &#x2F;&#x2F; 最后一个参数</span><br><span class="line">        pushq   $7 &#x2F;&#x2F; 倒数第二个参数</span><br><span class="line">        movl    $6, %r9d &#x2F;&#x2F; 第六个参数</span><br><span class="line">        movl    $5, %r8d &#x2F;&#x2F; 第五个参数</span><br><span class="line">        movl    $4, %ecx &#x2F;&#x2F; 第四个参数</span><br><span class="line">        movl    $3, %edx &#x2F;&#x2F; 第三个参数</span><br><span class="line">        movl    $2, %esi &#x2F;&#x2F; 第二个参数</span><br><span class="line">        movl    $1, %edi &#x2F;&#x2F; 第一个参数</span><br><span class="line">        call    testArgs(long, long, long, long, long, long, long, long)</span><br><span class="line">        addq    $16, %rsp &#x2F;&#x2F; 回收分配的栈空间</span><br><span class="line">        movl    %eax, -4(%rbp)</span><br><span class="line">        movl    $0, %eax</span><br><span class="line">        leave</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
 
 <h3 id="C-testArgs"><a href="#C-testArgs" class="headerlink" title="C testArgs"></a>C testArgs</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">testArgs</span><span class="params">(<span class="keyword">long</span> a1,<span class="keyword">long</span> a2,<span class="keyword">long</span> a3,<span class="keyword">long</span> a4,<span class="keyword">long</span> a5,<span class="keyword">long</span> a6,<span class="keyword">long</span> a7,<span class="keyword">long</span> a8)</span></span>&#123;</span><br><span class="line">    <span class="keyword">long</span> sum = <span class="number">0</span>;</span><br><span class="line">    sum = a1 + a2 + a3 + a4 +a5 + a6 + a7 + a8;</span><br><span class="line">    <span class="keyword">return</span> sum;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -934,7 +1331,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-05-10 19:53:44" itemprop="dateModified" datetime="2020-05-10T19:53:44+08:00">2020-05-10</time>
+        <time title="Modified: 2021-09-11 16:03:04" itemprop="dateModified" datetime="2021-09-11T16:03:04+08:00">2021-09-11</time>
       </span>
 
   
@@ -1101,7 +1498,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-01-24 10:27:36" itemprop="dateModified" datetime="2021-01-24T10:27:36+08:00">2021-01-24</time>
+        <time title="Modified: 2021-01-24 10:27:38" itemprop="dateModified" datetime="2021-01-24T10:27:38+08:00">2021-01-24</time>
       </span>
 
   
@@ -1181,387 +1578,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/05/31/linux-kernel-analysis-2/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/31/linux-kernel-analysis-2/" class="post-title-link" itemprop="url">linux-kernel-analysis-2</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2019-05-31 09:35:37 / Modified: 10:24:41" itemprop="dateCreated datePublished" datetime="2019-05-31T09:35:37+08:00">2019-05-31</time>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>11</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="数据连续存储和选择读取"><a href="#数据连续存储和选择读取" class="headerlink" title="数据连续存储和选择读取"></a>数据连续存储和选择读取</h1>
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/05/28/asm-how-x86-function-execute/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/28/asm-how-x86-function-execute/" class="post-title-link" itemprop="url">asm-how-x86-function-execute</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-05-28 19:32:16" itemprop="dateCreated datePublished" datetime="2019-05-28T19:32:16+08:00">2019-05-28</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-02-15 17:12:23" itemprop="dateModified" datetime="2021-02-15T17:12:23+08:00">2021-02-15</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>7.9k</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>7 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编译后的汇编代码.<br>目的: 搞明白 X86 架构下函数到底是怎么调用执行的.</p>
-</blockquote>
-<h1 id="assembly-syntax-for-X86"><a href="#assembly-syntax-for-X86" class="headerlink" title="assembly syntax for X86"></a>assembly syntax for X86</h1><h2 id="gas-gnu-assembler-syntax-也就是-AT-amp-T-风格"><a href="#gas-gnu-assembler-syntax-也就是-AT-amp-T-风格" class="headerlink" title="gas (gnu assembler syntax), 也就是 AT&amp;T 风格."></a>gas (gnu assembler syntax), 也就是 AT&amp;T 风格.</h2><p>本文采用该风格.</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">swap(<span class="keyword">int</span>, <span class="keyword">int</span>):</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    %edi, <span class="number">-20</span>(%rbp)</span><br><span class="line">        movl    %esi, <span class="number">-24</span>(%rbp)</span><br><span class="line">        movl    <span class="number">-20</span>(%rbp), %eax</span><br><span class="line">        movl    %eax, <span class="number">-4</span>(%rbp)</span><br><span class="line">        movl    <span class="number">-24</span>(%rbp), %eax</span><br><span class="line">        movl    %eax, <span class="number">-20</span>(%rbp)</span><br><span class="line">        movl    <span class="number">-4</span>(%rbp), %eax</span><br><span class="line">        movl    %eax, <span class="number">-24</span>(%rbp)</span><br><span class="line">        nop</span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
-<h2 id="intel-syntax"><a href="#intel-syntax" class="headerlink" title="intel syntax"></a>intel syntax</h2><figure class="highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">swap(<span class="keyword">int</span>, <span class="keyword">int</span>):</span><br><span class="line">        <span class="keyword">push</span>    <span class="built_in">rbp</span></span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">rbp</span>, <span class="built_in">rsp</span></span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">20</span>], <span class="built_in">edi</span></span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">24</span>], <span class="built_in">esi</span></span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">eax</span>, <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">20</span>]</span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">4</span>], <span class="built_in">eax</span></span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">eax</span>, <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">24</span>]</span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">20</span>], <span class="built_in">eax</span></span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">eax</span>, <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">4</span>]</span><br><span class="line">        <span class="keyword">mov</span>     <span class="built_in">DWORD</span> <span class="built_in">PTR</span> [<span class="built_in">rbp</span>-<span class="number">24</span>], <span class="built_in">eax</span></span><br><span class="line">        <span class="keyword">nop</span></span><br><span class="line">        <span class="keyword">pop</span>     <span class="built_in">rbp</span></span><br><span class="line">        <span class="keyword">ret</span></span><br></pre></td></tr></table></figure>
-<h1 id="instruction-suffixes"><a href="#instruction-suffixes" class="headerlink" title="instruction suffixes"></a>instruction suffixes</h1><table>
-<thead>
-<tr>
-<th>缩写</th>
-<th>全称</th>
-<th>位数</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>b</td>
-<td>byte</td>
-<td>8bit</td>
-</tr>
-<tr>
-<td>w</td>
-<td>word</td>
-<td>16bit</td>
-</tr>
-<tr>
-<td>l</td>
-<td>long</td>
-<td>32bit</td>
-</tr>
-<tr>
-<td>q</td>
-<td>quad</td>
-<td>64bit</td>
-</tr>
-</tbody></table>
-<h1 id="addressing-mode"><a href="#addressing-mode" class="headerlink" title="addressing mode"></a>addressing mode</h1><blockquote>
-<p>CPU 寻址方式, 也就是拿到数据的方式.</p>
-</blockquote>
-<h2 id="direct-addressing"><a href="#direct-addressing" class="headerlink" title="direct addressing"></a>direct addressing</h2><blockquote>
-<p>movb $0x05,%al<br>表示为:R[al] = 0x05;<br>将立即数 0x05(1 byte) 复制到寄存器 al</p>
-</blockquote>
-<h2 id="indirect-addressing"><a href="#indirect-addressing" class="headerlink" title="indirect addressing"></a>indirect addressing</h2><blockquote>
-<p>间接寻址也就是到内存里去找</p>
-</blockquote>
-<h3 id="register-to-memory"><a href="#register-to-memory" class="headerlink" title="register to memory"></a>register to memory</h3><blockquote>
-<p>movl %eax, -4(%ebp)<br>表示为: mem[R[ebp]-4] = R[eax];<br>将寄存器 eax 里面的值复制到寄存器 ebp 的值减去 4 指向的内存地址处(也就是 R[ebp] -4 的值是一个内存地址).<br>通过寄存器指向了内存地址, 是不是很熟悉的指针啊, 对, 就是指针. C 语言的指针就是这么玩的啊!</p>
-</blockquote>
-<h3 id="memory-to-register"><a href="#memory-to-register" class="headerlink" title="memory to register"></a>memory to register</h3><blockquote>
-<p>movl -4(%ebp), %eax<br>%eax 表示为: R[eax] = mem[R[ebp] -4];<br>将寄存器 esp 的值减去 4 的值指向的内存地址处存放的值, 复制到寄存器 eax</p>
-</blockquote>
-<h1 id="program-counter-for-stored-program"><a href="#program-counter-for-stored-program" class="headerlink" title="program counter for stored program"></a>program counter for stored program</h1><blockquote>
-<p>PC = PC + (instruction size in bytes)<br>(instruction) (src1) (src2) (dst)<br>In most processors, the PC is incremented after fetching an instruction,<br>and holds the memory address of (“points to”) the next instruction that would be executed.<br>这里就用到了指令周期(instruction cycle)这个概念了, fetch, decode, execute.<br>注意到 PC 这个寄存器, 在 CPU fetch 了一条指令后就自动增加了.<br>(In a processor where the incrementation precedes the fetch, the PC points to the current instruction being executed.)<br>同样的在 CPU fetch 一条指令之前, PC 指向当前正在执行的指令.<br>注意: 不允许直接操作 ip(instruction pointer) 也叫 pc(program counter) 这个寄存器, 如果这个能被编译器操作的话, 就完全想跳到哪执行就跳到哪执行了. 实际上 call 和 ret 指令就是在间接操作这两个寄存器. call 带来的效果之一就是 push %rip, ret 带来的效果之一就是 pop %rip. 两者具有对称作用啊!</p>
-</blockquote>
-<h1 id="change-control-flow"><a href="#change-control-flow" class="headerlink" title="change control flow"></a>change control flow</h1><h2 id="jmp-label"><a href="#jmp-label" class="headerlink" title="jmp label"></a>jmp label</h2><blockquote>
-<p>When a jump instruction executes (in the last step of the machine cycle), it puts a new address into the PC. Now the fetch at the top of the next machine cycle fetches the instruction at that new address. Instead of executing the instruction that follows the jump instruction in memory, the processor “jumps” to an instruction somewhere else in memory.<br>jmp 指令把 label 所在的地址, 复制给 pc 寄存器. 这就改变了程序的控制流. 然后程序流程就脱离了原来的执行流. 和 call label 很相似, 对, call指令作用之一就包括了一个隐式的 jmp label. 函数调用也就是把控制权交给了被调用者. 但是控制权要回到调用函数那里. 只不过 call 指令在函数交出控制权之前还多干了一件事, 就是把此时的 pc 值 push 到了栈里. </p>
-</blockquote>
-<h1 id="stack-management"><a href="#stack-management" class="headerlink" title="stack management"></a>stack management</h1><h2 id="stack-pointer"><a href="#stack-pointer" class="headerlink" title="stack pointer"></a>stack pointer</h2><blockquote>
-<p>A stack register is a computer central processor register whose purpose is to keep track of a call stack.<br>push pop 指令操作的是 sp(stack pointer) 这个寄存器.<br>栈底地址: 由bp(base pointer) 保存<br>栈分配空间: sp 减去需要的地址空间大小(所谓的栈向下生长);<br>栈回收空间: sp 加上需要的地址空间大小(所谓的栈向上收缩);(PS: 相当无聊的话)</p>
-</blockquote>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-stack.png" alt="x86-64-stack"> #(x86-64-stack)</p>
-<h2 id="pushl-eax"><a href="#pushl-eax" class="headerlink" title="pushl %eax"></a>pushl %eax</h2><blockquote>
-<p>push value of %eax onto stack<br>The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.<br>这里可以看到 push 的是多字节的数据, 那就涉及到怎样排列多字节数据的问题了. 也就是所谓的字节序的问题. X86 采用所谓的小端, 也就是把数字按照顺序放到栈里, 数字的高位放在了比较大的内存地址那里.(这里不做讨论)<br>等价于</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">subl $4, %esp &#x2F;&#x2F;分配4个字节的空间, 所谓的栈向下生长</span><br><span class="line">movl %eax, (%esp) &#x2F;&#x2F;将 eax 的值复制到 esp 指到的内存地址处</span><br></pre></td></tr></table></figure>
-<h2 id="popl-eax"><a href="#popl-eax" class="headerlink" title="popl %eax"></a>popl %eax</h2><blockquote>
-<p>pop %eax off stack<br>The pop instruction removes the 4-byte data element from the top of the hardware-supported stack into the specified operand (i.e. register or memory location). It first moves the 4 bytes located at memory location [ESP] into the specified register or memory location, and then increments SP by 4.<br>等价于</p>
-</blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movl (%esp),%eax &#x2F;&#x2F;将 esp 指向的内存地址里面的值复制到 eax</span><br><span class="line">addl $4,%esp &#x2F;&#x2F;回收空间</span><br></pre></td></tr></table></figure>
-
-<h1 id="function-call-and-return"><a href="#function-call-and-return" class="headerlink" title="function call and return"></a>function call and return</h1><h2 id="call"><a href="#call" class="headerlink" title="call "></a>call <label></h2><blockquote>
-<p>The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.<br>注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. call 指令做了两件事, 第一件事: 将此时的 ip 保存到栈中, 第二件事: jump 到 label 位置, 此时已经改变了 PC 的值.<br>call label 作用等价于:<br>pushq %rip<br>jmp label</p>
-</blockquote>
-<h2 id="ret"><a href="#ret" class="headerlink" title="ret"></a>ret</h2><blockquote>
-<p>The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (也就是 call 指令压入栈中的 PC, 将这个值复制到 PC 寄存器)(see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.<br>所以啊, call(含有一个 push 操作) 和 ret(含有一个 pop 操作) 指令, 这是实现控制流跳转和恢复的关键. 也间接操作了 sp 这个寄存器. 硬件实现的功能, 不需要过多的计较.<br>ret 作用等价于:<br>popq %rip</p>
-</blockquote>
-<h1 id="call-stack"><a href="#call-stack" class="headerlink" title="call stack"></a>call stack</h1><blockquote>
-<p>In computer science, a call stack is a stack data structure that stores information about the active subroutines of a computer program. This kind of stack is also known as an execution stack, program stack, control stack, run-time stack, or machine stack, and is often shortened to just “the stack”.<br>A call stack is used for several related purposes, but the main reason for having one is to keep track of the point to which each active subroutine should return control when it finishes executing.<br>An active subroutine is one that has been called but is yet to complete execution after which control should be handed back to the point of call. Such activations of subroutines may be nested to any level (recursive as a special case), hence the stack structure.</p>
-</blockquote>
-<h2 id="example"><a href="#example" class="headerlink" title="example"></a>example</h2><blockquote>
-<p>for example, a subroutine DrawSquare calls a subroutine DrawLine from four different places, DrawLine must know where to return when its execution completes. To accomplish this, the address following the instruction that jumps to DrawLine, the return address, is pushed onto the call stack with each call.</p>
-</blockquote>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/callstack-layout-for-upward-growing-stacks.png" alt="callstack-layout-for-upward-growing-stacks"> #(callstack-layout-for-upward-growing-stacks)</p>
-<h1 id="code-analysis"><a href="#code-analysis" class="headerlink" title="code analysis"></a>code analysis</h1><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> tmp = a;</span><br><span class="line">    a = b;</span><br><span class="line">    b = tmp;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">-- 64 bit 机器 , AT&amp;T 风格的汇编</span><br><span class="line">swap(int, int):</span><br><span class="line">        pushq   %rbp &#x2F;&#x2F; 上一个栈帧(main)的基地址压栈 等价于 subq $8, %rsp; movq %rbp,(%rsp)</span><br><span class="line">        movq    %rsp, %rbp &#x2F;&#x2F; 开辟新的函数栈帧, 也就是形成一个新的栈的基地址</span><br><span class="line">        movl    %edi, -20(%rbp) &#x2F;&#x2F; 参数 a</span><br><span class="line">        movl    %esi, -24(%rbp) &#x2F;&#x2F; 参数 b</span><br><span class="line">        movl    -20(%rbp), %eax &#x2F;&#x2F; 把 a 赋值给 %eax</span><br><span class="line">        movl    %eax, -4(%rbp)  &#x2F;&#x2F; 把 %eax (a)赋值给 %rbp - 4(a) 的地址处</span><br><span class="line">        movl    -24(%rbp), %eax &#x2F;&#x2F; 把 b 赋值给 % eax（b）</span><br><span class="line">        movl    %eax, -20(%rbp) &#x2F;&#x2F; 把 %eax (b) 赋值给 %rbp - 20（b） 的地址处,完成 b 的交换</span><br><span class="line">        movl    -4(%rbp), %eax  &#x2F;&#x2F; 把 %rbp - 4 地址处的值(a) 赋值给 %eax (a)</span><br><span class="line">        movl    %eax, -24(%rbp) &#x2F;&#x2F; 把 %eax (a) 赋值给 %rbp - 24 的地址处, 完成 a 的交换</span><br><span class="line">        nop &#x2F;&#x2F; 延时</span><br><span class="line">        popq    %rbp &#x2F;&#x2F; 等价于 movq (%rsp), %rbp ; 上一个函数栈帧(main)的基地址恢复; addq $8, %rsp ; 上一个函数的 %rsp 恢复</span><br><span class="line">        ret &#x2F;&#x2F; 1. popq %rip. (恢复 main 的 pc, call swap 这条指令压入的 pc ) 2. jmp % rip 处继续执行.(也就是 movl $0, %eax 这条指令的地址)</span><br></pre></td></tr></table></figure>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    swap(<span class="number">1</span>, <span class="number">2</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">main:</span><br><span class="line">        pushq   %rbp</span><br><span class="line">        movq    %rsp, %rbp</span><br><span class="line">        movl    $2, %esi &#x2F;&#x2F; 由 caller 准备函数参数 2</span><br><span class="line">        movl    $1, %edi &#x2F;&#x2F; 由 caller 准备函数参数 1</span><br><span class="line">        call    swap &#x2F;&#x2F; 在 CPU fetch 了 call 指令后, pc 已经指向了下一条指令, 也就是 movl $0, %eax 这条指令. 此时的 call 指令完成了两件事, 第一件事: 将 pc(old) 压入到栈中(swap 函数 ret 指令(函数返回)就是把这个 pc(old) pop 到 pc 这个寄存器, CPU 就能接着执行 movl $0, %eax 这条指令了), 第二件事: jump 到swap的地址, 开始执行swap的代码.</span><br><span class="line">        movl    $0, %eax &#x2F;&#x2F; 返回值 0 </span><br><span class="line">        popq    %rbp</span><br><span class="line">        ret</span><br></pre></td></tr></table></figure>
-<h1 id="C-compare-to-Assembly"><a href="#C-compare-to-Assembly" class="headerlink" title="C compare to  Assembly"></a>C compare to  Assembly</h1><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/c-swap-to-asm-swap.png" alt="c-swap-to-asm-swap"></p>
-<h1 id="asm-execute-graph"><a href="#asm-execute-graph" class="headerlink" title="asm execute graph"></a>asm execute graph</h1><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/asm-execute-graph.png" alt="asm-execute-graph"></p>
-<blockquote>
-<p>注意: 示意图里面的是 64 bit 的汇编代码.<br>注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.<br>图1 main 函数执行完 pushq %rbp 和 movq %rsp, %rbp, 开辟 main 函数的栈帧.<br>图2 main 函数执行 call swap. call 指令两个作用: 1. 将 movl $0, %eax 这条指令的地址(X)压入栈中. 2. jump 到 swap 的地址.<br>图3 是 swap 函数的栈帧, 此时新函数的栈帧 rsp 和 rbp 指向的是相同的内存地址.<br>图4 所有的 mov 使用的内存地址, 都是通过 rbp 来偏移得到, rbp 的值并没有发生改变.<br>图5 执行完 popq %rsp, 恢复 main 函数的栈基址(rbp), 也就是和图1 一样.<br>图6 执行完 ret 恢复为 main 函数的栈帧(这里主要是 rsp, rbp, pc, 个人理解把 pc 视为栈帧的一部分, 因为函数调用控制权发生转移, 幕后也离不开 pc 这个寄存器的变化). ret 的作用等价于 popq %rip. 但是无法直接操作 ip(pc) 这个寄存器. 也就相当于间接改变 ip. 此时 pc 已被 ret 指令恢复成了 X. (此时实际上已经控制权已经回到 main 函数了), 接下来就是继续执行 main 函数的代码. 其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.<br>注意: 图1 和 图6 , 图2 和 图5 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的. 在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的 rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址. 也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧. 也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 pc). call 和 ret 指令的也分别有 push %rip 和 pop %rip 的作用. 很对称的操作!</p>
-</blockquote>
-<h1 id="bombs"><a href="#bombs" class="headerlink" title="bombs"></a>bombs</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pushq   %rbp  ; 保留上一个函数(也就是调用者)的栈基址</span><br><span class="line">movq    %rsp, %rbp ; 新函数的栈基址. 一个新的栈帧 sp 和 bp 指向的是同一个地址</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>一个所谓的栈帧(stack frame)就是由 sp(stack pointer) 和 bp(base pointer) 这两个寄存器来维护的.<br>这两句会出现在每一个函数的开始, 那么问题来了 main 函数里面保留的是哪一个调用函数的栈基址呢? 个人推测, 不一定正确, 我们知道创建进程(线程)是 OS 内核的功能, 当然进程销毁也是内核的功能. 内核同样维护着属于内核空间的栈帧, 当进程创建完毕后, 我们写的 C 代码应该是被内核里的函数调用的, 这样的话 main 里面 pushq %rbp 应该是保留的内核函数的栈基址. 这样 main 的 ret 返回后就能接着执行内核函数里面的逻辑了. (估计也就是销毁进程一系列操作了, 这样才能把分配的资源收回来啊!)</p>
-</blockquote>
-<h1 id="references"><a href="#references" class="headerlink" title="references"></a>references</h1><ol>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Program_counter">program counter</a></li>
-<li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/02/S01_x86_64.key.pdf">A reader’s guide to x86 assembly</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cs.virginia.edu/~evans/cs216/guides/x86.html">x86 guide</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Instruction_cycle">instruction cycle</a></li>
-<li><a target="_blank" rel="noopener" href="http://chortle.ccsu.edu/assemblytutorial/Chapter-17/ass17_2.html">how jump work</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stack_register">stack pointer</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Call_stack">call stack</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bogotobogo.com/cplusplus/stackunwinding.php">stack-winding(push)-unwinding(pop)</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.bogotobogo.com/cplusplus/assembly.php">understand-heap-assembly</a></li>
-<li><a target="_blank" rel="noopener" href="https://keleshev.com/eax-x86-register-meaning-and-history/">eax-x86-register-meaning-and-history</a></li>
-<li><a target="_blank" rel="noopener" href="https://flint.cs.yale.edu/cs421/papers/x86-asm/asm.html">flint.cs.yale.edu/cs421/papers/x86-asm/asm.html</a></li>
-<li><a target="_blank" rel="noopener" href="https://csiflabs.cs.ucdavis.edu/~ssdavis/50/att-syntax.htm">at&amp;t 语法</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/05/28/linux-kernel-analysis-1/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/28/linux-kernel-analysis-1/" class="post-title-link" itemprop="url">linux-kernel-analysis-1</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2019-05-28 12:25:46 / Modified: 16:03:23" itemprop="dateCreated datePublished" datetime="2019-05-28T12:25:46+08:00">2019-05-28</time>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>945</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="设计理念"><a href="#设计理念" class="headerlink" title="设计理念"></a>设计理念</h1><p>机制与策略分离<br>机制 – 提供什么样的功能<br>策略 – 如何使用这些功能</p>
-<blockquote>
-<p>说实在的这句话第一次听到还是挺震撼的, 一时觉得大学里的操作系统都不知道在干嘛, 我们学的就是机制, 比如进程创建功能, 进程创建完成后具体如何使用与OS内核不再有关. 文件创建功能, 文件创建完,如何使用交给用户. 其实很类似编程中的接口, 接口定义功能, 实现负责具体的策略.</p>
-</blockquote>
-<h1 id="内核类型"><a href="#内核类型" class="headerlink" title="内核类型"></a>内核类型</h1><ol>
-<li>单内核 (Linux)<blockquote>
-<p>可加载的 Linux 内核模块, 提高维护性.</p>
-</blockquote>
-</li>
-<li>微内核 </li>
-</ol>
-<h1 id="Linux-Kernel"><a href="#Linux-Kernel" class="headerlink" title="Linux Kernel"></a>Linux Kernel</h1><h2 id="双链表"><a href="#双链表" class="headerlink" title="双链表"></a>双链表</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">list_head</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> *<span class="title">next</span> , *<span class="title">prev</span></span></span><br><span class="line"><span class="class">&#125;;</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>这个结构很有意思, 改变两个指针的含义, 会发现几乎描述了很多数据结构.<br>只有一个 *next, 单链表, 只进行头部插入数据-栈, 只进行尾部插入数据-队列<br>*left, *right </p>
-</blockquote>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">define <span class="title">LIST_HEAD_INIT</span><span class="params">(name)</span></span>&#123;&amp;name, &amp;name&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>前后指针都指向自己</p>
-</blockquote>
-<h3 id="声明并初始化"><a href="#声明并初始化" class="headerlink" title="声明并初始化"></a>声明并初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">define <span class="title">LIST_HEAD</span><span class="params">(name)</span> struct <span class="title">list_head</span><span class="params">(name)</span></span>&#123;LIST_HEAD_INIT(name)&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="判空"><a href="#判空" class="headerlink" title="判空"></a>判空</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">list_empty</span><span class="params">(<span class="keyword">const</span> struct list_head*head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next == head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> _ _list_add(struct list_head*<span class="keyword">new</span>,struct list_head*prev,struct_head*next)&#123;</span><br><span class="line">    next-&gt;prev = <span class="keyword">new</span>;</span><br><span class="line">    <span class="keyword">new</span>-&gt;next = next;</span><br><span class="line">    <span class="keyword">new</span>-&gt;prev = prev;</span><br><span class="line">    prev-&gt;next = <span class="keyword">new</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>static 该函数作用域仅在本文件内, 可以隐藏信息<br>inline 编译器展开该函数</p>
-</blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> _ _list_add_tail(struct list_head*<span class="keyword">new</span>,struct list_head*head)&#123;</span><br><span class="line">    _ _list_add(<span class="keyword">new</span>,head-&gt;prev,head);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/3/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1608,13 +1624,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">203k</span>
+    <span title="Symbols count total">205k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:05</span>
+    <span title="Reading time total">3:07</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

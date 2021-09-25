@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -31,7 +31,7 @@
 <meta property="og:description" content="Running a container background(detached)docker search image-name 1docker search redis docker run options image-name:versionsolution1: default latest version 1docker run -d redis solution2: version is">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-05-16T04:40:16.000Z">
-<meta property="article:modified_time" content="2019-05-22T06:54:34.956Z">
+<meta property="article:modified_time" content="2019-05-22T06:54:36.000Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -194,14 +194,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">50</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">53</span>
+        <span class="site-state-item-count">56</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -285,7 +285,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-05-22 14:54:34" itemprop="dateModified" datetime="2019-05-22T14:54:34+08:00">2019-05-22</time>
+        <time title="Modified: 2019-05-22 14:54:36" itemprop="dateModified" datetime="2019-05-22T14:54:36+08:00">2019-05-22</time>
       </span>
 
   
@@ -321,7 +321,8 @@
 <p><strong>solution2: version is 3.2</strong> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis:3.2</span><br></pre></td></tr></table></figure>
 <h1 id="Find-running-container"><a href="#Find-running-container" class="headerlink" title="Find running container"></a>Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="Access-redis"><a href="#Access-redis" class="headerlink" title="Access redis"></a>Access redis</h1><pre><code>note: each docker container is **sandboxed**</code></pre>
+<h1 id="Access-redis"><a href="#Access-redis" class="headerlink" title="Access redis"></a>Access redis</h1><pre><code>note: each docker container is **sandboxed**
+</code></pre>
 <p><strong>solution1: specify host port is 6379</strong><br><em>-p host-port:container-post</em> </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure>
 <p><strong>solution2: specify randomly host port</strong><br><em>-p container-port</em> </p>
@@ -345,9 +346,6 @@
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2019/05/16/hello-world/" rel="prev" title="Hello World">
-                  <i class="fa fa-chevron-left"></i> Hello World
-                </a>
             </div>
             <div class="post-nav-item">
                 <a href="/2019/05/16/katacoda-deploy-static-website/" rel="next" title="deploy-static-website">
@@ -364,6 +362,13 @@
 
 
 
+    
+  
+  <div class="comments">
+  <script src="https://utteranc.es/client.js" repo="stardustman/comments" issue-term="pathname" theme="github-light" crossorigin="anonymous" async></script>
+  </div>
+  
+  
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -406,13 +411,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">203k</span>
+    <span title="Symbols count total">205k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:05</span>
+    <span title="Reading time total">3:07</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

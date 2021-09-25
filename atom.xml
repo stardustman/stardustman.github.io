@@ -6,7 +6,7 @@
   <link href="http://stardustman.github.io/atom.xml" rel="self"/>
   
   <link href="http://stardustman.github.io/"/>
-  <updated>2021-07-21T01:18:21.351Z</updated>
+  <updated>2021-09-11T08:32:17.827Z</updated>
   <id>http://stardustman.github.io/</id>
   
   <author>
@@ -17,11 +17,85 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>What-happens-when-you-type-google.com-into-your-browser-and-press-enter</title>
+    <link href="http://stardustman.github.io/2021/09/11/What-happens-when-you-type-google-com-into-your-browser-and-press-enter/"/>
+    <id>http://stardustman.github.io/2021/09/11/What-happens-when-you-type-google-com-into-your-browser-and-press-enter/</id>
+    <published>2021-09-11T08:21:12.000Z</published>
+    <updated>2021-09-11T08:32:17.827Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;References&quot;&gt;&lt;a href=&quot;#References&quot; class=&quot;headerlink&quot; title=&quot;References&quot;&gt;&lt;/a&gt;References&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="network" scheme="http://stardustman.github.io/tags/network/"/>
+    
+    <category term="interrput" scheme="http://stardustman.github.io/tags/interrput/"/>
+    
+    <category term="dns" scheme="http://stardustman.github.io/tags/dns/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://stardustman.github.io/2021/09/11/hello-world/"/>
+    <id>http://stardustman.github.io/2021/09/11/hello-world/</id>
+    <published>2021-09-11T08:03:04.844Z</published>
+    <updated>2021-09-11T08:03:04.844Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>asm-java-jit</title>
+    <link href="http://stardustman.github.io/2021/07/18/asm-java-jit/"/>
+    <id>http://stardustman.github.io/2021/07/18/asm-java-jit/</id>
+    <published>2021-07-18T02:43:46.000Z</published>
+    <updated>2021-09-11T08:03:04.840Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;无论多么花里胡哨的功能，最终落地到一台计算机上，都是二进制代码。虽然 java 代码跑在 jvm 平台之上，但是 jvm 只是负责执行</summary>
+        
+      
+    
+    
+    
+    
+    <category term="java" scheme="http://stardustman.github.io/tags/java/"/>
+    
+    <category term="jit" scheme="http://stardustman.github.io/tags/jit/"/>
+    
+  </entry>
+  
+  <entry>
     <title>java-keyword-volatile</title>
     <link href="http://stardustman.github.io/2021/06/18/java-keyword-volatile/"/>
     <id>http://stardustman.github.io/2021/06/18/java-keyword-volatile/</id>
     <published>2021-06-18T06:54:23.000Z</published>
-    <updated>2021-07-21T01:18:21.351Z</updated>
+    <updated>2021-07-21T01:18:22.000Z</updated>
     
     
       
@@ -50,7 +124,7 @@
     <link href="http://stardustman.github.io/2021/05/25/cs-semaphores/"/>
     <id>http://stardustman.github.io/2021/05/25/cs-semaphores/</id>
     <published>2021-05-25T04:38:06.000Z</published>
-    <updated>2021-05-25T04:38:06.257Z</updated>
+    <updated>2021-05-25T04:38:08.000Z</updated>
     
     
     
@@ -63,7 +137,7 @@
     <link href="http://stardustman.github.io/2021/04/28/asm-pointers-and-memory/"/>
     <id>http://stardustman.github.io/2021/04/28/asm-pointers-and-memory/</id>
     <published>2021-04-28T08:04:36.000Z</published>
-    <updated>2021-07-21T00:48:32.360Z</updated>
+    <updated>2021-07-21T00:48:34.000Z</updated>
     
     
       
@@ -86,7 +160,7 @@
     <link href="http://stardustman.github.io/2021/04/18/cs-condition-variables/"/>
     <id>http://stardustman.github.io/2021/04/18/cs-condition-variables/</id>
     <published>2021-04-18T12:44:09.000Z</published>
-    <updated>2021-05-28T02:23:14.633Z</updated>
+    <updated>2021-05-28T02:23:16.000Z</updated>
     
     
       
@@ -115,7 +189,7 @@
     <link href="http://stardustman.github.io/2020/12/28/cs-english-words/"/>
     <id>http://stardustman.github.io/2020/12/28/cs-english-words/</id>
     <published>2020-12-28T07:11:28.000Z</published>
-    <updated>2021-03-09T09:20:19.815Z</updated>
+    <updated>2021-03-09T09:20:20.000Z</updated>
     
     
       
@@ -140,7 +214,7 @@
     <link href="http://stardustman.github.io/2020/12/14/cs-lock/"/>
     <id>http://stardustman.github.io/2020/12/14/cs-lock/</id>
     <published>2020-12-14T07:20:26.000Z</published>
-    <updated>2021-05-23T13:29:45.775Z</updated>
+    <updated>2021-05-23T13:29:46.000Z</updated>
     
     
       
@@ -165,7 +239,7 @@
     <link href="http://stardustman.github.io/2020/12/01/cs-cache/"/>
     <id>http://stardustman.github.io/2020/12/01/cs-cache/</id>
     <published>2020-12-01T00:40:29.000Z</published>
-    <updated>2021-01-24T02:05:12.115Z</updated>
+    <updated>2021-01-24T02:05:14.000Z</updated>
     
     
       
@@ -194,7 +268,7 @@
     <link href="http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/"/>
     <id>http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/</id>
     <published>2020-11-30T02:54:57.000Z</published>
-    <updated>2021-01-14T06:17:33.157Z</updated>
+    <updated>2021-01-14T06:17:34.000Z</updated>
     
     
       
@@ -225,7 +299,7 @@
     <link href="http://stardustman.github.io/2020/11/26/data-and-metadata/"/>
     <id>http://stardustman.github.io/2020/11/26/data-and-metadata/</id>
     <published>2020-11-26T08:18:52.000Z</published>
-    <updated>2021-01-08T03:09:08.064Z</updated>
+    <updated>2021-01-08T03:09:10.000Z</updated>
     
     
       
@@ -251,7 +325,7 @@
     <link href="http://stardustman.github.io/2020/11/24/notions-of-computer/"/>
     <id>http://stardustman.github.io/2020/11/24/notions-of-computer/</id>
     <published>2020-11-24T05:25:13.000Z</published>
-    <updated>2021-01-14T06:01:24.363Z</updated>
+    <updated>2021-01-14T06:01:26.000Z</updated>
     
     
       
@@ -274,7 +348,7 @@
     <link href="http://stardustman.github.io/2020/06/12/data-structure-btree/"/>
     <id>http://stardustman.github.io/2020/06/12/data-structure-btree/</id>
     <published>2020-06-12T06:11:02.000Z</published>
-    <updated>2021-01-24T02:08:49.003Z</updated>
+    <updated>2021-01-24T02:08:50.000Z</updated>
     
     
       
@@ -301,7 +375,7 @@
     <link href="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/"/>
     <id>http://stardustman.github.io/2020/06/08/asm-how-computer-startup/</id>
     <published>2020-06-08T00:09:12.000Z</published>
-    <updated>2021-01-24T00:49:40.760Z</updated>
+    <updated>2021-01-24T00:49:42.000Z</updated>
     
     
       
@@ -327,7 +401,7 @@
     <link href="http://stardustman.github.io/2020/05/18/data-structure-heap/"/>
     <id>http://stardustman.github.io/2020/05/18/data-structure-heap/</id>
     <published>2020-05-18T07:24:05.000Z</published>
-    <updated>2021-01-24T02:10:09.229Z</updated>
+    <updated>2021-01-24T02:10:10.000Z</updated>
     
     
       
@@ -356,7 +430,7 @@
     <link href="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/"/>
     <id>http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/</id>
     <published>2020-05-13T07:31:05.000Z</published>
-    <updated>2021-01-14T05:53:00.877Z</updated>
+    <updated>2021-01-14T05:53:02.000Z</updated>
     
     
       
@@ -383,7 +457,7 @@
     <link href="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/"/>
     <id>http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/</id>
     <published>2020-05-11T00:39:15.000Z</published>
-    <updated>2021-01-24T01:58:56.124Z</updated>
+    <updated>2021-01-24T01:58:58.000Z</updated>
     
     
       
@@ -408,7 +482,7 @@
     <link href="http://stardustman.github.io/2020/05/09/network-dhcp/"/>
     <id>http://stardustman.github.io/2020/05/09/network-dhcp/</id>
     <published>2020-05-09T01:36:27.000Z</published>
-    <updated>2021-01-08T08:48:32.404Z</updated>
+    <updated>2021-09-11T08:03:04.846Z</updated>
     
     
       
@@ -433,7 +507,7 @@
     <link href="http://stardustman.github.io/2020/04/27/data-structure-red-black-tree/"/>
     <id>http://stardustman.github.io/2020/04/27/data-structure-red-black-tree/</id>
     <published>2020-04-27T00:50:28.000Z</published>
-    <updated>2021-07-19T01:17:10.146Z</updated>
+    <updated>2021-09-11T08:03:04.844Z</updated>
     
     
       
@@ -450,82 +524,6 @@
     <category term="data structure" scheme="http://stardustman.github.io/tags/data-structure/"/>
     
     <category term="red-black-tree" scheme="http://stardustman.github.io/tags/red-black-tree/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>network-dns</title>
-    <link href="http://stardustman.github.io/2020/04/23/network-dns/"/>
-    <id>http://stardustman.github.io/2020/04/23/network-dns/</id>
-    <published>2020-04-23T02:27:04.000Z</published>
-    <updated>2021-01-14T06:12:27.528Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;blockquote&gt;
-&lt;p&gt;怎样学习一个新的东西，也可以按照一定的套路的。这个东西解决什么问题？这个东西怎样解决问题？&lt;br&gt;还有没有其他方法？&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;三步走分析一下-DNS&quot;&gt;&lt;a href=&quot;#三步走分析一下-DNS&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="network" scheme="http://stardustman.github.io/tags/network/"/>
-    
-    <category term="dns" scheme="http://stardustman.github.io/tags/dns/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>algorithm-quick-sort</title>
-    <link href="http://stardustman.github.io/2020/04/14/algorithm-quick-sort/"/>
-    <id>http://stardustman.github.io/2020/04/14/algorithm-quick-sort/</id>
-    <published>2020-04-14T12:02:16.000Z</published>
-    <updated>2021-01-14T06:19:50.444Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;quick-sort&quot;&gt;&lt;a href=&quot;#quick-sort&quot; class=&quot;headerlink&quot; title=&quot;quick sort&quot;&gt;&lt;/a&gt;quick sort&lt;/h2&gt;&lt;h3 id=&quot;C-代码&quot;&gt;&lt;a href=&quot;#C-代码&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="algorithm,sort" scheme="http://stardustman.github.io/tags/algorithm-sort/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>algorithm-merge-sort</title>
-    <link href="http://stardustman.github.io/2020/04/10/algorithm-merge-sort/"/>
-    <id>http://stardustman.github.io/2020/04/10/algorithm-merge-sort/</id>
-    <published>2020-04-10T12:07:39.000Z</published>
-    <updated>2021-01-14T06:19:05.326Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;merge-sort&quot;&gt;&lt;a href=&quot;#merge-sort&quot; class=&quot;headerlink&quot; title=&quot;merge sort&quot;&gt;&lt;/a&gt;merge sort&lt;/h2&gt;&lt;h3 id=&quot;merge-sort-C-code&quot;&gt;&lt;a</summary>
-        
-      
-    
-    
-    
-    
-    <category term="algorithm" scheme="http://stardustman.github.io/tags/algorithm/"/>
-    
-    <category term="sort" scheme="http://stardustman.github.io/tags/sort/"/>
     
   </entry>
   
