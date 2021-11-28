@@ -188,14 +188,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -238,6 +238,123 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2021/11/28/k8s-deploy-container-using-yaml/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2021/11/28/k8s-deploy-container-using-yaml/" class="post-title-link" itemprop="url">k8s-deploy-container-using-yaml</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2021-11-28 10:18:03 / Modified: 12:28:11" itemprop="dateCreated datePublished" datetime="2021-11-28T10:18:03+08:00">2021-11-28</time>
+    </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>1.9k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>2 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>kubernetes 作为一个云上的操作系统，要想充分利用，就要了解 kubernetes 提供的功能。告诉系统要搞啥，k8s 帮你搞定这一切，归根结底，不开发 k8s 就是一个 k8s 的用户，知道 k8s 能具体做啥，写好 YAML 就可以。</p>
+<h2 id="如何在-k8s-上部署服务"><a href="#如何在-k8s-上部署服务" class="headerlink" title="如何在 k8s 上部署服务"></a>如何在 k8s 上部署服务</h2><h3 id="create-Deployment"><a href="#create-Deployment" class="headerlink" title="create Deployment"></a>create Deployment</h3><blockquote>
+<p>One of the most common <code>Kubernetes object</code> is the <code>deployment object</code>.<br>The deployment object defines the <code>container spec required</code>, along with the <code>name</code> and <code>labels</code> used by other parts of Kubernetes to discover and connect to the application.</p>
+</blockquote>
+<h4 id="准备-deployment-yaml"><a href="#准备-deployment-yaml" class="headerlink" title="准备 deployment.yaml"></a>准备 deployment.yaml</h4><blockquote>
+<p>The definition defines how to launch an application called webapp1 using the Docker Image katacoda/docker-http-server that runs on Port 80.</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span> <span class="comment"># object type</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">webapp1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">webapp1</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">webapp1</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">webapp1</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">katacoda/docker-http-server:latest</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+<h4 id="部署到-k8s-中"><a href="#部署到-k8s-中" class="headerlink" title="部署到 k8s 中"></a>部署到 k8s 中</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f `deployment.yaml`</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看所有-deployment"><a href="#查看所有-deployment" class="headerlink" title="查看所有 deployment"></a>查看所有 deployment</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get deployment</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看某一个-deployment"><a href="#查看某一个-deployment" class="headerlink" title="查看某一个 deployment"></a>查看某一个 deployment</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe deployment `webapp1`</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="create-Service"><a href="#create-Service" class="headerlink" title="create Service"></a>create Service</h3><blockquote>
+<p>kubernetes has powerful networking capabilities that control how applications communicate.<br>These networking configurations can also be controlled via YAML.</p>
+</blockquote>
+<h4 id="准备-service-yaml"><a href="#准备-service-yaml" class="headerlink" title="准备 service.yaml"></a>准备 service.yaml</h4><blockquote>
+<p>The Service <code>selects</code> all applications with the label webapp1.<br>As multiple replicas, or instances, are deployed,<br>they will be <code>automatically load balanced</code> based on this common label.<br>The Service makes the application available via a <code>NodePort</code>.</p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Service</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">webapp1-svc</span></span><br><span class="line">  <span class="attr">labels:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">webapp1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">NodePort</span></span><br><span class="line">  <span class="attr">ports:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="attr">port:</span> <span class="number">80</span></span><br><span class="line">    <span class="attr">nodePort:</span> <span class="number">30080</span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">app:</span> <span class="string">webapp1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="部署到-k8s-中-1"><a href="#部署到-k8s-中-1" class="headerlink" title="部署到 k8s 中"></a>部署到 k8s 中</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl create -f `service.yaml`</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看所有-service"><a href="#查看所有-service" class="headerlink" title="查看所有 service"></a>查看所有 service</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get svc</span><br></pre></td></tr></table></figure>
+
+<h4 id="查看某一个-deployment-1"><a href="#查看某一个-deployment-1" class="headerlink" title="查看某一个 deployment"></a>查看某一个 deployment</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl describe svc `webapp1-svc`</span><br></pre></td></tr></table></figure>
+
+<h3 id="scale-Deployment"><a href="#scale-Deployment" class="headerlink" title="scale Deployment"></a>scale <code>Deployment</code></h3><h4 id="配置-replicas"><a href="#配置-replicas" class="headerlink" title="配置 replicas"></a>配置 replicas</h4><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">apiVersion:</span> <span class="string">apps/v1</span></span><br><span class="line"><span class="attr">kind:</span> <span class="string">Deployment</span> <span class="comment"># object type</span></span><br><span class="line"><span class="attr">metadata:</span></span><br><span class="line">  <span class="attr">name:</span> <span class="string">webapp1</span></span><br><span class="line"><span class="attr">spec:</span></span><br><span class="line">  <span class="attr">replicas:</span> <span class="number">4</span> <span class="comment"># </span></span><br><span class="line">  <span class="attr">selector:</span></span><br><span class="line">    <span class="attr">matchLabels:</span></span><br><span class="line">      <span class="attr">app:</span> <span class="string">webapp1</span></span><br><span class="line">  <span class="attr">template:</span></span><br><span class="line">    <span class="attr">metadata:</span></span><br><span class="line">      <span class="attr">labels:</span></span><br><span class="line">        <span class="attr">app:</span> <span class="string">webapp1</span></span><br><span class="line">    <span class="attr">spec:</span></span><br><span class="line">      <span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">webapp1</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">katacoda/docker-http-server:latest</span></span><br><span class="line">        <span class="attr">ports:</span></span><br><span class="line">        <span class="bullet">-</span> <span class="attr">containerPort:</span> <span class="number">80</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.katacoda.com/courses/kubernetes/kubectl-run-containers">https://www.katacoda.com/courses/kubernetes/kubectl-run-containers</a></li>
+<li><a target="_blank" rel="noopener" href="https://matthewpalmer.net/kubernetes-app-developer/articles/kubernetes-apiversion-definition-guide.html">apiversion</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.redhat.com/en/topics/containers/what-is-kubernetes-deployment">what is k8s deployment?</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1241,159 +1358,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/12/01/cs-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2020/12/01/cs-cache/" class="post-title-link" itemprop="url">cs-cache</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-12-01 08:40:29" itemprop="dateCreated datePublished" datetime="2020-12-01T08:40:29+08:00">2020-12-01</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-01-24 10:05:14" itemprop="dateModified" datetime="2021-01-24T10:05:14+08:00">2021-01-24</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>2.1k</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>2 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>There can be many caches <code>stacked</code> on top of each other.<br>Cache 可以一层一层累积。</p>
-</blockquote>
-<ol>
-<li>if you miss in one you try in the “lower level cache”<br>Lower level, mean higher number.<br>在上层的 Cache miss 了，可以在下层的 Cache 去找。依次类推。</li>
-<li>There can also be <code>separate</code> caches for data and<br>instructions. Or the cache can be <code>“unified”</code>.<br>数据和指令的 Cache 可以独立，也可以混合。</li>
-<li>to wit:</li>
-</ol>
-<ul>
-<li>the <code>L1 data cache (d-cache)</code> is the one nearest processor. It<br>corresponds to the “data memory” block in our pipeline<br>diagrams</li>
-<li>the <code>L1 instruction cache (i-cache)</code> corresponds to the<br>“instruction memory” block in our pipeline diagrams.</li>
-<li>The L2 sits <code>underneath</code> the L1s.</li>
-<li>There is often an <code>L3 in modern systems</code>.</li>
-</ul>
-<h2 id="cache-指导思想"><a href="#cache-指导思想" class="headerlink" title="cache 指导思想"></a>cache 指导思想</h2><h3 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h3><h4 id="temporal-locality-时间局部性"><a href="#temporal-locality-时间局部性" class="headerlink" title="temporal locality (时间局部性)"></a>temporal locality (时间局部性)</h4><p>Taking advantage of temporal locality:</p>
-<ol>
-<li>bring data into cache whenever its referenced</li>
-<li>kick out something that hasn’t been used recently</li>
-</ol>
-<h4 id="spatial-locality-空间局部性"><a href="#spatial-locality-空间局部性" class="headerlink" title="spatial locality (空间局部性)"></a>spatial locality (空间局部性)</h4><p>Taking advantage of spatial locality:<br>bring in a block of <code>contiguous data (cacheline)</code>, not just<br>the <code>requested data</code>.</p>
-<h2 id="基本问题"><a href="#基本问题" class="headerlink" title="基本问题"></a>基本问题</h2><h3 id="怎样找到-cache-中的数据？"><a href="#怎样找到-cache-中的数据？" class="headerlink" title="怎样找到 cache 中的数据？"></a>怎样找到 cache 中的数据？</h3><blockquote>
-<p>以 32bits 的内存地址，来分析。<br>(index, offset) 二维坐标来定位一个 byte 的数据。</p>
-</blockquote>
-<h4 id="index"><a href="#index" class="headerlink" title="index"></a>index</h4><p> 定位 cache line，可视为<code>横坐标</code>。<br> 现在可以通过 cache lines = cache size / cache line size 来计算。<br> index bits = log2(cache lines)</p>
-<h4 id="offset"><a href="#offset" class="headerlink" title="offset"></a>offset</h4><p> 通过 index 定位到 cache line 后，offset 定位到这个 cache line 的哪一个 byte。<br> 可以视为<code>纵坐标</code>。<br> offset bits = log2(offset)</p>
-<h4 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h4><p>32bits 剩下的部分。</p>
-<h4 id="cache-line-应该是多大？"><a href="#cache-line-应该是多大？" class="headerlink" title="cache line 应该是多大？"></a>cache line 应该是多大？</h4><blockquote>
-<p>这其实是分块(block)思想。在利用空间局部性原理。</p>
-</blockquote>
-<h5 id="cache-line-size-越大"><a href="#cache-line-size-越大" class="headerlink" title="cache line size 越大"></a>cache line size 越大</h5><ol>
-<li>Exploits more spatial locality.</li>
-<li>Large cache lines effectively prefetch data that we have not<br>explicitly asked for.<br>更好地利用空间局部性，提前获取将要访问的数据。</li>
-</ol>
-<h5 id="cache-line-size-越小"><a href="#cache-line-size-越小" class="headerlink" title="cache line size 越小"></a>cache line size 越小</h5><ol>
-<li>Focuses on temporal locality.</li>
-<li>If there is little spatial locality, large cache lines waste<br>space and bandwidth.<br>聚焦在时间局部性上，如果没有较好的空间局部性，提前 <code>fetch</code> 了数据，那就浪费了空间和带宽。</li>
-</ol>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache_organization.svg" alt="cache_organization"> #(cache 组织方式)</p>
-<h3 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h3><p>内存地址 32bits。</p>
-<h4 id="1024-cache-lines-32-Bytes-per-line"><a href="#1024-cache-lines-32-Bytes-per-line" class="headerlink" title="1024 cache lines, 32 Bytes per line."></a>1024 cache lines, 32 Bytes per line.</h4><p>index bits = log2(1024) = 10<br>offset bits = log2(32) = 5<br>tags bits = 32 - index - offset = 17</p>
-<h4 id="32KB-cache-64byte-lines"><a href="#32KB-cache-64byte-lines" class="headerlink" title="32KB cache, 64byte lines"></a>32KB cache, 64byte lines</h4><p>index bits = log2(32KB / 64Bytes) = 9<br>offset bits = log2(64) = 6<br>tags bits = 32 - 9 - 6 = 17</p>
-<h4 id="set-是干什么的？"><a href="#set-是干什么的？" class="headerlink" title="set 是干什么的？"></a>set 是干什么的？</h4><p>(set) <code>Associativity</code> means providing <code>more than one</code> place for a cache line to live.<br>One group of lines corresponds to each index</p>
-<ol>
-<li>it is called a “set”</li>
-<li><code>Each line</code> in a set is called a <code>“way”</code></li>
-<li>N-Way associativity requires N parallel comparators<br>set = ？</li>
-</ol>
-<img src="/2020/12/01/cs-cache/cache-2-ways-cache.svg" class="" title="2-ways-cache">
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache-2-ways-cache.svg" alt="2-ways-cache"></p>
-<h3 id="cache-哪一种-address？"><a href="#cache-哪一种-address？" class="headerlink" title="cache 哪一种 address？"></a>cache 哪一种 address？</h3><h4 id="virtual-memory-address"><a href="#virtual-memory-address" class="headerlink" title="virtual memory address"></a>virtual memory address</h4><h4 id="physical-memory-address"><a href="#physical-memory-address" class="headerlink" title="physical memory address"></a>physical memory address</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache-memory-address-type.svg" alt="cache-memory-address-type"> #(缓存类型)</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/wi12/cse141-a/Slides/09_Cache_intro.pdf">CSE141-Caching-Intro</a></li>
-<li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/07/09_CSE141-Caching.pdf">CSE141-Caching</a></li>
-<li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/wi12/cse141-a/Slides/10_Caches_detail.pdf">CSE141-Caches-Details</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.0xffffff.org/2014/01/06/26-x86-cache/">x86-cache</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/admin-guide/mm/memory-hotplug.html">memory-hotplug</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31859105">Cache 是怎样组织和工作的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sysinternals/downloads/coreinfo">cacheinfo-windows</a></li>
-<li><a target="_blank" rel="noopener" href="https://manybutfinite.com/post/intel-cpu-caches/">intel-cpu-cache</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.cs.cornell.edu/courses/cs3410/2013sp/lecture/18-caches3-w.pdf">caches3-w.pdf</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CPU_cache">wiki-cpu-cache</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cs.princeton.edu/courses/archive/fall19/cos316/lectures/10-cpu-cache.pdf">cos316-10-cpu-cache.pdf</a></li>
-<li><a target="_blank" rel="noopener" href="http://aturing.umcs.maine.edu/~meadow/courses/cos335/Intel-CacheOverview.pdf">cos355-Intel-CacheOverview</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31875174">细说Cache-L1/L2/L3/TLB</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1438,13 +1404,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">205k</span>
+    <span title="Symbols count total">207k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:07</span>
+    <span title="Reading time total">3:09</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>

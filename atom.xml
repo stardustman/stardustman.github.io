@@ -6,7 +6,7 @@
   <link href="http://stardustman.github.io/atom.xml" rel="self"/>
   
   <link href="http://stardustman.github.io/"/>
-  <updated>2021-09-11T08:32:17.827Z</updated>
+  <updated>2021-11-28T04:28:11.873Z</updated>
   <id>http://stardustman.github.io/</id>
   
   <author>
@@ -15,6 +15,36 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>k8s-deploy-container-using-yaml</title>
+    <link href="http://stardustman.github.io/2021/11/28/k8s-deploy-container-using-yaml/"/>
+    <id>http://stardustman.github.io/2021/11/28/k8s-deploy-container-using-yaml/</id>
+    <published>2021-11-28T02:18:03.000Z</published>
+    <updated>2021-11-28T04:28:11.873Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;kubernetes 作为一个云上的操作系统，要想充分利用，就要了解 kubernetes 提供的功能。告诉系统要搞啥，k8s 帮你搞定这一切，归根结底，不开发 k8s 就是一个 k8s 的用户，知道 k8s 能具体做啥，写好 YAML 就可以。&lt;/p&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    
+    <category term="katacoda" scheme="http://stardustman.github.io/tags/katacoda/"/>
+    
+    <category term="k8s" scheme="http://stardustman.github.io/tags/k8s/"/>
+    
+    <category term="declarative" scheme="http://stardustman.github.io/tags/declarative/"/>
+    
+    <category term="deploy" scheme="http://stardustman.github.io/tags/deploy/"/>
+    
+  </entry>
   
   <entry>
     <title>What-happens-when-you-type-google.com-into-your-browser-and-press-enter</title>
@@ -499,31 +529,6 @@
     <category term="network" scheme="http://stardustman.github.io/tags/network/"/>
     
     <category term="dhcp" scheme="http://stardustman.github.io/tags/dhcp/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>data-structure-red-black-tree</title>
-    <link href="http://stardustman.github.io/2020/04/27/data-structure-red-black-tree/"/>
-    <id>http://stardustman.github.io/2020/04/27/data-structure-red-black-tree/</id>
-    <published>2020-04-27T00:50:28.000Z</published>
-    <updated>2021-09-11T08:03:04.844Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;img src=&quot;https://gitee.com/stardustman/pictrues/raw/master/img/datastructure/2-3-tree-read-black-tree-2-3-tree.svg&quot; alt=&quot;2-3tree</summary>
-        
-      
-    
-    
-    
-    
-    <category term="data structure" scheme="http://stardustman.github.io/tags/data-structure/"/>
-    
-    <category term="red-black-tree" scheme="http://stardustman.github.io/tags/red-black-tree/"/>
     
   </entry>
   

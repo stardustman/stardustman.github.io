@@ -188,14 +188,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">51</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">60</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -238,6 +238,125 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/06/04/master-ip/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2019/06/04/master-ip/" class="post-title-link" itemprop="url">master-ip</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2019-06-04 15:32:28" itemprop="dateCreated datePublished" datetime="2019-06-04T15:32:28+08:00">2019-06-04</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-24 10:27:38" itemprop="dateModified" datetime="2021-01-24T10:27:38+08:00">2021-01-24</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>1.5k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Motivation"><a href="#Motivation" class="headerlink" title="Motivation"></a>Motivation</h1><p>  The Internet Protocol is designed for use in interconnected systems of <strong>packet-switched</strong> computer communication networks.  Such a system has been called a “catenet”.  The internet protocol provides for transmitting blocks of data called datagrams from sources to destinations, where sources and destinations are hosts identified by <strong>fixed length addresses</strong>.  The internet protocol also provides for <strong>fragmentation</strong> and <strong>reassembly</strong> of long datagrams, if necessary, for transmission through “small packet” networks.</p>
+<blockquote>
+<p>IPv4 is a connectionless protocol for use on packet-switched networks. It operates on a best effort delivery model, in that it does not guarantee delivery, nor does it assure proper sequencing or avoidance of duplicate delivery. These aspects, including data integrity, are addressed by an upper layer transport protocol, such as the Transmission Control Protocol (TCP).</p>
+</blockquote>
+<h1 id="IP-header-format"><a href="#IP-header-format" class="headerlink" title="IP header format"></a>IP header format</h1><p>  <img src="https://gitee.com/stardustman/pictrues/raw/master/img/ip-header-format.png" alt="ip-header-format"></p>
+<h1 id="Ip-datagram"><a href="#Ip-datagram" class="headerlink" title="Ip datagram"></a>Ip datagram</h1><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/ip-format.png" alt="ip-format"></p>
+<h1 id="IPV4-example"><a href="#IPV4-example" class="headerlink" title="IPV4 example"></a>IPV4 example</h1><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/ip-capture-wireshark.jpg"></p>
+<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/ip-capture-wireshark-example.png"></p>
+<h2 id="version-4-bits"><a href="#version-4-bits" class="headerlink" title="version(4 bits)"></a>version(4 bits)</h2><p>0x4(4)</p>
+<h2 id="Header-Length-4-bits"><a href="#Header-Length-4-bits" class="headerlink" title="Header Length(4 bits)"></a>Header Length(4 bits)</h2><p>0x5(5)</p>
+<h2 id="Type-Of-Service-TOS-8-bits"><a href="#Type-Of-Service-TOS-8-bits" class="headerlink" title="Type Of Service(TOS)(8 bits)"></a>Type Of Service(TOS)(8 bits)</h2><p>0x00(0)</p>
+<h2 id="Total-Length-16-bits"><a href="#Total-Length-16-bits" class="headerlink" title="Total Length(16 bits)"></a>Total Length(16 bits)</h2><p>0x28(40)</p>
+<h2 id="Identification-16-bits"><a href="#Identification-16-bits" class="headerlink" title="Identification(16 bits)"></a>Identification(16 bits)</h2><p>0xd279</p>
+<h2 id="Flags-3-bits"><a href="#Flags-3-bits" class="headerlink" title="Flags(3 bits)"></a>Flags(3 bits)</h2><p>0x4 0100</p>
+<ol>
+<li>0 Reserved bit not set</li>
+<li>1 Don’t fragment set</li>
+<li>0 More fragments not set</li>
+</ol>
+<h2 id="Fragment-Offset-13-bits"><a href="#Fragment-Offset-13-bits" class="headerlink" title="Fragment Offset(13 bits)"></a>Fragment Offset(13 bits)</h2><blockquote>
+<p>This field indicates where in the datagram this fragment belongs.<br>The fragment offset is measured in units of 8 octets (64 bits). The<br>first fragment has offset zero.</p>
+</blockquote>
+<p>0x000 (0000 0000 0000)</p>
+<h2 id="Time-to-Live-TTL-8-bits"><a href="#Time-to-Live-TTL-8-bits" class="headerlink" title="Time to Live(TTL)(8 bits)"></a>Time to Live(TTL)(8 bits)</h2><p>0x80 TTL:(128)</p>
+<h2 id="Protocal-8-bits"><a href="#Protocal-8-bits" class="headerlink" title="Protocal(8 bits)"></a>Protocal(8 bits)</h2><p>0x06 TCP:(6)</p>
+<h2 id="Header-Checksum-16-bits"><a href="#Header-Checksum-16-bits" class="headerlink" title="Header Checksum(16 bits)"></a>Header Checksum(16 bits)</h2><p>0x2e35</p>
+<h2 id="Source-IP-Address-32-bits"><a href="#Source-IP-Address-32-bits" class="headerlink" title="Source IP Address(32 bits)"></a>Source IP Address(32 bits)</h2><p>0x 0a:fe:c9:ad -&gt; 10.254.201.173</p>
+<h2 id="Destination-IP-Address-32-bits"><a href="#Destination-IP-Address-32-bits" class="headerlink" title="Destination IP Address(32 bits)"></a>Destination IP Address(32 bits)</h2><p>0x ac:10:79:65 -&gt; 172.16.121.101</p>
+<h1 id="References"><a href="#References" class="headerlink" title="References"></a>References</h1><ol>
+<li><a target="_blank" rel="noopener" href="http://user.it.uu.se/~rmg/teaching/IP.pdf">ip fragmentation and reassembly</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.m.wikipedia.org/wiki/IPv4#Fragmentation_and_reassembly">fragmentation &amp; reassembly</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/ifZk5Ox9cnixq1ZxgwFBSw">ip 重组</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1255,110 +1374,8 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/05/16/katacoda-deploying-first-docker-container/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/05/16/katacoda-deploying-first-docker-container/" class="post-title-link" itemprop="url">katacoda-deploying-first-docker-container</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-05-16 12:40:16" itemprop="dateCreated datePublished" datetime="2019-05-16T12:40:16+08:00">2019-05-16</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2019-05-22 14:54:36" itemprop="dateModified" datetime="2019-05-22T14:54:36+08:00">2019-05-22</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>757</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h1 id="Running-a-container-background-detached"><a href="#Running-a-container-background-detached" class="headerlink" title="Running a container background(detached)"></a>Running a container background(detached)</h1><p><strong>docker search image-name</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker search redis</span><br></pre></td></tr></table></figure>
-<p><strong>docker run options image-name:version</strong><br><strong>solution1: default latest version</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis</span><br></pre></td></tr></table></figure>
-<p><strong>solution2: version is 3.2</strong> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d redis:3.2</span><br></pre></td></tr></table></figure>
-<h1 id="Find-running-container"><a href="#Find-running-container" class="headerlink" title="Find running container"></a>Find running container</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line">docker inspect &lt;container-id&gt;</span><br><span class="line">docker logs &lt;container-id&gt;</span><br></pre></td></tr></table></figure>
-<h1 id="Access-redis"><a href="#Access-redis" class="headerlink" title="Access redis"></a>Access redis</h1><pre><code>note: each docker container is **sandboxed**
-</code></pre>
-<p><strong>solution1: specify host port is 6379</strong><br><em>-p host-port:container-post</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisHostPort -p 6379:6379 redis:latest</span><br></pre></td></tr></table></figure>
-<p><strong>solution2: specify randomly host port</strong><br><em>-p container-port</em> </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisDynamic  -p 6379 redis:latest</span><br><span class="line">docker port redisDynamic 6379</span><br></pre></td></tr></table></figure>
-<h1 id="Persisting-data"><a href="#Persisting-data" class="headerlink" title="Persisting data"></a>Persisting data</h1><p><em>-v host-dir:container-dir</em></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d --name redisMapped -v &#x2F;opt&#x2F;docker&#x2F;data&#x2F;redis:&#x2F;data redis</span><br></pre></td></tr></table></figure>
-<h1 id="Running-a-container-foreground"><a href="#Running-a-container-foreground" class="headerlink" title="Running a container foreground"></a>Running a container foreground</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -it ubuntu bash</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span>
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -1403,13 +1420,13 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">205k</span>
+    <span title="Symbols count total">207k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:07</span>
+    <span title="Reading time total">3:09</span>
   </span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
