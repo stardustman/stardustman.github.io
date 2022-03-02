@@ -6,7 +6,7 @@
   <link href="http://stardustman.github.io/atom.xml" rel="self"/>
   
   <link href="http://stardustman.github.io/"/>
-  <updated>2021-11-28T04:28:11.873Z</updated>
+  <updated>2022-02-13T14:43:27.357Z</updated>
   <id>http://stardustman.github.io/</id>
   
   <author>
@@ -15,6 +15,88 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>2022-plan</title>
+    <link href="http://stardustman.github.io/2022/02/07/2022-plan/"/>
+    <id>http://stardustman.github.io/2022/02/07/2022-plan/</id>
+    <published>2022-02-07T15:32:40.000Z</published>
+    <updated>2022-02-13T14:43:27.357Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;ul&gt;
+&lt;li&gt;&lt;input disabled=&quot;&quot; type=&quot;checkbox&quot;&gt; &lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="plan" scheme="http://stardustman.github.io/tags/plan/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>asm-executable-and-linkable-format</title>
+    <link href="http://stardustman.github.io/2021/12/25/asm-executable-and-linkable-format/"/>
+    <id>http://stardustman.github.io/2021/12/25/asm-executable-and-linkable-format/</id>
+    <published>2021-12-25T11:39:41.000Z</published>
+    <updated>2021-12-25T11:41:47.146Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;References&quot;&gt;&lt;a href=&quot;#References&quot; class=&quot;headerlink&quot; title=&quot;References&quot;&gt;&lt;/a&gt;References&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="elf" scheme="http://stardustman.github.io/tags/elf/"/>
+    
+    <category term="linker" scheme="http://stardustman.github.io/tags/linker/"/>
+    
+    <category term="module" scheme="http://stardustman.github.io/tags/module/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>js-eventloop</title>
+    <link href="http://stardustman.github.io/2021/12/05/js-eventloop/"/>
+    <id>http://stardustman.github.io/2021/12/05/js-eventloop/</id>
+    <published>2021-12-05T15:24:48.000Z</published>
+    <updated>2021-12-05T15:31:18.252Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;References&quot;&gt;&lt;a href=&quot;#References&quot; class=&quot;headerlink&quot; title=&quot;References&quot;&gt;&lt;/a&gt;References&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+    <category term="event-loop" scheme="http://stardustman.github.io/tags/event-loop/"/>
+    
+    <category term="call-stack" scheme="http://stardustman.github.io/tags/call-stack/"/>
+    
+    <category term="task-queue" scheme="http://stardustman.github.io/tags/task-queue/"/>
+    
+    <category term="timer" scheme="http://stardustman.github.io/tags/timer/"/>
+    
+  </entry>
   
   <entry>
     <title>k8s-deploy-container-using-yaml</title>
@@ -244,7 +326,7 @@
     <link href="http://stardustman.github.io/2020/12/14/cs-lock/"/>
     <id>http://stardustman.github.io/2020/12/14/cs-lock/</id>
     <published>2020-12-14T07:20:26.000Z</published>
-    <updated>2021-05-23T13:29:46.000Z</updated>
+    <updated>2022-03-02T14:48:21.735Z</updated>
     
     
       
@@ -452,83 +534,6 @@
     <category term="priority queue" scheme="http://stardustman.github.io/tags/priority-queue/"/>
     
     <category term="heap sort" scheme="http://stardustman.github.io/tags/heap-sort/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>os-banker&#39;s-algorithm</title>
-    <link href="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/"/>
-    <id>http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/</id>
-    <published>2020-05-13T07:31:05.000Z</published>
-    <updated>2021-01-14T05:53:02.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;Banker’s-Algorithm&quot;&gt;&lt;a href=&quot;#Banker’s-Algorithm&quot; class=&quot;headerlink&quot; title=&quot;Banker’s Algorithm&quot;&gt;&lt;/a&gt;Banker’s Algorithm&lt;/h2&gt;&lt;h3</summary>
-        
-      
-    
-    
-    
-    
-    <category term="os" scheme="http://stardustman.github.io/tags/os/"/>
-    
-    <category term="dead lock" scheme="http://stardustman.github.io/tags/dead-lock/"/>
-    
-    <category term="recource allocation" scheme="http://stardustman.github.io/tags/recource-allocation/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>cache-replacement-policy-lru</title>
-    <link href="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/"/>
-    <id>http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/</id>
-    <published>2020-05-11T00:39:15.000Z</published>
-    <updated>2021-01-24T01:58:58.000Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;Cache&quot;&gt;&lt;a href=&quot;#Cache&quot; class=&quot;headerlink&quot; title=&quot;Cache&quot;&gt;&lt;/a&gt;Cache&lt;/h2&gt;&lt;h3 id=&quot;cache&quot;&gt;&lt;a href=&quot;#cache&quot; class=&quot;headerlink&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="cache replacement" scheme="http://stardustman.github.io/tags/cache-replacement/"/>
-    
-    <category term="LRU" scheme="http://stardustman.github.io/tags/LRU/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>network-dhcp</title>
-    <link href="http://stardustman.github.io/2020/05/09/network-dhcp/"/>
-    <id>http://stardustman.github.io/2020/05/09/network-dhcp/</id>
-    <published>2020-05-09T01:36:27.000Z</published>
-    <updated>2021-09-11T08:03:04.846Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;DHCP-步骤&quot;&gt;&lt;a href=&quot;#DHCP-步骤&quot; class=&quot;headerlink&quot; title=&quot;DHCP 步骤&quot;&gt;&lt;/a&gt;DHCP 步骤&lt;/h2&gt;&lt;h3 id=&quot;Discover&quot;&gt;&lt;a href=&quot;#Discover&quot;</summary>
-        
-      
-    
-    
-    
-    
-    <category term="network" scheme="http://stardustman.github.io/tags/network/"/>
-    
-    <category term="dhcp" scheme="http://stardustman.github.io/tags/dhcp/"/>
     
   </entry>
   

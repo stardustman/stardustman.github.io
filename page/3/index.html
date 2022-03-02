@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.0.0">
 
 
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
@@ -188,14 +188,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-count">54</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-count">68</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -238,6 +238,463 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/13/os-banker-s-algorithm/" class="post-title-link" itemprop="url">os-banker's-algorithm</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-13 15:31:05" itemprop="dateCreated datePublished" datetime="2020-05-13T15:31:05+08:00">2020-05-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-14 13:53:02" itemprop="dateModified" datetime="2021-01-14T13:53:02+08:00">2021-01-14</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>2.5k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>2 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h2><h3 id="银行家算法是什么"><a href="#银行家算法是什么" class="headerlink" title="银行家算法是什么"></a>银行家算法是什么</h3><p><code>银行家</code>主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，银行可以判定能不能按照某个顺序来给这批人放贷。类似的思路延伸到计算机世界，同理。操作系统给多个进程分配资源，<code>能不能找到一个顺序给这些进程分配资源，并逐渐回收资源？</code>从而满足多个进程的资源需求。采用银行家放贷和收贷的思路（这里排除利息，放多少贷，收多少钱。呵呵，哪有此种好事？）来分配和回收系统资源就是所谓的<code>银行家算法</code>。</p>
+<h3 id="银行家算法解决什么问题"><a href="#银行家算法解决什么问题" class="headerlink" title="银行家算法解决什么问题"></a>银行家算法解决什么问题</h3><p><code>resource allocation and deadlock avoidance algorithm </code>。银行家算法用来进行资源分配和避免死锁。</p>
+<h3 id="银行家算法怎样解决问题"><a href="#银行家算法怎样解决问题" class="headerlink" title="银行家算法怎样解决问题"></a>银行家算法怎样解决问题</h3><p>P0、P1、P2、P3、P4 5个进程，视为需要钱的 5 个人。<br>A、B、C 三种系统资源。分别视为是银行三种贵金属：金块、银块、铜块。</p>
+<h4 id="allocation-table-已放贷表"><a href="#allocation-table-已放贷表" class="headerlink" title="allocation table 已放贷表"></a>allocation table 已放贷表</h4><p>每个人已经借的金银铜个数列表</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P0</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">P1</td>
+<td align="center">2</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">P2</td>
+<td align="center">3</td>
+<td align="center">0</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P3</td>
+<td align="center">2</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">P4</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">2</td>
+</tr>
+</tbody></table>
+<h4 id="max-table-最大借贷表"><a href="#max-table-最大借贷表" class="headerlink" title="max table 最大借贷表"></a>max table 最大借贷表</h4><p>每个人需要金银铜最大个数列表</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P0</td>
+<td align="center">7</td>
+<td align="center">5</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">P1</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P2</td>
+<td align="center">9</td>
+<td align="center">0</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P3</td>
+<td align="center">2</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P4</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">3</td>
+</tr>
+</tbody></table>
+<h4 id="need-table-还需放贷表"><a href="#need-table-还需放贷表" class="headerlink" title="need table 还需放贷表"></a>need table 还需放贷表</h4><p>每个人还需要的金银铜个数列表。由 max table - allocation table 得到。</p>
+<table>
+<thead>
+<tr>
+<th align="center"></th>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">P0</td>
+<td align="center">7</td>
+<td align="center">4</td>
+<td align="center">3</td>
+</tr>
+<tr>
+<td align="center">P1</td>
+<td align="center">1</td>
+<td align="center">2</td>
+<td align="center">2</td>
+</tr>
+<tr>
+<td align="center">P2</td>
+<td align="center">6</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr>
+<td align="center">P3</td>
+<td align="center">0</td>
+<td align="center">1</td>
+<td align="center">1</td>
+</tr>
+<tr>
+<td align="center">P4</td>
+<td align="center">4</td>
+<td align="center">3</td>
+<td align="center">1</td>
+</tr>
+</tbody></table>
+<h4 id="available-table-剩余资源表"><a href="#available-table-剩余资源表" class="headerlink" title="available table 剩余资源表"></a>available table 剩余资源表</h4><p>银行还剩下的金银铜个数。</p>
+<table>
+<thead>
+<tr>
+<th align="center">A</th>
+<th align="center">B</th>
+<th align="center">C</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">3</td>
+<td align="center">3</td>
+<td align="center">2</td>
+</tr>
+</tbody></table>
+<h4 id="剩余系统资源分配顺序推演"><a href="#剩余系统资源分配顺序推演" class="headerlink" title="剩余系统资源分配顺序推演"></a>剩余系统资源分配顺序推演</h4><ol>
+<li>拿着 available table （剩余资源表），到 need table（还需放贷表） 比对。若 available table 的 A B C 满足 need table 的某一行（也就是 available table 每一列都大于等于 need table 的某一行的每一列）。说明可以分配给这个进程，标记这一行。同时回收这一行对应的 allocation table 中已经分配的 A B C。更新 available table 的 A B C。以此类推，继续比对 need table 中其他未标记的行。若最后 need table 所有行都有标记，说明存在一个给 P0、P1、P2、P3、P4 进程分配资源的顺序。</li>
+<li>拿着 available table 剩余资源表，不满足 need table 中任何一行。说明不存在一个给 P0、P1、P2、P3、P4 进程分配资源的顺序。系统有可能进入死锁。</li>
+</ol>
+<h4 id="银行家算法图解分析"><a href="#银行家算法图解分析" class="headerlink" title="银行家算法图解分析"></a>银行家算法图解分析</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/banks-algorithm.svg" alt="银行家算法"><br>存在的一个序列 P1 -&gt; P3 -&gt; P4 -&gt; P0 -&gt; P2</p>
+<h3 id="有没有其他方法解决此问题"><a href="#有没有其他方法解决此问题" class="headerlink" title="有没有其他方法解决此问题"></a>有没有其他方法解决此问题</h3><h3 id="Banker’s-Algorithm-implemention"><a href="#Banker’s-Algorithm-implemention" class="headerlink" title="Banker’s Algorithm implemention"></a>Banker’s Algorithm implemention</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Banker&#x27;s Algorithm </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// P0, P1, P2, P3, P4 are the Process names here </span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> n, m, i, j, k; </span><br><span class="line">    n = <span class="number">5</span>; <span class="comment">// Number of processes </span></span><br><span class="line">    m = <span class="number">3</span>; <span class="comment">// Number of resources </span></span><br><span class="line">    <span class="keyword">int</span> alloc[<span class="number">5</span>][<span class="number">3</span>] = &#123; &#123; <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span> &#125;, <span class="comment">// P0    // Allocation Matrix </span></span><br><span class="line">                        &#123; <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span> &#125;, <span class="comment">// P1 </span></span><br><span class="line">                        &#123; <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> &#125;, <span class="comment">// P2 </span></span><br><span class="line">                        &#123; <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span> &#125;, <span class="comment">// P3 </span></span><br><span class="line">                        &#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span> &#125; &#125;; <span class="comment">// P4 </span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> max[<span class="number">5</span>][<span class="number">3</span>] = &#123; &#123; <span class="number">7</span>, <span class="number">5</span>, <span class="number">3</span> &#125;, <span class="comment">// P0    // MAX Matrix </span></span><br><span class="line">                      &#123; <span class="number">3</span>, <span class="number">2</span>, <span class="number">2</span> &#125;, <span class="comment">// P1 </span></span><br><span class="line">                      &#123; <span class="number">9</span>, <span class="number">0</span>, <span class="number">2</span> &#125;, <span class="comment">// P2 </span></span><br><span class="line">                      &#123; <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span> &#125;, <span class="comment">// P3 </span></span><br><span class="line">                      &#123; <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span> &#125; &#125;; <span class="comment">// P4 </span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> avail[<span class="number">3</span>] = &#123; <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span> &#125;; <span class="comment">// Available Resources </span></span><br><span class="line">  </span><br><span class="line">    <span class="keyword">int</span> finished[n], ans[n], index = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; n; k++) &#123; </span><br><span class="line">        finished[k] = <span class="number">0</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">int</span> need[n][m]; </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123; </span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++) </span><br><span class="line">            <span class="comment">// 计算 need matrix</span></span><br><span class="line">            need[i][j] = max[i][j] - alloc[i][j]; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">int</span> y = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; <span class="number">5</span>; k++) &#123; </span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> (finished[i] == <span class="number">0</span>) &#123; </span><br><span class="line">  </span><br><span class="line">                <span class="keyword">int</span> flag = <span class="number">0</span>; </span><br><span class="line">                <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++) &#123; </span><br><span class="line">                    <span class="keyword">if</span> (need[i][j] &gt; avail[j])&#123; </span><br><span class="line">                        flag = <span class="number">1</span>; </span><br><span class="line">                         <span class="keyword">break</span>; </span><br><span class="line">                    &#125; </span><br><span class="line">                &#125; </span><br><span class="line">  </span><br><span class="line">                <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123; </span><br><span class="line">                    ans[index++] = i; </span><br><span class="line">                    <span class="keyword">for</span> (y = <span class="number">0</span>; y &lt; m; y++) </span><br><span class="line">                        avail[y] += alloc[i][y]; </span><br><span class="line">                    finished[i] = <span class="number">1</span>; </span><br><span class="line">                &#125; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Following is the SAFE Sequence\n&quot;</span>); </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot; P%d -&gt;&quot;</span>, ans[i]); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; P%d&quot;</span>, ans[n - <span class="number">1</span>]); </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>); </span><br><span class="line">  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95">银行家算法-wiki</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/bankers-algorithm-in-operating-system-2/">bankers-algorithm</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/11/cache-replacement-policy-lru/" class="post-title-link" itemprop="url">cache-replacement-policy-lru</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-11 08:39:15" itemprop="dateCreated datePublished" datetime="2020-05-11T08:39:15+08:00">2020-05-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-24 09:58:58" itemprop="dateModified" datetime="2021-01-24T09:58:58+08:00">2021-01-24</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>7.4k</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>7 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><h3 id="cache"><a href="#cache" class="headerlink" title="cache"></a>cache</h3><p>为啥要有 <code>Cache</code> 呢？根本原因是各种存储速度不匹配。或者为了加快某个过程，直接将多次转换的转换结果直接缓存起来，便于再次使用时直接绕开这些转换过程。典型的就是 <code>MMU</code> 的地址翻译过程，直接将<code>虚拟地址</code>多次转换的最后结果，也就是<code>物理地址</code>，直接缓存到 <code>TLB</code> 中，下次再次访问同一个虚拟地址，直接从虚拟地址拿到物理地址，绕开多次转换过程，这可不就提高了速度。<code>CPU</code> 的速度比 <code>Memory</code> 快得多，为了配上 <code>CPU</code> 超级快的速度，也就有了 <code>L1</code>，<code>L2</code>，<code>L3</code> cache。还有就是存储器层次结构，<em>速度快，容量小</em>的存储作为<em>速度慢，容量大</em>的上级缓存。</p>
+<h3 id="cache-replacement"><a href="#cache-replacement" class="headerlink" title="cache replacement"></a>cache replacement</h3><p>为啥要有 <code>cache replacement</code> 呢？ 因为再大的存储容量也有限，总有使用完的时候，何况速度快的存储，容量本身就小。cache 使用完，再有需要缓存的东西，就需要从缓存中剔除一些，来存放新的内容。那问题就来了，缓存使用完，<em>该剔除哪些已经缓存的内容呢？</em> 这就是所谓的 <code>cache replacement policy</code>。从不同的角度，可以有不同的替换策略。</p>
+<h3 id="least-recently-used"><a href="#least-recently-used" class="headerlink" title="least recently used"></a>least recently used</h3><p>本文来说明这个策略。我不想记忆定义。来通过一个实例来理解这个策略的思想。<br>磁盘要缓存到内存中的内容划分为相等的 page，称之为 <code>virtual page</code>，每一个 page 一个编号，称之为 page number。<br>同理，内存的容量也划分为和磁盘大小一致的 page，称之为 <code>page frame</code>。<br>以下为访问磁盘 page number 的顺序：<br>1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5<br>缓存大小为 3 个 page frame。组成一个<em>缓存 Queue</em></p>
+<h4 id="virtual-page-存放规则"><a href="#virtual-page-存放规则" class="headerlink" title="virtual page 存放规则"></a>virtual page 存放规则</h4><h4 id="缓存队列没满"><a href="#缓存队列没满" class="headerlink" title="缓存队列没满"></a>缓存队列没满</h4><ol>
+<li>virtual page 已在缓存队列中，将代表 virtual page 的队列节点移动到队首。</li>
+<li>virtual page 不在缓存队列中，添加代表这个 virtual page 的队列节点到队首。</li>
+</ol>
+<h4 id="缓存队列已满"><a href="#缓存队列已满" class="headerlink" title="缓存队列已满"></a>缓存队列已满</h4><ol>
+<li>virtual page 已在缓存队列中，将代表 virtual page 的队列节点移动到队首。</li>
+<li> virtual page 不在缓存队列中，<em>移除队尾队列节点</em>，添加代表这个 virtual page 的队列节点到队首。</li>
+</ol>
+<h4 id="LRU-图解"><a href="#LRU-图解" class="headerlink" title="LRU 图解"></a>LRU 图解</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/lru.svg" alt="lru"></p>
+<p>可以看到一直是对<code>缓存队列队首</code>操作。<br>1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</p>
+<ol>
+<li>访问 page 1，缓存队列中没有，page 1 放到队首。</li>
+<li>访问 page 2，缓存队列中没有，page 2 放到队首。</li>
+<li>访问 page 3，缓存队列中没有，page 3 放到队首。</li>
+<li>访问 page 4，缓存队列中没有，且缓存队列满了。移除队尾 page 1，page 4 放到队首。</li>
+<li>访问 page 1，缓存队列中没有，且缓存队列满了。移除队尾 page 2，page 1 放到队首。</li>
+<li>访问 page 2，缓存队列中没有，且缓存队列满了。移除队尾 page 3，page 2 放到队首。</li>
+<li>访问 page 5，缓存队列中没有，且缓存队列满了。移除队尾 page 4，page 5 放到队首。</li>
+<li>访问 page 1，缓存队列中有，page 1 移动到队首。</li>
+<li>访问 page 2，缓存队列中有，page 2 移动到队首。</li>
+<li>访问 page 3，缓存队列中没有，且缓存队列满了。移除队尾 page 5，page 3 放到队首。</li>
+<li>访问 page 4，缓存队列中没有，且缓存队列满了。移除队尾 page 1，page 4 放到队首。</li>
+<li>访问 page 5，缓存队列中没有，且缓存队列满了。移除队尾 page 2，page 5 放到队首。<br>最后缓存队列中存放的是 page 5，page 4，page 3。</li>
+</ol>
+<blockquote>
+<p>由上可知从队首到队尾包含着一个信息就是，越接近队首，越是最近刚访问的 page。缓存背后的原理其实和<code>程序运行的局部性原理</code>有关。<br>通过上述操作，可以看到队列节点调整非常频繁，且队列节点之间有先后关系。这也决定了队列是个双端队列。<br>QNode 指针数组指向已经在缓存队列中的代表 page 的队列节点。</p>
+</blockquote>
+<h4 id="LRU-实现"><a href="#LRU-实现" class="headerlink" title="LRU 实现"></a>LRU 实现</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A C program to show implementation of LRU cache </span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt; </span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt; </span></span></span><br><span class="line">  </span><br><span class="line"><span class="comment">// A Queue Node (Queue is implemented using Doubly Linked List) </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">QNode</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">QNode</span> *<span class="title">prev</span>, *<span class="title">next</span>;</span> </span><br><span class="line">    <span class="keyword">unsigned</span> pageNumber;  <span class="comment">// the page number stored in this QNode </span></span><br><span class="line">&#125; QNode; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A Queue (A FIFO collection of Queue Nodes) </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Queue</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">    <span class="keyword">unsigned</span> count;  <span class="comment">// Number of filled frames </span></span><br><span class="line">    <span class="keyword">unsigned</span> numberOfFrames; <span class="comment">// total number of frames </span></span><br><span class="line">    QNode *front, *rear; </span><br><span class="line">&#125; Queue; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A hash (Collection of pointers to Queue Nodes) </span></span><br><span class="line"><span class="comment">// 怎样判定 page 是不是已经在 cache 中，用这个结构。</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Hash</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">    <span class="keyword">int</span> capacity; <span class="comment">// how many pages can be there </span></span><br><span class="line">    QNode* *<span class="built_in">array</span>; <span class="comment">// an array of queue nodes pointer，QNode 指针数组下标作为 page number 直接索引得到 QNode，或者判定 QNode 存在与否。</span></span><br><span class="line">&#125; Hash; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to create a new Queue Node. The queue Node </span></span><br><span class="line"><span class="comment">// will store the given &#x27;pageNumber&#x27; </span></span><br><span class="line"><span class="function">QNode* <span class="title">newQNode</span><span class="params">( <span class="keyword">unsigned</span> pageNumber )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// Allocate memory and assign &#x27;pageNumber&#x27; </span></span><br><span class="line">    QNode* temp = (QNode *)<span class="built_in">malloc</span>( <span class="keyword">sizeof</span>( QNode ) ); </span><br><span class="line">    temp-&gt;pageNumber = pageNumber; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Initialize prev and next as NULL</span></span><br><span class="line">    temp-&gt;prev = temp-&gt;next = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> temp; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to create an empty Queue. </span></span><br><span class="line"><span class="comment">// The queue can have at most &#x27;numberOfFrames&#x27; nodes </span></span><br><span class="line"><span class="function">Queue* <span class="title">createQueue</span><span class="params">( <span class="keyword">int</span> numberOfFrames )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    Queue* <span class="built_in">queue</span> = (Queue *)<span class="built_in">malloc</span>( <span class="keyword">sizeof</span>( Queue ) ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// The queue is empty </span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;count = <span class="number">0</span>; </span><br><span class="line">    <span class="built_in">queue</span>-&gt;front = <span class="built_in">queue</span>-&gt;rear = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Number of frames that can be stored in memory </span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;numberOfFrames = numberOfFrames; </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to create an empty Hash of given capacity </span></span><br><span class="line"><span class="comment">// capacity 其实就是 page number 范围</span></span><br><span class="line"><span class="function">Hash* <span class="title">createHash</span><span class="params">( <span class="keyword">int</span> capacity )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// Allocate memory for hash </span></span><br><span class="line">    Hash* hash = (Hash *) <span class="built_in">malloc</span>( <span class="keyword">sizeof</span>( Hash ) ); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;====&gt;%d\n&quot;</span>, <span class="keyword">sizeof</span>(Hash));</span><br><span class="line">    hash-&gt;capacity = capacity; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Create an array of pointers for refering queue nodes </span></span><br><span class="line">    hash-&gt;<span class="built_in">array</span> = (QNode **) <span class="built_in">malloc</span>( hash-&gt;capacity * <span class="keyword">sizeof</span>( QNode* ) ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Initialize all hash entries as empty </span></span><br><span class="line">    <span class="keyword">int</span> i; </span><br><span class="line">    <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; hash-&gt;capacity; ++i ) </span><br><span class="line">        hash-&gt;<span class="built_in">array</span>[i] = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> hash; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A function to check if there is slot available in memory </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">AreAllFramesFull</span><span class="params">( Queue* <span class="built_in">queue</span> )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>-&gt;count == <span class="built_in">queue</span>-&gt;numberOfFrames; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to check if queue is empty </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isQueueEmpty</span><span class="params">( Queue* <span class="built_in">queue</span> )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>-&gt;rear == <span class="literal">NULL</span>; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to delete a frame from queue </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">deQueue</span><span class="params">( Queue* <span class="built_in">queue</span> )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// 判断队列是不是空</span></span><br><span class="line">    <span class="keyword">if</span>( isQueueEmpty( <span class="built_in">queue</span> ) ) </span><br><span class="line">        <span class="keyword">return</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// If this is the only node in list, then change front </span></span><br><span class="line">    <span class="comment">// 只有一个 node</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">queue</span>-&gt;front == <span class="built_in">queue</span>-&gt;rear) </span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Change rear and remove the previous rear </span></span><br><span class="line">    QNode* temp = <span class="built_in">queue</span>-&gt;rear; </span><br><span class="line">    <span class="built_in">queue</span>-&gt;rear = <span class="built_in">queue</span>-&gt;rear-&gt;prev; </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">queue</span>-&gt;rear) </span><br><span class="line">        <span class="built_in">queue</span>-&gt;rear-&gt;next = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">free</span>( temp ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// decrement the number of full frames by 1 </span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;count--; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A function to add a page with given &#x27;pageNumber&#x27; to both queue </span></span><br><span class="line"><span class="comment">// and hash </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Enqueue</span><span class="params">( Queue* <span class="built_in">queue</span>, Hash* hash, <span class="keyword">unsigned</span> pageNumber )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// If all frames are full, remove the page at the rear </span></span><br><span class="line">    <span class="keyword">if</span> ( AreAllFramesFull ( <span class="built_in">queue</span> ) ) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">// remove page from hash </span></span><br><span class="line">        <span class="comment">// 移除队尾 QNode</span></span><br><span class="line">        hash-&gt;<span class="built_in">array</span>[ <span class="built_in">queue</span>-&gt;rear-&gt;pageNumber ] = <span class="literal">NULL</span>; </span><br><span class="line">        deQueue( <span class="built_in">queue</span> ); </span><br><span class="line">    &#125; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Create a new node with given page number, </span></span><br><span class="line">    <span class="comment">// And add the new node to the front of queue </span></span><br><span class="line">    QNode* temp = newQNode( pageNumber ); </span><br><span class="line">    temp-&gt;next = <span class="built_in">queue</span>-&gt;front; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// If queue is empty, change both front and rear pointers </span></span><br><span class="line">    <span class="keyword">if</span> ( isQueueEmpty( <span class="built_in">queue</span> ) ) </span><br><span class="line">        <span class="built_in">queue</span>-&gt;rear = <span class="built_in">queue</span>-&gt;front = temp; </span><br><span class="line">    <span class="keyword">else</span>  <span class="comment">// Else change the front </span></span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">// 队首前一个 Node 是 temp</span></span><br><span class="line">        <span class="built_in">queue</span>-&gt;front-&gt;prev = temp;</span><br><span class="line">        <span class="comment">// 队首调整成 temp </span></span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = temp; </span><br><span class="line">    &#125; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Add page entry to hash also </span></span><br><span class="line">    hash-&gt;<span class="built_in">array</span>[ pageNumber ] = temp; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// increment number of full frames </span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;count++; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// This function is called when a page with given &#x27;pageNumber&#x27; is referenced </span></span><br><span class="line"><span class="comment">// from cache (or memory). There are two cases: </span></span><br><span class="line"><span class="comment">// 1. Frame is not there in memory, we bring it in memory and add to the front </span></span><br><span class="line"><span class="comment">//    of queue </span></span><br><span class="line"><span class="comment">// 2. Frame is there in memory, we move the frame to front of queue </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">ReferencePage</span><span class="params">( Queue* <span class="built_in">queue</span>, Hash* hash, <span class="keyword">unsigned</span> pageNumber )</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    QNode* reqPage = hash-&gt;<span class="built_in">array</span>[ pageNumber ]; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// the page is not in cache, bring it </span></span><br><span class="line">    <span class="keyword">if</span> ( reqPage == <span class="literal">NULL</span> ) </span><br><span class="line">        Enqueue( <span class="built_in">queue</span>, hash, pageNumber ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// page is there and not at front, change pointer </span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (reqPage != <span class="built_in">queue</span>-&gt;front) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">// Unlink rquested page from its current location </span></span><br><span class="line">        <span class="comment">// in queue. 把这个 Node 从队列上拿下来</span></span><br><span class="line">        reqPage-&gt;prev-&gt;next = reqPage-&gt;next; </span><br><span class="line">        <span class="comment">// 这个 Node 不是最后一个</span></span><br><span class="line">        <span class="keyword">if</span> (reqPage-&gt;next) </span><br><span class="line">           <span class="comment">// reqPage 的下一个 Node 的 prev 指向 reqPage 的前一个 Node</span></span><br><span class="line">           reqPage-&gt;next-&gt;prev = reqPage-&gt;prev; </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// If the requested page is rear, then change rear </span></span><br><span class="line">        <span class="comment">// as this node will be moved to front </span></span><br><span class="line">        <span class="comment">// reqPage 是队尾</span></span><br><span class="line">        <span class="keyword">if</span> (reqPage == <span class="built_in">queue</span>-&gt;rear) </span><br><span class="line">        &#123; </span><br><span class="line">           <span class="comment">// 更改队尾 Node</span></span><br><span class="line">           <span class="built_in">queue</span>-&gt;rear = reqPage-&gt;prev; </span><br><span class="line">           <span class="comment">// 队尾 Node 没有下一个 Node 了</span></span><br><span class="line">           <span class="built_in">queue</span>-&gt;rear-&gt;next = <span class="literal">NULL</span>; </span><br><span class="line">        &#125; </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// Put the requested page before current front </span></span><br><span class="line">        <span class="comment">// reqPage 成为新的队首 Node</span></span><br><span class="line">        reqPage-&gt;next = <span class="built_in">queue</span>-&gt;front; </span><br><span class="line">        reqPage-&gt;prev = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// Change prev of current front </span></span><br><span class="line">        <span class="comment">// old 队首的 prev 变成 reqPage</span></span><br><span class="line">        reqPage-&gt;next-&gt;prev = reqPage; </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// Change front to the requested page </span></span><br><span class="line">        <span class="comment">// 队列的队首是 reqPage</span></span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = reqPage; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Driver program to test above functions </span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span></span><br><span class="line"><span class="function"></span>&#123; </span><br><span class="line">    <span class="comment">// 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</span></span><br><span class="line">    <span class="comment">// Let cache can hold 3 pages </span></span><br><span class="line">    Queue* q = createQueue( <span class="number">3</span> ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Let 6 different pages can be requested (pages to be </span></span><br><span class="line">    <span class="comment">// referenced are numbered from 0 to 5 </span></span><br><span class="line">    Hash* hash = createHash( <span class="number">6</span> ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Let us refer pages  1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</span></span><br><span class="line">    ReferencePage( q, hash, <span class="number">1</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">2</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">3</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">4</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">1</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">2</span>);</span><br><span class="line">    ReferencePage( q, hash, <span class="number">5</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">1</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">2</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">3</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">4</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">5</span>); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Let us print cache frames after the above referenced pages </span></span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;%d &quot;</span>, q-&gt;front-&gt;pageNumber); </span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;%d &quot;</span>, q-&gt;front-&gt;next-&gt;pageNumber); </span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;%d &quot;</span>, q-&gt;front-&gt;next-&gt;next-&gt;pageNumber); </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/lru-cache-implementation/">least recently used</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cache_(computing)">cache wiki</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/09/network-dhcp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="stardustman">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="stardustman">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2020/05/09/network-dhcp/" class="post-title-link" itemprop="url">network-dhcp</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-05-09 09:36:27" itemprop="dateCreated datePublished" datetime="2020-05-09T09:36:27+08:00">2020-05-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-09-11 16:03:04" itemprop="dateModified" datetime="2021-09-11T16:03:04+08:00">2021-09-11</time>
+      </span>
+
+  
+      </div>
+      <div class="post-meta">
+    <span class="post-meta-item" title="Symbols count in article">
+      <span class="post-meta-item-icon">
+        <i class="far fa-file-word"></i>
+      </span>
+      <span class="post-meta-item-text">Symbols count in article: </span>
+      <span>133</span>
+    </span>
+    <span class="post-meta-item" title="Reading time">
+      <span class="post-meta-item-icon">
+        <i class="far fa-clock"></i>
+      </span>
+      <span class="post-meta-item-text">Reading time &asymp;</span>
+      <span>1 mins.</span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="DHCP-步骤"><a href="#DHCP-步骤" class="headerlink" title="DHCP 步骤"></a>DHCP 步骤</h2><h3 id="Discover"><a href="#Discover" class="headerlink" title="Discover"></a>Discover</h3><h3 id="Offer"><a href="#Offer" class="headerlink" title="Offer"></a>Offer</h3><h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><h3 id="ACK"><a href="#ACK" class="headerlink" title="ACK"></a>ACK</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vU14pBhHTC-oVp1gBpmSvA">127.0.0.1 和 0.0.0.0</a></li>
+<li><a target="_blank" rel="noopener" href="https://support.microsoft.com/en-gb/help/169289/">DHCP-Basics</a></li>
+<li><a target="_blank" rel="noopener" href="https://medium.com/@bromiley/full-packet-friday-dhcp-abbc6b7b3c77">full-packet-friday-dhcp</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/dynamic-host-configuration-protocol-dhcp/">dynamic-host-configuration-protocal</a></li>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc1541">dhcp-rfc</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1325,348 +1782,6 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/11/29/tomcat-http-cookie/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/29/tomcat-http-cookie/" class="post-title-link" itemprop="url">tomcat-http-cookie</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-      
-
-      <time title="Created: 2019-11-29 14:29:51 / Modified: 14:54:40" itemprop="dateCreated datePublished" datetime="2019-11-29T14:29:51+08:00">2019-11-29</time>
-    </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>16k</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>14 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br><span class="line">454</span><br><span class="line">455</span><br><span class="line">456</span><br><span class="line">457</span><br><span class="line">458</span><br><span class="line">459</span><br><span class="line">460</span><br><span class="line">461</span><br><span class="line">462</span><br><span class="line">463</span><br><span class="line">464</span><br><span class="line">465</span><br><span class="line">466</span><br><span class="line">467</span><br><span class="line">468</span><br><span class="line">469</span><br><span class="line">470</span><br><span class="line">471</span><br><span class="line">472</span><br><span class="line">473</span><br><span class="line">474</span><br><span class="line">475</span><br><span class="line">476</span><br><span class="line">477</span><br><span class="line">478</span><br><span class="line">479</span><br><span class="line">480</span><br><span class="line">481</span><br><span class="line">482</span><br><span class="line">483</span><br><span class="line">484</span><br><span class="line">485</span><br><span class="line">486</span><br><span class="line">487</span><br><span class="line">488</span><br><span class="line">489</span><br><span class="line">490</span><br><span class="line">491</span><br><span class="line">492</span><br><span class="line">493</span><br><span class="line">494</span><br><span class="line">495</span><br><span class="line">496</span><br><span class="line">497</span><br><span class="line">498</span><br><span class="line">499</span><br><span class="line">500</span><br><span class="line">501</span><br><span class="line">502</span><br><span class="line">503</span><br><span class="line">504</span><br><span class="line">505</span><br><span class="line">506</span><br><span class="line">507</span><br><span class="line">508</span><br><span class="line">509</span><br><span class="line">510</span><br><span class="line">511</span><br><span class="line">512</span><br><span class="line">513</span><br><span class="line">514</span><br><span class="line">515</span><br><span class="line">516</span><br><span class="line">517</span><br><span class="line">518</span><br><span class="line">519</span><br><span class="line">520</span><br><span class="line">521</span><br><span class="line">522</span><br><span class="line">523</span><br><span class="line">524</span><br><span class="line">525</span><br><span class="line">526</span><br><span class="line">527</span><br><span class="line">528</span><br><span class="line">529</span><br><span class="line">530</span><br><span class="line">531</span><br><span class="line">532</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">package</span> javax.servlet.http;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.Serializable;</span><br><span class="line"><span class="keyword">import</span> java.security.AccessController;</span><br><span class="line"><span class="keyword">import</span> java.security.PrivilegedAction;</span><br><span class="line"><span class="keyword">import</span> java.text.MessageFormat;</span><br><span class="line"><span class="keyword">import</span> java.util.BitSet;</span><br><span class="line"><span class="keyword">import</span> java.util.Locale;</span><br><span class="line"><span class="keyword">import</span> java.util.ResourceBundle;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Creates a cookie, a small amount of information sent by a servlet to a Web</span></span><br><span class="line"><span class="comment"> * browser, saved by the browser, and later sent back to the server.</span></span><br><span class="line"><span class="comment"> * 创建一个 cookie， servlet 发给浏览器的一个小信息，被浏览器保存。之后再发送给服务器。</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> *  A cookie&#x27;s value can uniquely identify a client, so cookies are commonly used for</span></span><br><span class="line"><span class="comment"> * session management.</span></span><br><span class="line"><span class="comment"> * 一个 cookie 的值可以单独的标记出一个客户端，所以 cookies 一般被用来 session 管理。因为</span></span><br><span class="line"><span class="comment"> * http 是一个 stateless 的协议。</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * A cookie has a name, a single value, and optional attributes such as a</span></span><br><span class="line"><span class="comment"> * comment, path and domain qualifiers, a maximum age, and a version number.</span></span><br><span class="line"><span class="comment"> * 一个 cookie 有一个 name，一个单独的 value，还有一些可选的属性，比如 注释，路径，域标记</span></span><br><span class="line"><span class="comment"> * 最大存活时间和一个版本号。</span></span><br><span class="line"><span class="comment"> * document.cookie 可以得到 httponly = false 的 cookie</span></span><br><span class="line"><span class="comment"> *  </span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * Some Web browsers have bugs in how they handle the optional attributes, so</span></span><br><span class="line"><span class="comment"> * use them sparingly to improve the interoperability of your servlets.</span></span><br><span class="line"><span class="comment"> * 一些 web browsers 在处怎样处理可选的属性有 bugs。提高 servlets 的互操作性，请慎用。</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * The servlet sends cookies to the browser by using the</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> HttpServletResponse#addCookie&#125; method, which adds fields to HTTP</span></span><br><span class="line"><span class="comment"> * response headers to send cookies to the browser, one at a time. The browser</span></span><br><span class="line"><span class="comment"> * is expected to support 20 cookies for each Web server, 300 cookies total, and</span></span><br><span class="line"><span class="comment"> * may limit cookie size to 4 KB each.</span></span><br><span class="line"><span class="comment"> * servlet 用 HttpServletResponse#addCookie 向 http 的相应头添加 field, 之后发送给浏览器.</span></span><br><span class="line"><span class="comment"> * 浏览器支持每一个 web server 保存 20 个 cookie. 每一个 cookie 的 size 可能被限制为 4 </span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * The browser returns cookies to the servlet by adding fields to HTTP request</span></span><br><span class="line"><span class="comment"> * headers. </span></span><br><span class="line"><span class="comment"> * 浏览器通过向 http 请求头添加 cookies 的方式返回给服务器. </span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * Cookies can be retrieved from a request by using the</span></span><br><span class="line"><span class="comment"> * &#123;<span class="doctag">@link</span> HttpServletRequest#getCookies&#125; method. Several cookies might have the</span></span><br><span class="line"><span class="comment"> * same name but different path attributes.</span></span><br><span class="line"><span class="comment"> * 服务器通过 HttpServletRequest#getCookies 从请求中提取 cookies.</span></span><br><span class="line"><span class="comment"> * 一些 cookie 可能有相同的 name 但是有不同的 path attribute.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * Cookies affect the caching of the Web pages that use them. HTTP 1.0 does not</span></span><br><span class="line"><span class="comment"> * cache pages that use cookies created with this class. This class does not</span></span><br><span class="line"><span class="comment"> * support the cache control defined with HTTP 1.1.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;</span></span><br><span class="line"><span class="comment"> * This class supports both the RFC 2109 and the RFC 6265 specifications.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * By default, cookies are created using RFC 6265.</span></span><br><span class="line"><span class="comment"> * 默认的, cookie 生成方式采用 RFC 6265. 本质所有的 Cookie 都是按规范生成的.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Cookie</span> <span class="keyword">implements</span> <span class="title">Cloneable</span>, <span class="title">Serializable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 校验 Cookie name</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> CookieNameValidator validation;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">boolean</span> strictServletCompliance; <span class="comment">// 严格的 servlet</span></span><br><span class="line">        <span class="keyword">boolean</span> strictNaming;</span><br><span class="line">        <span class="keyword">boolean</span> allowSlash;</span><br><span class="line">        String propStrictNaming;</span><br><span class="line">        String propFwdSlashIsSeparator;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (System.getSecurityManager() == <span class="keyword">null</span>) &#123;</span><br><span class="line">            strictServletCompliance = Boolean.getBoolean(</span><br><span class="line">                    <span class="string">&quot;org.apache.catalina.STRICT_SERVLET_COMPLIANCE&quot;</span>);</span><br><span class="line">            propStrictNaming = System.getProperty(</span><br><span class="line">                    <span class="string">&quot;org.apache.tomcat.util.http.ServerCookie.STRICT_NAMING&quot;</span>);</span><br><span class="line">            propFwdSlashIsSeparator = System.getProperty(</span><br><span class="line">                    <span class="string">&quot;org.apache.tomcat.util.http.ServerCookie.FWD_SLASH_IS_SEPARATOR&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            strictServletCompliance = AccessController.doPrivileged(</span><br><span class="line">                    <span class="keyword">new</span> PrivilegedAction&lt;Boolean&gt;() &#123;</span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">public</span> Boolean <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                            <span class="keyword">return</span> Boolean.valueOf(System.getProperty(</span><br><span class="line">                                    <span class="string">&quot;org.apache.catalina.STRICT_SERVLET_COMPLIANCE&quot;</span>));</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                ).booleanValue();</span><br><span class="line">            propStrictNaming = AccessController.doPrivileged(</span><br><span class="line">                    <span class="keyword">new</span> PrivilegedAction&lt;String&gt;() &#123;</span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">public</span> String <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                            <span class="keyword">return</span> System.getProperty(</span><br><span class="line">                                    <span class="string">&quot;org.apache.tomcat.util.http.ServerCookie.STRICT_NAMING&quot;</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                );</span><br><span class="line">            propFwdSlashIsSeparator = AccessController.doPrivileged(</span><br><span class="line">                    <span class="keyword">new</span> PrivilegedAction&lt;String&gt;() &#123;</span><br><span class="line">                        <span class="meta">@Override</span></span><br><span class="line">                        <span class="function"><span class="keyword">public</span> String <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                            <span class="keyword">return</span> System.getProperty(</span><br><span class="line">                                    <span class="string">&quot;org.apache.tomcat.util.http.ServerCookie.FWD_SLASH_IS_SEPARATOR&quot;</span>);</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                );</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (propStrictNaming == <span class="keyword">null</span>) &#123;</span><br><span class="line">            strictNaming = strictServletCompliance;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            strictNaming = Boolean.parseBoolean(propStrictNaming);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (propFwdSlashIsSeparator == <span class="keyword">null</span>) &#123;</span><br><span class="line">            allowSlash = !strictServletCompliance;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            allowSlash = !Boolean.parseBoolean(propFwdSlashIsSeparator);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (strictNaming) &#123;</span><br><span class="line">            validation = <span class="keyword">new</span> RFC2109Validator(allowSlash);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            validation = <span class="keyword">new</span> RFC6265Validator();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name; <span class="comment">// cookie name 一旦创建不能被修改</span></span><br><span class="line">    <span class="keyword">private</span> String value; <span class="comment">// cookie value</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> version = <span class="number">0</span>; <span class="comment">// ;Version=1 ... means RFC 2109 style</span></span><br><span class="line">                             <span class="comment">// 默认的是 RFC 6265</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Attributes encoded in the header&#x27;s cookie fields.</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="keyword">private</span> String comment; <span class="comment">// ;Comment=VALUE ... describes cookie&#x27;s use</span></span><br><span class="line">    <span class="keyword">private</span> String domain; <span class="comment">// ;Domain=VALUE ... domain that sees cookie 可以看到 cookie 的 domain</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> maxAge = -<span class="number">1</span>; <span class="comment">// ;Max-Age=VALUE ... cookies auto-expire </span></span><br><span class="line">    <span class="keyword">private</span> String path; <span class="comment">// ;Path=VALUE ... URLs that see the cookie 可以看到 cookie 的 urls</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> secure; <span class="comment">// ;Secure ... e.g. use SSL 启用 ssl</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> httpOnly; <span class="comment">// Not in cookie specs, but supported by browsers 不在 cookie 规范里, 但是被浏览器支持</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Constructs a cookie with a specified name and value.</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * The name must conform to RFC 2109. cookie name 必须遵循 RFC 2109. 没办法,规范就是牛啊</span></span><br><span class="line"><span class="comment">     * That means it can contain only ASCII</span></span><br><span class="line"><span class="comment">     * alphanumeric characters and cannot contain commas, semicolons, or white</span></span><br><span class="line"><span class="comment">     * space or begin with a $ character. The cookie&#x27;s name cannot be changed</span></span><br><span class="line"><span class="comment">     * after creation.</span></span><br><span class="line"><span class="comment">     * 这意味着 cookie name 只能包含 ASCII 的字母, 数字, 不能包括逗号, 分号, 空格, 或者以</span></span><br><span class="line"><span class="comment">     * $ 开头. cookie name 一旦创建不能被修改.</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * The value can be anything the server chooses to send. Its value is</span></span><br><span class="line"><span class="comment">     * probably of interest only to the server. The cookie&#x27;s value can be</span></span><br><span class="line"><span class="comment">     * changed after creation with the &lt;code&gt;setValue&lt;/code&gt; method.</span></span><br><span class="line"><span class="comment">     * server 可以通过 cookie value 发送任何东西.  </span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * By default, cookies are created according to the Netscape cookie</span></span><br><span class="line"><span class="comment">     * specification. The version can be changed with the</span></span><br><span class="line"><span class="comment">     * &lt;code&gt;setVersion&lt;/code&gt; method.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> name</span></span><br><span class="line"><span class="comment">     *            a &lt;code&gt;String&lt;/code&gt; specifying the name of the cookie</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> value</span></span><br><span class="line"><span class="comment">     *            a &lt;code&gt;String&lt;/code&gt; specifying the value of the cookie</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> IllegalArgumentException</span></span><br><span class="line"><span class="comment">     *             if the cookie name contains illegal characters (for example,</span></span><br><span class="line"><span class="comment">     *             a comma, space, or semicolon) or it is one of the tokens</span></span><br><span class="line"><span class="comment">     *             reserved for use by the cookie protocol</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setValue</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setVersion</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Cookie</span><span class="params">(String name, String value)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 首先进行 cookie name 的校验</span></span><br><span class="line">        validation.validate(name);</span><br><span class="line">        <span class="keyword">this</span>.name = name;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Specifies a comment that describes a cookie&#x27;s purpose. </span></span><br><span class="line"><span class="comment">     * 描述这个 cookie 的目的</span></span><br><span class="line"><span class="comment">     * The comment is useful if the browser presents the cookie to the user. Comments are not</span></span><br><span class="line"><span class="comment">     * supported by Netscape Version 0 cookies.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> purpose</span></span><br><span class="line"><span class="comment">     *            a &lt;code&gt;String&lt;/code&gt; specifying the comment to display to the</span></span><br><span class="line"><span class="comment">     *            user</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #getComment</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setComment</span><span class="params">(String purpose)</span> </span>&#123;</span><br><span class="line">        comment = purpose;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the comment describing the purpose of this cookie, or</span></span><br><span class="line"><span class="comment">     * &lt;code&gt;null&lt;/code&gt; if the cookie has no comment.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> a &lt;code&gt;String&lt;/code&gt; containing the comment, or</span></span><br><span class="line"><span class="comment">     *         &lt;code&gt;null&lt;/code&gt; if none</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setComment</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getComment</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> comment;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Specifies the domain within which this cookie should be presented.</span></span><br><span class="line"><span class="comment">     * 指定这个 cookie 可以出现在那个 domain</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * The form of the domain name is specified by RFC 2109. A domain name</span></span><br><span class="line"><span class="comment">     * begins with a dot (&lt;code&gt;.foo.com&lt;/code&gt;) and means that the cookie is</span></span><br><span class="line"><span class="comment">     * visible to servers in a specified Domain Name System (DNS) zone (for</span></span><br><span class="line"><span class="comment">     * example, &lt;code&gt;www.foo.com&lt;/code&gt;, but not &lt;code&gt;a.b.foo.com&lt;/code&gt;). By</span></span><br><span class="line"><span class="comment">     * default, cookies are only returned to the server that sent them.</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * domain name 的形式说明在 RFC 2109. domain name 以 dot 开头, 这意味着在一个特定的</span></span><br><span class="line"><span class="comment">     * DNS 这个 cookie 是可见的. 默认的, 那个服务器发送的 cookie 返回给哪个服务器.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> pattern</span></span><br><span class="line"><span class="comment">     *            a &lt;code&gt;String&lt;/code&gt; containing the domain name within which</span></span><br><span class="line"><span class="comment">     *            this cookie is visible; form is according to RFC 2109</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #getDomain</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setDomain</span><span class="params">(String pattern)</span> </span>&#123;</span><br><span class="line">        domain = pattern.toLowerCase(Locale.ENGLISH); <span class="comment">// IE allegedly needs this</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the domain name set for this cookie. The form of the domain name</span></span><br><span class="line"><span class="comment">     * is set by RFC 2109.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> a &lt;code&gt;String&lt;/code&gt; containing the domain name</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setDomain</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getDomain</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> domain;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Sets the maximum age of the cookie in seconds.</span></span><br><span class="line"><span class="comment">     * cookie 最大存活的秒数</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * A positive value indicates that the cookie will expire after that many</span></span><br><span class="line"><span class="comment">     * seconds have passed. Note that the value is the &lt;i&gt;maximum&lt;/i&gt; age when</span></span><br><span class="line"><span class="comment">     * the cookie will expire, not the cookie&#x27;s current age.</span></span><br><span class="line"><span class="comment">     * 一个正数表明 cookie 将在 maximun age 秒数后过期.</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * A negative value means that the cookie is not stored persistently and</span></span><br><span class="line"><span class="comment">     * will be deleted when the Web browser exits. A zero value causes the</span></span><br><span class="line"><span class="comment">     * cookie to be deleted.</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * 一个负数表示 cookie 不会被永久存储, 浏览器退出时将被删除.</span></span><br><span class="line"><span class="comment">     * 0  删除这个 cookie</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> expiry</span></span><br><span class="line"><span class="comment">     *            an integer specifying the maximum age of the cookie in</span></span><br><span class="line"><span class="comment">     *            seconds; if negative, means the cookie is not stored; if zero,</span></span><br><span class="line"><span class="comment">     *            deletes the cookie</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #getMaxAge</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setMaxAge</span><span class="params">(<span class="keyword">int</span> expiry)</span> </span>&#123;</span><br><span class="line">        maxAge = expiry;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the maximum age of the cookie, specified in seconds, By default,</span></span><br><span class="line"><span class="comment">     * &lt;code&gt;-1&lt;/code&gt; indicating the cookie will persist until browser</span></span><br><span class="line"><span class="comment">     * shutdown.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> an integer specifying the maximum age of the cookie in seconds; if</span></span><br><span class="line"><span class="comment">     *         negative, means the cookie persists until browser shutdown</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setMaxAge</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getMaxAge</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> maxAge;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Specifies a path for the cookie to which the client should return the</span></span><br><span class="line"><span class="comment">     * cookie.</span></span><br><span class="line"><span class="comment">     * 指定一个 path, 表示哪一个 client 应该把这个 cookie 返还给服务器.</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * The cookie is visible to all the pages in the directory you specify, and</span></span><br><span class="line"><span class="comment">     * all the pages in that directory&#x27;s subdirectories. A cookie&#x27;s path must</span></span><br><span class="line"><span class="comment">     * include the servlet that set the cookie, for example, &lt;i&gt;/catalog&lt;/i&gt;,</span></span><br><span class="line"><span class="comment">     * which makes the cookie visible to all directories on the server under</span></span><br><span class="line"><span class="comment">     * &lt;i&gt;/catalog&lt;/i&gt;.</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * Consult RFC 2109 (available on the Internet) for more information on</span></span><br><span class="line"><span class="comment">     * setting path names for cookies.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> uri</span></span><br><span class="line"><span class="comment">     *            a &lt;code&gt;String&lt;/code&gt; specifying a path</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #getPath</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPath</span><span class="params">(String uri)</span> </span>&#123;</span><br><span class="line">        path = uri;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the path on the server to which the browser returns this cookie.</span></span><br><span class="line"><span class="comment">     * The cookie is visible to all subpaths on the server.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> a &lt;code&gt;String&lt;/code&gt; specifying a path that contains a servlet</span></span><br><span class="line"><span class="comment">     *         name, for example, &lt;i&gt;/catalog&lt;/i&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setPath</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getPath</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> path;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Indicates to the browser whether the cookie should only be sent using a</span></span><br><span class="line"><span class="comment">     * secure protocol, such as HTTPS or SSL.</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * The default value is &lt;code&gt;false&lt;/code&gt;.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> flag</span></span><br><span class="line"><span class="comment">     *            if &lt;code&gt;true&lt;/code&gt;, sends the cookie from the browser to the</span></span><br><span class="line"><span class="comment">     *            server only when using a secure protocol; if</span></span><br><span class="line"><span class="comment">     *            &lt;code&gt;false&lt;/code&gt;, sent on any protocol</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #getSecure</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setSecure</span><span class="params">(<span class="keyword">boolean</span> flag)</span> </span>&#123;</span><br><span class="line">        secure = flag;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns &lt;code&gt;true&lt;/code&gt; if the browser is sending cookies only over a</span></span><br><span class="line"><span class="comment">     * secure protocol, or &lt;code&gt;false&lt;/code&gt; if the browser can send cookies</span></span><br><span class="line"><span class="comment">     * using any protocol.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> &lt;code&gt;true&lt;/code&gt; if the browser uses a secure protocol;</span></span><br><span class="line"><span class="comment">     *         otherwise, &lt;code&gt;true&lt;/code&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setSecure</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">getSecure</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> secure;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the name of the cookie. The name cannot be changed after</span></span><br><span class="line"><span class="comment">     * creation.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> a &lt;code&gt;String&lt;/code&gt; specifying the cookie&#x27;s name</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Assigns a new value to a cookie after the cookie is created. If you use a</span></span><br><span class="line"><span class="comment">     * binary value, you may want to use BASE64 encoding.</span></span><br><span class="line"><span class="comment">     * cookie 被创建后, 给 value 指定一个值. 如果使用二进制的值, 采用 BASE64 的编码方式.</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * With Version 0 cookies, values should not contain white space, brackets,</span></span><br><span class="line"><span class="comment">     * parentheses, equals signs, commas, double quotes, slashes, question</span></span><br><span class="line"><span class="comment">     * marks, at signs, colons, and semicolons. Empty values may not behave the</span></span><br><span class="line"><span class="comment">     * same way on all browsers.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> newValue</span></span><br><span class="line"><span class="comment">     *            a &lt;code&gt;String&lt;/code&gt; specifying the new value</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #getValue</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> Cookie</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setValue</span><span class="params">(String newValue)</span> </span>&#123;</span><br><span class="line">        value = newValue;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the value of the cookie.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> a &lt;code&gt;String&lt;/code&gt; containing the cookie&#x27;s present value</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setValue</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> Cookie</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getValue</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Returns the version of the protocol this cookie complies with. Version 1</span></span><br><span class="line"><span class="comment">     * complies with RFC 2109, and version 0 complies with the original cookie</span></span><br><span class="line"><span class="comment">     * specification drafted by Netscape. Cookies provided by a browser use and</span></span><br><span class="line"><span class="comment">     * identify the browser&#x27;s cookie version.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 0 if the cookie complies with the original Netscape specification;</span></span><br><span class="line"><span class="comment">     *         1 if the cookie complies with RFC 2109  被 RFC 6265 淘汰</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #setVersion</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getVersion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> version;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Sets the version of the cookie protocol this cookie complies with.</span></span><br><span class="line"><span class="comment">     * Version 0 complies with the original Netscape cookie specification.</span></span><br><span class="line"><span class="comment">     * version 0 遵守原始的 netscape cookie 说明</span></span><br><span class="line"><span class="comment">     * Version 1 complies with RFC 2109.</span></span><br><span class="line"><span class="comment">     * version 1 遵守 RFC 2109 规范</span></span><br><span class="line"><span class="comment">     * &lt;p&gt;</span></span><br><span class="line"><span class="comment">     * Since RFC 2109 is still somewhat new, consider version 1 as experimental;</span></span><br><span class="line"><span class="comment">     * do not use it yet on production sites.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> v</span></span><br><span class="line"><span class="comment">     *            0 if the cookie should comply with the original Netscape</span></span><br><span class="line"><span class="comment">     *            specification; 1 if the cookie should comply with RFC 2109</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@see</span> #getVersion</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setVersion</span><span class="params">(<span class="keyword">int</span> v)</span> </span>&#123;</span><br><span class="line">        version = v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Overrides the standard &lt;code&gt;java.lang.Object.clone&lt;/code&gt; method to</span></span><br><span class="line"><span class="comment">     * return a copy of this cookie.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">clone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">super</span>.clone();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (CloneNotSupportedException e) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Sets the flag that controls if this cookie will be hidden from scripts on</span></span><br><span class="line"><span class="comment">     * the client side.</span></span><br><span class="line"><span class="comment">     * </span></span><br><span class="line"><span class="comment">     * true 不能被 js document.cookie 操作</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> httpOnly  The new value of the flag</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> Servlet 3.0</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHttpOnly</span><span class="params">(<span class="keyword">boolean</span> httpOnly)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.httpOnly = httpOnly;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Gets the flag that controls if this cookie will be hidden from scripts on</span></span><br><span class="line"><span class="comment">     * the client side.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span>  &lt;code&gt;true&lt;/code&gt; if the cookie is hidden from scripts, else</span></span><br><span class="line"><span class="comment">     *          &lt;code&gt;false&lt;/code&gt;</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@since</span> Servlet 3.0</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isHttpOnly</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> httpOnly;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CookieNameValidator</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 拿到 properties 文件的方法 ResourceBundle</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String LSTRING_FILE = <span class="string">&quot;javax.servlet.http.LocalStrings&quot;</span>;</span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">final</span> ResourceBundle lStrings = ResourceBundle.getBundle(LSTRING_FILE);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">final</span> BitSet allowed;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="title">CookieNameValidator</span><span class="params">(String separators)</span> </span>&#123;</span><br><span class="line">        allowed = <span class="keyword">new</span> BitSet(<span class="number">128</span>);</span><br><span class="line">        allowed.set(<span class="number">0x20</span>, <span class="number">0x7f</span>); <span class="comment">// any CHAR except CTLs or separators</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; separators.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> ch = separators.charAt(i);</span><br><span class="line">            allowed.clear(ch);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// cookie name 不允许为 null 或者长度为 0</span></span><br><span class="line">        <span class="keyword">if</span> (name == <span class="keyword">null</span> || name.length() == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(lStrings.getString(<span class="string">&quot;err.cookie_name_blank&quot;</span>));</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (!isToken(name)) &#123;</span><br><span class="line">            String errMsg = lStrings.getString(<span class="string">&quot;err.cookie_name_is_token&quot;</span>);</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(MessageFormat.format(errMsg, name));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isToken</span><span class="params">(String possibleToken)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = possibleToken.length();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = possibleToken.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (!allowed.get(c)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RFC6265Validator</span> <span class="keyword">extends</span> <span class="title">CookieNameValidator</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String RFC2616_SEPARATORS = <span class="string">&quot;()&lt;&gt;@,;:\\\&quot;/[]?=&#123;&#125; \t&quot;</span>;</span><br><span class="line"></span><br><span class="line">    RFC6265Validator() &#123;</span><br><span class="line">        <span class="keyword">super</span>(RFC2616_SEPARATORS);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RFC2109Validator</span> <span class="keyword">extends</span> <span class="title">RFC6265Validator</span> </span>&#123;</span><br><span class="line">    RFC2109Validator(<span class="keyword">boolean</span> allowSlash) &#123;</span><br><span class="line">        <span class="comment">// special treatment to allow for FWD_SLASH_IS_SEPARATOR property</span></span><br><span class="line">        <span class="keyword">if</span> (allowSlash) &#123;</span><br><span class="line">            allowed.set(<span class="string">&#x27;/&#x27;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">validate</span><span class="params">(String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.validate(name);</span><br><span class="line">        <span class="comment">// cookie name 不允许 $ 开头</span></span><br><span class="line">        <span class="keyword">if</span> (name.charAt(<span class="number">0</span>) == <span class="string">&#x27;$&#x27;</span>) &#123;</span><br><span class="line">            String errMsg = lStrings.getString(<span class="string">&quot;err.cookie_name_is_token&quot;</span>);</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(MessageFormat.format(errMsg, name));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/11/26/katacoda-what-is-a-container-image/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/26/katacoda-what-is-a-container-image/" class="post-title-link" itemprop="url">katacoda-what-is-a-container-image</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-26 20:12:23" itemprop="dateCreated datePublished" datetime="2019-11-26T20:12:23+08:00">2019-11-26</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2020-05-13 15:21:42" itemprop="dateModified" datetime="2020-05-13T15:21:42+08:00">2020-05-13</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>5.5k</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>5 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="container-image"><a href="#container-image" class="headerlink" title="container image"></a>container image</h2><blockquote>
-<p>A container image is a tar file containing tar files. Each of the tar file is a layer. Once all tar files have been extract into the same location then you have the container’s filesystem.<br><code>container image</code> 是一个 <code>tar</code> 文件. 每一个 <code>tar</code> 文件就是一个 layer</p>
-</blockquote>
-<h3 id="docker-pull-拉取一个镜像"><a href="#docker-pull-拉取一个镜像" class="headerlink" title="docker pull 拉取一个镜像"></a>docker pull 拉取一个镜像</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull redis:3.2.11-alpine</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>3.2.11-alpine: Pulling from library/redis<br>ff3a5c916c92: Pull complete<br>aae70a2e6027: Pull complete<br>87c655da471c: Pull complete<br>bc3141806bdc: Pull complete<br>53616fb426d9: Pull complete<br>9791c5883c6a: Pull complete<br>Digest: sha256:ebf1948b84dcaaa0f8a2849cce6f2548edb8862e2829e3e7d9e4cd5a324fb3b7<br>Status: Downloaded newer image for redis:3.2.11-alpine</p>
-</blockquote>
-<blockquote>
-<p>可以看到 redis:3.2.11-alpine 这个 image 拉取了 <em>ff3a5c916c92</em>,<br><em>aae70a2e6027</em>, <em>87c655da471c</em>, <em>bc3141806bdc</em>, <em>53616fb426d9</em>, <em>9791c5883c6a</em> 共 6 次.</p>
-</blockquote>
-<h3 id="docker-save-验证-image-分层"><a href="#docker-save-验证-image-分层" class="headerlink" title="docker save 验证 image 分层"></a>docker save 验证 image 分层</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">docker save --<span class="built_in">help</span></span><br><span class="line">Usage:  docker save [OPTIONS] IMAGE [IMAGE...]</span><br><span class="line">Save one or more images to a tar archive (streamed to STDOUT by default)</span><br><span class="line">Options:</span><br><span class="line">  -o, --output string   Write to a file, instead of STDOUT</span><br></pre></td></tr></table></figure>
-
-<h4 id="验证-redis-3-2-11-alpine-分层"><a href="#验证-redis-3-2-11-alpine-分层" class="headerlink" title="验证 redis:3.2.11-alpine 分层"></a>验证 redis:3.2.11-alpine 分层</h4><h5 id="docker-save-保存-image-为-tar-文件"><a href="#docker-save-保存-image-为-tar-文件" class="headerlink" title="docker save 保存 image 为 tar 文件"></a>docker save 保存 image 为 tar 文件</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker  save  redis:3.2.11-alpine &gt; redis.tar</span><br></pre></td></tr></table></figure>
-
-<h5 id="解压-tar-文件"><a href="#解压-tar-文件" class="headerlink" title="解压 tar 文件"></a>解压 tar 文件</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -xvf redis.tar</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">tree</span><br><span class="line">.</span><br><span class="line">├── 46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── 498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json // 这个 `image` 的配置文件</span><br><span class="line">├── da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c</span><br><span class="line">│   ├── json // 这一 layer 的配置文件</span><br><span class="line">│   ├── layer.tar</span><br><span class="line">│   └── VERSION</span><br><span class="line">├── manifest.json</span><br><span class="line">├── redis.tar // docker save 的 tar 文件</span><br><span class="line">└── repositories</span><br></pre></td></tr></table></figure>
-
-<h5 id="查看解压后的-tar-文件"><a href="#查看解压后的-tar-文件" class="headerlink" title="查看解压后的 tar 文件"></a>查看解压后的 tar 文件</h5><blockquote>
-<p>ls<br>46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557<br>498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59<br>ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c<br>ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json<br>da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c<br>db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3<br>f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c<br>manifest.json<br>repositories</p>
-</blockquote>
-<h5 id="查看-manifest-json"><a href="#查看-manifest-json" class="headerlink" title="查看 manifest.json"></a>查看 manifest.json</h5><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">[</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">&quot;Config&quot;</span>:<span class="string">&quot;ca0b6709748d024a67c502558ea88dc8a1f8a858d380f5ddafa1504126a3b018.json&quot;</span>, <span class="comment">// 整个 image 的配置文件</span></span><br><span class="line">        <span class="attr">&quot;RepoTags&quot;</span>:[</span><br><span class="line">            <span class="string">&quot;redis:3.2.11-alpine&quot;</span> <span class="comment">// image 的 tag</span></span><br><span class="line">        ],</span><br><span class="line">        <span class="attr">&quot;Layers&quot;</span>:[</span><br><span class="line">            <span class="string">&quot;498654318d0999ce36c7b90901ed8bd8cb63d86837cb101ea1ec9bb092f44e59/layer.tar&quot;</span>, <span class="comment">// 1</span></span><br><span class="line">            <span class="string">&quot;ad01e7adb4e23f63a0a1a1d258c165d852768fb2e4cc2d9d5e71698e9672093c/layer.tar&quot;</span>, <span class="comment">// 2</span></span><br><span class="line">            <span class="string">&quot;da2a73e79c2ccb87834d7ce3e43d274a750177fe6527ea3f8492d08d3bb0123c/layer.tar&quot;</span>, <span class="comment">// 3</span></span><br><span class="line">            <span class="string">&quot;db1a23fc1daa8135a1c6c695f7b416a0ac0eb1d8ca873928385a3edaba6ac9a3/layer.tar&quot;</span>, <span class="comment">// 4</span></span><br><span class="line">            <span class="string">&quot;f07352aa34c241692cae1ce60ade187857d0bffa3a31390867038d46b1e7739c/layer.tar&quot;</span>, <span class="comment">// 5</span></span><br><span class="line">            <span class="string">&quot;46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557/layer.tar&quot;</span>  <span class="comment">// 6</span></span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>由上可知, <code>redis:3.2.11-alpine</code> 这个 <code>image</code> 有 6 个 <code>*layer.tar</code> 组成. 每一个 layer.tar 对应 image 一层.</p>
-</blockquote>
-<h5 id="查看-repositories"><a href="#查看-repositories" class="headerlink" title="查看 repositories"></a>查看 repositories</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat repositories</span><br></pre></td></tr></table></figure>
-<p>结果如下:</p>
-<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="attr">&quot;redis&quot;</span>:&#123;<span class="attr">&quot;3.2.11-alpine&quot;</span>:<span class="string">&quot;46a2fed8167f5d523f9a9c07f17a7cd151412fed437272b517ee4e46587e5557&quot;</span>&#125;&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="创建一个空的-image"><a href="#创建一个空的-image" class="headerlink" title="创建一个空的 image"></a>创建一个空的 image</h3><blockquote>
-<p>build an image from scratch</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker import --<span class="built_in">help</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>Usage:  docker import [OPTIONS] file|URL|- [REPOSITORY[:TAG]]<br>Import the contents from a tarball to create a filesystem image<br>Options:<br>  -c, –change list      Apply Dockerfile instruction to the created image<br>  -m, –message string   Set commit message for imported image</p>
-</blockquote>
-<ol>
-<li><p>使用 docker import 生成一个空镜像</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar cv --files-from /dev/null | docker import - empty</span><br></pre></td></tr></table></figure>
-<p>生成的 <strong>empty</strong> 空镜像 ID 如下:<br>sha256:8880ab5b7953a69e0a9252cbeeb537f0667ec10d3f849289117f8434802c0c49</p>
-</li>
-<li><p>查看生成的镜像</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker images</span><br></pre></td></tr></table></figure></li>
-</ol>
-<h3 id="Creating-Image-without-Dockerfile"><a href="#Creating-Image-without-Dockerfile" class="headerlink" title="Creating Image without Dockerfile"></a>Creating Image without Dockerfile</h3><ol>
-<li>得到 <code>BusyBox rootfs</code> </li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://raw.githubusercontent.com/moby/moby/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/contrib/mkimage/busybox-static &amp;&amp; chmod +x busybox-static</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li><p>执行 ./busybox-static busybox</p>
-</li>
-<li><p>ls -lha busybox</p>
-</li>
-<li><p>向 busybox 添加一个版本信息</p>
-</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> KatacodaPrivateBuild &gt; busybox/release</span><br></pre></td></tr></table></figure>
-
-<ol start="5">
-<li>用 busybox 这个文件夹生成一个 image</li>
-</ol>
-<blockquote>
-<p>the directory can be converted into a tar and automatically imported into Docker as an image.</p>
-</blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -C busybox -c . | docker import - busybox</span><br></pre></td></tr></table></figure>
-
-<ol start="6">
-<li>启动一个容器并查看 release 信息</li>
-</ol>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run busybox cat /release</span><br></pre></td></tr></table></figure>
-
-<h3 id="busy-static-shell-脚本分析"><a href="#busy-static-shell-脚本分析" class="headerlink" title="busy-static shell 脚本分析"></a>busy-static shell 脚本分析</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"><span class="built_in">set</span> -e <span class="comment">#  Exit immediately if a command exits with a non-zero status.</span></span><br><span class="line"></span><br><span class="line">rootfsDir=<span class="string">&quot;<span class="variable">$1</span>&quot;</span> <span class="comment"># $1 是第一个参数</span></span><br><span class="line"><span class="built_in">shift</span> <span class="comment"># 相当于 shift 1, 也就是把第一个参数丢掉, 后面的都前进一步</span></span><br><span class="line"></span><br><span class="line">busybox=<span class="string">&quot;<span class="subst">$(which busybox 2&gt;/dev/null || true)</span>&quot;</span> <span class="comment"># 拿到 busybox 的路径</span></span><br><span class="line"><span class="keyword">if</span> [ -z <span class="string">&quot;<span class="variable">$busybox</span>&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> &gt;&amp;2 <span class="string">&#x27;error: busybox: not found&#x27;</span></span><br><span class="line">	<span class="built_in">echo</span> &gt;&amp;2 <span class="string">&#x27;  install it with your distribution &quot;busybox-static&quot; package&#x27;</span></span><br><span class="line">	<span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"><span class="keyword">if</span> ! ldd <span class="string">&quot;<span class="variable">$busybox</span>&quot;</span> 2&gt;&amp;1 | grep -q <span class="string">&#x27;not a dynamic executable&#x27;</span>; <span class="keyword">then</span></span><br><span class="line">	<span class="built_in">echo</span> &gt;&amp;2 <span class="string">&quot;error: &#x27;<span class="variable">$busybox</span>&#x27; appears to be a dynamic executable&quot;</span></span><br><span class="line">	<span class="built_in">echo</span> &gt;&amp;2 <span class="string">&#x27;  you should install your distribution &quot;busybox-static&quot; package instead&#x27;</span></span><br><span class="line">	<span class="built_in">exit</span> 1</span><br><span class="line"><span class="keyword">fi</span></span><br><span class="line"></span><br><span class="line">mkdir -p <span class="string">&quot;<span class="variable">$rootfsDir</span>/bin&quot;</span> <span class="comment"># 创建 $rootfsDir/bin</span></span><br><span class="line">rm -f <span class="string">&quot;<span class="variable">$rootfsDir</span>/bin/busybox&quot;</span> <span class="comment"># just in case</span></span><br><span class="line">cp <span class="string">&quot;<span class="variable">$busybox</span>&quot;</span> <span class="string">&quot;<span class="variable">$rootfsDir</span>/bin/busybox&quot;</span></span><br><span class="line"></span><br><span class="line">(</span><br><span class="line">	<span class="built_in">cd</span> <span class="string">&quot;<span class="variable">$rootfsDir</span>&quot;</span></span><br><span class="line"></span><br><span class="line">	IFS=$<span class="string">&#x27;\n&#x27;</span></span><br><span class="line">	modules=( $(bin/busybox --list-modules) ) <span class="comment"># 得到 busybox 所有的模块</span></span><br><span class="line">	<span class="built_in">unset</span> IFS</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> module <span class="keyword">in</span> <span class="string">&quot;<span class="variable">$&#123;modules[@]&#125;</span>&quot;</span>; <span class="keyword">do</span></span><br><span class="line">		mkdir -p <span class="string">&quot;<span class="subst">$(dirname <span class="string">&quot;<span class="variable">$module</span>&quot;</span>)</span>&quot;</span></span><br><span class="line">        <span class="comment"># ln target linkname</span></span><br><span class="line">		ln -sf /bin/busybox <span class="string">&quot;<span class="variable">$module</span>&quot;</span> <span class="comment"># 强制创建符号链接</span></span><br><span class="line">	<span class="keyword">done</span></span><br><span class="line">)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/moby/moby/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/contrib/mkimage/busybox-static">busybox-static</a></li>
-<li><a target="_blank" rel="noopener" href="http://jm.taobao.org/2016/05/12/introduction-to-docker/">docker-intro</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2019/11/22/bloomfilter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2019/11/22/bloomfilter/" class="post-title-link" itemprop="url">bloomfilter</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2019-11-22 09:05:04" itemprop="dateCreated datePublished" datetime="2019-11-22T09:05:04+08:00">2019-11-22</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-05-20 16:28:24" itemprop="dateModified" datetime="2021-05-20T16:28:24+08:00">2021-05-20</time>
-      </span>
-
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>67</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>1 mins.</span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><p><a target="_blank" rel="noopener" href="https://www.jasondavies.com/bloomfilter/">bloom filter</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://llimllib.github.io/bloomfilter-tutorial/">bloom filter</a></p>
-</li>
-<li><p><a target="_blank" rel="noopener" href="https://coderscat.com/bloom-filter/">https://coderscat.com/bloom-filter/</a></p>
-</li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
@@ -1702,7 +1817,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -1713,7 +1828,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-line"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">208k</span>
   </span>
   <span class="post-meta-item">
     <span class="post-meta-item-icon">
