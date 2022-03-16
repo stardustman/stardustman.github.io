@@ -4,9 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.0.0">
-
-
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -15,15 +13,14 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
-
-<script class="hexo-configurations">
+<script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"stardustman.github.io","root":"/","images":"/images","scheme":"Pisces","version":"8.0.2","exturl":false,"sidebar":{"position":"left","Pisces | Gemini":240,"display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}};
+    var CONFIG = {"hostname":"stardustman.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"Pisces | Gemini":240},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
-<meta name="description" content="merge sortmerge sort C code1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253#include &lt;stdio.h&gt;void merge(int* array, int start, int mid, int end)&amp;">
+
+  <meta name="description" content="merge sortmerge sort C code1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253#include &lt;stdio.h&gt;void merge(int* array, int start, int mid, int end)&amp;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="algorithm-merge-sort">
 <meta property="og:url" content="http://stardustman.github.io/2020/04/10/algorithm-merge-sort/index.html">
@@ -33,18 +30,17 @@
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/merge-sort-stack-frame-analysis.svg">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/merge-sort-analysis.svg">
 <meta property="article:published_time" content="2020-04-10T12:07:39.000Z">
-<meta property="article:modified_time" content="2021-09-11T08:03:04.837Z">
+<meta property="article:modified_time" content="2022-03-16T02:11:45.493Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="algorithm">
 <meta property="article:tag" content="sort">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/merge-sort-stack-frame-analysis.svg">
 
-
 <link rel="canonical" href="http://stardustman.github.io/2020/04/10/algorithm-merge-sort/">
 
 
-<script class="page-configurations">
+<script id="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -53,69 +49,61 @@
     lang   : 'en'
   };
 </script>
-<title>algorithm-merge-sort | stardustman</title>
+
+  <title>algorithm-merge-sort | stardustman</title>
   
+
+
+
 
 
 
   <noscript>
   <style>
-  body { margin-top: 2rem; }
-
+  .use-motion .brand,
   .use-motion .menu-item,
-  .use-motion .sidebar,
+  .sidebar-inner,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
+  .use-motion .site-subtitle {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
 
 <link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
-  <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
 
-  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
     <div class="toggle" aria-label="Toggle navigation bar">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
+      <span class="logo-line-before"><i></i></span>
       <h1 class="site-title">stardustman</h1>
-      <i class="logo-line"></i>
+      <span class="logo-line-after"><i></i></span>
     </a>
   </div>
 
@@ -127,11 +115,17 @@
 
 
 
+
 <nav class="site-nav">
-  <ul class="main-menu menu">
+  <ul id="menu" class="main-menu menu">
         <li class="menu-item menu-item-home">
 
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
 
   </li>
         <li class="menu-item menu-item-about">
@@ -149,11 +143,6 @@
     <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
 
   </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
   </ul>
 </nav>
 
@@ -161,80 +150,6 @@
 
 
 </div>
-        
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#merge-sort"><span class="nav-number">1.</span> <span class="nav-text">merge sort</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#merge-sort-C-code"><span class="nav-number">1.1.</span> <span class="nav-text">merge sort C code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x64-%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">x64 汇编代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E5%B8%A7%E8%B0%83%E7%94%A8%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">栈帧调用图解分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array-%E5%BD%92%E5%B9%B6%E9%A1%BA%E5%BA%8F%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">array 归并顺序图解分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strace-%E5%88%86%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">strace 分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">reference</span></a></li></ol></div>
-        </section>
-        <!--/noindex-->
-
-        <section class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">stardustman</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">54</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">68</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author site-overview-item animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/stardustman" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stardustman" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:aoyunyoung@gmail.com" title="E-Mail → mailto:aoyunyoung@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://stackoverflow.com/users/9112817/cloud-young" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;9112817&#x2F;cloud-young" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
-      </span>
-  </div>
-
-
-
-        </section>
-      </div>
-        <div class="back-to-top animated">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
     </header>
 
     
@@ -242,22 +157,19 @@
 
   <a href="https://github.com/stardustman" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
 
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
 
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
 
-    <div class="main-inner post posts-expand">
+          <div class="content post posts-expand">
+            
 
-
-  
-
-
-<div class="post-block">
+    
   
   
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
     <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/04/10/algorithm-merge-sort/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -274,42 +186,38 @@
           algorithm-merge-sort
         </h1>
 
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
 
-      <time title="Created: 2020-04-10 20:07:39" itemprop="dateCreated datePublished" datetime="2020-04-10T20:07:39+08:00">2020-04-10</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-09-11 16:03:04" itemprop="dateModified" datetime="2021-09-11T16:03:04+08:00">2021-09-11</time>
-      </span>
+              <time title="Created: 2020-04-10 20:07:39" itemprop="dateCreated datePublished" datetime="2020-04-10T20:07:39+08:00">2020-04-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+              </span>
 
-  
-      </div>
-      <div class="post-meta">
-    <span class="post-meta-item" title="Symbols count in article">
-      <span class="post-meta-item-icon">
-        <i class="far fa-file-word"></i>
-      </span>
-      <span class="post-meta-item-text">Symbols count in article: </span>
-      <span>21k</span>
-    </span>
-    <span class="post-meta-item" title="Reading time">
-      <span class="post-meta-item-icon">
-        <i class="far fa-clock"></i>
-      </span>
-      <span class="post-meta-item-text">Reading time &asymp;</span>
-      <span>19 mins.</span>
-    </span>
-</div>
+          <br>
+            <span class="post-meta-item" title="Symbols count in article">
+              <span class="post-meta-item-icon">
+                <i class="far fa-file-word"></i>
+              </span>
+                <span class="post-meta-item-text">Symbols count in article: </span>
+              <span>21k</span>
+            </span>
+            <span class="post-meta-item" title="Reading time">
+              <span class="post-meta-item-icon">
+                <i class="far fa-clock"></i>
+              </span>
+                <span class="post-meta-item-text">Reading time &asymp;</span>
+              <span>19 mins.</span>
+            </span>
 
         </div>
       </header>
@@ -318,6 +226,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
+
+      
         <h2 id="merge-sort"><a href="#merge-sort" class="headerlink" title="merge sort"></a>merge sort</h2><h3 id="merge-sort-C-code"><a href="#merge-sort-C-code" class="headerlink" title="merge sort C code"></a>merge sort C code</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">merge</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">array</span>, <span class="keyword">int</span> start, <span class="keyword">int</span> mid, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="comment">// start = 0</span></span><br><span class="line">    <span class="comment">// mid = 3</span></span><br><span class="line">    <span class="comment">// end = 7</span></span><br><span class="line">    <span class="keyword">int</span> tempArrayLength = end - start + <span class="number">1</span>; <span class="comment">// 8</span></span><br><span class="line">    <span class="keyword">int</span> tempArray[tempArrayLength]; <span class="comment">// tempArray[8]</span></span><br><span class="line">    <span class="keyword">int</span> p1 = start; <span class="comment">// 0</span></span><br><span class="line">    <span class="keyword">int</span> p2 = mid + <span class="number">1</span>; <span class="comment">// 4</span></span><br><span class="line">    <span class="keyword">int</span> p = <span class="number">0</span>;</span><br><span class="line">       <span class="comment">// 比较两个小集合，依次放入大集合, 第一个 while 循环</span></span><br><span class="line">        <span class="keyword">while</span> (p1 &lt;= mid &amp;&amp; p2 &lt;= end)&#123; p1 &lt;=<span class="number">3</span> &amp;&amp; p2 &lt;=<span class="number">7</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="built_in">array</span>[p1] &lt;= <span class="built_in">array</span>[p2])&#123; <span class="comment">// 7 &lt;= 5 XXX</span></span><br><span class="line">                tempArray[p++] = <span class="built_in">array</span>[p1++];</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                tempArray[p++] = <span class="built_in">array</span>[p2++]; <span class="comment">// tempArray[0] = 5</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 左侧集合还有剩余，依次放入大集合， 第二个 while 循环</span></span><br><span class="line">        <span class="keyword">while</span> (p1 &lt;= mid)&#123; <span class="comment">// 2 &lt;= 2 </span></span><br><span class="line">            tempArray[p++] = <span class="built_in">array</span>[p1++]; tempArray[<span class="number">1</span>] = <span class="number">7</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 右侧集合还有剩余，依次放入大集合，第三个 while 循环</span></span><br><span class="line">        <span class="keyword">while</span> (p2 &lt;= end)&#123; <span class="comment">// 4 &lt;= 3 XXX</span></span><br><span class="line">            tempArray[p++] = <span class="built_in">array</span>[p2++]; <span class="comment">// tempArray[1] = 9</span></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 大集合复制到原来的数组，for 循环</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tempArrayLength; i++) &#123;</span><br><span class="line">            <span class="built_in">array</span>[i + start] = tempArray[i]; <span class="comment">//  3,9,5,7</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">mergeSort</span><span class="params">(<span class="keyword">int</span>* <span class="built_in">array</span>, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(start &lt; end)&#123;</span><br><span class="line">        <span class="keyword">int</span> mid = (start + end) / <span class="number">2</span>;</span><br><span class="line">        mergeSort(<span class="built_in">array</span>, start, mid); <span class="comment">// mergeSort_L(array, start, mid);</span></span><br><span class="line">        mergeSort(<span class="built_in">array</span>, mid+<span class="number">1</span>, end); <span class="comment">// mergeSort_R(array, mid+1, end);</span></span><br><span class="line">        merge(<span class="built_in">array</span>, start, mid, end);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">     <span class="keyword">int</span> <span class="built_in">array</span>[<span class="number">8</span>] = &#123;<span class="number">9</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">5</span>, <span class="number">8</span>, <span class="number">6</span>, <span class="number">4</span>, <span class="number">10</span>&#125;;</span><br><span class="line">     mergeSort(<span class="built_in">array</span>, <span class="number">0</span> , <span class="number">7</span>);</span><br><span class="line">     <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">8</span>; i++)</span><br><span class="line">     &#123;</span><br><span class="line">         <span class="built_in">printf</span>(<span class="string">&quot;%d#&quot;</span>,<span class="built_in">array</span>[i]);</span><br><span class="line">     &#125;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h3 id="x64-汇编代码分析"><a href="#x64-汇编代码分析" class="headerlink" title="x64 汇编代码分析"></a>x64 汇编代码分析</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br><span class="line">313</span><br><span class="line">314</span><br><span class="line">315</span><br><span class="line">316</span><br><span class="line">317</span><br><span class="line">318</span><br><span class="line">319</span><br><span class="line">320</span><br><span class="line">321</span><br><span class="line">322</span><br><span class="line">323</span><br><span class="line">324</span><br><span class="line">325</span><br><span class="line">326</span><br><span class="line">327</span><br><span class="line">328</span><br><span class="line">329</span><br><span class="line">330</span><br><span class="line">331</span><br><span class="line">332</span><br><span class="line">333</span><br><span class="line">334</span><br><span class="line">335</span><br><span class="line">336</span><br><span class="line">337</span><br><span class="line">338</span><br><span class="line">339</span><br><span class="line">340</span><br><span class="line">341</span><br><span class="line">342</span><br><span class="line">343</span><br><span class="line">344</span><br><span class="line">345</span><br><span class="line">346</span><br><span class="line">347</span><br><span class="line">348</span><br><span class="line">349</span><br><span class="line">350</span><br><span class="line">351</span><br><span class="line">352</span><br><span class="line">353</span><br><span class="line">354</span><br><span class="line">355</span><br><span class="line">356</span><br><span class="line">357</span><br><span class="line">358</span><br><span class="line">359</span><br><span class="line">360</span><br><span class="line">361</span><br><span class="line">362</span><br><span class="line">363</span><br><span class="line">364</span><br><span class="line">365</span><br><span class="line">366</span><br><span class="line">367</span><br><span class="line">368</span><br><span class="line">369</span><br><span class="line">370</span><br><span class="line">371</span><br><span class="line">372</span><br><span class="line">373</span><br><span class="line">374</span><br><span class="line">375</span><br><span class="line">376</span><br><span class="line">377</span><br><span class="line">378</span><br><span class="line">379</span><br><span class="line">380</span><br><span class="line">381</span><br><span class="line">382</span><br><span class="line">383</span><br><span class="line">384</span><br><span class="line">385</span><br><span class="line">386</span><br><span class="line">387</span><br><span class="line">388</span><br><span class="line">389</span><br><span class="line">390</span><br><span class="line">391</span><br><span class="line">392</span><br><span class="line">393</span><br><span class="line">394</span><br><span class="line">395</span><br><span class="line">396</span><br><span class="line">397</span><br><span class="line">398</span><br><span class="line">399</span><br><span class="line">400</span><br><span class="line">401</span><br><span class="line">402</span><br><span class="line">403</span><br><span class="line">404</span><br><span class="line">405</span><br><span class="line">406</span><br><span class="line">407</span><br><span class="line">408</span><br><span class="line">409</span><br><span class="line">410</span><br><span class="line">411</span><br><span class="line">412</span><br><span class="line">413</span><br><span class="line">414</span><br><span class="line">415</span><br><span class="line">416</span><br><span class="line">417</span><br><span class="line">418</span><br><span class="line">419</span><br><span class="line">420</span><br><span class="line">421</span><br><span class="line">422</span><br><span class="line">423</span><br><span class="line">424</span><br><span class="line">425</span><br><span class="line">426</span><br><span class="line">427</span><br><span class="line">428</span><br><span class="line">429</span><br><span class="line">430</span><br><span class="line">431</span><br><span class="line">432</span><br><span class="line">433</span><br><span class="line">434</span><br><span class="line">435</span><br><span class="line">436</span><br><span class="line">437</span><br><span class="line">438</span><br><span class="line">439</span><br><span class="line">440</span><br><span class="line">441</span><br><span class="line">442</span><br><span class="line">443</span><br><span class="line">444</span><br><span class="line">445</span><br><span class="line">446</span><br><span class="line">447</span><br><span class="line">448</span><br><span class="line">449</span><br><span class="line">450</span><br><span class="line">451</span><br><span class="line">452</span><br><span class="line">453</span><br></pre></td><td class="code"><pre><span class="line">mergesort:     file format elf64-x86-64 ; 64bits 汇编代码</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Disassembly of section .init:</span><br><span class="line"></span><br><span class="line">0000000000000548 &lt;_init&gt;:</span><br><span class="line"> 548:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line"> 54c:	48 8b 05 95 0a 20 00 	mov    0x200a95(%rip),%rax        # 200fe8 &lt;__gmon_start__&gt;</span><br><span class="line"> 553:	48 85 c0             	test   %rax,%rax</span><br><span class="line"> 556:	74 02                	je     55a &lt;_init+0x12&gt;</span><br><span class="line"> 558:	ff d0                	callq  *%rax</span><br><span class="line"> 55a:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line"> 55e:	c3                   	retq   </span><br><span class="line"></span><br><span class="line">Disassembly of section .plt:</span><br><span class="line"></span><br><span class="line">0000000000000560 &lt;.plt&gt;:</span><br><span class="line"> 560:	ff 35 52 0a 20 00    	pushq  0x200a52(%rip)        # 200fb8 &lt;_GLOBAL_OFFSET_TABLE_+0x8&gt;</span><br><span class="line"> 566:	ff 25 54 0a 20 00    	jmpq   *0x200a54(%rip)        # 200fc0 &lt;_GLOBAL_OFFSET_TABLE_+0x10&gt;</span><br><span class="line"> 56c:	0f 1f 40 00          	nopl   0x0(%rax)</span><br><span class="line"></span><br><span class="line">0000000000000570 &lt;__stack_chk_fail@plt&gt;:</span><br><span class="line"> 570:	ff 25 52 0a 20 00    	jmpq   *0x200a52(%rip)        # 200fc8 &lt;__stack_chk_fail@GLIBC_2.4&gt;</span><br><span class="line"> 576:	68 00 00 00 00       	pushq  $0x0</span><br><span class="line"> 57b:	e9 e0 ff ff ff       	jmpq   560 &lt;.plt&gt;</span><br><span class="line"></span><br><span class="line">0000000000000580 &lt;printf@plt&gt;:</span><br><span class="line"> 580:	ff 25 4a 0a 20 00    	jmpq   *0x200a4a(%rip)        # 200fd0 &lt;printf@GLIBC_2.2.5&gt;</span><br><span class="line"> 586:	68 01 00 00 00       	pushq  $0x1</span><br><span class="line"> 58b:	e9 d0 ff ff ff       	jmpq   560 &lt;.plt&gt;</span><br><span class="line"></span><br><span class="line">Disassembly of section .plt.got:</span><br><span class="line"></span><br><span class="line">0000000000000590 &lt;__cxa_finalize@plt&gt;:</span><br><span class="line"> 590:	ff 25 62 0a 20 00    	jmpq   *0x200a62(%rip)        # 200ff8 &lt;__cxa_finalize@GLIBC_2.2.5&gt;</span><br><span class="line"> 596:	66 90                	xchg   %ax,%ax</span><br><span class="line"></span><br><span class="line">Disassembly of section .text: ; 代码区</span><br><span class="line"></span><br><span class="line">00000000000005a0 &lt;_start&gt;:</span><br><span class="line"> 5a0:	31 ed                	xor    %ebp,%ebp ; ebp &#x3D; 0</span><br><span class="line"> 5a2:	49 89 d1             	mov    %rdx,%r9 </span><br><span class="line"> 5a5:	5e                   	pop    %rsi</span><br><span class="line"> 5a6:	48 89 e2             	mov    %rsp,%rdx</span><br><span class="line"> 5a9:	48 83 e4 f0          	and    $0xfffffffffffffff0,%rsp</span><br><span class="line"> 5ad:	50                   	push   %rax</span><br><span class="line"> 5ae:	54                   	push   %rsp</span><br><span class="line"> 5af:	4c 8d 05 aa 04 00 00 	lea    0x4aa(%rip),%r8        # a60 &lt;__libc_csu_fini&gt;</span><br><span class="line"> 5b6:	48 8d 0d 33 04 00 00 	lea    0x433(%rip),%rcx        # 9f0 &lt;__libc_csu_init&gt;</span><br><span class="line"> 5bd:	48 8d 3d 79 03 00 00 	lea    0x379(%rip),%rdi        # 93d &lt;main&gt;</span><br><span class="line"> 5c4:	ff 15 16 0a 20 00    	callq  *0x200a16(%rip)        # 200fe0 &lt;__libc_start_main@GLIBC_2.2.5&gt;</span><br><span class="line"> 5ca:	f4                   	hlt    </span><br><span class="line"> 5cb:	0f 1f 44 00 00       	nopl   0x0(%rax,%rax,1)</span><br><span class="line"></span><br><span class="line">00000000000005d0 &lt;deregister_tm_clones&gt;:</span><br><span class="line"> 5d0:	48 8d 3d 39 0a 20 00 	lea    0x200a39(%rip),%rdi        # 201010 &lt;__TMC_END__&gt;</span><br><span class="line"> 5d7:	55                   	push   %rbp</span><br><span class="line"> 5d8:	48 8d 05 31 0a 20 00 	lea    0x200a31(%rip),%rax        # 201010 &lt;__TMC_END__&gt;</span><br><span class="line"> 5df:	48 39 f8             	cmp    %rdi,%rax</span><br><span class="line"> 5e2:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line"> 5e5:	74 19                	je     600 &lt;deregister_tm_clones+0x30&gt;</span><br><span class="line"> 5e7:	48 8b 05 ea 09 20 00 	mov    0x2009ea(%rip),%rax        # 200fd8 &lt;_ITM_deregisterTMCloneTable&gt;</span><br><span class="line"> 5ee:	48 85 c0             	test   %rax,%rax</span><br><span class="line"> 5f1:	74 0d                	je     600 &lt;deregister_tm_clones+0x30&gt;</span><br><span class="line"> 5f3:	5d                   	pop    %rbp</span><br><span class="line"> 5f4:	ff e0                	jmpq   *%rax</span><br><span class="line"> 5f6:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)</span><br><span class="line"> 5fd:	00 00 00 </span><br><span class="line"> 600:	5d                   	pop    %rbp</span><br><span class="line"> 601:	c3                   	retq   </span><br><span class="line"> 602:	0f 1f 40 00          	nopl   0x0(%rax)</span><br><span class="line"> 606:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)</span><br><span class="line"> 60d:	00 00 00 </span><br><span class="line"></span><br><span class="line">0000000000000610 &lt;register_tm_clones&gt;:</span><br><span class="line"> 610:	48 8d 3d f9 09 20 00 	lea    0x2009f9(%rip),%rdi        # 201010 &lt;__TMC_END__&gt;</span><br><span class="line"> 617:	48 8d 35 f2 09 20 00 	lea    0x2009f2(%rip),%rsi        # 201010 &lt;__TMC_END__&gt;</span><br><span class="line"> 61e:	55                   	push   %rbp</span><br><span class="line"> 61f:	48 29 fe             	sub    %rdi,%rsi</span><br><span class="line"> 622:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line"> 625:	48 c1 fe 03          	sar    $0x3,%rsi</span><br><span class="line"> 629:	48 89 f0             	mov    %rsi,%rax</span><br><span class="line"> 62c:	48 c1 e8 3f          	shr    $0x3f,%rax</span><br><span class="line"> 630:	48 01 c6             	add    %rax,%rsi</span><br><span class="line"> 633:	48 d1 fe             	sar    %rsi</span><br><span class="line"> 636:	74 18                	je     650 &lt;register_tm_clones+0x40&gt;</span><br><span class="line"> 638:	48 8b 05 b1 09 20 00 	mov    0x2009b1(%rip),%rax        # 200ff0 &lt;_ITM_registerTMCloneTable&gt;</span><br><span class="line"> 63f:	48 85 c0             	test   %rax,%rax</span><br><span class="line"> 642:	74 0c                	je     650 &lt;register_tm_clones+0x40&gt;</span><br><span class="line"> 644:	5d                   	pop    %rbp</span><br><span class="line"> 645:	ff e0                	jmpq   *%rax</span><br><span class="line"> 647:	66 0f 1f 84 00 00 00 	nopw   0x0(%rax,%rax,1)</span><br><span class="line"> 64e:	00 00 </span><br><span class="line"> 650:	5d                   	pop    %rbp</span><br><span class="line"> 651:	c3                   	retq   </span><br><span class="line"> 652:	0f 1f 40 00          	nopl   0x0(%rax)</span><br><span class="line"> 656:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)</span><br><span class="line"> 65d:	00 00 00 </span><br><span class="line"></span><br><span class="line">0000000000000660 &lt;__do_global_dtors_aux&gt;:</span><br><span class="line"> 660:	80 3d a9 09 20 00 00 	cmpb   $0x0,0x2009a9(%rip)        # 201010 &lt;__TMC_END__&gt;</span><br><span class="line"> 667:	75 2f                	jne    698 &lt;__do_global_dtors_aux+0x38&gt;</span><br><span class="line"> 669:	48 83 3d 87 09 20 00 	cmpq   $0x0,0x200987(%rip)        # 200ff8 &lt;__cxa_finalize@GLIBC_2.2.5&gt;</span><br><span class="line"> 670:	00 </span><br><span class="line"> 671:	55                   	push   %rbp</span><br><span class="line"> 672:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line"> 675:	74 0c                	je     683 &lt;__do_global_dtors_aux+0x23&gt;</span><br><span class="line"> 677:	48 8b 3d 8a 09 20 00 	mov    0x20098a(%rip),%rdi        # 201008 &lt;__dso_handle&gt;</span><br><span class="line"> 67e:	e8 0d ff ff ff       	callq  590 &lt;__cxa_finalize@plt&gt;</span><br><span class="line"> 683:	e8 48 ff ff ff       	callq  5d0 &lt;deregister_tm_clones&gt;</span><br><span class="line"> 688:	c6 05 81 09 20 00 01 	movb   $0x1,0x200981(%rip)        # 201010 &lt;__TMC_END__&gt;</span><br><span class="line"> 68f:	5d                   	pop    %rbp</span><br><span class="line"> 690:	c3                   	retq   </span><br><span class="line"> 691:	0f 1f 80 00 00 00 00 	nopl   0x0(%rax)</span><br><span class="line"> 698:	f3 c3                	repz retq </span><br><span class="line"> 69a:	66 0f 1f 44 00 00    	nopw   0x0(%rax,%rax,1)</span><br><span class="line"></span><br><span class="line">00000000000006a0 &lt;frame_dummy&gt;:</span><br><span class="line"> 6a0:	55                   	push   %rbp</span><br><span class="line"> 6a1:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line"> 6a4:	5d                   	pop    %rbp</span><br><span class="line"> 6a5:	e9 66 ff ff ff       	jmpq   610 &lt;register_tm_clones&gt;</span><br><span class="line"></span><br><span class="line">00000000000006aa &lt;merge&gt;:</span><br><span class="line"> 6aa:	55                   	push   %rbp</span><br><span class="line"> 6ab:	48 89 e5             	mov    %rsp,%rbp ; rbp &#x3D; rsp</span><br><span class="line"> 6ae:	48 83 ec 50          	sub    $0x50,%rsp ; rsp &#x3D; rsp - 0x50 开辟栈帧</span><br><span class="line"> 6b2:	48 89 7d c8          	mov    %rdi,-0x38(%rbp) ; 第一个参数 &amp;array[0]</span><br><span class="line"> 6b6:	89 75 c4             	mov    %esi,-0x3c(%rbp) ; 第二个参数 start</span><br><span class="line"> 6b9:	89 55 c0             	mov    %edx,-0x40(%rbp) ; 第三个参数 mid</span><br><span class="line"> 6bc:	89 4d bc             	mov    %ecx,-0x44(%rbp) ; 第四个参数 end</span><br><span class="line"> 6bf:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax ; 哨兵值判定栈帧是否出了问题。</span><br><span class="line"> 6c6:	00 00 </span><br><span class="line"> 6c8:	48 89 45 f8          	mov    %rax,-0x8(%rbp) ; 哨兵值</span><br><span class="line"> 6cc:	31 c0                	xor    %eax,%eax ; eax &#x3D; 0</span><br><span class="line"> 6ce:	48 89 e0             	mov    %rsp,%rax ; rax &#x3D; rsp</span><br><span class="line"> 6d1:	48 89 c6             	mov    %rax,%rsi ; rsi &#x3D; rax &#x3D; rsp 记录这个 rsp 的值</span><br><span class="line"> 6d4:	8b 45 bc             	mov    -0x44(%rbp),%eax ; eax &#x3D; end</span><br><span class="line"> 6d7:	2b 45 c4             	sub    -0x3c(%rbp),%eax ; eax &#x3D; end - start</span><br><span class="line"> 6da:	83 c0 01             	add    $0x1,%eax ; tempArrayLength &#x3D; eax &#x3D; (end - start) + 1</span><br><span class="line"> 6dd:	89 45 e4             	mov    %eax,-0x1c(%rbp) ; tempArrayLength &#x3D; (end - start) + 1 复制到 rbp - 0x1c 内存处</span><br><span class="line"> 6e0:	8b 45 e4             	mov    -0x1c(%rbp),%eax ; eax &#x3D; tempArrayLength</span><br><span class="line"> 6e3:	48 63 d0             	movslq %eax,%rdx ; rdx &#x3D; tempArrayLength, cltq 32bit 扩展为 64bit</span><br><span class="line"> 6e6:	48 83 ea 01          	sub    $0x1,%rdx ; rdx &#x3D; (tempArrayLength) - 1 &#x3D; end - start</span><br><span class="line"> 6ea:	48 89 55 e8          	mov    %rdx,-0x18(%rbp) ; end - start 复制到 rbp - 0x18 内存地址处</span><br><span class="line"> 6ee:	48 63 d0             	movslq %eax,%rdx ; rdx &#x3D; (end - start) + 1 ? tempArrayLength</span><br><span class="line"> 6f1:	49 89 d2             	mov    %rdx,%r10 ; r10 &#x3D; (end - start) + 1</span><br><span class="line"> 6f4:	41 bb 00 00 00 00    	mov    $0x0,%r11d ; r11d &#x3D; 0</span><br><span class="line"> 6fa:	48 63 d0             	movslq %eax,%rdx ; rdx &#x3D; (end - start) + 1 ? tempArrayLength</span><br><span class="line"> 6fd:	49 89 d0             	mov    %rdx,%r8 ; r8 &#x3D; (end - start) + 1 ? tempArrayLength</span><br><span class="line"> 700:	41 b9 00 00 00 00    	mov    $0x0,%r9d ; r9d &#x3D; 0</span><br><span class="line"> 706:	48 98                	cltq   ; 相当于 movslq %eax,%rax.</span><br><span class="line"> 708:	48 c1 e0 02          	shl    $0x2,%rax ; rax &#x3D; ((end - start) + 1) * 4</span><br><span class="line"> 70c:	48 8d 50 03          	lea    0x3(%rax),%rdx ; rdx &#x3D; 4 * ((end - start) + 1) + 3 </span><br><span class="line"> 710:	b8 10 00 00 00       	mov    $0x10,%eax ; eax &#x3D; 16</span><br><span class="line"> 715:	48 83 e8 01          	sub    $0x1,%rax ; rax &#x3D; 16 - 1 &#x3D; 15</span><br><span class="line"> 719:	48 01 d0             	add    %rdx,%rax ; rax &#x3D; rax + rdx &#x3D; 15 + 4 * ((end - start) + 1) + 3 &#x3D; 4 * (end - start) + 22</span><br><span class="line"> 71c:	bf 10 00 00 00       	mov    $0x10,%edi ; edi &#x3D; 16</span><br><span class="line"> 721:	ba 00 00 00 00       	mov    $0x0,%edx ; edx &#x3D; 0</span><br><span class="line"> 726:	48 f7 f7             	div    %rdi ; (rdx(high-32bit):rax(low-32bit))&#x2F;rdi , quotient(商) in %rax, remainder(余数) in %rdx</span><br><span class="line"> 729:	48 6b c0 10          	imul   $0x10,%rax,%rax ; rax &#x3D; rax * 16</span><br><span class="line"> 72d:	48 29 c4             	sub    %rax,%rsp ; rsp &#x3D; rsp - rax 分配空间</span><br><span class="line"> 730:	48 89 e0             	mov    %rsp,%rax ; rax &#x3D; rsp</span><br><span class="line"> 733:	48 83 c0 03          	add    $0x3,%rax ; rax &#x3D; rsp + 3</span><br><span class="line"> 737:	48 c1 e8 02          	shr    $0x2,%rax ; rax &#x3D; (rsp + 3) &gt;&gt; 2</span><br><span class="line"> 73b:	48 c1 e0 02          	shl    $0x2,%rax ; rax &#x3D; ((rsp + 3) &gt;&gt; 2) &lt;&lt;2</span><br><span class="line"> 73f:	48 89 45 f0          	mov    %rax,-0x10(%rbp) ;</span><br><span class="line"> 743:	8b 45 c4             	mov    -0x3c(%rbp),%eax ; eax &#x3D; start</span><br><span class="line"> 746:	89 45 dc             	mov    %eax,-0x24(%rbp) ; start 复制到 rbp - 0x24(p1) 处</span><br><span class="line"> 749:	8b 45 c0             	mov    -0x40(%rbp),%eax ; eax &#x3D; mid</span><br><span class="line"> 74c:	83 c0 01             	add    $0x1,%eax ; eax &#x3D; mid + 1</span><br><span class="line"> 74f:	89 45 d8             	mov    %eax,-0x28(%rbp) ; mid + 1 复制到 rbp - 0x28(p2) 处</span><br><span class="line"> 752:	c7 45 d4 00 00 00 00 	movl   $0x0,-0x2c(%rbp) ; 0 复制到 rbp - 0x2c(p) 处</span><br><span class="line"> 759:	e9 90 00 00 00       	jmpq   7ee &lt;merge+0x144&gt; ; 无条件跳转, 0x144 表示要跳转出也就是 7ee 距离 merge(6aa) 之间的所有指令字节数是 0x144。。。。。。</span><br><span class="line"></span><br><span class="line"> ; if(array[p1] &lt;&#x3D; array[p2]) 的判定</span><br><span class="line"> 75e:	8b 45 dc             	mov    -0x24(%rbp),%eax ; rax &#x3D; p1</span><br><span class="line"> 761:	48 98                	cltq   </span><br><span class="line"> 763:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx ; rdx &#x3D; 4 * p1 + 0</span><br><span class="line"> 76a:	00 </span><br><span class="line"> 76b:	48 8b 45 c8          	mov    -0x38(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 76f:	48 01 d0             	add    %rdx,%rax ; rax &#x3D; &amp;array[0] + 4 * p1 &#x3D; &amp;array[p1] </span><br><span class="line"> 772:	8b 10                	mov    (%rax),%edx ; edx &#x3D; array[p1]</span><br><span class="line"> 774:	8b 45 d8             	mov    -0x28(%rbp),%eax ; eax &#x3D; p2</span><br><span class="line"> 777:	48 98                	cltq   </span><br><span class="line"> 779:	48 8d 0c 85 00 00 00 	lea    0x0(,%rax,4),%rcx ; rcx &#x3D; 4 * rax &#x3D; 4 * p2</span><br><span class="line"> 780:	00 </span><br><span class="line"> 781:	48 8b 45 c8          	mov    -0x38(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 785:	48 01 c8             	add    %rcx,%rax ; rax &#x3D; &amp;array[0] + 4 * p2 &#x3D; &amp;array[p2]</span><br><span class="line"> 788:	8b 00                	mov    (%rax),%eax ; eax &#x3D; array[p2]</span><br><span class="line"> 78a:	39 c2                	cmp    %eax,%edx ; cmp array[p2],array[p1]</span><br><span class="line"> 78c:	7f 31                	jg     7bf &lt;merge+0x115&gt; ; array[p1] &gt; array[p2] 跳到 else</span><br><span class="line"> 78e:	8b 45 dc             	mov    -0x24(%rbp),%eax ; eax &#x3D; p1</span><br><span class="line"> 791:	8d 50 01             	lea    0x1(%rax),%edx ; edx &#x3D; p1 + 1</span><br><span class="line"> 794:	89 55 dc             	mov    %edx,-0x24(%rbp) ; p1 &#x3D; p1 + 1</span><br><span class="line"> 797:	48 98                	cltq   </span><br><span class="line"> 799:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx ; rdx &#x3D; 4 * p1</span><br><span class="line"> 7a0:	00 </span><br><span class="line"> 7a1:	48 8b 45 c8          	mov    -0x38(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 7a5:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx ; rcx &#x3D; &amp;array[0] + 4 * p1 &#x3D; &amp;array[p1]</span><br><span class="line"> 7a9:	8b 45 d4             	mov    -0x2c(%rbp),%eax ; eax &#x3D; p</span><br><span class="line"> 7ac:	8d 50 01             	lea    0x1(%rax),%edx ; edx &#x3D; p + 1</span><br><span class="line"> 7af:	89 55 d4             	mov    %edx,-0x2c(%rbp) ; p &#x3D; p + 1</span><br><span class="line"> 7b2:	8b 09                	mov    (%rcx),%ecx ; ecx &#x3D; array[p1]</span><br><span class="line"> 7b4:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx ;rdx &#x3D; &amp;tempArray[0]</span><br><span class="line"> 7b8:	48 98                	cltq   </span><br><span class="line"> 7ba:	89 0c 82             	mov    %ecx,(%rdx,%rax,4) ; tempArray[p] &#x3D; array[p1]</span><br><span class="line"> 7bd:	eb 2f                	jmp    7ee &lt;merge+0x144&gt; ; 开启下一轮判定&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><br><span class="line"></span><br><span class="line"> 7bf:	8b 45 d8             	mov    -0x28(%rbp),%eax ; eax &#x3D; p2 $$$ begin else array[p1] &gt; array[p2]</span><br><span class="line"> 7c2:	8d 50 01             	lea    0x1(%rax),%edx ; edx &#x3D; p2 + 1</span><br><span class="line"> 7c5:	89 55 d8             	mov    %edx,-0x28(%rbp) ; p2 &#x3D; p2 + 1</span><br><span class="line"> 7c8:	48 98                	cltq   </span><br><span class="line"> 7ca:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx ; rdx &#x3D; 4 * p2</span><br><span class="line"> 7d1:	00 </span><br><span class="line"> 7d2:	48 8b 45 c8          	mov    -0x38(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 7d6:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx ; rcx &#x3D; rdx + 1 * rax &#x3D; &amp;array[0] + 4 * p2 &#x3D; &amp;array[p2] </span><br><span class="line"> 7da:	8b 45 d4             	mov    -0x2c(%rbp),%eax ; eax &#x3D; p</span><br><span class="line"> 7dd:	8d 50 01             	lea    0x1(%rax),%edx ; edx &#x3D; p + 1</span><br><span class="line"> 7e0:	89 55 d4             	mov    %edx,-0x2c(%rbp) ; p &#x3D; p + 1</span><br><span class="line"> 7e3:	8b 09                	mov    (%rcx),%ecx ; ecx &#x3D; array[p2]</span><br><span class="line"> 7e5:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx ; rdx &#x3D; &amp;tempArray[0] , 临时数组地址</span><br><span class="line"> 7e9:	48 98                	cltq   </span><br><span class="line"> 7eb:	89 0c 82             	mov    %ecx,(%rdx,%rax,4) ; tempArray[p] &#x3D; array[p2] $$$$$ end else</span><br><span class="line"> 7ee:	8b 45 dc             	mov    -0x24(%rbp),%eax ; eax &#x3D; p1  下一轮判定&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span><br><span class="line"> 7f1:	3b 45 c0             	cmp    -0x40(%rbp),%eax ; cmp mid,p1</span><br><span class="line"> 7f4:	7f 3d                	jg     833 &lt;merge+0x189&gt; ;   p1 &gt; mid 跳出去 </span><br><span class="line"> 7f6:	8b 45 d8             	mov    -0x28(%rbp),%eax ; eax &#x3D; p2 此时 p1 &lt;&#x3D; mid, 判定 p2 &lt;&#x3D; end 吗？</span><br><span class="line"> 7f9:	3b 45 bc             	cmp    -0x44(%rbp),%eax ; cmp end,p2</span><br><span class="line"> 7fc:	0f 8e 5c ff ff ff    	jle    75e &lt;merge+0xb4&gt; ; 此时 p1 &lt;&#x3D; mid,p2 &lt;&#x3D; end，进入 if。 </span><br><span class="line"> 802:	eb 2f                	jmp    833 &lt;merge+0x189&gt;; 不满足第一个 while 循环，进入第二个 while 循环</span><br><span class="line"></span><br><span class="line">; p1 &lt;&#x3D; mid 循环体开始</span><br><span class="line"> 804:	8b 45 dc             	mov    -0x24(%rbp),%eax ; eax &#x3D; p1 </span><br><span class="line"> 807:	8d 50 01             	lea    0x1(%rax),%edx ; edx &#x3D; p1 + 1</span><br><span class="line"> 80a:	89 55 dc             	mov    %edx,-0x24(%rbp) ; p1 &#x3D; p1 + 1 ####</span><br><span class="line"> 80d:	48 98                	cltq   ; movslq %eax,%rax</span><br><span class="line"> 80f:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx ; rdx &#x3D; 4 * p1</span><br><span class="line"> 816:	00 </span><br><span class="line"> 817:	48 8b 45 c8          	mov    -0x38(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 81b:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx ; rcx &#x3D; &amp;array[p1]</span><br><span class="line"> 81f:	8b 45 d4             	mov    -0x2c(%rbp),%eax ; eax &#x3D; p</span><br><span class="line"> 822:	8d 50 01             	lea    0x1(%rax),%edx ; edx &#x3D; p + 1</span><br><span class="line"> 825:	89 55 d4             	mov    %edx,-0x2c(%rbp) ; p &#x3D; p + 1 </span><br><span class="line"> 828:	8b 09                	mov    (%rcx),%ecx ; ecx &#x3D; array[p1]</span><br><span class="line"> 82a:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx ; rdx &#x3D; &amp;tempArray[0] </span><br><span class="line"> 82e:	48 98                	cltq   </span><br><span class="line"> 830:	89 0c 82             	mov    %ecx,(%rdx,%rax,4) ; tempArray[p] &#x3D; array[p1]</span><br><span class="line"></span><br><span class="line">; 第二个 while 循环 也就是 while(p1 &lt;&#x3D; mid)</span><br><span class="line"> 833:	8b 45 dc             	mov    -0x24(%rbp),%eax ; eax &#x3D; p1  </span><br><span class="line"> 836:	3b 45 c0             	cmp    -0x40(%rbp),%eax ; cmp mid, p1 判定 p1 &lt;&#x3D; mid 吗？</span><br><span class="line"> 839:	7e c9                	jle    804 &lt;merge+0x15a&gt; ;  p1 &lt;&#x3D; mid</span><br><span class="line">; p1 &lt;&#x3D; mid 循环体结束</span><br><span class="line"></span><br><span class="line"> 83b:	eb 2f                	jmp    86c &lt;merge+0x1c2&gt; ; 第二个 while 循环的 p1 &lt;&#x3D; mid不满足， 短路。直接进入第三个while(p2 &lt;&#x3D; end) </span><br><span class="line"></span><br><span class="line">; p2 &lt;&#x3D; end 的循环体开始</span><br><span class="line"> 83d:	8b 45 d8             	mov    -0x28(%rbp),%eax ; eax &#x3D; p2</span><br><span class="line"> 840:	8d 50 01             	lea    0x1(%rax),%edx ; edx &#x3D; p2 + 1</span><br><span class="line"> 843:	89 55 d8             	mov    %edx,-0x28(%rbp) ; p &#x3D; p2 + 1</span><br><span class="line"> 846:	48 98                	cltq   </span><br><span class="line"> 848:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx ; rdx &#x3D; 4 * p2</span><br><span class="line"> 84f:	00 </span><br><span class="line"> 850:	48 8b 45 c8          	mov    -0x38(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 854:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx ; rcx &#x3D; &amp;array[0] + 4 * p2 &#x3D; &amp;array[p2]</span><br><span class="line"> 858:	8b 45 d4             	mov    -0x2c(%rbp),%eax ; eax &#x3D; p</span><br><span class="line"> 85b:	8d 50 01             	lea    0x1(%rax),%edx ; eax &#x3D; p + 1</span><br><span class="line"> 85e:	89 55 d4             	mov    %edx,-0x2c(%rbp) ; p &#x3D; p + 1</span><br><span class="line"> 861:	8b 09                	mov    (%rcx),%ecx ; ecx &#x3D; array[p2]</span><br><span class="line"> 863:	48 8b 55 f0          	mov    -0x10(%rbp),%rdx ;rdx &#x3D; &amp;tempArray[0]</span><br><span class="line"> 867:	48 98                	cltq   </span><br><span class="line"> 869:	89 0c 82             	mov    %ecx,(%rdx,%rax,4) ; tempArray[p] &#x3D; array[p2]</span><br><span class="line"></span><br><span class="line"> ; 第三个 while 循环</span><br><span class="line"> 86c:	8b 45 d8             	mov    -0x28(%rbp),%eax ; eax &#x3D; p2 开始判定 p2 &lt;&#x3D; end 吗？</span><br><span class="line"> 86f:	3b 45 bc             	cmp    -0x44(%rbp),%eax ; cmp end, p2</span><br><span class="line"> 872:	7e c9                	jle    83d &lt;merge+0x193&gt; ; 满足 p2 &lt;&#x3D; end，第三个 while 循环</span><br><span class="line"></span><br><span class="line"> ; p2 &gt; end</span><br><span class="line"> 874:	c7 45 e0 00 00 00 00 	movl   $0x0,-0x20(%rbp) ; 此时 p2 &gt; end 了。i &#x3D; 0</span><br><span class="line"> 87b:	eb 2d                	jmp    8aa &lt;merge+0x200&gt;  ; 直接跳到 for 循环</span><br><span class="line"></span><br><span class="line">; for(int i &#x3D; 0; i &lt; tempArrayLength; i++) 开始</span><br><span class="line"> 87d:	8b 55 e0             	mov    -0x20(%rbp),%edx ; edx &#x3D; i</span><br><span class="line"> 880:	8b 45 c4             	mov    -0x3c(%rbp),%eax ; eax &#x3D; start</span><br><span class="line"> 883:	01 d0                	add    %edx,%eax ; eax &#x3D; start + i</span><br><span class="line"> 885:	48 98                	cltq   </span><br><span class="line"> 887:	48 8d 14 85 00 00 00 	lea    0x0(,%rax,4),%rdx ; rdx &#x3D; 4 * (start + i)</span><br><span class="line"> 88e:	00 </span><br><span class="line"> 88f:	48 8b 45 c8          	mov    -0x38(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 893:	48 8d 0c 02          	lea    (%rdx,%rax,1),%rcx ; rcx &#x3D; array[start + i] </span><br><span class="line"> 897:	48 8b 45 f0          	mov    -0x10(%rbp),%rax ; rax &#x3D; &amp;tempArray[0]</span><br><span class="line"> 89b:	8b 55 e0             	mov    -0x20(%rbp),%edx ; edx &#x3D; i</span><br><span class="line"> 89e:	48 63 d2             	movslq %edx,%rdx</span><br><span class="line"> 8a1:	8b 04 90             	mov    (%rax,%rdx,4),%eax ; eax &#x3D; tempArray[i]</span><br><span class="line"> 8a4:	89 01                	mov    %eax,(%rcx) ; array[start + i] &#x3D; tempArray[i];</span><br><span class="line"> 8a6:	83 45 e0 01          	addl   $0x1,-0x20(%rbp) ; i &#x3D; i + 1</span><br><span class="line"> ; 判定 i &lt; tempArrayLength 吗？</span><br><span class="line"> 8aa:	8b 45 e0             	mov    -0x20(%rbp),%eax ; eax &#x3D; i </span><br><span class="line"> 8ad:	3b 45 e4             	cmp    -0x1c(%rbp),%eax ; cmp tempArrayLength, i</span><br><span class="line"> 8b0:	7c cb                	jl     87d &lt;merge+0x1d3&gt; ; i &lt; tempArrayLength</span><br><span class="line">; for(int i &#x3D; 0; i &lt; tempArrayLength; i++) 结束</span><br><span class="line"></span><br><span class="line">; 此时 i &gt;&#x3D; tempArrayLength 了。</span><br><span class="line"> 8b2:	48 89 f4             	mov    %rsi,%rsp ; rsp &#x3D; rsi(记录的 rsp 的值) i &gt;&#x3D; tempArrayLength</span><br><span class="line"> 8b5:	90                   	nop</span><br><span class="line"> 8b6:	48 8b 45 f8          	mov    -0x8(%rbp),%rax ; rax &#x3D; %fs:0x28</span><br><span class="line"> 8ba:	64 48 33 04 25 28 00 	xor    %fs:0x28,%rax ;The OF and CF flags are cleared; the SF, ZF, and PF flags are set according to the result. The state of the AF flag is undefined.</span><br><span class="line"> 8c1:	00 00 </span><br><span class="line"> 8c3:	74 05                	je     8ca &lt;merge+0x220&gt; ; ZF &#x3D; 0 说明栈帧没出问题，退出函数。</span><br><span class="line"> 8c5:	e8 a6 fc ff ff       	callq  570 &lt;__stack_chk_fail@plt&gt; ; 能执行到这说明栈帧出问题了。。。</span><br><span class="line"></span><br><span class="line"> 8ca:	c9                   	leaveq </span><br><span class="line"> 8cb:	c3                   	retq   </span><br><span class="line"></span><br><span class="line">00000000000008cc &lt;mergeSort&gt;:</span><br><span class="line"> 8cc:	55                   	push   %rbp</span><br><span class="line"> 8cd:	48 89 e5             	mov    %rsp,%rbp ; rbp &#x3D; rsp</span><br><span class="line"> 8d0:	48 83 ec 20          	sub    $0x20,%rsp ; rsp &#x3D; rsp - 0x20</span><br><span class="line"> 8d4:	48 89 7d e8          	mov    %rdi,-0x18(%rbp) ;&amp;array[0] 复制到 rbp - 0x18 地址处</span><br><span class="line"> 8d8:	89 75 e4             	mov    %esi,-0x1c(%rbp) ;第二个参数 (start) 复制到 rbp -0x1c 地址处</span><br><span class="line"> 8db:	89 55 e0             	mov    %edx,-0x20(%rbp) ;第三个参数 (end) 复制到 rbp -0x20 地址处</span><br><span class="line"> 8de:	8b 45 e4             	mov    -0x1c(%rbp),%eax ;eax &#x3D; start</span><br><span class="line"> 8e1:	3b 45 e0             	cmp    -0x20(%rbp),%eax ;cmp end,start </span><br><span class="line"> 8e4:	7d 54                	jge    93a &lt;mergeSort+0x6e&gt; ; start &gt;&#x3D; end，直接退出函数。</span><br><span class="line"> 8e6:	8b 55 e4             	mov    -0x1c(%rbp),%edx ; edx &#x3D; start 此时 start &lt; end </span><br><span class="line"> 8e9:	8b 45 e0             	mov    -0x20(%rbp),%eax ; eax &#x3D; end</span><br><span class="line"> 8ec:	01 d0                	add    %edx,%eax ; eax &#x3D; start + end</span><br><span class="line"> 8ee:	89 c2                	mov    %eax,%edx ; edx &#x3D; start + end</span><br><span class="line"> 8f0:	c1 ea 1f             	shr    $0x1f,%edx ; edx &#x3D; edx &gt;&gt; 31 (start + end)&#x2F;pow(2,31) 相当于是 0 了😂</span><br><span class="line"> 8f3:	01 d0                	add    %edx,%eax ; eax &#x3D; (start + end) + 0</span><br><span class="line"> 8f5:	d1 f8                	sar    %eax ; eax &#x3D; (start + end) &#x2F; 2 算术右移一位，最高位补上 eax 的符号位</span><br><span class="line"> 8f7:	89 45 fc             	mov    %eax,-0x4(%rbp) ; mid &#x3D; (start + end) &#x2F; 2 复制到 rbp - 0x4 内存地址处</span><br><span class="line"> 8fa:	8b 55 fc             	mov    -0x4(%rbp),%edx ; edx &#x3D; mid(start + end) &#x2F; 2 也就是准备第三个参数 mid</span><br><span class="line"> 8fd:	8b 4d e4             	mov    -0x1c(%rbp),%ecx ; ecx &#x3D; start</span><br><span class="line"> 900:	48 8b 45 e8          	mov    -0x18(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 904:	89 ce                	mov    %ecx,%esi ; esi &#x3D; start ; 第二个参数</span><br><span class="line"> 906:	48 89 c7             	mov    %rax,%rdi ; rdi &#x3D; &amp;array[0] ; 第一个参数</span><br><span class="line"> 909:	e8 be ff ff ff       	callq  8cc &lt;mergeSort&gt; ; 调用 mergeSort 左侧 mergeSort</span><br><span class="line"></span><br><span class="line"> 90e:	8b 45 fc             	mov    -0x4(%rbp),%eax ; eax &#x3D; mid &#x3D; (start + end) &#x2F; 2</span><br><span class="line"> 911:	8d 48 01             	lea    0x1(%rax),%ecx  ; mid &#x3D; mid + 1 </span><br><span class="line"> 914:	8b 55 e0             	mov    -0x20(%rbp),%edx ; edx &#x3D; end 第三个参数</span><br><span class="line"> 917:	48 8b 45 e8          	mov    -0x18(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 91b:	89 ce                	mov    %ecx,%esi ; esi &#x3D; mid 第二个参数</span><br><span class="line"> 91d:	48 89 c7             	mov    %rax,%rdi ; rdi &#x3D; &amp;array[0] 第一个参数</span><br><span class="line"> 920:	e8 a7 ff ff ff       	callq  8cc &lt;mergeSort&gt; ; 调用 mergeSort 右侧 mergeSort</span><br><span class="line"></span><br><span class="line"> 925:	8b 4d e0             	mov    -0x20(%rbp),%ecx ; ecx &#x3D; end ; 第四个参数</span><br><span class="line"> 928:	8b 55 fc             	mov    -0x4(%rbp),%edx ; edx &#x3D; mid &#x3D; (start + end) &#x2F; 2 第三个参数</span><br><span class="line"> 92b:	8b 75 e4             	mov    -0x1c(%rbp),%esi ; esi &#x3D; start ; 第二个参数</span><br><span class="line"> 92e:	48 8b 45 e8          	mov    -0x18(%rbp),%rax ; rax &#x3D; &amp;array[0] </span><br><span class="line"> 932:	48 89 c7             	mov    %rax,%rdi ; rdi &#x3D; rax  ; 第一个参数</span><br><span class="line"> 935:	e8 70 fd ff ff       	callq  6aa &lt;merge&gt; ; 调用 merge 开始 merge</span><br><span class="line"></span><br><span class="line"> 93a:	90                   	nop ; 从此处销毁栈帧</span><br><span class="line"> 93b:	c9                   	leaveq &#x2F;&#x2F; 销毁栈帧，相当于 rsp &#x3D; rbp，pop rbp</span><br><span class="line"> 93c:	c3                   	retq   </span><br><span class="line"></span><br><span class="line">000000000000093d &lt;main&gt;:</span><br><span class="line"> 93d:	55                   	push   %rbp</span><br><span class="line"> 93e:	48 89 e5             	mov    %rsp,%rbp</span><br><span class="line"> 941:	48 83 ec 40          	sub    $0x40,%rsp</span><br><span class="line"> 945:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax</span><br><span class="line"> 94c:	00 00 </span><br><span class="line"> 94e:	48 89 45 f8          	mov    %rax,-0x8(%rbp)</span><br><span class="line"> 952:	31 c0                	xor    %eax,%eax</span><br><span class="line"> 954:	c7 45 d0 09 00 00 00 	movl   $0x9,-0x30(%rbp) ; 0x9 复制到 rbp - 0x30 地址处。array[0] &#x3D; 0x9</span><br><span class="line"> 95b:	c7 45 d4 03 00 00 00 	movl   $0x3,-0x2c(%rbp) ; 0x3 复制到 rbp - 0x2c 地址处。array[1] &#x3D; 0x3</span><br><span class="line"> 962:	c7 45 d8 07 00 00 00 	movl   $0x7,-0x28(%rbp) ; 0x7 复制到 rbp - 0x28 地址处。array[2] &#x3D; 0x7</span><br><span class="line"> 969:	c7 45 dc 05 00 00 00 	movl   $0x5,-0x24(%rbp) ; 0x5 复制到 rbp - 0x24 地址处。array[3] &#x3D; 0x5</span><br><span class="line"> 970:	c7 45 e0 08 00 00 00 	movl   $0x8,-0x20(%rbp) ; 0x8 复制到 rbp - 0x20 地址处。array[4] &#x3D; 0x8</span><br><span class="line"> 977:	c7 45 e4 06 00 00 00 	movl   $0x6,-0x1c(%rbp) ; 0x6 复制到 rbp - 0x1c 地址处。array[5] &#x3D; 0x6</span><br><span class="line"> 97e:	c7 45 e8 04 00 00 00 	movl   $0x4,-0x18(%rbp) ; 0x4 复制到 rbp - 0x28 地址处。array[6] &#x3D; 0x4</span><br><span class="line"> 985:	c7 45 ec 0a 00 00 00 	movl   $0xa,-0x14(%rbp) ; 0xa 复制到 rbp - 0x14 地址处。array[7] &#x3D; 0xa</span><br><span class="line"> 98c:	48 8d 45 d0          	lea    -0x30(%rbp),%rax ; rax &#x3D; &amp;array[0]</span><br><span class="line"> 990:	ba 07 00 00 00       	mov    $0x7,%edx ; 第三个参数 7</span><br><span class="line"> 995:	be 00 00 00 00       	mov    $0x0,%esi ; 第二个参数 0</span><br><span class="line"> 99a:	48 89 c7             	mov    %rax,%rdi ; 第一个参数 &amp;array[0]</span><br><span class="line"> 99d:	e8 2a ff ff ff       	callq  8cc &lt;mergeSort&gt; ; 调用 mergeSort，地址偏移是 0x8cc</span><br><span class="line"> 9a2:	c7 45 cc 00 00 00 00 	movl   $0x0,-0x34(%rbp)</span><br><span class="line"> 9a9:	eb 20                	jmp    9cb &lt;main+0x8e&gt;</span><br><span class="line"> 9ab:	8b 45 cc             	mov    -0x34(%rbp),%eax</span><br><span class="line"> 9ae:	48 98                	cltq   </span><br><span class="line"> 9b0:	8b 44 85 d0          	mov    -0x30(%rbp,%rax,4),%eax</span><br><span class="line"> 9b4:	89 c6                	mov    %eax,%esi</span><br><span class="line"> 9b6:	48 8d 3d b7 00 00 00 	lea    0xb7(%rip),%rdi        # a74 &lt;_IO_stdin_used+0x4&gt;</span><br><span class="line"> 9bd:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line"> 9c2:	e8 b9 fb ff ff       	callq  580 &lt;printf@plt&gt;</span><br><span class="line"> 9c7:	83 45 cc 01          	addl   $0x1,-0x34(%rbp)</span><br><span class="line"> 9cb:	83 7d cc 07          	cmpl   $0x7,-0x34(%rbp)</span><br><span class="line"> 9cf:	7e da                	jle    9ab &lt;main+0x6e&gt;</span><br><span class="line"> 9d1:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line"> 9d6:	48 8b 4d f8          	mov    -0x8(%rbp),%rcx</span><br><span class="line"> 9da:	64 48 33 0c 25 28 00 	xor    %fs:0x28,%rcx</span><br><span class="line"> 9e1:	00 00 </span><br><span class="line"> 9e3:	74 05                	je     9ea &lt;main+0xad&gt;</span><br><span class="line"> 9e5:	e8 86 fb ff ff       	callq  570 &lt;__stack_chk_fail@plt&gt;</span><br><span class="line"> 9ea:	c9                   	leaveq </span><br><span class="line"> 9eb:	c3                   	retq   </span><br><span class="line"> 9ec:	0f 1f 40 00          	nopl   0x0(%rax)</span><br><span class="line"></span><br><span class="line">00000000000009f0 &lt;__libc_csu_init&gt;:</span><br><span class="line"> 9f0:	41 57                	push   %r15</span><br><span class="line"> 9f2:	41 56                	push   %r14</span><br><span class="line"> 9f4:	49 89 d7             	mov    %rdx,%r15</span><br><span class="line"> 9f7:	41 55                	push   %r13</span><br><span class="line"> 9f9:	41 54                	push   %r12</span><br><span class="line"> 9fb:	4c 8d 25 ae 03 20 00 	lea    0x2003ae(%rip),%r12        # 200db0 &lt;__frame_dummy_init_array_entry&gt;</span><br><span class="line"> a02:	55                   	push   %rbp</span><br><span class="line"> a03:	48 8d 2d ae 03 20 00 	lea    0x2003ae(%rip),%rbp        # 200db8 &lt;__init_array_end&gt;</span><br><span class="line"> a0a:	53                   	push   %rbx</span><br><span class="line"> a0b:	41 89 fd             	mov    %edi,%r13d</span><br><span class="line"> a0e:	49 89 f6             	mov    %rsi,%r14</span><br><span class="line"> a11:	4c 29 e5             	sub    %r12,%rbp</span><br><span class="line"> a14:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line"> a18:	48 c1 fd 03          	sar    $0x3,%rbp</span><br><span class="line"> a1c:	e8 27 fb ff ff       	callq  548 &lt;_init&gt;</span><br><span class="line"> a21:	48 85 ed             	test   %rbp,%rbp</span><br><span class="line"> a24:	74 20                	je     a46 &lt;__libc_csu_init+0x56&gt;</span><br><span class="line"> a26:	31 db                	xor    %ebx,%ebx</span><br><span class="line"> a28:	0f 1f 84 00 00 00 00 	nopl   0x0(%rax,%rax,1)</span><br><span class="line"> a2f:	00 </span><br><span class="line"> a30:	4c 89 fa             	mov    %r15,%rdx</span><br><span class="line"> a33:	4c 89 f6             	mov    %r14,%rsi</span><br><span class="line"> a36:	44 89 ef             	mov    %r13d,%edi</span><br><span class="line"> a39:	41 ff 14 dc          	callq  *(%r12,%rbx,8)</span><br><span class="line"> a3d:	48 83 c3 01          	add    $0x1,%rbx</span><br><span class="line"> a41:	48 39 dd             	cmp    %rbx,%rbp</span><br><span class="line"> a44:	75 ea                	jne    a30 &lt;__libc_csu_init+0x40&gt;</span><br><span class="line"> a46:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line"> a4a:	5b                   	pop    %rbx</span><br><span class="line"> a4b:	5d                   	pop    %rbp</span><br><span class="line"> a4c:	41 5c                	pop    %r12</span><br><span class="line"> a4e:	41 5d                	pop    %r13</span><br><span class="line"> a50:	41 5e                	pop    %r14</span><br><span class="line"> a52:	41 5f                	pop    %r15</span><br><span class="line"> a54:	c3                   	retq   </span><br><span class="line"> a55:	90                   	nop</span><br><span class="line"> a56:	66 2e 0f 1f 84 00 00 	nopw   %cs:0x0(%rax,%rax,1)</span><br><span class="line"> a5d:	00 00 00 </span><br><span class="line"></span><br><span class="line">0000000000000a60 &lt;__libc_csu_fini&gt;:</span><br><span class="line"> a60:	f3 c3                	repz retq </span><br><span class="line"></span><br><span class="line">Disassembly of section .fini:</span><br><span class="line"></span><br><span class="line">0000000000000a64 &lt;_fini&gt;:</span><br><span class="line"> a64:	48 83 ec 08          	sub    $0x8,%rsp</span><br><span class="line"> a68:	48 83 c4 08          	add    $0x8,%rsp</span><br><span class="line"> a6c:	c3                   	retq   </span><br><span class="line"></span><br></pre></td></tr></table></figure>
@@ -364,7 +274,8 @@
     
     
 
-    <footer class="post-footer">
+      <footer class="post-footer">
+          
           <div class="post-tags">
               <a href="/tags/algorithm/" rel="tag"><i class="fa fa-tag"></i> algorithm</a>
               <a href="/tags/sort/" rel="tag"><i class="fa fa-tag"></i> sort</a>
@@ -372,27 +283,29 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/2020/01/14/three-easy-pieces-4-process/" rel="prev" title="three-easy-pieces-4-process">
-                  <i class="fa fa-chevron-left"></i> three-easy-pieces-4-process
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/2020/04/14/algorithm-quick-sort/" rel="next" title="algorithm-quick-sort">
-                  algorithm-quick-sort <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/01/14/three-easy-pieces-4-process/" rel="prev" title="three-easy-pieces-4-process">
+      <i class="fa fa-chevron-left"></i> three-easy-pieces-4-process
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/04/14/algorithm-quick-sort/" rel="next" title="algorithm-quick-sort">
+      algorithm-quick-sort <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-</div>
+  
+  
+  
 
 
 
-
-
-
+          </div>
+          
     
   
   <div class="comments">
@@ -408,7 +321,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -417,49 +330,147 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
+      let commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#merge-sort"><span class="nav-number">1.</span> <span class="nav-text">merge sort</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#merge-sort-C-code"><span class="nav-number">1.1.</span> <span class="nav-text">merge sort C code</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x64-%E6%B1%87%E7%BC%96%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90"><span class="nav-number">1.2.</span> <span class="nav-text">x64 汇编代码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A0%88%E5%B8%A7%E8%B0%83%E7%94%A8%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">栈帧调用图解分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#array-%E5%BD%92%E5%B9%B6%E9%A1%BA%E5%BA%8F%E5%9B%BE%E8%A7%A3%E5%88%86%E6%9E%90"><span class="nav-number">1.4.</span> <span class="nav-text">array 归并顺序图解分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#strace-%E5%88%86%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">strace 分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#reference"><span class="nav-number">2.</span> <span class="nav-text">reference</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">stardustman</p>
+  <div class="site-description" itemprop="description"></div>
 </div>
-  </main>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">51</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">60</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/stardustman" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stardustman" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:aoyunyoung@gmail.com" title="E-Mail → mailto:aoyunyoung@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://stackoverflow.com/users/9112817/cloud-young" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;9112817&#x2F;cloud-young" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
+      </span>
+  </div>
 
-  <footer class="footer">
-    <div class="footer-inner">
 
+
+      </div>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
 
 <div class="copyright">
+  
   &copy; 
   <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">stardustman</span>
-</div>
-<div class="wordcount">
-  <span class="post-meta-item">
+    <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
-      <i class="fa fa-chart-line"></i>
+      <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">208k</span>
-  </span>
-  <span class="post-meta-item">
+    <span title="Symbols count total">207k</span>
+    <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
     <span title="Reading time total">3:09</span>
-  </span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
 
-    </div>
-  </footer>
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
 
   
 
@@ -469,12 +480,17 @@
 
 
 
+
+
+
+
+
+
+
+
   
 
-
-
-
-
+  
 
 </body>
 </html>
