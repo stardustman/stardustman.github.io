@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.1.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="设计理念机制与策略分离机制 – 提供什么样的功能策略 – 如何使用这些功能  说实在的这句话第一次听到还是挺震撼的, 一时觉得大学里的操作系统都不知道在干嘛, 我们学的就是机制, 比如进程创建功能, 进程创建完成后具体如何使用与OS内核不再有关. 文件创建功能, 文件创建完,如何使用交给用户. 其实很类似编程中的接口, 接口定义功能, 实现负责具体的策略.  内核类型 单内核 (Linux) 可加">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-05-28T04:25:46.000Z">
-<meta property="article:modified_time" content="2022-03-16T02:11:45.513Z">
+<meta property="article:modified_time" content="2022-03-16T02:17:27.900Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="linux-analysis">
 <meta name="twitter:card" content="summary">
@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
               </span>
 
           <br>
@@ -233,23 +233,23 @@
 <p>可加载的 Linux 内核模块, 提高维护性.</p>
 </blockquote>
 </li>
-<li>微内核 </li>
+<li>微内核</li>
 </ol>
 <h1 id="Linux-Kernel"><a href="#Linux-Kernel" class="headerlink" title="Linux Kernel"></a>Linux Kernel</h1><h2 id="双链表"><a href="#双链表" class="headerlink" title="双链表"></a>双链表</h2><h3 id="结构"><a href="#结构" class="headerlink" title="结构"></a>结构</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">list_head</span>&#123;</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">list_head</span> *<span class="title">next</span> , *<span class="title">prev</span></span></span><br><span class="line"><span class="class">&#125;;</span></span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>这个结构很有意思, 改变两个指针的含义, 会发现几乎描述了很多数据结构.<br>只有一个 *next, 单链表, 只进行头部插入数据-栈, 只进行尾部插入数据-队列<br>*left, *right </p>
 </blockquote>
-<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">define <span class="title">LIST_HEAD_INIT</span><span class="params">(name)</span></span>&#123;&amp;name, &amp;name&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define <span class="title function_">LIST_HEAD_INIT</span><span class="params">(name)</span>&#123;&amp;name, &amp;name&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>前后指针都指向自己</p>
 </blockquote>
-<h3 id="声明并初始化"><a href="#声明并初始化" class="headerlink" title="声明并初始化"></a>声明并初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">define <span class="title">LIST_HEAD</span><span class="params">(name)</span> struct <span class="title">list_head</span><span class="params">(name)</span></span>&#123;LIST_HEAD_INIT(name)&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="判空"><a href="#判空" class="headerlink" title="判空"></a>判空</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">list_empty</span><span class="params">(<span class="keyword">const</span> struct list_head*head)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next == head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> _ _list_add(struct list_head*<span class="keyword">new</span>,struct list_head*prev,struct_head*next)&#123;</span><br><span class="line">    next-&gt;prev = <span class="keyword">new</span>;</span><br><span class="line">    <span class="keyword">new</span>-&gt;next = next;</span><br><span class="line">    <span class="keyword">new</span>-&gt;prev = prev;</span><br><span class="line">    prev-&gt;next = <span class="keyword">new</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="声明并初始化"><a href="#声明并初始化" class="headerlink" title="声明并初始化"></a>声明并初始化</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define <span class="title function_">LIST_HEAD</span><span class="params">(name)</span> <span class="keyword">struct</span> <span class="title function_">list_head</span><span class="params">(name)</span>&#123;LIST_HEAD_INIT(name)&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="判空"><a href="#判空" class="headerlink" title="判空"></a>判空</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">int</span> <span class="title function_">list_empty</span><span class="params">(<span class="type">const</span> <span class="keyword">struct</span> list_head*head)</span>&#123;</span><br><span class="line">    <span class="keyword">return</span> head-&gt;next == head;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="添加节点"><a href="#添加节点" class="headerlink" title="添加节点"></a>添加节点</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> _ _list_add(<span class="keyword">struct</span> list_head*new,<span class="keyword">struct</span> list_head*prev,struct_head*next)&#123;</span><br><span class="line">    next-&gt;prev = new;</span><br><span class="line">    new-&gt;next = next;</span><br><span class="line">    new-&gt;prev = prev;</span><br><span class="line">    prev-&gt;next = new;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>static 该函数作用域仅在本文件内, 可以隐藏信息<br>inline 编译器展开该函数</p>
 </blockquote>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">void</span> _ _list_add_tail(struct list_head*<span class="keyword">new</span>,struct list_head*head)&#123;</span><br><span class="line">    _ _list_add(<span class="keyword">new</span>,head-&gt;prev,head);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">static</span> <span class="keyword">inline</span> <span class="type">void</span> _ _list_add_tail(<span class="keyword">struct</span> list_head*new,<span class="keyword">struct</span> list_head*head)&#123;</span><br><span class="line">    _ _list_add(new,head-&gt;prev,head);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -413,12 +413,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:09</span>
+    <span title="Reading time total">3:06</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

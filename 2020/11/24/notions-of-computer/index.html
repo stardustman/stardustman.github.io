@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.1.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/typical-memory-hierarchy.png">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/network-layer.svg">
 <meta property="article:published_time" content="2020-11-24T05:25:13.000Z">
-<meta property="article:modified_time" content="2022-03-16T02:11:45.525Z">
+<meta property="article:modified_time" content="2022-03-16T02:17:27.912Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="notions">
 <meta name="twitter:card" content="summary">
@@ -203,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
               </span>
 
           <br>
@@ -234,11 +234,11 @@
         <h2 id="指导思想"><a href="#指导思想" class="headerlink" title="指导思想"></a>指导思想</h2><p>   计算机是人发明的。由计算机组成的世界，其设计思想很明显要借鉴现实中的东西。正如一位伟人的著作开篇提出 <code>“谁是我们的敌人？谁是我们的朋友？这个问题是革命的首要问题。中国过去一切革命斗争成效甚少，其基本原因就是因为不能团结真正的朋友，以攻击真正的敌人。”</code>那么应对计算机，什么才是计算机组织背后的指导思想呢？个人认为有三个：1. hierarchy(层级)、2：group(分组)、3：order(有序)</p>
 <h3 id="hierarchy-层级"><a href="#hierarchy-层级" class="headerlink" title="hierarchy(层级)"></a>hierarchy(层级)</h3><p>  <em>hierarchy</em> 在这里也可以理解成等级。层级结构最重要的一点就是最顶层在哪？用 <code>tree</code> 理解就是，<code>root</code> 在哪？这个信息整个层级都要知道。哈哈，是不是挺像皇帝。😄</p>
 <h4 id="面对数量庞大的相同事物，怎样管理呢？用什么组织方式呢？"><a href="#面对数量庞大的相同事物，怎样管理呢？用什么组织方式呢？" class="headerlink" title="面对数量庞大的相同事物，怎样管理呢？用什么组织方式呢？"></a>面对数量庞大的相同事物，怎样管理呢？用什么组织方式呢？</h4><p>   这里的数量庞大要是成千上万的。比如中国有十几亿人口、中国有 960 万平方公里的土地，等等。首先简述一下历史上的经验，比如西周，采用分封制。天子、诸侯、卿、士、平民等所有人组成一个金字塔形状。每一个层级的人<code>权力大小不同</code>、<code>承担的责任和义务也不同</code>。对于土地则是封邦建国。分封制可以对人口、土地等进行有效的统治。更直观的理解就是形成稳定的阶级。到这是不是立刻就能想到由于每种存储的<code>价格</code>、<code>速度</code>、<code>容量</code>不同，应用在哪个地方也不同。也是组织成一个层级结构来构成整个计算机的存储系统。</p>
-<p>   从数学的角度分析就是：用<code>对数的方式</code>搞定数量庞大的事物的管理。不管数量多庞大，用对数搞一下，数量立刻就降下来。比如 log<sub>2</sub>4294967296 = 32。对数的发明、解析几何的创立和微积分的建立是17世纪数学的三大成就。</p>
+<p>   从数学的角度分析就是：用<code>对数的方式</code>搞定数量庞大的事物的管理。不管数量多庞大，用对数搞一下，数量立刻就降下来。比如 log<sub>2</sub>4294967296 &#x3D; 32。对数的发明、解析几何的创立和微积分的建立是17世纪数学的三大成就。</p>
 <h5 id="域名组织方式"><a href="#域名组织方式" class="headerlink" title="域名组织方式"></a>域名组织方式</h5><blockquote>
 <p>In 2017, 330.6 million domain names had been registered.<br>2017 年已经有 33 多亿的注册域名了。</p>
 </blockquote>
-<p>如果让你组织数量如此庞大的域名，你该怎样组织呢？没错，也是组织成层级结构，来管理数量如此庞大的域名。一开始的解决方法是直接把域名信息放在 /etc/hosts 文件，随着域名增多，单独的一个文件没法满足要求，数量太多了嘛，放在一个文件，且不论能不能全部存储，查找都是一个大问题。</p>
+<p>如果让你组织数量如此庞大的域名，你该怎样组织呢？没错，也是组织成层级结构，来管理数量如此庞大的域名。一开始的解决方法是直接把域名信息放在 &#x2F;etc&#x2F;hosts 文件，随着域名增多，单独的一个文件没法满足要求，数量太多了嘛，放在一个文件，且不论能不能全部存储，查找都是一个大问题。</p>
 <p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/dns-root-server.png" alt="domain-name-hierarchy"></p>
 <h5 id="IP-分配管理方式"><a href="#IP-分配管理方式" class="headerlink" title="IP 分配管理方式"></a>IP 分配管理方式</h5><p>IP Addresses are <code>unique identifiers</code> used to determine who is who on the Internet.<br>IP 地址是一个 32bit 的无符号整数。范围是 [0,2^32-1], 一共有 4294967296 个整数。将近 43 亿个 ip 地址(这里不考虑公网、私网)该怎样分配使用呢？由 <a target="_blank" rel="noopener" href="https://www.iana.org/numbers">Internet Assigned Numbers Authority (IANA)</a> 负责协调管理所有 IP，同时负责分配自治系统号(Autonomous System number)。</p>
 <blockquote>
@@ -453,12 +453,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:09</span>
+    <span title="Reading time total">3:06</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.1.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="Processes Containers are just normal Linux Processes with additional configuration applied.  容器只是应用了附加配置的普通 Linux 进程。 redis containerlanch redis-server process Usage:  docker run [OPTIONS] IMAGE [COMM">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-12-24T05:02:03.000Z">
-<meta property="article:modified_time" content="2022-03-16T02:11:45.513Z">
+<meta property="article:modified_time" content="2022-03-16T02:17:27.900Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="docker">
 <meta property="article:tag" content="container">
@@ -197,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
               </span>
 
           <br>
@@ -206,7 +206,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>7.6k</span>
+              <span>7.8k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -236,7 +236,7 @@
 
 <p>在后台启动一个 <code>container name</code> 是 <code>db</code> 的容器, 并打印容器的 <code>ID</code></p>
 <blockquote>
-<p>Unable to find image ‘redis:alpine’ locally<br>alpine: Pulling from library/redis<br>63bc94deeb28: Pull complete<br>828e397560e3: Pull complete<br>5902d88df6c2: Pull complete<br>157b2c953c6d: Pull complete<br>b5212c16b59d: Pull complete<br>5f8f01031701: Pull complete<br>Digest: sha256:613ab7e1c0175cae18b69c291512e5e8f1129175f6617ff2126b7ac9a1e5c550<br>Status: Downloaded newer image for redis:alpine<br>0a5ceea3df52e200d45772c4507b20d7c95a97dcd3939cb33a8d5bc1b842e334</p>
+<p>Unable to find image ‘redis:alpine’ locally<br>alpine: Pulling from library&#x2F;redis<br>63bc94deeb28: Pull complete<br>828e397560e3: Pull complete<br>5902d88df6c2: Pull complete<br>157b2c953c6d: Pull complete<br>b5212c16b59d: Pull complete<br>5f8f01031701: Pull complete<br>Digest: sha256:613ab7e1c0175cae18b69c291512e5e8f1129175f6617ff2126b7ac9a1e5c550<br>Status: Downloaded newer image for redis:alpine<br>0a5ceea3df52e200d45772c4507b20d7c95a97dcd3939cb33a8d5bc1b842e334</p>
 </blockquote>
 <h4 id="检验"><a href="#检验" class="headerlink" title="检验"></a>检验</h4><h5 id="pidof-lt-process-name-gt"><a href="#pidof-lt-process-name-gt" class="headerlink" title="pidof &lt;process-name&gt;"></a>pidof &lt;process-name&gt;</h5><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pidof redis-server</span><br></pre></td></tr></table></figure>
 
@@ -253,25 +253,25 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pstree -c -p -A $(pgrep dockerd)</span><br></pre></td></tr></table></figure>
 
 <h2 id="Process-Directory"><a href="#Process-Directory" class="headerlink" title="Process Directory"></a>Process Directory</h2><blockquote>
-<p>Linux is just a series of magic files and contents, this makes it fun to explore and navigate to see what is happening under the covers, and in some cases, change the contents to see the results. The configuration for each process is defined within the /proc directory. If you know the process ID, then you can identify the configuration directory.</p>
+<p>Linux is just a series of magic files and contents, this makes it fun to explore and navigate to see what is happening under the covers, and in some cases, change the contents to see the results. The configuration for each process is defined within the &#x2F;proc directory. If you know the process ID, then you can identify the configuration directory.</p>
 </blockquote>
 <p>每一个 <code>process</code> 的配置都定义在 <code>/proc</code> 文件夹下. 如果知道 <code>process ID</code>, 就能找到该进程的配置文件夹</p>
-<h3 id="redis-server-进程的配置"><a href="#redis-server-进程的配置" class="headerlink" title="redis-server 进程的配置"></a>redis-server 进程的配置</h3><h4 id="找到-redis-server-的-pid"><a href="#找到-redis-server-的-pid" class="headerlink" title="找到 redis-server 的 pid"></a>找到 redis-server 的 pid</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DBPID=$(pgrep redis-server)</span><br><span class="line"><span class="built_in">echo</span> Redis is <span class="variable">$DBPID</span></span><br><span class="line">ls /proc</span><br></pre></td></tr></table></figure>
+<h3 id="redis-server-进程的配置"><a href="#redis-server-进程的配置" class="headerlink" title="redis-server 进程的配置"></a>redis-server 进程的配置</h3><h4 id="找到-redis-server-的-pid"><a href="#找到-redis-server-的-pid" class="headerlink" title="找到 redis-server 的 pid"></a>找到 redis-server 的 pid</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">DBPID=$(pgrep redis-server)</span><br><span class="line"><span class="built_in">echo</span> Redis is <span class="variable">$DBPID</span></span><br><span class="line"><span class="built_in">ls</span> /proc</span><br></pre></td></tr></table></figure>
 
-<h4 id="查看-redis-server-进程的环境变量"><a href="#查看-redis-server-进程的环境变量" class="headerlink" title="查看 redis-server 进程的环境变量"></a>查看 redis-server 进程的环境变量</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ls /proc/<span class="variable">$DBPID</span></span><br><span class="line">cat /proc/<span class="variable">$DBPID</span>/environ</span><br></pre></td></tr></table></figure>
+<h4 id="查看-redis-server-进程的环境变量"><a href="#查看-redis-server-进程的环境变量" class="headerlink" title="查看 redis-server 进程的环境变量"></a>查看 redis-server 进程的环境变量</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /proc/<span class="variable">$DBPID</span></span><br><span class="line"><span class="built_in">cat</span> /proc/<span class="variable">$DBPID</span>/environ</span><br></pre></td></tr></table></figure>
 
 <p>结果如下:</p>
 <blockquote>
-<p>HOSTNAME=f3b9624ce46cSHLVL=2REDIS_DOWNLOAD_SHA=<br>61db74eabf6801f057fd24b590232f2f337d422280fd19486<br>eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sb<br>in:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br>REDIS_DOWNLOAD_URL=<a target="_blank" rel="noopener" href="http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data">http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data</a></p>
+<p>HOSTNAME&#x3D;f3b9624ce46cSHLVL&#x3D;2REDIS_DOWNLOAD_SHA&#x3D;<br>61db74eabf6801f057fd24b590232f2f337d422280fd19486<br>eca03be87d3a82bHOME&#x3D;&#x2F;home&#x2F;redisPATH&#x3D;&#x2F;usr&#x2F;local&#x2F;sb<br>in:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;sbin:&#x2F;bin<br>REDIS_DOWNLOAD_URL&#x3D;<a target="_blank" rel="noopener" href="http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data">http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data</a></p>
 </blockquote>
 <p>解析查看:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;HOSTNAME=5fba1658e4ceSHLVL=2REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binREDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data&#x27;</span>.match(<span class="regexp">/[A-Z]+=[^A-Z]*/g</span>) <span class="comment">// regexp 解析查看 key=value</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">&#x27;HOSTNAME=5fba1658e4ceSHLVL=2REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82bHOME=/home/redisPATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/binREDIS_DOWNLOAD_URL=http://download.redis.io/releases/redis-5.0.7.tar.gzREDIS_VERSION=5.0.7PWD=/data&#x27;</span>.<span class="title function_">match</span>(<span class="regexp">/[A-Z]+=[^A-Z]*/g</span>) <span class="comment">// regexp 解析查看 key=value</span></span><br></pre></td></tr></table></figure>
 
-<h4 id="docker-容器里执行-env-命令"><a href="#docker-容器里执行-env-命令" class="headerlink" title="docker 容器里执行 env 命令"></a>docker 容器里执行 env 命令</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it db env</span><br></pre></td></tr></table></figure>
+<h4 id="docker-容器里执行-env-命令"><a href="#docker-容器里执行-env-命令" class="headerlink" title="docker 容器里执行 env 命令"></a>docker 容器里执行 env 命令</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker <span class="built_in">exec</span> -it db <span class="built_in">env</span></span><br></pre></td></tr></table></figure>
 
 <p><code>env</code> 内容如下:</p>
 <blockquote>
-<p>PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin<br>HOSTNAME=f3b9624ce46c<br>TERM=xterm<br>REDIS_VERSION=5.0.7<br>REDIS_DOWNLOAD_URL=<a target="_blank" rel="noopener" href="http://download.redis.io/releases/redis-5.0.7.tar.gz">http://download.redis.io/releases/redis-5.0.7.tar.gz</a><br>REDIS_DOWNLOAD_SHA=61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82b<br>HOME=/root</p>
+<p>PATH&#x3D;&#x2F;usr&#x2F;local&#x2F;sbin:&#x2F;usr&#x2F;local&#x2F;bin:&#x2F;usr&#x2F;sbin:&#x2F;usr&#x2F;bin:&#x2F;sbin:&#x2F;bin<br>HOSTNAME&#x3D;f3b9624ce46c<br>TERM&#x3D;xterm<br>REDIS_VERSION&#x3D;5.0.7<br>REDIS_DOWNLOAD_URL&#x3D;<a target="_blank" rel="noopener" href="http://download.redis.io/releases/redis-5.0.7.tar.gz">http://download.redis.io/releases/redis-5.0.7.tar.gz</a><br>REDIS_DOWNLOAD_SHA&#x3D;61db74eabf6801f057fd24b590232f2f337d422280fd19486eca03be87d3a82b<br>HOME&#x3D;&#x2F;root</p>
 </blockquote>
 <h2 id="namespace"><a href="#namespace" class="headerlink" title="namespace"></a>namespace</h2><blockquote>
 <p>One of the fundamental parts of a container is namespaces. The concept of namespaces is to limit what processes can see and access certain parts of the system, such as other network interfaces or processes<br>When a container is started, the container runtime, such as Docker, will create new namespaces to sandbox the process. By running a process in it’s own Pid namespace, it will look like it’s the only process on the system.</p>
@@ -298,10 +298,10 @@
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">unshare --fork --pid --mount-proc bash</span><br><span class="line">ps</span><br><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
 
 <h3 id="namespace-是啥"><a href="#namespace-是啥" class="headerlink" title="namespace 是啥"></a>namespace 是啥</h3><blockquote>
-<p>Namespaces are inode locations on disk. this allows for processes to shared/reused the same namespace, allowing them to view and interact.</p>
+<p>Namespaces are inode locations on disk. this allows for processes to shared&#x2F;reused the same namespace, allowing them to view and interact.</p>
 </blockquote>
-<p><code>namespace</code> 是硬盘上的 <code>inode</code>. 这允许 <code>processes</code> 共享/复用相同的 <code>namespace</code>, 允许进程之间可以互相看得到, 互相交流.</p>
-<h4 id="查看-redis-server-的所有-namespace"><a href="#查看-redis-server-的所有-namespace" class="headerlink" title="查看 redis-server 的所有 namespace"></a>查看 redis-server 的所有 namespace</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -liha /proc/<span class="variable">$DBPID</span>/ns</span><br></pre></td></tr></table></figure>
+<p><code>namespace</code> 是硬盘上的 <code>inode</code>. 这允许 <code>processes</code> 共享&#x2F;复用相同的 <code>namespace</code>, 允许进程之间可以互相看得到, 互相交流.</p>
+<h4 id="查看-redis-server-的所有-namespace"><a href="#查看-redis-server-的所有-namespace" class="headerlink" title="查看 redis-server 的所有 namespace"></a>查看 redis-server 的所有 namespace</h4><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -liha /proc/<span class="variable">$DBPID</span>/ns</span><br></pre></td></tr></table></figure>
 
 <h4 id="attach-process-to-existing-NameSpaces"><a href="#attach-process-to-existing-NameSpaces" class="headerlink" title="attach process to existing NameSpaces"></a>attach process to existing NameSpaces</h4><blockquote>
 <p><code>nsenter</code> run a program with namespaces of other processes.</p>
@@ -321,7 +321,7 @@
 <ul>
 <li>查看 <code>nginx</code> 容器的 <code>net</code> 的 namespace</li>
 </ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lha /proc/<span class="variable">$WEBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lha /proc/<span class="variable">$WEBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>dr-x–x–x 2 systemd-network systemd-journal 0 Dec 24 13:40 .<br>dr-xr-xr-x 9 systemd-network systemd-journal 0 Dec 24 13:40 ..<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 cgroup -&gt; cgroup:[4026531835]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 ipc -&gt; ipc:[4026532225]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 mnt -&gt; mnt:[4026532223]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 net -&gt; net:[4026532160] – 注意这个是共享的 redis-server 的 net 命名空间<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 pid -&gt; pid:[4026532226]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 user -&gt; user:[4026531837]<br>lrwxrwxrwx 1 systemd-network systemd-journal 0 Dec 24 13:40 uts -&gt; uts:[4026532224]</p>
@@ -329,15 +329,15 @@
 <ul>
 <li>查看 <code>redis-server</code> 容器的 <code>net</code> 命名空间</li>
 </ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls -lha /proc/<span class="variable">$DBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> -lha /proc/<span class="variable">$DBPID</span>/ns/ | grep net</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>lrwxrwxrwx 1 999 packer 0 Dec 24 13:39 net -&gt; net:[4026532160]</p>
 </blockquote>
 <h2 id="CGroups"><a href="#CGroups" class="headerlink" title="CGroups"></a>CGroups</h2><blockquote>
-<p>CGroups limit the amount of resources a process can consume. These cgroups are values defined in particular files within the /proc directory.<br>CGroups 用来限制一个进程可以使用的资源的量. cgroups 的值被定义在 /proc 文件夹下的特定文件里.</p>
+<p>CGroups limit the amount of resources a process can consume. These cgroups are values defined in particular files within the &#x2F;proc directory.<br>CGroups 用来限制一个进程可以使用的资源的量. cgroups 的值被定义在 &#x2F;proc 文件夹下的特定文件里.</p>
 </blockquote>
-<h3 id="查看-redis-server-的-CGroups"><a href="#查看-redis-server-的-CGroups" class="headerlink" title="查看 redis-server 的 CGroups"></a>查看 redis-server 的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/cgroup</span><br></pre></td></tr></table></figure>
+<h3 id="查看-redis-server-的-CGroups"><a href="#查看-redis-server-的-CGroups" class="headerlink" title="查看 redis-server 的 CGroups"></a>查看 redis-server 的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/<span class="variable">$DBPID</span>/cgroup</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>得到 redis-server 的容器 ID</li>
@@ -347,19 +347,19 @@
 <ul>
 <li>查看 redis-server 的 cpu stats 和 usages</li>
 </ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpuacct.stat</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpuacct.stat</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>查看 redis-server 的 cpu shares</li>
 </ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpu.shares</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /sys/fs/cgroup/cpu,cpuacct/docker/<span class="variable">$DBID</span>/cpu.shares</span><br></pre></td></tr></table></figure>
 
 <ul>
 <li>查看所有容器的 memory 的 docker cgroups 配置</li>
 </ul>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/fs/cgroup/memory/docker</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /sys/fs/cgroup/memory/docker</span><br></pre></td></tr></table></figure>
 
-<h3 id="查看所有的-CGroups"><a href="#查看所有的-CGroups" class="headerlink" title="查看所有的 CGroups"></a>查看所有的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/fs/cgroup</span><br></pre></td></tr></table></figure>
+<h3 id="查看所有的-CGroups"><a href="#查看所有的-CGroups" class="headerlink" title="查看所有的 CGroups"></a>查看所有的 CGroups</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /sys/fs/cgroup</span><br></pre></td></tr></table></figure>
 
 <h3 id="配置-cgroups"><a href="#配置-cgroups" class="headerlink" title="配置 cgroups"></a>配置 cgroups</h3><blockquote>
 <p>用 cgroups 配置 内存, memory quotes 存放在 memory.limit_in_bytes<br>这个文件</p>
@@ -377,7 +377,7 @@
 <h2 id="Seccomp-限制可以使用的-syscall"><a href="#Seccomp-限制可以使用的-syscall" class="headerlink" title="Seccomp 限制可以使用的 syscall"></a>Seccomp 限制可以使用的 syscall</h2><blockquote>
 <p>When assigned to a process it means the process will be limited to a subset of the ability system calls. If it attempts to call a blocked system call is will recieve the error “Operation Not Allowed”. <a target="_blank" rel="noopener" href="https://github.com/moby/moby/blob/a575b0b1384b2ba89b79cbd7e770fbeb616758b3/profiles/seccomp/default.json">容器默认可以使用的 syscall</a></p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/status</span><br><span class="line">cat /proc/<span class="variable">$DBPID</span>/status | grep Seccomp</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/<span class="variable">$DBPID</span>/status</span><br><span class="line"><span class="built_in">cat</span> /proc/<span class="variable">$DBPID</span>/status | grep Seccomp</span><br></pre></td></tr></table></figure>
 
 <blockquote>
 <p>The flag meaning are: 0: disabled 1: strict 2: filtering</p>
@@ -391,7 +391,7 @@
 <blockquote>
 <p>The status file also containers the Capabilities flag. A process can drop as many Capabilities as possible to ensure it’s secure.</p>
 </blockquote>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/<span class="variable">$DBPID</span>/status | grep ^Cap</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> /proc/<span class="variable">$DBPID</span>/status | grep ^Cap</span><br></pre></td></tr></table></figure>
 
 <p>结果如下:</p>
 <blockquote>
@@ -407,7 +407,7 @@
 
 <p>解析结果如下:</p>
 <blockquote>
-<p>0x00000000a80425fb=cap_chown,cap_dac_override,cap_fowner,<br>cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,<br>cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,<br>cap_audit_write,cap_setfcap</p>
+<p>0x00000000a80425fb&#x3D;cap_chown,cap_dac_override,cap_fowner,<br>cap_fsetid,cap_kill,cap_setgid,cap_setuid,cap_setpcap,<br>cap_net_bind_service,cap_net_raw,cap_sys_chroot,cap_mknod,<br>cap_audit_write,cap_setfcap</p>
 </blockquote>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
 <li><p><a target="_blank" rel="noopener" href="https://www.katacoda.com/courses/container-runtimes/what-is-a-container">what is a container</a></p>
@@ -579,12 +579,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:09</span>
+    <span title="Reading time total">3:06</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

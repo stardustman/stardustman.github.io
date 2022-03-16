@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.1.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,17 +20,17 @@
     var CONFIG = {"hostname":"stardustman.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"Pisces | Gemini":240},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="B-tree 特性 所有的 leaves 都在同一层级。 B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。 除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。 所有的节点（包括 root）最多有 2t - 1 个 key。 某一个节点的子节点的个数 &#x3D; 这个节点的 key 的个数 + 1。 一个节">
+  <meta name="description" content="B-tree 特性 所有的 leaves 都在同一层级。 B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。 除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。 所有的节点（包括 root）最多有 2t - 1 个 key。 某一个节点的子节点的个数 &#x3D; 这个节点的 key 的个数 + 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="data-structure-btree">
 <meta property="og:url" content="http://stardustman.github.io/2020/06/12/data-structure-btree/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="B-tree 特性 所有的 leaves 都在同一层级。 B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。 除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。 所有的节点（包括 root）最多有 2t - 1 个 key。 某一个节点的子节点的个数 &#x3D; 这个节点的 key 的个数 + 1。 一个节">
+<meta property="og:description" content="B-tree 特性 所有的 leaves 都在同一层级。 B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。 除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。 所有的节点（包括 root）最多有 2t - 1 个 key。 某一个节点的子节点的个数 &#x3D; 这个节点的 key 的个数 + 1">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split.svg">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split2.svg">
 <meta property="article:published_time" content="2020-06-12T06:11:02.000Z">
-<meta property="article:modified_time" content="2022-03-16T02:11:45.509Z">
+<meta property="article:modified_time" content="2022-03-16T02:17:27.896Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="data structure">
 <meta property="article:tag" content="BTree">
@@ -200,7 +200,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
               </span>
 
           <br>
@@ -209,7 +209,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>816</span>
+              <span>861</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -233,24 +233,24 @@
 <li>B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。</li>
 <li>除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。</li>
 <li>所有的节点（包括 root）最多有 2t - 1 个 key。</li>
-<li>某一个节点的子节点的个数 = 这个节点的 key 的个数 + 1。</li>
+<li>某一个节点的子节点的个数 &#x3D; 这个节点的 key 的个数 + 1。</li>
 <li>一个节点的所有 key 从小到大排序。两个 key1 和 key2 之间的所有 child 都在 key1 和 key2 之间。</li>
 <li>B-Tree 从 root 节点 grow(扩张) 和 shrink(收缩)。</li>
 <li>search、insert、delete 时间复杂度是O(log n)。n 是 key 的总数。</li>
 </ol>
-<h3 id="t-3-为例来理解-B-tree"><a href="#t-3-为例来理解-B-tree" class="headerlink" title="t=3 为例来理解 B-tree"></a>t=3 为例来理解 B-tree</h3><ol>
-<li>每一个节点(root 除外) 至少有 t - 1 = 2 个 key。</li>
-<li>每一个节点最多有 2t - 1 = 5 个 key。节点 key 数量 = 5，称为节点满了。<br>问题来了，节点 key 个数大于 5 了咋办？拆分。什么时候来拆分呢？在向下遍历节点时发现满了，立即进行拆分。</li>
+<h3 id="t-x3D-3-为例来理解-B-tree"><a href="#t-x3D-3-为例来理解-B-tree" class="headerlink" title="t&#x3D;3 为例来理解 B-tree"></a>t&#x3D;3 为例来理解 B-tree</h3><ol>
+<li>每一个节点(root 除外) 至少有 t - 1 &#x3D; 2 个 key。</li>
+<li>每一个节点最多有 2t - 1 &#x3D; 5 个 key。节点 key 数量 &#x3D; 5，称为节点满了。<br>问题来了，节点 key 个数大于 5 了咋办？拆分。什么时候来拆分呢？在向下遍历节点时发现满了，立即进行拆分。</li>
 </ol>
 <h4 id="B-Tree-insert-operation"><a href="#B-Tree-insert-operation" class="headerlink" title="B-Tree insert operation"></a>B-Tree insert operation</h4><h5 id="拆分已满节点"><a href="#拆分已满节点" class="headerlink" title="拆分已满节点"></a>拆分已满节点</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split.svg" alt="btree-full-root-split"> #(btree-拆分已满节点)</p>
 <ol>
 <li>如上图，节点1 已经满了，对此时的 root 节点进行拆分。</li>
-<li>创建节点2，s 节点，作为新的 root 节点，同时设置 s.child[0] = root。</li>
+<li>创建节点2，s 节点，作为新的 root 节点，同时设置 s.child[0] &#x3D; root。</li>
 <li>创建节点2，z 节点，将原来 root 节点一半的 key，复制到 z 节点。</li>
-<li>将 z 节点设置为 s 节点的 child。s.child[1] = z。</li>
+<li>将 z 节点设置为 s 节点的 child。s.child[1] &#x3D; z。</li>
 </ol>
 <h5 id="拆分已满节点-有子节点"><a href="#拆分已满节点-有子节点" class="headerlink" title="拆分已满节点(有子节点)"></a>拆分已满节点(有子节点)</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split2.svg" alt=" btree-full-root-split2"> #(btree-拆分已满节点2)</p>
-<p>B-Tree 是向上扩张的(grow)。可以看到所有的 key 都是在 leaf 节点插入的。节点的 key 值的数量一旦等于 2t - 1 = 5 时，就会对该节点进行拆分。所以这也是每一个节点(root 除外)至少有 t-1 = 2 个 key 的原因。</p>
+<p>B-Tree 是向上扩张的(grow)。可以看到所有的 key 都是在 leaf 节点插入的。节点的 key 值的数量一旦等于 2t - 1 &#x3D; 5 时，就会对该节点进行拆分。所以这也是每一个节点(root 除外)至少有 t-1 &#x3D; 2 个 key 的原因。</p>
 <h4 id="B-Tree-delete-operation"><a href="#B-Tree-delete-operation" class="headerlink" title="B-Tree delete operation"></a>B-Tree delete operation</h4><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
 <li><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/BTree.html">BTree-visualization</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/introduction-of-b-tree-2/">BTree introduction</a></li>
@@ -349,7 +349,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-tree-%E7%89%B9%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">B-tree 特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#t-3-%E4%B8%BA%E4%BE%8B%E6%9D%A5%E7%90%86%E8%A7%A3-B-tree"><span class="nav-number">2.</span> <span class="nav-text">t&#x3D;3 为例来理解 B-tree</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree-insert-operation"><span class="nav-number">2.1.</span> <span class="nav-text">B-Tree insert operation</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%86%E5%88%86%E5%B7%B2%E6%BB%A1%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.1.</span> <span class="nav-text">拆分已满节点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%86%E5%88%86%E5%B7%B2%E6%BB%A1%E8%8A%82%E7%82%B9-%E6%9C%89%E5%AD%90%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">拆分已满节点(有子节点)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree-delete-operation"><span class="nav-number">2.2.</span> <span class="nav-text">B-Tree delete operation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#B-tree-%E7%89%B9%E6%80%A7"><span class="nav-number">1.</span> <span class="nav-text">B-tree 特性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#t-x3D-3-%E4%B8%BA%E4%BE%8B%E6%9D%A5%E7%90%86%E8%A7%A3-B-tree"><span class="nav-number">2.</span> <span class="nav-text">t&#x3D;3 为例来理解 B-tree</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree-insert-operation"><span class="nav-number">2.1.</span> <span class="nav-text">B-Tree insert operation</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%86%E5%88%86%E5%B7%B2%E6%BB%A1%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.1.</span> <span class="nav-text">拆分已满节点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8B%86%E5%88%86%E5%B7%B2%E6%BB%A1%E8%8A%82%E7%82%B9-%E6%9C%89%E5%AD%90%E8%8A%82%E7%82%B9"><span class="nav-number">2.1.2.</span> <span class="nav-text">拆分已满节点(有子节点)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#B-Tree-delete-operation"><span class="nav-number">2.2.</span> <span class="nav-text">B-Tree delete operation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number"></span> <span class="nav-text">References</span></a></div>
       </div>
       <!--/noindex-->
 
@@ -421,12 +421,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:09</span>
+    <span title="Reading time total">3:06</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

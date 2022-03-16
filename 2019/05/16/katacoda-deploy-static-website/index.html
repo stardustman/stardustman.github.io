@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.1.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -28,7 +28,7 @@
 <meta property="og:description" content="Create a Dockerfile Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.This base">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2019-05-16T08:17:51.000Z">
-<meta property="article:modified_time" content="2022-03-16T02:11:45.513Z">
+<meta property="article:modified_time" content="2022-03-16T02:17:27.900Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="docker">
 <meta name="twitter:card" content="summary">
@@ -196,7 +196,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
               </span>
 
           <br>
@@ -227,16 +227,16 @@
         <h1 id="Create-a-Dockerfile"><a href="#Create-a-Dockerfile" class="headerlink" title="Create a Dockerfile"></a>Create a Dockerfile</h1><blockquote>
 <p>Docker Images start from a base image. The base image should include the platform dependencies required by your application, for example, having the JVM or CLR installed.<br>This base image is defined as an instruction in the Dockerfile. Docker Images are built based on the contents of a Dockerfile. The Dockerfile is a list of instructions describing how to deploy your application.</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># base image</span><br><span class="line">FROM nginx:alpine</span><br><span class="line"># copies the content of the current directory into a particular location (&#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html)inside the container.</span><br><span class="line">COPY . &#x2F;usr&#x2F;share&#x2F;nginx&#x2F;html</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># base image</span><br><span class="line">FROM nginx:alpine</span><br><span class="line"># copies the content of the current directory into a particular location (/usr/share/nginx/html)inside the container.</span><br><span class="line">COPY . /usr/share/nginx/html</span><br></pre></td></tr></table></figure>
 <h1 id="Build-docker-image"><a href="#Build-docker-image" class="headerlink" title="Build docker image"></a>Build docker image</h1><blockquote>
 <p>The Dockerfile is used by the Docker CLI build command. The build command executes each instruction within the Dockerfile. The result is a built Docker Image that can be launched and run your configured app.<br>The build command takes in some different parameters. The format is <strong>docker build -t build-directory</strong>. The -t parameter allows you to specify a friendly name for the image and a tag, commonly used as a version number. This allows you to track built images and be confident about which version is being started.</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Build our static HTML image using the build command below.</span><br><span class="line"># The built image will have the name webserver-image with a tag of v1.</span><br><span class="line">docker build -t webserver-image:v1 .</span><br><span class="line"># view a list of all the images on the host</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Build our static HTML image using the build command below.</span><br><span class="line"># The built image will have the name webserver-image with a tag of v1.</span><br><span class="line">docker build -t webserver-image:v1 .</span><br><span class="line"># view a list of all the images on the host</span><br><span class="line">docker images</span><br></pre></td></tr></table></figure>
 <h1 id="Run"><a href="#Run" class="headerlink" title="Run"></a>Run</h1><blockquote>
 <p>The built Image can be launched in a consistent way to other Docker Images. When a container launches, it’s sandboxed from other processes and networks on the host. When starting a container you need to give it permission and access to what it requires.<br>For example, to open and bind to a network port on the host you need to provide the parameter <em>-p host-port:container-port</em>.</p>
 </blockquote>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Launch our newly built image providing the friendly name and tag. As it&#39;s a web server, bind port 80 to our host using the -p parameter.</span><br><span class="line">docker run -d -p 80:80 webserver-image:v1</span><br><span class="line"># Access the results of port 80</span><br><span class="line">curl docker</span><br></pre></td></tr></table></figure>
-<h1 id="dockerfile-and-index-html"><a href="#dockerfile-and-index-html" class="headerlink" title="dockerfile and index.html"></a>dockerfile and index.html</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># index.html</span><br><span class="line">&lt;h1&gt;Hello World&lt;&#x2F;h1&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># Launch our newly built image providing the friendly name and tag. As it&#x27;s a web server, bind port 80 to our host using the -p parameter.</span><br><span class="line">docker run -d -p 80:80 webserver-image:v1</span><br><span class="line"># Access the results of port 80</span><br><span class="line">curl docker</span><br></pre></td></tr></table></figure>
+<h1 id="dockerfile-and-index-html"><a href="#dockerfile-and-index-html" class="headerlink" title="dockerfile and index.html"></a>dockerfile and index.html</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># index.html</span><br><span class="line">&lt;h1&gt;Hello World&lt;/h1&gt;</span><br></pre></td></tr></table></figure>
 
     </div>
 
@@ -400,12 +400,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:09</span>
+    <span title="Reading time total">3:06</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

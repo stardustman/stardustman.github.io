@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.1.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -32,7 +32,7 @@
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/cache-2-ways-cache.svg">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/cache-memory-address-type.svg">
 <meta property="article:published_time" content="2020-12-01T00:40:29.000Z">
-<meta property="article:modified_time" content="2022-03-16T02:11:45.509Z">
+<meta property="article:modified_time" content="2022-03-16T02:17:27.896Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="notion">
 <meta property="article:tag" content="cache">
@@ -202,7 +202,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
               </span>
 
           <br>
@@ -211,7 +211,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.1k</span>
+              <span>2.2k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -253,8 +253,8 @@
 <h2 id="基本问题"><a href="#基本问题" class="headerlink" title="基本问题"></a>基本问题</h2><h3 id="怎样找到-cache-中的数据？"><a href="#怎样找到-cache-中的数据？" class="headerlink" title="怎样找到 cache 中的数据？"></a>怎样找到 cache 中的数据？</h3><blockquote>
 <p>以 32bits 的内存地址，来分析。<br>(index, offset) 二维坐标来定位一个 byte 的数据。</p>
 </blockquote>
-<h4 id="index"><a href="#index" class="headerlink" title="index"></a>index</h4><p> 定位 cache line，可视为<code>横坐标</code>。<br> 现在可以通过 cache lines = cache size / cache line size 来计算。<br> index bits = log2(cache lines)</p>
-<h4 id="offset"><a href="#offset" class="headerlink" title="offset"></a>offset</h4><p> 通过 index 定位到 cache line 后，offset 定位到这个 cache line 的哪一个 byte。<br> 可以视为<code>纵坐标</code>。<br> offset bits = log2(offset)</p>
+<h4 id="index"><a href="#index" class="headerlink" title="index"></a>index</h4><p> 定位 cache line，可视为<code>横坐标</code>。<br> 现在可以通过 cache lines &#x3D; cache size &#x2F; cache line size 来计算。<br> index bits &#x3D; log2(cache lines)</p>
+<h4 id="offset"><a href="#offset" class="headerlink" title="offset"></a>offset</h4><p> 通过 index 定位到 cache line 后，offset 定位到这个 cache line 的哪一个 byte。<br> 可以视为<code>纵坐标</code>。<br> offset bits &#x3D; log2(offset)</p>
 <h4 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h4><p>32bits 剩下的部分。</p>
 <h4 id="cache-line-应该是多大？"><a href="#cache-line-应该是多大？" class="headerlink" title="cache line 应该是多大？"></a>cache line 应该是多大？</h4><blockquote>
 <p>这其实是分块(block)思想。在利用空间局部性原理。</p>
@@ -269,13 +269,13 @@
 </ol>
 <p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache_organization.svg" alt="cache_organization"> #(cache 组织方式)</p>
 <h3 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h3><p>内存地址 32bits。</p>
-<h4 id="1024-cache-lines-32-Bytes-per-line"><a href="#1024-cache-lines-32-Bytes-per-line" class="headerlink" title="1024 cache lines, 32 Bytes per line."></a>1024 cache lines, 32 Bytes per line.</h4><p>index bits = log2(1024) = 10<br>offset bits = log2(32) = 5<br>tags bits = 32 - index - offset = 17</p>
-<h4 id="32KB-cache-64byte-lines"><a href="#32KB-cache-64byte-lines" class="headerlink" title="32KB cache, 64byte lines"></a>32KB cache, 64byte lines</h4><p>index bits = log2(32KB / 64Bytes) = 9<br>offset bits = log2(64) = 6<br>tags bits = 32 - 9 - 6 = 17</p>
+<h4 id="1024-cache-lines-32-Bytes-per-line"><a href="#1024-cache-lines-32-Bytes-per-line" class="headerlink" title="1024 cache lines, 32 Bytes per line."></a>1024 cache lines, 32 Bytes per line.</h4><p>index bits &#x3D; log2(1024) &#x3D; 10<br>offset bits &#x3D; log2(32) &#x3D; 5<br>tags bits &#x3D; 32 - index - offset &#x3D; 17</p>
+<h4 id="32KB-cache-64byte-lines"><a href="#32KB-cache-64byte-lines" class="headerlink" title="32KB cache, 64byte lines"></a>32KB cache, 64byte lines</h4><p>index bits &#x3D; log2(32KB &#x2F; 64Bytes) &#x3D; 9<br>offset bits &#x3D; log2(64) &#x3D; 6<br>tags bits &#x3D; 32 - 9 - 6 &#x3D; 17</p>
 <h4 id="set-是干什么的？"><a href="#set-是干什么的？" class="headerlink" title="set 是干什么的？"></a>set 是干什么的？</h4><p>(set) <code>Associativity</code> means providing <code>more than one</code> place for a cache line to live.<br>One group of lines corresponds to each index</p>
 <ol>
 <li>it is called a “set”</li>
 <li><code>Each line</code> in a set is called a <code>“way”</code></li>
-<li>N-Way associativity requires N parallel comparators<br>set = ？</li>
+<li>N-Way associativity requires N parallel comparators<br>set &#x3D; ？</li>
 </ol>
 <img src="/2020/12/01/cs-cache/cache-2-ways-cache.svg" class="" title="2-ways-cache">
 <p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache-2-ways-cache.svg" alt="2-ways-cache"></p>
@@ -293,7 +293,7 @@
 <li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CPU_cache">wiki-cpu-cache</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cs.princeton.edu/courses/archive/fall19/cos316/lectures/10-cpu-cache.pdf">cos316-10-cpu-cache.pdf</a></li>
 <li><a target="_blank" rel="noopener" href="http://aturing.umcs.maine.edu/~meadow/courses/cos335/Intel-CacheOverview.pdf">cos355-Intel-CacheOverview</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31875174">细说Cache-L1/L2/L3/TLB</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31875174">细说Cache-L1&#x2F;L2&#x2F;L3&#x2F;TLB</a></li>
 </ol>
 
     </div>
@@ -459,12 +459,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:09</span>
+    <span title="Reading time total">3:06</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

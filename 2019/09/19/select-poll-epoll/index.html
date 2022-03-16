@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.1.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"stardustman.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"Pisces | Gemini":240},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
   </script>
 
-  <meta name="description" content="弄清楚 I&#x2F;O Multiplexing 和 Linux 中 select, poll, epoll 之间的关系.  multiplexer Multiplexer is a combinational circuit that has maximum of 2^n data inputs, n selection lines and single output line. One of the">
+  <meta name="description" content="弄清楚 I&#x2F;O Multiplexing 和 Linux 中 select, poll, epoll 之间的关系.  multiplexer Multiplexer is a combinational circuit that has maximum of 2^n data inputs, n selection lines and single output line. One o">
 <meta property="og:type" content="article">
 <meta property="og:title" content="select_poll_epoll">
 <meta property="og:url" content="http://stardustman.github.io/2019/09/19/select-poll-epoll/index.html">
 <meta property="og:site_name" content="stardustman">
-<meta property="og:description" content="弄清楚 I&#x2F;O Multiplexing 和 Linux 中 select, poll, epoll 之间的关系.  multiplexer Multiplexer is a combinational circuit that has maximum of 2^n data inputs, n selection lines and single output line. One of the">
+<meta property="og:description" content="弄清楚 I&#x2F;O Multiplexing 和 Linux 中 select, poll, epoll 之间的关系.  multiplexer Multiplexer is a combinational circuit that has maximum of 2^n data inputs, n selection lines and single output line. One o">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/4x1_Multiplexer.png">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I0.png">
@@ -34,7 +34,7 @@
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I3.png">
 <meta property="og:image" content="http://stardustman.github.io/2019/09/19/select-poll-epoll/multiplexers_S1_S0_I0.png">
 <meta property="article:published_time" content="2019-09-19T06:43:18.000Z">
-<meta property="article:modified_time" content="2022-03-16T02:11:45.529Z">
+<meta property="article:modified_time" content="2022-03-16T02:17:27.916Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="io">
 <meta name="twitter:card" content="summary">
@@ -203,7 +203,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
               </span>
 
           <br>
@@ -212,7 +212,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2k</span>
+              <span>2.1k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -232,7 +232,7 @@
 
       
         <blockquote>
-<p>弄清楚 I/O Multiplexing 和 Linux 中 select, poll, epoll 之间的关系.</p>
+<p>弄清楚 I&#x2F;O Multiplexing 和 Linux 中 select, poll, epoll 之间的关系.</p>
 </blockquote>
 <h2 id="multiplexer"><a href="#multiplexer" class="headerlink" title="multiplexer"></a>multiplexer</h2><blockquote>
 <p><code>Multiplexer</code> is a combinational circuit that has maximum of 2^n data inputs, <code>n</code> <code>selection lines</code> and <code>single output line</code>. One of these data inputs will be connected to the output based on the values of selection lines.<br>Since there are <code>n</code> selection lines, there will be 2^n possible combinations of zeros and ones. So, each combination will select only one data input. Multiplexer is also called as Mux.<br>聚合多个输入, 通过 selection lines 来选择一个输出. </p>
@@ -241,21 +241,21 @@
 <p>聚合 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 这 4 个输入, 通过 S1 和 S0 来选择一个输出.</p>
 </blockquote>
 <h3 id="Block-diagram-of-4x1-Multiplexer"><a href="#Block-diagram-of-4x1-Multiplexer" class="headerlink" title="Block diagram of 4x1 Multiplexer"></a>Block diagram of 4x1 Multiplexer</h3><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/4x1_Multiplexer.png" alt="4x1_Multiplexer"></p>
-<h3 id="Y-output-输出值的分析"><a href="#Y-output-输出值的分析" class="headerlink" title="Y(output) 输出值的分析"></a>Y<sub>(output)</sub> 输出值的分析</h3><h4 id="S1-0-S0-0-时-Y-的值由-I0-决定"><a href="#S1-0-S0-0-时-Y-的值由-I0-决定" class="headerlink" title="S1 = 0, S0 = 0 时 Y 的值由 I0 决定"></a>S<sub>1</sub> = 0, S<sub>0</sub> = 0 时 Y 的值由 I<sub>0</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I0.png" alt="multiplexers_S1_S0_I0"></p>
+<h3 id="Y-output-输出值的分析"><a href="#Y-output-输出值的分析" class="headerlink" title="Y(output) 输出值的分析"></a>Y<sub>(output)</sub> 输出值的分析</h3><h4 id="S1-x3D-0-S0-x3D-0-时-Y-的值由-I0-决定"><a href="#S1-x3D-0-S0-x3D-0-时-Y-的值由-I0-决定" class="headerlink" title="S1 &#x3D; 0, S0 &#x3D; 0 时 Y 的值由 I0 决定"></a>S<sub>1</sub> &#x3D; 0, S<sub>0</sub> &#x3D; 0 时 Y 的值由 I<sub>0</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I0.png" alt="multiplexers_S1_S0_I0"></p>
 <blockquote>
-<p>S1 = 0, S0 = 0. 此时的 I1, I2, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I0 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I0.</p>
+<p>S1 &#x3D; 0, S0 &#x3D; 0. 此时的 I1, I2, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I0 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> &#x3D; I0.</p>
 </blockquote>
-<h4 id="S1-0-S0-1-时-Y-的值由-I1-决定"><a href="#S1-0-S0-1-时-Y-的值由-I1-决定" class="headerlink" title="S1 = 0, S0 = 1 时 Y 的值由 I1 决定"></a>S<sub>1</sub> = 0, S<sub>0</sub> = 1 时 Y 的值由 I<sub>1</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I1.png" alt="multiplexers_S1_S0_I1"></p>
+<h4 id="S1-x3D-0-S0-x3D-1-时-Y-的值由-I1-决定"><a href="#S1-x3D-0-S0-x3D-1-时-Y-的值由-I1-决定" class="headerlink" title="S1 &#x3D; 0, S0 &#x3D; 1 时 Y 的值由 I1 决定"></a>S<sub>1</sub> &#x3D; 0, S<sub>0</sub> &#x3D; 1 时 Y 的值由 I<sub>1</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I1.png" alt="multiplexers_S1_S0_I1"></p>
 <blockquote>
-<p>S1 = 0, S0 = 1. 此时的 I0, I2, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I1 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I1.</p>
+<p>S1 &#x3D; 0, S0 &#x3D; 1. 此时的 I0, I2, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I1 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> &#x3D; I1.</p>
 </blockquote>
-<h4 id="S1-1-S0-0-时-Y-的值由-I2-决定"><a href="#S1-1-S0-0-时-Y-的值由-I2-决定" class="headerlink" title="S1 = 1, S0 = 0 时 Y 的值由 I2 决定"></a>S<sub>1</sub> = 1, S<sub>0</sub> = 0 时 Y 的值由 I<sub>2</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I2.png" alt="multiplexers_S1_S0_I2"></p>
+<h4 id="S1-x3D-1-S0-x3D-0-时-Y-的值由-I2-决定"><a href="#S1-x3D-1-S0-x3D-0-时-Y-的值由-I2-决定" class="headerlink" title="S1 &#x3D; 1, S0 &#x3D; 0 时 Y 的值由 I2 决定"></a>S<sub>1</sub> &#x3D; 1, S<sub>0</sub> &#x3D; 0 时 Y 的值由 I<sub>2</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I2.png" alt="multiplexers_S1_S0_I2"></p>
 <blockquote>
-<p>S1 = 1, S0 = 0. 此时的 I0, I1, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I2 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I2.</p>
+<p>S1 &#x3D; 1, S0 &#x3D; 0. 此时的 I0, I1, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I2 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> &#x3D; I2.</p>
 </blockquote>
-<h4 id="S1-1-S1-0-时-Y-的值由-I3-决定"><a href="#S1-1-S1-0-时-Y-的值由-I3-决定" class="headerlink" title="S1 = 1, S1 = 0 时 Y 的值由 I3 决定"></a>S<sub>1</sub> = 1, S<sub>1</sub> = 0 时 Y 的值由 I<sub>3</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I3.png" alt="multiplexers_S1_S0_I3"></p>
+<h4 id="S1-x3D-1-S1-x3D-0-时-Y-的值由-I3-决定"><a href="#S1-x3D-1-S1-x3D-0-时-Y-的值由-I3-决定" class="headerlink" title="S1 &#x3D; 1, S1 &#x3D; 0 时 Y 的值由 I3 决定"></a>S<sub>1</sub> &#x3D; 1, S<sub>1</sub> &#x3D; 0 时 Y 的值由 I<sub>3</sub> 决定</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I3.png" alt="multiplexers_S1_S0_I3"></p>
 <blockquote>
-<p>S1 = 1, S0 = 1. 此时的 I0, I1, I2, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I3 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I3.</p>
+<p>S1 &#x3D; 1, S0 &#x3D; 1. 此时的 I0, I1, I2, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I3 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> &#x3D; I3.</p>
 </blockquote>
 <h3 id="Truth-table-of-4x1-Multiplexer"><a href="#Truth-table-of-4x1-Multiplexer" class="headerlink" title="Truth table of 4x1 Multiplexer"></a>Truth table of 4x1 Multiplexer</h3><table>
 <thead>
@@ -292,21 +292,21 @@
 </tr>
 </tbody></table>
 <h3 id="Multiplexer-Mux"><a href="#Multiplexer-Mux" class="headerlink" title="Multiplexer (Mux)"></a>Multiplexer (Mux)</h3><blockquote>
-<p>4x1 Multiplexer 相当于提供了一种映射, Y = I<sub>(S1S0)</sub>.<br>通过组合S<sub>1</sub> 和 S<sub>0</sub> 的值, 可以直接得到 I<sub>S1S0</sub> 的值.也就是通过 4x1 Multiplexer 输出的 Y 值是 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 之一.</p>
+<p>4x1 Multiplexer 相当于提供了一种映射, Y &#x3D; I<sub>(S1S0)</sub>.<br>通过组合S<sub>1</sub> 和 S<sub>0</sub> 的值, 可以直接得到 I<sub>S1S0</sub> 的值.也就是通过 4x1 Multiplexer 输出的 Y 值是 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 之一.</p>
 </blockquote>
-<h2 id="I-O-Multiplexing"><a href="#I-O-Multiplexing" class="headerlink" title="I/O Multiplexing"></a>I/O Multiplexing</h2><blockquote>
-<p>I/O multiplexing 这里面的 multiplexing 指的其实是在单个线程通过记录跟踪每一个 Sock(I/O 流)的状态.<br>select, poll, epoll 都是 I/O multiplexing的具体的实现, 之所以有这三个存在，其实是他们出现是有先后顺序的.</p>
+<h2 id="I-x2F-O-Multiplexing"><a href="#I-x2F-O-Multiplexing" class="headerlink" title="I&#x2F;O Multiplexing"></a>I&#x2F;O Multiplexing</h2><blockquote>
+<p>I&#x2F;O multiplexing 这里面的 multiplexing 指的其实是在单个线程通过记录跟踪每一个 Sock(I&#x2F;O 流)的状态.<br>select, poll, epoll 都是 I&#x2F;O multiplexing的具体的实现, 之所以有这三个存在，其实是他们出现是有先后顺序的.</p>
 </blockquote>
-<h2 id="I-O-Multiplexing-和-Multiplexer"><a href="#I-O-Multiplexing-和-Multiplexer" class="headerlink" title="I/O Multiplexing 和 Multiplexer"></a>I/O Multiplexing 和 Multiplexer</h2><blockquote>
-<p>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 视为 4 个 I/O 流. 值为 1 时, 视为一个 I/O 流. 4x1 Multiplexer 作为硬件实现的 I/O multiplexing. 可以周期性的设置S<sub>1</sub> 和 S<sub>0</sub> 的值, 通过监测 Y 的输出, 得到 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 的输入.</p>
+<h2 id="I-x2F-O-Multiplexing-和-Multiplexer"><a href="#I-x2F-O-Multiplexing-和-Multiplexer" class="headerlink" title="I&#x2F;O Multiplexing 和 Multiplexer"></a>I&#x2F;O Multiplexing 和 Multiplexer</h2><blockquote>
+<p>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 视为 4 个 I&#x2F;O 流. 值为 1 时, 视为一个 I&#x2F;O 流. 4x1 Multiplexer 作为硬件实现的 I&#x2F;O multiplexing. 可以周期性的设置S<sub>1</sub> 和 S<sub>0</sub> 的值, 通过监测 Y 的输出, 得到 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 的输入.</p>
 </blockquote>
 <img src="/2019/09/19/select-poll-epoll/multiplexers_S1_S0_I0.png" class="" title="multiplexers_S1_S0_I0">
 
 <h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>select 被实现以后, 很快就暴露出了很多问题.</p>
 <ul>
 <li>select 会修改传入的参数数组, 这个对于一个需要调用很多次的函数, 是非常不友好的.</li>
-<li>select 如果任何一个 sock(I/O stream) 出现了数据, select 仅仅会返回, 但是并不会告诉你是那个 sock 上有数,于是你只能自己一个一个的找.<blockquote>
-<p>相当于监测到 <code>Mutiplexer</code> 的 Y = 1, 但是不知道 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>哪一个的输入是 1. 也就是不告诉 S<sub>1</sub> 和 S<sub>0</sub>的值, 那就只好再去具体查看一次.<br>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>的值.</p>
+<li>select 如果任何一个 sock(I&#x2F;O stream) 出现了数据, select 仅仅会返回, 但是并不会告诉你是那个 sock 上有数,于是你只能自己一个一个的找.<blockquote>
+<p>相当于监测到 <code>Mutiplexer</code> 的 Y &#x3D; 1, 但是不知道 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>哪一个的输入是 1. 也就是不告诉 S<sub>1</sub> 和 S<sub>0</sub>的值, 那就只好再去具体查看一次.<br>I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub>的值.</p>
 </blockquote>
 </li>
 <li>select 只能监视 1024 个链接. 相当于实现了一个 1024x1 的 Mutiplexer. 只能有1024 个输入.</li>
@@ -318,11 +318,11 @@
 <ul>
 <li>poll 去掉了 1024 个链接的限制</li>
 </ul>
-<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 可以说是 I/O 多路复用最新的一个实现, epoll 修复了 poll 和 select 绝大部分问题, 比如:</p>
+<h3 id="epoll"><a href="#epoll" class="headerlink" title="epoll"></a>epoll</h3><p>epoll 可以说是 I&#x2F;O 多路复用最新的一个实现, epoll 修复了 poll 和 select 绝大部分问题, 比如:</p>
 <ul>
 <li>epoll 现在是线程安全的。</li>
 <li>epoll 现在不仅告诉你 sock 组里面数据，还会告诉你具体哪个 sock 有数据, 你不用自己去找了.<blockquote>
-<p>相当于监测到  <code>Mutiplexer</code> 的 Y = 1, 且告知了此时的 S<sub>1</sub> 和 S<sub>0</sub> 的值, 通过组合就可以知道是哪一个具体的输入是 1 了.</p>
+<p>相当于监测到  <code>Mutiplexer</code> 的 Y &#x3D; 1, 且告知了此时的 S<sub>1</sub> 和 S<sub>0</sub> 的值, 通过组合就可以知道是哪一个具体的输入是 1 了.</p>
 </blockquote>
 </li>
 </ul>
@@ -330,7 +330,7 @@
 <li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/digital_circuits/digital_circuits_multiplexers.htm">circuits_multiplexers</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/digital_circuits/digital_circuits_demultiplexers.htm">circuits_demultiplexers</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/64138532">epoll的本质</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/32163005">I/O multiplexing</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/32163005">I&#x2F;O multiplexing</a></li>
 </ol>
 
     </div>
@@ -423,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#multiplexer"><span class="nav-number">1.</span> <span class="nav-text">multiplexer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4x1-Multiplexer-%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">4x1 Multiplexer 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block-diagram-of-4x1-Multiplexer"><span class="nav-number">1.2.</span> <span class="nav-text">Block diagram of 4x1 Multiplexer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Y-output-%E8%BE%93%E5%87%BA%E5%80%BC%E7%9A%84%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">Y(output) 输出值的分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#S1-0-S0-0-%E6%97%B6-Y-%E7%9A%84%E5%80%BC%E7%94%B1-I0-%E5%86%B3%E5%AE%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">S1 &#x3D; 0, S0 &#x3D; 0 时 Y 的值由 I0 决定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#S1-0-S0-1-%E6%97%B6-Y-%E7%9A%84%E5%80%BC%E7%94%B1-I1-%E5%86%B3%E5%AE%9A"><span class="nav-number">1.3.2.</span> <span class="nav-text">S1 &#x3D; 0, S0 &#x3D; 1 时 Y 的值由 I1 决定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#S1-1-S0-0-%E6%97%B6-Y-%E7%9A%84%E5%80%BC%E7%94%B1-I2-%E5%86%B3%E5%AE%9A"><span class="nav-number">1.3.3.</span> <span class="nav-text">S1 &#x3D; 1, S0 &#x3D; 0 时 Y 的值由 I2 决定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#S1-1-S1-0-%E6%97%B6-Y-%E7%9A%84%E5%80%BC%E7%94%B1-I3-%E5%86%B3%E5%AE%9A"><span class="nav-number">1.3.4.</span> <span class="nav-text">S1 &#x3D; 1, S1 &#x3D; 0 时 Y 的值由 I3 决定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Truth-table-of-4x1-Multiplexer"><span class="nav-number">1.4.</span> <span class="nav-text">Truth table of 4x1 Multiplexer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiplexer-Mux"><span class="nav-number">1.5.</span> <span class="nav-text">Multiplexer (Mux)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-Multiplexing"><span class="nav-number">2.</span> <span class="nav-text">I&#x2F;O Multiplexing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-O-Multiplexing-%E5%92%8C-Multiplexer"><span class="nav-number">3.</span> <span class="nav-text">I&#x2F;O Multiplexing 和 Multiplexer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">3.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll"><span class="nav-number">3.2.</span> <span class="nav-text">poll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">3.3.</span> <span class="nav-text">epoll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#multiplexer"><span class="nav-number">1.</span> <span class="nav-text">multiplexer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4x1-Multiplexer-%E5%88%86%E6%9E%90"><span class="nav-number">1.1.</span> <span class="nav-text">4x1 Multiplexer 分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Block-diagram-of-4x1-Multiplexer"><span class="nav-number">1.2.</span> <span class="nav-text">Block diagram of 4x1 Multiplexer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Y-output-%E8%BE%93%E5%87%BA%E5%80%BC%E7%9A%84%E5%88%86%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">Y(output) 输出值的分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#S1-x3D-0-S0-x3D-0-%E6%97%B6-Y-%E7%9A%84%E5%80%BC%E7%94%B1-I0-%E5%86%B3%E5%AE%9A"><span class="nav-number">1.3.1.</span> <span class="nav-text">S1 &#x3D; 0, S0 &#x3D; 0 时 Y 的值由 I0 决定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#S1-x3D-0-S0-x3D-1-%E6%97%B6-Y-%E7%9A%84%E5%80%BC%E7%94%B1-I1-%E5%86%B3%E5%AE%9A"><span class="nav-number">1.3.2.</span> <span class="nav-text">S1 &#x3D; 0, S0 &#x3D; 1 时 Y 的值由 I1 决定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#S1-x3D-1-S0-x3D-0-%E6%97%B6-Y-%E7%9A%84%E5%80%BC%E7%94%B1-I2-%E5%86%B3%E5%AE%9A"><span class="nav-number">1.3.3.</span> <span class="nav-text">S1 &#x3D; 1, S0 &#x3D; 0 时 Y 的值由 I2 决定</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#S1-x3D-1-S1-x3D-0-%E6%97%B6-Y-%E7%9A%84%E5%80%BC%E7%94%B1-I3-%E5%86%B3%E5%AE%9A"><span class="nav-number">1.3.4.</span> <span class="nav-text">S1 &#x3D; 1, S1 &#x3D; 0 时 Y 的值由 I3 决定</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Truth-table-of-4x1-Multiplexer"><span class="nav-number">1.4.</span> <span class="nav-text">Truth table of 4x1 Multiplexer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multiplexer-Mux"><span class="nav-number">1.5.</span> <span class="nav-text">Multiplexer (Mux)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-x2F-O-Multiplexing"><span class="nav-number">2.</span> <span class="nav-text">I&#x2F;O Multiplexing</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-x2F-O-Multiplexing-%E5%92%8C-Multiplexer"><span class="nav-number">3.</span> <span class="nav-text">I&#x2F;O Multiplexing 和 Multiplexer</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#select"><span class="nav-number">3.1.</span> <span class="nav-text">select</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#poll"><span class="nav-number">3.2.</span> <span class="nav-text">poll</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#epoll"><span class="nav-number">3.3.</span> <span class="nav-text">epoll</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#References"><span class="nav-number">4.</span> <span class="nav-text">References</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -495,12 +495,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:09</span>
+    <span title="Reading time total">3:06</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>

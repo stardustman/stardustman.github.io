@@ -6,7 +6,7 @@
   <link href="http://stardustman.github.io/atom.xml" rel="self"/>
   
   <link href="http://stardustman.github.io/"/>
-  <updated>2022-03-16T02:11:45.513Z</updated>
+  <updated>2022-03-16T02:17:27.900Z</updated>
   <id>http://stardustman.github.io/</id>
   
   <author>
@@ -20,8 +20,8 @@
     <title>Hello World</title>
     <link href="http://stardustman.github.io/2022/03/16/hello-world/"/>
     <id>http://stardustman.github.io/2022/03/16/hello-world/</id>
-    <published>2022-03-16T02:11:45.513Z</published>
-    <updated>2022-03-16T02:11:45.513Z</updated>
+    <published>2022-03-16T02:17:27.900Z</published>
+    <updated>2022-03-16T02:17:27.900Z</updated>
     
     
       
@@ -42,7 +42,7 @@
     <link href="http://stardustman.github.io/2021/11/28/k8s-deploy-container-using-yaml/"/>
     <id>http://stardustman.github.io/2021/11/28/k8s-deploy-container-using-yaml/</id>
     <published>2021-11-28T02:18:03.000Z</published>
-    <updated>2022-03-16T02:11:45.513Z</updated>
+    <updated>2022-03-16T02:17:27.900Z</updated>
     
     
       
@@ -72,7 +72,7 @@
     <link href="http://stardustman.github.io/2021/09/11/What-happens-when-you-type-google-com-into-your-browser-and-press-enter/"/>
     <id>http://stardustman.github.io/2021/09/11/What-happens-when-you-type-google-com-into-your-browser-and-press-enter/</id>
     <published>2021-09-11T08:21:12.000Z</published>
-    <updated>2022-03-16T02:11:45.493Z</updated>
+    <updated>2022-03-16T02:17:27.880Z</updated>
     
     
       
@@ -100,7 +100,7 @@
     <link href="http://stardustman.github.io/2021/07/18/asm-java-jit/"/>
     <id>http://stardustman.github.io/2021/07/18/asm-java-jit/</id>
     <published>2021-07-18T02:43:46.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -125,7 +125,7 @@
     <link href="http://stardustman.github.io/2021/06/18/java-keyword-volatile/"/>
     <id>http://stardustman.github.io/2021/06/18/java-keyword-volatile/</id>
     <published>2021-06-18T06:54:23.000Z</published>
-    <updated>2022-03-16T02:11:45.513Z</updated>
+    <updated>2022-03-16T02:17:27.900Z</updated>
     
     
       
@@ -154,7 +154,7 @@
     <link href="http://stardustman.github.io/2021/05/25/cs-semaphores/"/>
     <id>http://stardustman.github.io/2021/05/25/cs-semaphores/</id>
     <published>2021-05-25T04:38:06.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
     
@@ -167,7 +167,7 @@
     <link href="http://stardustman.github.io/2021/04/28/asm-pointers-and-memory/"/>
     <id>http://stardustman.github.io/2021/04/28/asm-pointers-and-memory/</id>
     <published>2021-04-28T08:04:36.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -190,7 +190,7 @@
     <link href="http://stardustman.github.io/2021/04/18/cs-condition-variables/"/>
     <id>http://stardustman.github.io/2021/04/18/cs-condition-variables/</id>
     <published>2021-04-18T12:44:09.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -219,7 +219,7 @@
     <link href="http://stardustman.github.io/2020/12/28/cs-english-words/"/>
     <id>http://stardustman.github.io/2020/12/28/cs-english-words/</id>
     <published>2020-12-28T07:11:28.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -244,7 +244,7 @@
     <link href="http://stardustman.github.io/2020/12/14/cs-lock/"/>
     <id>http://stardustman.github.io/2020/12/14/cs-lock/</id>
     <published>2020-12-14T07:20:26.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -269,7 +269,7 @@
     <link href="http://stardustman.github.io/2020/12/01/cs-cache/"/>
     <id>http://stardustman.github.io/2020/12/01/cs-cache/</id>
     <published>2020-12-01T00:40:29.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -298,7 +298,7 @@
     <link href="http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/"/>
     <id>http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/</id>
     <published>2020-11-30T02:54:57.000Z</published>
-    <updated>2022-03-16T02:11:45.493Z</updated>
+    <updated>2022-03-16T02:17:27.880Z</updated>
     
     
       
@@ -329,7 +329,7 @@
     <link href="http://stardustman.github.io/2020/11/26/data-and-metadata/"/>
     <id>http://stardustman.github.io/2020/11/26/data-and-metadata/</id>
     <published>2020-11-26T08:18:52.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -355,7 +355,7 @@
     <link href="http://stardustman.github.io/2020/11/24/notions-of-computer/"/>
     <id>http://stardustman.github.io/2020/11/24/notions-of-computer/</id>
     <published>2020-11-24T05:25:13.000Z</published>
-    <updated>2022-03-16T02:11:45.525Z</updated>
+    <updated>2022-03-16T02:17:27.912Z</updated>
     
     
       
@@ -378,7 +378,7 @@
     <link href="http://stardustman.github.io/2020/06/12/data-structure-btree/"/>
     <id>http://stardustman.github.io/2020/06/12/data-structure-btree/</id>
     <published>2020-06-12T06:11:02.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -405,7 +405,7 @@
     <link href="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/"/>
     <id>http://stardustman.github.io/2020/06/08/asm-how-computer-startup/</id>
     <published>2020-06-08T00:09:12.000Z</published>
-    <updated>2022-03-16T02:11:45.501Z</updated>
+    <updated>2022-03-16T02:17:27.888Z</updated>
     
     
       
@@ -431,7 +431,7 @@
     <link href="http://stardustman.github.io/2020/05/18/data-structure-heap/"/>
     <id>http://stardustman.github.io/2020/05/18/data-structure-heap/</id>
     <published>2020-05-18T07:24:05.000Z</published>
-    <updated>2022-03-16T02:11:45.513Z</updated>
+    <updated>2022-03-16T02:17:27.900Z</updated>
     
     
       
@@ -460,7 +460,7 @@
     <link href="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/"/>
     <id>http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/</id>
     <published>2020-05-13T07:31:05.000Z</published>
-    <updated>2022-03-16T02:11:45.529Z</updated>
+    <updated>2022-03-16T02:17:27.916Z</updated>
     
     
       
@@ -487,7 +487,7 @@
     <link href="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/"/>
     <id>http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/</id>
     <published>2020-05-11T00:39:15.000Z</published>
-    <updated>2022-03-16T02:11:45.509Z</updated>
+    <updated>2022-03-16T02:17:27.896Z</updated>
     
     
       
@@ -512,7 +512,7 @@
     <link href="http://stardustman.github.io/2020/05/09/network-dhcp/"/>
     <id>http://stardustman.github.io/2020/05/09/network-dhcp/</id>
     <published>2020-05-09T01:36:27.000Z</published>
-    <updated>2022-03-16T02:11:45.521Z</updated>
+    <updated>2022-03-16T02:17:27.908Z</updated>
     
     
       

@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 6.1.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/intel8086_address.png">
 <meta property="og:image" content="https://gitee.com/stardustman/pictrues/raw/master/img/intel8086_real_address_mode_translation.png">
 <meta property="article:published_time" content="2019-10-16T05:59:24.000Z">
-<meta property="article:modified_time" content="2022-03-16T02:11:45.533Z">
+<meta property="article:modified_time" content="2022-03-16T02:17:27.920Z">
 <meta property="article:author" content="stardustman">
 <meta property="article:tag" content="x86">
 <meta name="twitter:card" content="summary">
@@ -199,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:11:45" itemprop="dateModified" datetime="2022-03-16T10:11:45+08:00">2022-03-16</time>
+                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
               </span>
 
           <br>
@@ -208,7 +208,7 @@
                 <i class="far fa-file-word"></i>
               </span>
                 <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.4k</span>
+              <span>2.5k</span>
             </span>
             <span class="post-meta-item" title="Reading time">
               <span class="post-meta-item-icon">
@@ -238,18 +238,18 @@
 <p>上图的 AD<sub>0</sub> ~ AD<sub>15</sub> 是复用(Multiplex)引脚<br>A<sub>16</sub> ~ A<sub>19</sub> 也是复用引脚</p>
 </blockquote>
 <ul>
-<li>ALE(Address Latch Enable) = 1 是作为地址线 A<sub>0</sub>~A<sub>15</sub>(寻址) 再加上A<sub>16</sub> ~ A<sub>19</sub>.</li>
-<li>ALE(Address Latch Enable) = 0 是作为数据线 D<sub>0</sub>~D<sub>15</sub>(传输 16 bit 数据)</li>
+<li>ALE(Address Latch Enable) &#x3D; 1 是作为地址线 A<sub>0</sub>~A<sub>15</sub>(寻址) 再加上A<sub>16</sub> ~ A<sub>19</sub>.</li>
+<li>ALE(Address Latch Enable) &#x3D; 0 是作为数据线 D<sub>0</sub>~D<sub>15</sub>(传输 16 bit 数据)</li>
 </ul>
 <h4 id="物理地址生成"><a href="#物理地址生成" class="headerlink" title="物理地址生成"></a>物理地址生成</h4><blockquote>
-<p>20 bit 来表示一个内存地址. 但是 Intel 8086 是一个 <code>16 bit</code> 的处理器(其实就是一次只能传输 16 bit 的数据). 怎样来表示 <code>20 bit</code> 的内存地址呢? 比如一个内存地址是: <code>0x18AC9</code>, 该怎样表示呢? 其实道理很简单, 既然没法一次传输 20 bit, 那就分两次好了. 最后用两个 <code>16 bit</code> 的数据来合成 <code>0x18AC9</code> 这个地址. 很显然要有生成 <code>0x18AC9</code> 这个地址的策略. 在 Intel 8086 中, 将 <code>0x18AC9</code> 拆分为 <code>0x1234</code>(segment address) 和 <code>0x6789</code>(offset address) 这两个 <code>16 bit</code> 的地址, 这就是所谓的逻辑地址(logical address). 怎样生成 <code>0x18AC9</code> 这个真实的物理地址呢? 也很简单使用一个 <code>20 bit</code> 的 <code>adder</code>(加法器). 0x18AC9 = 0x1234 * 16 + 0x6789</p>
+<p>20 bit 来表示一个内存地址. 但是 Intel 8086 是一个 <code>16 bit</code> 的处理器(其实就是一次只能传输 16 bit 的数据). 怎样来表示 <code>20 bit</code> 的内存地址呢? 比如一个内存地址是: <code>0x18AC9</code>, 该怎样表示呢? 其实道理很简单, 既然没法一次传输 20 bit, 那就分两次好了. 最后用两个 <code>16 bit</code> 的数据来合成 <code>0x18AC9</code> 这个地址. 很显然要有生成 <code>0x18AC9</code> 这个地址的策略. 在 Intel 8086 中, 将 <code>0x18AC9</code> 拆分为 <code>0x1234</code>(segment address) 和 <code>0x6789</code>(offset address) 这两个 <code>16 bit</code> 的地址, 这就是所谓的逻辑地址(logical address). 怎样生成 <code>0x18AC9</code> 这个真实的物理地址呢? 也很简单使用一个 <code>20 bit</code> 的 <code>adder</code>(加法器). 0x18AC9 &#x3D; 0x1234 * 16 + 0x6789</p>
 </blockquote>
 <p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/intel8086_real_address_mode_translation.png" alt="intel8086_real_address_mode_translation"></p>
 <h4 id="Real-Address-Mode"><a href="#Real-Address-Mode" class="headerlink" title="Real Address Mode"></a>Real Address Mode</h4><blockquote>
 <p>物理地址由两部分组成: segment address 和 offset address. 这两个地址不能直接使用, 是用来合成真正的物理地址的. 这两个地址称之为 <code>逻辑地址</code>. 16 * segment address + offset address 合成的地址称之为 <code>物理地址</code>, 也叫 <code>线性地址</code>(也就是从 0 ~ 2^20 -1 地址空间). Intel 8086 这种得到物理地址的机制就叫做 <code>real address mode</code>. 也就是所谓的 <code>实模式</code>.<br>PS: 多说一句, <code>实模式</code> 这个翻译有点坑, 翻译成 <code>实地址模式</code> 不就十分清楚了吗?</p>
 </blockquote>
 <h4 id="segmented-memory"><a href="#segmented-memory" class="headerlink" title="segmented memory"></a>segmented memory</h4><blockquote>
-<p>physical address = 16 * segment address + offset address<br>offset address 是 16 bit, 决定了一个 segment 的范围是 64K. 将 1M 的寻址空间以 64K 为一个 segment 划分为多个 segment. 反过来说就是一个 segment 可以选择一个 64K 范围内的地址. 是的, <code>segment</code> 可以当作是一种 <code>selector</code>, 就像 <code>CSS</code> 里面的选择器.<br>那么这个 segment 存放在哪里呢? 放在专门的 <code>segment register</code> 里. </p>
+<p>physical address &#x3D; 16 * segment address + offset address<br>offset address 是 16 bit, 决定了一个 segment 的范围是 64K. 将 1M 的寻址空间以 64K 为一个 segment 划分为多个 segment. 反过来说就是一个 segment 可以选择一个 64K 范围内的地址. 是的, <code>segment</code> 可以当作是一种 <code>selector</code>, 就像 <code>CSS</code> 里面的选择器.<br>那么这个 segment 存放在哪里呢? 放在专门的 <code>segment register</code> 里. </p>
 </blockquote>
 <h4 id="segment-registers"><a href="#segment-registers" class="headerlink" title="segment registers"></a>segment registers</h4><blockquote>
 <p>Intel 8086 提供了 <code>Extra Segment</code>(ES), <code>Data Segment</code>(DS), <code>Stack Segment</code>(SS), <code>Code Segment</code>(CS) 这 4 个 段寄存器.</p>
@@ -261,7 +261,7 @@
 <p>stack segment 存放 segment address, 这个是专门的栈帧段寄存器.<br>stack pointer 存放 offset address, 这个专门的记录栈顶的寄存器.<br>所以访问函数栈帧的 <code>物理地址 = 16 * SS + SP</code></p>
 </blockquote>
 <blockquote>
-<p>注意: 如果令 SS = 0, 那么访问函数栈帧的 <code>物理地址 = SP</code>, 也就是只能访问 64K 的空间.<br>注意: real address mode 能够不受限制地访问 1M 的地址空间. 程序可以自由的访问 1M 的地址空间, 无法进行内存的保护, 这也是 <code>Intel 80386</code> 要解决的问题之一. </p>
+<p>注意: 如果令 SS &#x3D; 0, 那么访问函数栈帧的 <code>物理地址 = SP</code>, 也就是只能访问 64K 的空间.<br>注意: real address mode 能够不受限制地访问 1M 的地址空间. 程序可以自由的访问 1M 的地址空间, 无法进行内存的保护, 这也是 <code>Intel 80386</code> 要解决的问题之一. </p>
 </blockquote>
 <h4 id=""><a href="#" class="headerlink" title=""></a></h4><h3 id="general-purpose-register"><a href="#general-purpose-register" class="headerlink" title="general purpose register"></a>general purpose register</h3><h3 id="memory-mapping"><a href="#memory-mapping" class="headerlink" title="memory mapping"></a>memory mapping</h3><blockquote>
 <p>已安装内存 8G(7.88G) 可用？？？原因在哪里呢？</p>
@@ -442,12 +442,12 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-chart-area"></i>
     </span>
-    <span title="Symbols count total">207k</span>
+    <span title="Symbols count total">204k</span>
     <span class="post-meta-divider">|</span>
     <span class="post-meta-item-icon">
       <i class="fa fa-coffee"></i>
     </span>
-    <span title="Reading time total">3:09</span>
+    <span title="Reading time total">3:06</span>
 </div>
   <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
   </div>
