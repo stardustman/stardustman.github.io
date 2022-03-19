@@ -1,1562 +1,220 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html><html lang=en>
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 6.1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
-
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"stardustman.github.io","root":"/","scheme":"Pisces","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false,"Pisces | Gemini":240},"copycode":{"enable":true,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":true,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}}};
-  </script>
-
-  <meta property="og:type" content="website">
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>stardustman</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="stardustman"><meta name=description content="Hugo theme even example site."><meta name=keywords content="Hugo,theme,even">
+<meta name=generator content="Hugo 0.91.2 with theme even">
+<link rel=canonical href=http://stardustman.github.io/>
+<link href=http://stardustman.github.io/index.xml rel=alternate type=application/rss+xml title=stardustman>
+<link href=http://stardustman.github.io/index.xml rel=feed type=application/rss+xml title=stardustman>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
 <meta property="og:title" content="stardustman">
-<meta property="og:url" content="http://stardustman.github.io/page/2/index.html">
-<meta property="og:site_name" content="stardustman">
-<meta property="og:locale" content="en_US">
-<meta property="article:author" content="stardustman">
-<meta name="twitter:card" content="summary">
-
-<link rel="canonical" href="http://stardustman.github.io/page/2/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : true,
-    isPost : false,
-    lang   : 'en'
-  };
-</script>
-
-  <title>stardustman</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="stardustman" type="application/atom+xml">
+<meta property="og:description" content="Hugo theme even example site.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="http://stardustman.github.io/">
+<meta itemprop=name content="stardustman">
+<meta itemprop=description content="Hugo theme even example site."><meta name=twitter:card content="summary">
+<meta name=twitter:title content="stardustman">
+<meta name=twitter:description content="Hugo theme even example site."><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
 </head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
-      <h1 class="site-title">stardustman</h1>
-      <span class="logo-line-after"><i></i></span>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-    </div>
-  </div>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>stardustman</a>
 </div>
-
-
-
-
-<nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-  </ul>
-</nav>
-
-
-
-
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
 </div>
-    </header>
-
-    
-  <div class="reading-progress-bar"></div>
-
-  <a href="https://github.com/stardustman" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content index posts-expand">
-            
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/12/01/cs-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/12/01/cs-cache/" class="post-title-link" itemprop="url">cs-cache</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-12-01 08:40:29" itemprop="dateCreated datePublished" datetime="2020-12-01T08:40:29+08:00">2020-12-01</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.2k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>There can be many caches <code>stacked</code> on top of each other.<br>Cache 可以一层一层累积。</p>
-</blockquote>
-<ol>
-<li>if you miss in one you try in the “lower level cache”<br>Lower level, mean higher number.<br>在上层的 Cache miss 了，可以在下层的 Cache 去找。依次类推。</li>
-<li>There can also be <code>separate</code> caches for data and<br>instructions. Or the cache can be <code>“unified”</code>.<br>数据和指令的 Cache 可以独立，也可以混合。</li>
-<li>to wit:</li>
-</ol>
-<ul>
-<li>the <code>L1 data cache (d-cache)</code> is the one nearest processor. It<br>corresponds to the “data memory” block in our pipeline<br>diagrams</li>
-<li>the <code>L1 instruction cache (i-cache)</code> corresponds to the<br>“instruction memory” block in our pipeline diagrams.</li>
-<li>The L2 sits <code>underneath</code> the L1s.</li>
-<li>There is often an <code>L3 in modern systems</code>.</li>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/categories/>
+<li class=mobile-menu-item>Categories</li>
+</a>
 </ul>
-<h2 id="cache-指导思想"><a href="#cache-指导思想" class="headerlink" title="cache 指导思想"></a>cache 指导思想</h2><h3 id="局部性原理"><a href="#局部性原理" class="headerlink" title="局部性原理"></a>局部性原理</h3><h4 id="temporal-locality-时间局部性"><a href="#temporal-locality-时间局部性" class="headerlink" title="temporal locality (时间局部性)"></a>temporal locality (时间局部性)</h4><p>Taking advantage of temporal locality:</p>
-<ol>
-<li>bring data into cache whenever its referenced</li>
-<li>kick out something that hasn’t been used recently</li>
-</ol>
-<h4 id="spatial-locality-空间局部性"><a href="#spatial-locality-空间局部性" class="headerlink" title="spatial locality (空间局部性)"></a>spatial locality (空间局部性)</h4><p>Taking advantage of spatial locality:<br>bring in a block of <code>contiguous data (cacheline)</code>, not just<br>the <code>requested data</code>.</p>
-<h2 id="基本问题"><a href="#基本问题" class="headerlink" title="基本问题"></a>基本问题</h2><h3 id="怎样找到-cache-中的数据？"><a href="#怎样找到-cache-中的数据？" class="headerlink" title="怎样找到 cache 中的数据？"></a>怎样找到 cache 中的数据？</h3><blockquote>
-<p>以 32bits 的内存地址，来分析。<br>(index, offset) 二维坐标来定位一个 byte 的数据。</p>
-</blockquote>
-<h4 id="index"><a href="#index" class="headerlink" title="index"></a>index</h4><p> 定位 cache line，可视为<code>横坐标</code>。<br> 现在可以通过 cache lines &#x3D; cache size &#x2F; cache line size 来计算。<br> index bits &#x3D; log2(cache lines)</p>
-<h4 id="offset"><a href="#offset" class="headerlink" title="offset"></a>offset</h4><p> 通过 index 定位到 cache line 后，offset 定位到这个 cache line 的哪一个 byte。<br> 可以视为<code>纵坐标</code>。<br> offset bits &#x3D; log2(offset)</p>
-<h4 id="tag"><a href="#tag" class="headerlink" title="tag"></a>tag</h4><p>32bits 剩下的部分。</p>
-<h4 id="cache-line-应该是多大？"><a href="#cache-line-应该是多大？" class="headerlink" title="cache line 应该是多大？"></a>cache line 应该是多大？</h4><blockquote>
-<p>这其实是分块(block)思想。在利用空间局部性原理。</p>
-</blockquote>
-<h5 id="cache-line-size-越大"><a href="#cache-line-size-越大" class="headerlink" title="cache line size 越大"></a>cache line size 越大</h5><ol>
-<li>Exploits more spatial locality.</li>
-<li>Large cache lines effectively prefetch data that we have not<br>explicitly asked for.<br>更好地利用空间局部性，提前获取将要访问的数据。</li>
-</ol>
-<h5 id="cache-line-size-越小"><a href="#cache-line-size-越小" class="headerlink" title="cache line size 越小"></a>cache line size 越小</h5><ol>
-<li>Focuses on temporal locality.</li>
-<li>If there is little spatial locality, large cache lines waste<br>space and bandwidth.<br>聚焦在时间局部性上，如果没有较好的空间局部性，提前 <code>fetch</code> 了数据，那就浪费了空间和带宽。</li>
-</ol>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache_organization.svg" alt="cache_organization"> #(cache 组织方式)</p>
-<h3 id="实例分析"><a href="#实例分析" class="headerlink" title="实例分析"></a>实例分析</h3><p>内存地址 32bits。</p>
-<h4 id="1024-cache-lines-32-Bytes-per-line"><a href="#1024-cache-lines-32-Bytes-per-line" class="headerlink" title="1024 cache lines, 32 Bytes per line."></a>1024 cache lines, 32 Bytes per line.</h4><p>index bits &#x3D; log2(1024) &#x3D; 10<br>offset bits &#x3D; log2(32) &#x3D; 5<br>tags bits &#x3D; 32 - index - offset &#x3D; 17</p>
-<h4 id="32KB-cache-64byte-lines"><a href="#32KB-cache-64byte-lines" class="headerlink" title="32KB cache, 64byte lines"></a>32KB cache, 64byte lines</h4><p>index bits &#x3D; log2(32KB &#x2F; 64Bytes) &#x3D; 9<br>offset bits &#x3D; log2(64) &#x3D; 6<br>tags bits &#x3D; 32 - 9 - 6 &#x3D; 17</p>
-<h4 id="set-是干什么的？"><a href="#set-是干什么的？" class="headerlink" title="set 是干什么的？"></a>set 是干什么的？</h4><p>(set) <code>Associativity</code> means providing <code>more than one</code> place for a cache line to live.<br>One group of lines corresponds to each index</p>
-<ol>
-<li>it is called a “set”</li>
-<li><code>Each line</code> in a set is called a <code>“way”</code></li>
-<li>N-Way associativity requires N parallel comparators<br>set &#x3D; ？</li>
-</ol>
-<img src="/2020/12/01/cs-cache/cache-2-ways-cache.svg" class="" title="2-ways-cache">
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache-2-ways-cache.svg" alt="2-ways-cache"></p>
-<h3 id="cache-哪一种-address？"><a href="#cache-哪一种-address？" class="headerlink" title="cache 哪一种 address？"></a>cache 哪一种 address？</h3><h4 id="virtual-memory-address"><a href="#virtual-memory-address" class="headerlink" title="virtual memory address"></a>virtual memory address</h4><h4 id="physical-memory-address"><a href="#physical-memory-address" class="headerlink" title="physical memory address"></a>physical memory address</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/cache-memory-address-type.svg" alt="cache-memory-address-type"> #(缓存类型)</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/wi12/cse141-a/Slides/09_Cache_intro.pdf">CSE141-Caching-Intro</a></li>
-<li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/07/09_CSE141-Caching.pdf">CSE141-Caching</a></li>
-<li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/wi12/cse141-a/Slides/10_Caches_detail.pdf">CSE141-Caches-Details</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.0xffffff.org/2014/01/06/26-x86-cache/">x86-cache</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.kernel.org/doc/html/latest/admin-guide/mm/memory-hotplug.html">memory-hotplug</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31859105">Cache 是怎样组织和工作的？</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/sysinternals/downloads/coreinfo">cacheinfo-windows</a></li>
-<li><a target="_blank" rel="noopener" href="https://manybutfinite.com/post/intel-cpu-caches/">intel-cpu-cache</a></li>
-<li><a target="_blank" rel="noopener" href="http://www.cs.cornell.edu/courses/cs3410/2013sp/lecture/18-caches3-w.pdf">caches3-w.pdf</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CPU_cache">wiki-cpu-cache</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cs.princeton.edu/courses/archive/fall19/cos316/lectures/10-cpu-cache.pdf">cos316-10-cpu-cache.pdf</a></li>
-<li><a target="_blank" rel="noopener" href="http://aturing.umcs.maine.edu/~meadow/courses/cos335/Intel-CacheOverview.pdf">cos355-Intel-CacheOverview</a></li>
-<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/31875174">细说Cache-L1&#x2F;L2&#x2F;L3&#x2F;TLB</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/11/30/acknowledgement-timeout-retry-sequence-number/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/30/acknowledgement-timeout-retry-sequence-number/" class="post-title-link" itemprop="url">acknowledgement-timeout-retry-sequence-number</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-30 10:54:57" itemprop="dateCreated datePublished" datetime="2020-11-30T10:54:57+08:00">2020-11-30</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>67</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="TCP-要解决的问题"><a href="#TCP-要解决的问题" class="headerlink" title="TCP 要解决的问题"></a>TCP 要解决的问题</h3><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/notions_tcp.svg" alt="notions_tcp"></p>
-<h2 id="references"><a href="#references" class="headerlink" title="references"></a>references</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/tcp-congestion-control/">tcp-congestion-control</a></li>
-<li><a target="_blank" rel="noopener" href="https://web.cs.wpi.edu/~rek/Undergrad_Nets/B06/TCP_Congestion_Control.ppt">tcp-congestion-control-ppt</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/11/26/data-and-metadata/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/26/data-and-metadata/" class="post-title-link" itemprop="url">data_and_metadata</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-26 16:18:52" itemprop="dateCreated datePublished" datetime="2020-11-26T16:18:52+08:00">2020-11-26</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>3.5k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <blockquote>
-<p>具体问题具体分析，确实非常重要。用正确的思想指导行动，才可事半功倍。<br>现实中的客观问题有意思的地方在于：无论你选择看得见，还是选择看不见，它都在那里，关键在于有没有人去解决，解决的人有多大的决心。</p>
-</blockquote>
-<h2 id="data-vs-metadata"><a href="#data-vs-metadata" class="headerlink" title="data vs metadata"></a>data vs metadata</h2><blockquote>
-<p>Metadata is “data that provides information about other data”. In other words, it is “<code>data about data</code>“.<br>正如这个世上的人，无论承认与否，分为两类：统治者与被统治者。数据也不可避免的被分为两种：metadata 和 data。<code>数据的数据</code>和<code>数据</code>。两者相辅相成。</p>
-</blockquote>
-<h3 id="physical"><a href="#physical" class="headerlink" title="physical"></a>physical</h3><p>data  数据(被统治者)<br>metadata 元数据(统治者)<br>正如如果被统治者都没有了，那也谈不上统治者。在一个个实体确实存在的情况下，如果没有数据，那也谈不上元数据。</p>
-<h3 id="logical"><a href="#logical" class="headerlink" title="logical"></a>logical</h3><p>有时没有实体的存在但是也可以在<code>逻辑上</code>划分 data 和 Metadata 的。比如网络中的流量。仅仅是用户真正的数据吗？不，其实还有路由器之间的流量, 这部分流量对于整个网络系统的正常运行，不可缺少。</p>
-<p>The control plane is the part of a network that controls <code>how data is forwarded</code>, while the data plane is the actual forwarding process.<br>那么网络流量就可以在逻辑上（也就是虚拟的）划分为：<br>control plane 控制平面（视为 Metadata）<br>data&#x2F;forward plane 数据平面（视为 data）<br>从这个角度来理解，metadata 有控制数据的意思，控制真正的用户数据如何转发。虽然大家都是同一种事物(都是数据包)，但是又不是平等的事物。咳咳，换成人类，似乎也说得过去。</p>
-<h3 id="structural-metadata"><a href="#structural-metadata" class="headerlink" title="structural metadata"></a>structural metadata</h3><p>这种结构性的 metadata 相当于一份说明书，来说明哪一个位置的数据是什么数据。</p>
-<h4 id="java-class-format"><a href="#java-class-format" class="headerlink" title="java class format"></a>java class format</h4><blockquote>
-<p>Java 代码经过编译，可以的到一个 .class 文件。</p>
-</blockquote>
-<h5 id="Hello-java"><a href="#Hello-java" class="headerlink" title="Hello.java"></a>Hello.java</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Hello</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;Hello, World&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="Hello-class"><a href="#Hello-class" class="headerlink" title="Hello.class"></a>Hello.class</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">root@aliyun:java<span class="comment"># xxd Hello.class</span></span><br><span class="line">00000000: cafe babe 0000 0034 001d 0a00 0600 0f09  .......4........</span><br><span class="line">00000010: 0010 0011 0800 120a 0013 0014 0700 1507  ................</span><br><span class="line">00000020: 0016 0100 063c 696e 6974 3e01 0003 2829  .....&lt;init&gt;...()</span><br><span class="line">00000030: 5601 0004 436f 6465 0100 0f4c 696e 654e  V...Code...LineN</span><br><span class="line">00000040: 756d 6265 7254 6162 6c65 0100 046d 6169  umberTable...mai</span><br><span class="line">00000050: 6e01 0016 285b 4c6a 6176 612f 6c61 6e67  n...([Ljava/lang</span><br><span class="line">00000060: 2f53 7472 696e 673b 2956 0100 0a53 6f75  /String;)V...Sou</span><br><span class="line">00000070: 7263 6546 696c 6501 000a 4865 6c6c 6f2e  rceFile...Hello.</span><br><span class="line">00000080: 6a61 7661 0c00 0700 0807 0017 0c00 1800  java............</span><br><span class="line">00000090: 1901 000c 4865 6c6c 6f2c 2057 6f72 6c64  ....Hello, World</span><br><span class="line">000000a0: 0700 1a0c 001b 001c 0100 0548 656c 6c6f  ...........Hello</span><br><span class="line">000000b0: 0100 106a 6176 612f 6c61 6e67 2f4f 626a  ...java/lang/Obj</span><br><span class="line">000000c0: 6563 7401 0010 6a61 7661 2f6c 616e 672f  ect...java/lang/</span><br><span class="line">000000d0: 5379 7374 656d 0100 036f 7574 0100 154c  System...out...L</span><br><span class="line">000000e0: 6a61 7661 2f69 6f2f 5072 696e 7453 7472  java/io/PrintStr</span><br><span class="line">000000f0: 6561 6d3b 0100 136a 6176 612f 696f 2f50  eam;...java/io/P</span><br><span class="line">00000100: 7269 6e74 5374 7265 616d 0100 0770 7269  rintStream...pri</span><br><span class="line">00000110: 6e74 6c6e 0100 1528 4c6a 6176 612f 6c61  ntln...(Ljava/la</span><br><span class="line">00000120: 6e67 2f53 7472 696e 673b 2956 0021 0005  ng/String;)V.!..</span><br><span class="line">00000130: 0006 0000 0000 0002 0001 0007 0008 0001  ................</span><br><span class="line">00000140: 0009 0000 001d 0001 0001 0000 0005 2ab7  ..............*.</span><br><span class="line">00000150: 0001 b100 0000 0100 0a00 0000 0600 0100  ................</span><br><span class="line">00000160: 0000 0100 0900 0b00 0c00 0100 0900 0000  ................</span><br><span class="line">00000170: 2500 0200 0100 0000 09b2 0002 1203 b600  %...............</span><br><span class="line">00000180: 04b1 0000 0001 000a 0000 000a 0002 0000  ................</span><br><span class="line">00000190: 0003 0008 0004 0001 000d 0000 0002 000e  ................</span><br></pre></td></tr></table></figure>
-
-<h4 id="Hello-class-怎样解析的？"><a href="#Hello-class-怎样解析的？" class="headerlink" title="Hello.class 怎样解析的？"></a>Hello.class 怎样解析的？</h4><p>如果丢给我一个 .class 文件，其他啥也没有。我也看不懂。但是由于 <code>class file format</code> 的存在，只要足够耐心，自己也可以解析出 .class 是怎样的。这里的 <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html">class format</a> 就是 Metadata。没有这个格式说明，谁也弄不明白这一堆二进制的 0 和 1 是啥意思。</p>
-<h4 id="IP-header"><a href="#IP-header" class="headerlink" title="IP header"></a>IP header</h4><p>IP 这个协议是用来将不同局域网组成互联网的。既然通信是双向的，要知道发送者的 IP，接收者的 IP，IP 包的总大小，IP Header 的大小，这个 IP 包能跨越多少路由器(<a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/cdn/glossary/time-to-live-ttl/">TTL</a>)，使用的 IP 协议版本，是哪一个上层协议在使用 IP 协议，IP 包是否切分了，切分后怎样组装，校验整个 IP 包在传输过程中是否发生了错误等信息。记在哪里呢？IP header，这个 IP header 就是 Metadata。这些也可理解成控制数据。</p>
-<h4 id="TCP-header"><a href="#TCP-header" class="headerlink" title="TCP header"></a>TCP header</h4><p>TCP 传输层的协议。用来保证数据不丢失且按照发送顺序到达目的地。<br>怎样保证顺序呢？对每一个字节编号(sequence number)。<br>怎样保证数据不丢失呢？确认机制(ack)。<br>怎样找到目的地呢？一个在网络上的计算机，可能同时运行许多程序，如打开浏览器，在线听歌，在线编辑文档等等。用端口号(port number)。<br>同时，怎样知道接收方现在接收网络包的大小呢？用窗口(window size)。<br>怎样能知道网络包传输过程是否发生了错误？用校验和(checksum)。<br>这些信息都存在哪里了呢？TCP header 里。这就是 Metadata。也可理解成控制数据。</p>
-<h4 id="InnoDB-row-format"><a href="#InnoDB-row-format" class="headerlink" title="InnoDB row format"></a>InnoDB row format</h4><p>InnoDB 存储表是按行存储的。这只是逻辑上的说法。真正的数据存储是要落到磁盘上的。对于每一行，字段是不是空的，定长还是变长，变长字段的长度，该列的主键，这行数据是哪一个事务操作的，这些记录的相关日志都记在哪里了呢？<br>不错。这其实也是有相应的说明的。而且，InnoDB 提供了不同的 <a target="_blank" rel="noopener" href="https://mariadb.com/kb/en/innodb-row-formats-overview/">row format</a>。对用户的每一行来说，该行的 row format 就是 Metadata。当然这就是描述（或者说是控制）该行用户数据的。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Metadata">Metadata</a></li>
-<li><a target="_blank" rel="noopener" href="https://dataedo.com/kb/data-glossary/what-is-metadata">what-is-metadata</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/network-layer/what-is-the-control-plane/">what-is-the-control-plane</a></li>
-<li><a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se8/html/jvms-4.html">class file format</a></li>
-<li><a target="_blank" rel="noopener" href="https://mariadb.com/kb/en/innodb-row-formats-overview/">InnoDB-row-format</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/cdn/glossary/time-to-live-ttl/">TTL</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/11/24/notions-of-computer/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/11/24/notions-of-computer/" class="post-title-link" itemprop="url">notions_of_computer</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-11-24 13:25:13" itemprop="dateCreated datePublished" datetime="2020-11-24T13:25:13+08:00">2020-11-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>3.1k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="指导思想"><a href="#指导思想" class="headerlink" title="指导思想"></a>指导思想</h2><p>   计算机是人发明的。由计算机组成的世界，其设计思想很明显要借鉴现实中的东西。正如一位伟人的著作开篇提出 <code>“谁是我们的敌人？谁是我们的朋友？这个问题是革命的首要问题。中国过去一切革命斗争成效甚少，其基本原因就是因为不能团结真正的朋友，以攻击真正的敌人。”</code>那么应对计算机，什么才是计算机组织背后的指导思想呢？个人认为有三个：1. hierarchy(层级)、2：group(分组)、3：order(有序)</p>
-<h3 id="hierarchy-层级"><a href="#hierarchy-层级" class="headerlink" title="hierarchy(层级)"></a>hierarchy(层级)</h3><p>  <em>hierarchy</em> 在这里也可以理解成等级。层级结构最重要的一点就是最顶层在哪？用 <code>tree</code> 理解就是，<code>root</code> 在哪？这个信息整个层级都要知道。哈哈，是不是挺像皇帝。😄</p>
-<h4 id="面对数量庞大的相同事物，怎样管理呢？用什么组织方式呢？"><a href="#面对数量庞大的相同事物，怎样管理呢？用什么组织方式呢？" class="headerlink" title="面对数量庞大的相同事物，怎样管理呢？用什么组织方式呢？"></a>面对数量庞大的相同事物，怎样管理呢？用什么组织方式呢？</h4><p>   这里的数量庞大要是成千上万的。比如中国有十几亿人口、中国有 960 万平方公里的土地，等等。首先简述一下历史上的经验，比如西周，采用分封制。天子、诸侯、卿、士、平民等所有人组成一个金字塔形状。每一个层级的人<code>权力大小不同</code>、<code>承担的责任和义务也不同</code>。对于土地则是封邦建国。分封制可以对人口、土地等进行有效的统治。更直观的理解就是形成稳定的阶级。到这是不是立刻就能想到由于每种存储的<code>价格</code>、<code>速度</code>、<code>容量</code>不同，应用在哪个地方也不同。也是组织成一个层级结构来构成整个计算机的存储系统。</p>
-<p>   从数学的角度分析就是：用<code>对数的方式</code>搞定数量庞大的事物的管理。不管数量多庞大，用对数搞一下，数量立刻就降下来。比如 log<sub>2</sub>4294967296 &#x3D; 32。对数的发明、解析几何的创立和微积分的建立是17世纪数学的三大成就。</p>
-<h5 id="域名组织方式"><a href="#域名组织方式" class="headerlink" title="域名组织方式"></a>域名组织方式</h5><blockquote>
-<p>In 2017, 330.6 million domain names had been registered.<br>2017 年已经有 33 多亿的注册域名了。</p>
-</blockquote>
-<p>如果让你组织数量如此庞大的域名，你该怎样组织呢？没错，也是组织成层级结构，来管理数量如此庞大的域名。一开始的解决方法是直接把域名信息放在 &#x2F;etc&#x2F;hosts 文件，随着域名增多，单独的一个文件没法满足要求，数量太多了嘛，放在一个文件，且不论能不能全部存储，查找都是一个大问题。</p>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/dns-root-server.png" alt="domain-name-hierarchy"></p>
-<h5 id="IP-分配管理方式"><a href="#IP-分配管理方式" class="headerlink" title="IP 分配管理方式"></a>IP 分配管理方式</h5><p>IP Addresses are <code>unique identifiers</code> used to determine who is who on the Internet.<br>IP 地址是一个 32bit 的无符号整数。范围是 [0,2^32-1], 一共有 4294967296 个整数。将近 43 亿个 ip 地址(这里不考虑公网、私网)该怎样分配使用呢？由 <a target="_blank" rel="noopener" href="https://www.iana.org/numbers">Internet Assigned Numbers Authority (IANA)</a> 负责协调管理所有 IP，同时负责分配自治系统号(Autonomous System number)。</p>
-<blockquote>
-<p>Both IPv4 and IPv6 addresses are generally assigned in a <code>hierarchical manner</code>. Users are assigned IP addresses by <code>Internet service providers (ISPs)</code>. ISPs obtain allocations of IP addresses from a <code>local Internet registry (LIR</code>) or <code>National Internet Registry (NIR)</code>, or from their appropriate <code>Regional Internet Registry (RIR)</code>:</p>
-</blockquote>
-<p>数量庞大的 IP 地址怎样分配管理呢？组成层级结构。通过一级一级<code>委托</code>，管理数量庞大的 IP 地址。</p>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/IP_AS_Number.svg" alt="地址分配管理"></p>
-<h5 id="文件组织方式"><a href="#文件组织方式" class="headerlink" title="文件组织方式"></a>文件组织方式</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/file_system_hierarchy.png" alt="file system hierarchy"></p>
-<h4 id="不同性质的事物，怎样组织呢？"><a href="#不同性质的事物，怎样组织呢？" class="headerlink" title="不同性质的事物，怎样组织呢？"></a>不同性质的事物，怎样组织呢？</h4><h5 id="memory-hierarchy"><a href="#memory-hierarchy" class="headerlink" title="memory hierarchy"></a>memory hierarchy</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/ComputerMemoryHierarchy.svg" alt="ComputerMemoryHierarchy">   </p>
-<h5 id="Typical-memory-hierarchy"><a href="#Typical-memory-hierarchy" class="headerlink" title="Typical memory hierarchy"></a>Typical memory hierarchy</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/typical-memory-hierarchy.png" alt=" typical-memory-hierarchy "></p>
-<h5 id="OSI-参考模型"><a href="#OSI-参考模型" class="headerlink" title="OSI 参考模型"></a>OSI 参考模型</h5><p>  网络每一层，功能不同。</p>
-<p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/network-layer.svg" alt="OSI VS TCP/IP"></p>
-<h3 id="group-分组"><a href="#group-分组" class="headerlink" title="group(分组)"></a>group(分组)</h3><p>  体量庞大的东西的基层组织。</p>
-<ol>
-<li>可视为层级结构的最底层。block、page、packet、fragment、set</li>
-<li>也可以视为不同的模块。module、segment、section</li>
-<li>也可以理解成分类。sort</li>
-</ol>
-<h4 id="域名"><a href="#域名" class="headerlink" title="域名"></a>域名</h4><p>  对域名来说一个分组可以理解成一个<code>一级域名</code>下的所有域名。如 <code>org</code>下的域名。当然也可以理解成一个 <code>二级域名</code>下的所有域名。如 <code>google.com</code> 下 Google 家所有的域名。依次类推。可以看出，同种事物进行层级组织，本身就是在进行分组。</p>
-<h4 id="IP-地址"><a href="#IP-地址" class="headerlink" title="IP 地址"></a>IP 地址</h4><blockquote>
-<p>An autonomous system (AS) is a very large network or group of networks with a single routing policy. Each AS is assigned a unique ASN, which is a number that identifies the AS.</p>
-</blockquote>
-<p>  没错。IP 地址也是通过一个一个的实体来管理使用的，一个实体就是一个自治系统。(autonomous system)。比如中国移动这个运营商的 AS Number 是 <a target="_blank" rel="noopener" href="https://ipinfo.io/AS56041">56041</a>，管理一系列 IP 地址。再比如 Apple 的 AS Number 是 <a target="_blank" rel="noopener" href="https://ipinfo.io/AS714">714</a>。</p>
-<h4 id="Internet-Protocol"><a href="#Internet-Protocol" class="headerlink" title="Internet Protocol"></a>Internet Protocol</h4><blockquote>
-<p> Data traversing the Internet is <code>divided into</code> smaller pieces, called <code>packets</code>. IP information is attached to <code>each packet</code>, and this information helps <code>routers</code> to send packets to the right place.</p>
-</blockquote>
-<p>  通过网络发送大量的信息，也是拆分成一个个 <code>packet</code>。这里也可以理解成分组。</p>
-<h4 id="文件系统"><a href="#文件系统" class="headerlink" title="文件系统"></a>文件系统</h4><p>  文件系统管理磁盘空间。磁盘空间划分为一个个相同大小的 Block。一个扇区是 512Bytes，这可以视为一个分组。</p>
-<h4 id="网络流量"><a href="#网络流量" class="headerlink" title="网络流量"></a>网络流量</h4><blockquote>
-<p>Ports are virtual places within an operating system where network connections start and end. They help computers sort the <code>network traffic</code> they receive.</p>
-</blockquote>
-<p>  计算机从网络上接收的 packet 怎样判定哪一个是接收者呢？对网络流量分类就行。怎样分类呢？用端口号，不同的接收者，接收不同端口的流量。</p>
-<h4 id="subnet"><a href="#subnet" class="headerlink" title="subnet"></a>subnet</h4><blockquote>
-<p>Think of the Internet as a network of networks: computers are connected to each other within networks, and these networks connect to other networks. This enables these computers to connect with other computers both near and far.<br>A network is a group of two or more connected computing devices. </p>
-</blockquote>
-<p>  划分子网，也是在分组。</p>
-<h3 id="order-顺序"><a href="#order-顺序" class="headerlink" title="order(顺序)"></a>order(顺序)</h3><p>  顺序、分支、循环。顺序就是程序三大结构之一。没有秩序的世界是混乱的，啥事也做不成。<br>  TCP 协议目的之一就是要保证计算机接收到的网络包的顺序。怎样保证顺序呢？非常简单，为每一个 Byte 编号就行。</p>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/memory-hierarchy-design-and-its-characteristics/">memory-hierarchy</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/dns/glossary/what-is-a-domain-name/">what-is-a-domain-name</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/dns/glossary/dns-root-server/">dns-root-server</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.iana.org/numbers">ip number resources</a></li>
-<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc7020">The Internet Numbers Registry System</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Filesystem_Hierarchy_Standard">Filesystem_Hierarchy_Standard</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.pathname.com/fhs/2.2/">Filesystem Hierarchy Standard List</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/network-layer/what-is-the-network-layer/">network-layer</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/network-layer/internet-protocol/">internet-protocol</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/network-layer/what-is-a-computer-port/">what-is-a-computer-port</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cloudflare.com/learning/ddos/glossary/open-systems-interconnection-model-osi/">open-systems-interconnection-model</a></li>
-<li><a target="_blank" rel="noopener" href="http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/07/09_CSE141-Caching.pdf">CSE141-Caching</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/06/12/data-structure-btree/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/12/data-structure-btree/" class="post-title-link" itemprop="url">data-structure-btree</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-06-12 14:11:02" itemprop="dateCreated datePublished" datetime="2020-06-12T14:11:02+08:00">2020-06-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>861</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="B-tree-特性"><a href="#B-tree-特性" class="headerlink" title="B-tree 特性"></a>B-tree 特性</h3><ol>
-<li>所有的 leaves 都在同一层级。</li>
-<li>B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。</li>
-<li>除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 key。</li>
-<li>所有的节点（包括 root）最多有 2t - 1 个 key。</li>
-<li>某一个节点的子节点的个数 &#x3D; 这个节点的 key 的个数 + 1。</li>
-<li>一个节点的所有 key 从小到大排序。两个 key1 和 key2 之间的所有 child 都在 key1 和 key2 之间。</li>
-<li>B-Tree 从 root 节点 grow(扩张) 和 shrink(收缩)。</li>
-<li>search、insert、delete 时间复杂度是O(log n)。n 是 key 的总数。</li>
-</ol>
-<h3 id="t-x3D-3-为例来理解-B-tree"><a href="#t-x3D-3-为例来理解-B-tree" class="headerlink" title="t&#x3D;3 为例来理解 B-tree"></a>t&#x3D;3 为例来理解 B-tree</h3><ol>
-<li>每一个节点(root 除外) 至少有 t - 1 &#x3D; 2 个 key。</li>
-<li>每一个节点最多有 2t - 1 &#x3D; 5 个 key。节点 key 数量 &#x3D; 5，称为节点满了。<br>问题来了，节点 key 个数大于 5 了咋办？拆分。什么时候来拆分呢？在向下遍历节点时发现满了，立即进行拆分。</li>
-</ol>
-<h4 id="B-Tree-insert-operation"><a href="#B-Tree-insert-operation" class="headerlink" title="B-Tree insert operation"></a>B-Tree insert operation</h4><h5 id="拆分已满节点"><a href="#拆分已满节点" class="headerlink" title="拆分已满节点"></a>拆分已满节点</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split.svg" alt="btree-full-root-split"> #(btree-拆分已满节点)</p>
-<ol>
-<li>如上图，节点1 已经满了，对此时的 root 节点进行拆分。</li>
-<li>创建节点2，s 节点，作为新的 root 节点，同时设置 s.child[0] &#x3D; root。</li>
-<li>创建节点2，z 节点，将原来 root 节点一半的 key，复制到 z 节点。</li>
-<li>将 z 节点设置为 s 节点的 child。s.child[1] &#x3D; z。</li>
-</ol>
-<h5 id="拆分已满节点-有子节点"><a href="#拆分已满节点-有子节点" class="headerlink" title="拆分已满节点(有子节点)"></a>拆分已满节点(有子节点)</h5><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split2.svg" alt=" btree-full-root-split2"> #(btree-拆分已满节点2)</p>
-<p>B-Tree 是向上扩张的(grow)。可以看到所有的 key 都是在 leaf 节点插入的。节点的 key 值的数量一旦等于 2t - 1 &#x3D; 5 时，就会对该节点进行拆分。所以这也是每一个节点(root 除外)至少有 t-1 &#x3D; 2 个 key 的原因。</p>
-<h4 id="B-Tree-delete-operation"><a href="#B-Tree-delete-operation" class="headerlink" title="B-Tree delete operation"></a>B-Tree delete operation</h4><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.cs.usfca.edu/~galles/visualization/BTree.html">BTree-visualization</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/introduction-of-b-tree-2/">BTree introduction</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/insert-operation-in-b-tree/">BTree insertion</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/delete-operation-in-b-tree/">BTree deletion</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/06/08/asm-how-computer-startup/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/06/08/asm-how-computer-startup/" class="post-title-link" itemprop="url">asm-how-computer-startup</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-06-08 08:09:12" itemprop="dateCreated datePublished" datetime="2020-06-08T08:09:12+08:00">2020-06-08</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.8k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>3 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><code>x86</code> 架构计算机是如何启动的？</p>
-<h2 id="16-bit-Processors-and-Segmentation-1978"><a href="#16-bit-Processors-and-Segmentation-1978" class="headerlink" title="16-bit Processors and Segmentation (1978)"></a>16-bit Processors and Segmentation (1978)</h2><blockquote>
-<p>The IA-32 architecture family was preceded by <code>16-bit processors</code>, the 8086 and 8088. The 8086 has <code>16-bit registers</code> and a <code>16-bit external data bus</code>, with <code>20-bit addressing giving a 1-MByte address space</code>. The 8088 is similar to the 8086 except it has an 8-bit external data bus.<br>The 8086&#x2F;8088 introduced <code>segmentation</code> to the IA-32 architecture. With segmentation, a <code>16-bit segment register</code> contains a pointer to <code>a memory segment of up to 64 KBytes</code>. Using <code>four</code> segment registers at a time, 8086&#x2F;8088 processors are able to address up to 256 KBytes <code>without</code> switching between segments. The 20-bit addresses that can be formed using a segment register and an additional 16-bit pointer provide a total address range of 1 MByte.</p>
-</blockquote>
-<p>8086 是整个 intel 系列处理器的老祖宗。所有后续的一系列处理器都兼容 8086。唉，这就是路径依赖啊。这是一个 16-bit 的处理器。寄存器也是 16-bit 的。but 却能寻址 20-bit 的地址空间，也就是 1M 的内存。怎样在 16-bit 的处理器上实现呢？很简单，将 1M 的空间分成多个 64K 的 segment。那怎样用 16-bit 的寄存器表示 20-bit 的地址呢？也很简单，用 2 个 16-bit 的寄存器组合得来的(register1,register2)。那怎样组合的呢？<code>address = register1 &lt;&lt; 4 + register2</code>。将 register1 &lt;&lt; 4 和 register2 用一个 20-bit 的加法器就能得到内存地址。这种方式就是所谓的 <code>real address mode</code>。也即是拿到的是真正的内存地址。x86 架构的计算机启动时会先进入 real address mode。</p>
-<h2 id="计算机启动前置知识"><a href="#计算机启动前置知识" class="headerlink" title="计算机启动前置知识"></a>计算机启动前置知识</h2><ol>
-<li>CPU 工作方式是: 从<code>内存</code>中取指、执行。</li>
-<li>内存是存储数据的地方，给出一个内存地址，可以得到该处的数据。</li>
-<li>CPU 从内存哪里取指令，由 <code>instruction pointer</code> 这个寄存器的值决定。这个值不断 +1，或者跳转(jump) 到某处。real address mode 下由 CS:IP 组合决定。</li>
-</ol>
-<h2 id="BIOS"><a href="#BIOS" class="headerlink" title="BIOS"></a>BIOS</h2><h3 id="BIOS-是啥"><a href="#BIOS-是啥" class="headerlink" title="BIOS 是啥"></a>BIOS 是啥</h3><p><code>BIOS</code> 是啥呢？一个软件而已。不像我们平时在 PC 上使用如 <code>QQ</code> 等软件是安装在硬盘上的。BIOS 安装在 ROM 中。这个软件干啥的呢？帮助计算机启动，开机时检测整个机器的硬件。计算机启动需要运行软件，软件运行需要计算机先启动。咳咳，成了先有鸡还是先有蛋了，这怎么行？所以需要 BIOS 这个在硬件上的软件来帮助，破除这种依赖。</p>
-<h3 id="BIOS-大小"><a href="#BIOS-大小" class="headerlink" title="BIOS 大小"></a>BIOS 大小</h3><p>通过 <code>dmidecode</code> 这个命令来查看。也就是读取 BIOS 的信息。</p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">root@aliyun:~<span class="comment"># dmidecode -t bios -q  # 方法一</span></span><br><span class="line">BIOS Information</span><br><span class="line">        Vendor: SeaBIOS</span><br><span class="line">        Version: 8c24b4c</span><br><span class="line">        Release Date: 04/01/2014</span><br><span class="line">        Address: 0xE8000</span><br><span class="line">        Runtime Size: 96 kB</span><br><span class="line">        ROM Size: 64 kB --- ROM Size，在此可以看到，BIOS 大小为 64K。</span><br><span class="line">        Characteristics:</span><br><span class="line">                BIOS characteristics not supported</span><br><span class="line">                Targeted content distribution is supported</span><br><span class="line">        BIOS Revision: 0.0</span><br><span class="line"></span><br><span class="line">root@aliyun:~<span class="comment"># cd /sys/class/dmi/id/  # 方法二</span></span><br><span class="line">root@aliyun:<span class="built_in">id</span><span class="comment"># ls</span></span><br><span class="line">bios_date          chassis_serial   modalias        product_serial   sys_vendor</span><br><span class="line">bios_vendor        chassis_type     power           product_uuid     uevent</span><br><span class="line">bios_version       chassis_vendor   product_family  product_version</span><br><span class="line">chassis_asset_tag  chassis_version  product_name    subsystem</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="x86-架构计算机启动流程"><a href="#x86-架构计算机启动流程" class="headerlink" title="x86 架构计算机启动流程"></a>x86 架构计算机启动流程</h2><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/real-address-mode-how-computer-startup.svg" alt="real address mode 1M 内存布局"> #(real address mode 1M 内存布局)</p>
-<ol>
-<li><p>如上图所示，当按下 <code>power on</code> 之后，此时的 CPU 处于 real address mode。由硬件负责将 <code>BIOS 64K</code> 的内容加载到 <code>0xF0000 到 0xFFFFF</code>(64K 内存)。并将 <code>CS(code segment) 置为 0xF000</code>，<code>IP(instruction pointer) 置为 0xFFF0</code>。组合起来的内存地址 <code>PC</code> 就是 0xFFFF0。</p>
-</li>
-<li><p>此时 CPU 从 <code>PC = 0xFFFF0</code> 处开始取指、执行。那么从 <code>0xFFFF0 到 0xFFFFF</code> 只有 16Bytes。空间太小了，能放啥呢？但是可以跳到其他地方去执行啊。不错，这里存放的有一条指令是 <code>jmp far f000:e05b</code>, 组合起来就是 <code>0xfe05b</code>。注意这个地址可是在 <code>0xF0000 到 0xFFFFF</code> 范围之内，也就是这条指令跳转到 <code>BIOS 内部的代码</code>去执行。从 0xFE05B 到 0xFFFF0 将近 8K 内存，代码不少。</p>
-</li>
-<li><p>此时 CPU 从 <code>PC = 0xfe05b</code> 开始取值、执行。具体干啥呢？就是执行所谓的开机自检。检查计算机硬件。同时去找启动扇区，那什么才是启动扇区呢？若 0 盘 0 道 1 扇区最后两个字节分别是 0x55,0xaa，那就是启动区。很像 java class 文件中的魔数，就是标记一下。同时将找到的启动扇区(512Bytes) 复制到内存 <code>0x7C00 到 0x7DFF</code>(512Bytes) 处。最后会将 <code>CS 置为 0x0000， IP 置为 0x7C00</code>，组合起来就是 <code>0x7C00</code>。</p>
-</li>
-<li><p>此时 CPU 从 <code>PC = 0x7C00</code> 开始取值、执行。具体干啥呢？这就是开发人员可以决定的了。在启动扇区上可以是加载 OS Kernel 的代码，硬盘分区，boot loader 等。</p>
-</li>
-</ol>
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>1.<a target="_blank" rel="noopener" href="http://dewkumar.blogspot.com/2012/01/what-is-org-origin-directive-in.html">x86-ORG</a><br>2. <a target="_blank" rel="noopener" href="https://superuser.com/questions/806226/how-to-see-rom-size">how-to-see-rom-size</a><br>3. <a target="_blank" rel="noopener" href="http://smilejay.com/2013/02/bios-info-dmidecode/">bios-info-dmidecode</a><br>4. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/System_Management_BIOS">system-management-bios</a><br>5. <a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2013/02/booting.html">计算机是如何启动的？</a><br>6. <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Master_boot_record">多种 MBR 组织方式</a><br>7. <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/g6m_r28bvyyWIu1CAzxLdg">计算机是怎样启动的？</a></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/18/data-structure-heap/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/18/data-structure-heap/" class="post-title-link" itemprop="url">data-structure-heap</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-05-18 15:24:05" itemprop="dateCreated datePublished" datetime="2020-05-18T15:24:05+08:00">2020-05-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>4.3k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>4 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="线性-or-非线性"><a href="#线性-or-非线性" class="headerlink" title="线性 or 非线性"></a>线性 or 非线性</h3><p>数据结构可以分为两大类：线性结构和非线性结构。线性结构典型的就是数组和链表，非线性典型就是树了。复杂的数据结构基本上都是两者的组合。</p>
-<h3 id="binary-heap"><a href="#binary-heap" class="headerlink" title="binary heap"></a>binary heap</h3><p>二叉堆本质上就是个完全二叉树。但是却用数组来表示。为啥呢？因为数组的下标之间有关系，可以表示二叉树节点之间的层级关系。因为是 <code>完全二叉树</code>，这就保证了一维展开就是一个下标连续的数组，数组通过下标操作起来相当简洁。堆顶(root)也就就是数组第一个元素 <code>array[0]</code>，是最小元素，就是小顶堆。反之，大顶堆。</p>
-<h3 id="堆的自我调整"><a href="#堆的自我调整" class="headerlink" title="堆的自我调整"></a>堆的自我调整</h3><h4 id="插入节点"><a href="#插入节点" class="headerlink" title="插入节点"></a>插入节点</h4><p>新节点放在数组最后，然后对该节点进行上浮操作。</p>
-<h4 id="删除节点"><a href="#删除节点" class="headerlink" title="删除节点"></a>删除节点</h4><p>删除堆顶元素，最后一个节点放在堆顶，对此时的堆顶进行下沉操作。</p>
-<h4 id="构建二叉堆"><a href="#构建二叉堆" class="headerlink" title="构建二叉堆"></a>构建二叉堆</h4><p>所有的非叶子节点进行上浮操作。</p>
-<h4 id="二叉堆自我调整图解"><a href="#二叉堆自我调整图解" class="headerlink" title="二叉堆自我调整图解"></a>二叉堆自我调整图解</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/binary-heap.svg" alt="binary-heap"> #(二叉堆的自我调整)</p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HeapOperator</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自下而上，上浮</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">upAdjust</span><span class="params">(<span class="type">int</span> [] array)</span>&#123;</span><br><span class="line">        <span class="comment">// 最后一个节点</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">childIndex</span> <span class="operator">=</span> array.length - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 最后一个非叶子节点</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">parentIndex</span> <span class="operator">=</span> (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> array[childIndex];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &gt; <span class="number">0</span> &amp;&amp; temp &lt; array[parentIndex])&#123;</span><br><span class="line">            array[childIndex] = array[parentIndex];</span><br><span class="line">            childIndex = parentIndex;</span><br><span class="line">            parentIndex = (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[childIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自上而下，下沉</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">downAdjust</span><span class="params">(<span class="type">int</span> [] array, <span class="type">int</span> parentIndex, <span class="type">int</span> length)</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> array[parentIndex];</span><br><span class="line">        <span class="type">int</span> <span class="variable">childIndex</span> <span class="operator">=</span> <span class="number">2</span> * parentIndex + <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &lt; length)&#123;</span><br><span class="line">            <span class="comment">// 有右节点，且右节点小于左节点</span></span><br><span class="line">            <span class="keyword">if</span> (childIndex + <span class="number">1</span> &lt; length &amp;&amp; array[childIndex] &gt; array[childIndex + <span class="number">1</span>])&#123;</span><br><span class="line">                childIndex++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(temp &lt;= array[childIndex])&#123;</span><br><span class="line">               <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            array[parentIndex] = array[childIndex];</span><br><span class="line">            parentIndex = childIndex;</span><br><span class="line">            childIndex = <span class="number">2</span> * parentIndex + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[parentIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span>  <span class="keyword">static</span>  <span class="keyword">void</span> <span class="title function_">buildHeap</span><span class="params">(<span class="type">int</span>[] array)</span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> (array.length - <span class="number">1</span>)/ <span class="number">2</span>; i &gt;= <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            downAdjust(array, i, array.length - <span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">heapSort</span><span class="params">(<span class="type">int</span> [] array)</span>&#123;</span><br><span class="line">        <span class="comment">// 先构建一个小顶堆，得到一个最小值。</span></span><br><span class="line">        <span class="comment">// i 为 parentIndex，左右子节点分别是 2 * i + 1, 2 * i + 2</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> (array.length - <span class="number">1</span> -<span class="number">2</span> ) / <span class="number">2</span>; i &gt;= <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            downAdjust(array, i, array.length);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 堆顶和目前堆的最后一个节点交换，重新构建堆。</span></span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> array.length - <span class="number">1</span>; i &gt; <span class="number">0</span> ; i--) &#123;</span><br><span class="line">            <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> array[i];</span><br><span class="line">            array[i] = array[<span class="number">0</span>];</span><br><span class="line">            array[<span class="number">0</span>] = temp;</span><br><span class="line">            downAdjust(array, <span class="number">0</span> , i);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">int</span> [] array = <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">1</span>,<span class="number">3</span>,<span class="number">2</span>,<span class="number">6</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">10</span>,<span class="number">0</span>&#125;;</span><br><span class="line">        upAdjust(array);</span><br><span class="line">        System.out.println(Arrays.toString(array));</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span>[] array2 = <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">7</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>&#125;;</span><br><span class="line">        buildHeap(array2);</span><br><span class="line">        System.out.println(Arrays.toString(array2));</span><br><span class="line"></span><br><span class="line">        <span class="type">int</span>[] array3 = <span class="keyword">new</span> <span class="title class_">int</span>[]&#123;<span class="number">7</span>,<span class="number">1</span>,<span class="number">3</span>,<span class="number">10</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">8</span>,<span class="number">9</span>,<span class="number">6</span>,<span class="number">100</span>&#125;;</span><br><span class="line">        heapSort(array3);</span><br><span class="line">        System.out.println(Arrays.toString(array3));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h3 id="优先级队列"><a href="#优先级队列" class="headerlink" title="优先级队列"></a>优先级队列</h3><p>不要被队列二字带偏，优先级队列的重点在优先级上。比如线程有优先级，优先级大的先执行。运算符也是有优先级的。怎样来实现这种优先级呢？用 <code>堆</code> 就可以。这里使用小顶堆，堆顶就是最小值，这里带入优先级的概念，值越小优先级越大。那么，从堆顶拿出来的节点就是优先级最大的，剩余的节点重新构造成小顶堆，保证堆顶是最小值。</p>
-<h4 id="代码实现-1"><a href="#代码实现-1" class="headerlink" title="代码实现"></a>代码实现</h4><p><code>大顶堆</code>实现优先队列。每次只取最大值，取出一个堆顶，剩余节点重新构建大顶堆。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Arrays;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">PriorityQueue</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span>[] array;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">PriorityQueue</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.array = <span class="keyword">new</span> <span class="title class_">int</span>[<span class="number">32</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">enQueue</span><span class="params">(<span class="type">int</span> key)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(size &gt;= array.length)&#123;</span><br><span class="line">            resize();</span><br><span class="line">        &#125;</span><br><span class="line">        array[size++] = key;</span><br><span class="line">        upAdjust();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">deQueue</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">heapTop</span> <span class="operator">=</span> array[<span class="number">0</span>];</span><br><span class="line">        array[<span class="number">0</span>] = array[--size];</span><br><span class="line">        downAdjust();</span><br><span class="line">        <span class="keyword">return</span> heapTop;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">resize</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">doubleSize</span> <span class="operator">=</span> size &lt;&lt; <span class="number">2</span>;</span><br><span class="line">        <span class="built_in">this</span>.array = Arrays.copyOf(<span class="built_in">this</span>.array,doubleSize);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自下而上</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">upAdjust</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="comment">// 拿到最后一个节点</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">childIndex</span> <span class="operator">=</span> <span class="built_in">this</span>.size - <span class="number">1</span>;</span><br><span class="line">        <span class="comment">// 最后一个非叶子节点</span></span><br><span class="line">        <span class="type">int</span> <span class="variable">parentIndex</span> <span class="operator">=</span> (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> array[childIndex];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &gt; <span class="number">0</span> &amp;&amp; temp &gt; array[parentIndex])&#123;</span><br><span class="line">            array[childIndex] = array[parentIndex];</span><br><span class="line">            childIndex = parentIndex;</span><br><span class="line">            parentIndex = (childIndex - <span class="number">1</span>) / <span class="number">2</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[childIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 自上而下</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">downAdjust</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">parentIndex</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">temp</span> <span class="operator">=</span> array[<span class="number">0</span>];</span><br><span class="line">        <span class="type">int</span> <span class="variable">childIndex</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> (childIndex &lt; size)&#123;</span><br><span class="line">            <span class="comment">// 有右节点，且右节点大于左节点。拿到两个子节点的最大值。</span></span><br><span class="line">            <span class="keyword">if</span> (childIndex + <span class="number">1</span> &lt; size &amp;&amp; array[childIndex] &lt; array[childIndex + <span class="number">1</span>])&#123;</span><br><span class="line">                childIndex++;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(temp &gt;= array[childIndex])&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            array[parentIndex] = array[childIndex];</span><br><span class="line">            parentIndex = childIndex;</span><br><span class="line">            childIndex = <span class="number">2</span> * parentIndex + <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        array[parentIndex] = temp;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        <span class="type">PriorityQueue</span> <span class="variable">priorityQueue</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">PriorityQueue</span>();</span><br><span class="line">        priorityQueue.enQueue(<span class="number">30</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">100</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">50</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">300</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">130</span>);</span><br><span class="line">        priorityQueue.enQueue(<span class="number">430</span>);</span><br><span class="line">        System.out.println(priorityQueue.deQueue());</span><br><span class="line">        System.out.println(priorityQueue.deQueue());</span><br><span class="line">        System.out.println(priorityQueue.deQueue());</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-
-
-<h3 id="References"><a href="#References" class="headerlink" title="References"></a>References</h3><ol>
-<li><a target="_blank" rel="noopener" href="https://visualgo.net/zh/heap">visual heap</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/cq2EhVtOTzTVpNpLDXfeJg">binary heap</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/8Bid1naBLtEjPoP-R4HkBg">heap sort</a></li>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/4hXBw7sZ-NKs_asOQxS7gA">priority queue</a></li>
-<li><a target="_blank" rel="noopener" href="https://web.cecs.pdx.edu/~sheard/course/Cs163/Doc/FullvsComplete.html">full binary tree vs complete binary tree</a></li>
-<li><a target="_blank" rel="noopener" href="https://web.cecs.pdx.edu/~sheard/course/Cs163/Doc/HeapReview.html">heap review</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/13/os-banker-s-algorithm/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/13/os-banker-s-algorithm/" class="post-title-link" itemprop="url">os-banker's-algorithm</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-05-13 15:31:05" itemprop="dateCreated datePublished" datetime="2020-05-13T15:31:05+08:00">2020-05-13</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>2.5k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>2 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Banker’s-Algorithm"><a href="#Banker’s-Algorithm" class="headerlink" title="Banker’s Algorithm"></a>Banker’s Algorithm</h2><h3 id="银行家算法是什么"><a href="#银行家算法是什么" class="headerlink" title="银行家算法是什么"></a>银行家算法是什么</h3><p><code>银行家</code>主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，银行可以判定能不能按照某个顺序来给这批人放贷。类似的思路延伸到计算机世界，同理。操作系统给多个进程分配资源，<code>能不能找到一个顺序给这些进程分配资源，并逐渐回收资源？</code>从而满足多个进程的资源需求。采用银行家放贷和收贷的思路（这里排除利息，放多少贷，收多少钱。呵呵，哪有此种好事？）来分配和回收系统资源就是所谓的<code>银行家算法</code>。</p>
-<h3 id="银行家算法解决什么问题"><a href="#银行家算法解决什么问题" class="headerlink" title="银行家算法解决什么问题"></a>银行家算法解决什么问题</h3><p><code>resource allocation and deadlock avoidance algorithm </code>。银行家算法用来进行资源分配和避免死锁。</p>
-<h3 id="银行家算法怎样解决问题"><a href="#银行家算法怎样解决问题" class="headerlink" title="银行家算法怎样解决问题"></a>银行家算法怎样解决问题</h3><p>P0、P1、P2、P3、P4 5个进程，视为需要钱的 5 个人。<br>A、B、C 三种系统资源。分别视为是银行三种贵金属：金块、银块、铜块。</p>
-<h4 id="allocation-table-已放贷表"><a href="#allocation-table-已放贷表" class="headerlink" title="allocation table 已放贷表"></a>allocation table 已放贷表</h4><p>每个人已经借的金银铜个数列表</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">A</th>
-<th align="center">B</th>
-<th align="center">C</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">P0</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">P1</td>
-<td align="center">2</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">P2</td>
-<td align="center">3</td>
-<td align="center">0</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">P3</td>
-<td align="center">2</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">P4</td>
-<td align="center">0</td>
-<td align="center">0</td>
-<td align="center">2</td>
-</tr>
-</tbody></table>
-<h4 id="max-table-最大借贷表"><a href="#max-table-最大借贷表" class="headerlink" title="max table 最大借贷表"></a>max table 最大借贷表</h4><p>每个人需要金银铜最大个数列表</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">A</th>
-<th align="center">B</th>
-<th align="center">C</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">P0</td>
-<td align="center">7</td>
-<td align="center">5</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center">P1</td>
-<td align="center">3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">P2</td>
-<td align="center">9</td>
-<td align="center">0</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">P3</td>
-<td align="center">2</td>
-<td align="center">2</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">P4</td>
-<td align="center">4</td>
-<td align="center">3</td>
-<td align="center">3</td>
-</tr>
-</tbody></table>
-<h4 id="need-table-还需放贷表"><a href="#need-table-还需放贷表" class="headerlink" title="need table 还需放贷表"></a>need table 还需放贷表</h4><p>每个人还需要的金银铜个数列表。由 max table - allocation table 得到。</p>
-<table>
-<thead>
-<tr>
-<th align="center"></th>
-<th align="center">A</th>
-<th align="center">B</th>
-<th align="center">C</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">P0</td>
-<td align="center">7</td>
-<td align="center">4</td>
-<td align="center">3</td>
-</tr>
-<tr>
-<td align="center">P1</td>
-<td align="center">1</td>
-<td align="center">2</td>
-<td align="center">2</td>
-</tr>
-<tr>
-<td align="center">P2</td>
-<td align="center">6</td>
-<td align="center">0</td>
-<td align="center">0</td>
-</tr>
-<tr>
-<td align="center">P3</td>
-<td align="center">0</td>
-<td align="center">1</td>
-<td align="center">1</td>
-</tr>
-<tr>
-<td align="center">P4</td>
-<td align="center">4</td>
-<td align="center">3</td>
-<td align="center">1</td>
-</tr>
-</tbody></table>
-<h4 id="available-table-剩余资源表"><a href="#available-table-剩余资源表" class="headerlink" title="available table 剩余资源表"></a>available table 剩余资源表</h4><p>银行还剩下的金银铜个数。</p>
-<table>
-<thead>
-<tr>
-<th align="center">A</th>
-<th align="center">B</th>
-<th align="center">C</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">3</td>
-<td align="center">3</td>
-<td align="center">2</td>
-</tr>
-</tbody></table>
-<h4 id="剩余系统资源分配顺序推演"><a href="#剩余系统资源分配顺序推演" class="headerlink" title="剩余系统资源分配顺序推演"></a>剩余系统资源分配顺序推演</h4><ol>
-<li>拿着 available table （剩余资源表），到 need table（还需放贷表） 比对。若 available table 的 A B C 满足 need table 的某一行（也就是 available table 每一列都大于等于 need table 的某一行的每一列）。说明可以分配给这个进程，标记这一行。同时回收这一行对应的 allocation table 中已经分配的 A B C。更新 available table 的 A B C。以此类推，继续比对 need table 中其他未标记的行。若最后 need table 所有行都有标记，说明存在一个给 P0、P1、P2、P3、P4 进程分配资源的顺序。</li>
-<li>拿着 available table 剩余资源表，不满足 need table 中任何一行。说明不存在一个给 P0、P1、P2、P3、P4 进程分配资源的顺序。系统有可能进入死锁。</li>
-</ol>
-<h4 id="银行家算法图解分析"><a href="#银行家算法图解分析" class="headerlink" title="银行家算法图解分析"></a>银行家算法图解分析</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/banks-algorithm.svg" alt="银行家算法"><br>存在的一个序列 P1 -&gt; P3 -&gt; P4 -&gt; P0 -&gt; P2</p>
-<h3 id="有没有其他方法解决此问题"><a href="#有没有其他方法解决此问题" class="headerlink" title="有没有其他方法解决此问题"></a>有没有其他方法解决此问题</h3><h3 id="Banker’s-Algorithm-implemention"><a href="#Banker’s-Algorithm-implemention" class="headerlink" title="Banker’s Algorithm implemention"></a>Banker’s Algorithm implemention</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Banker&#x27;s Algorithm </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="comment">// P0, P1, P2, P3, P4 are the Process names here </span></span><br><span class="line">  </span><br><span class="line">    <span class="type">int</span> n, m, i, j, k; </span><br><span class="line">    n = <span class="number">5</span>; <span class="comment">// Number of processes </span></span><br><span class="line">    m = <span class="number">3</span>; <span class="comment">// Number of resources </span></span><br><span class="line">    <span class="type">int</span> alloc[<span class="number">5</span>][<span class="number">3</span>] = &#123; &#123; <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span> &#125;, <span class="comment">// P0    // Allocation Matrix </span></span><br><span class="line">                        &#123; <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span> &#125;, <span class="comment">// P1 </span></span><br><span class="line">                        &#123; <span class="number">3</span>, <span class="number">0</span>, <span class="number">2</span> &#125;, <span class="comment">// P2 </span></span><br><span class="line">                        &#123; <span class="number">2</span>, <span class="number">1</span>, <span class="number">1</span> &#125;, <span class="comment">// P3 </span></span><br><span class="line">                        &#123; <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span> &#125; &#125;; <span class="comment">// P4 </span></span><br><span class="line">  </span><br><span class="line">    <span class="type">int</span> max[<span class="number">5</span>][<span class="number">3</span>] = &#123; &#123; <span class="number">7</span>, <span class="number">5</span>, <span class="number">3</span> &#125;, <span class="comment">// P0    // MAX Matrix </span></span><br><span class="line">                      &#123; <span class="number">3</span>, <span class="number">2</span>, <span class="number">2</span> &#125;, <span class="comment">// P1 </span></span><br><span class="line">                      &#123; <span class="number">9</span>, <span class="number">0</span>, <span class="number">2</span> &#125;, <span class="comment">// P2 </span></span><br><span class="line">                      &#123; <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span> &#125;, <span class="comment">// P3 </span></span><br><span class="line">                      &#123; <span class="number">4</span>, <span class="number">3</span>, <span class="number">3</span> &#125; &#125;; <span class="comment">// P4 </span></span><br><span class="line">  </span><br><span class="line">    <span class="type">int</span> avail[<span class="number">3</span>] = &#123; <span class="number">3</span>, <span class="number">3</span>, <span class="number">2</span> &#125;; <span class="comment">// Available Resources </span></span><br><span class="line">  </span><br><span class="line">    <span class="type">int</span> finished[n], ans[n], index = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; n; k++) &#123; </span><br><span class="line">        finished[k] = <span class="number">0</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="type">int</span> need[n][m]; </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123; </span><br><span class="line">        <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++) </span><br><span class="line">            <span class="comment">// 计算 need matrix</span></span><br><span class="line">            need[i][j] = max[i][j] - alloc[i][j]; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="type">int</span> y = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">for</span> (k = <span class="number">0</span>; k &lt; <span class="number">5</span>; k++) &#123; </span><br><span class="line">        <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n; i++) &#123; </span><br><span class="line">            <span class="keyword">if</span> (finished[i] == <span class="number">0</span>) &#123; </span><br><span class="line">  </span><br><span class="line">                <span class="type">int</span> flag = <span class="number">0</span>; </span><br><span class="line">                <span class="keyword">for</span> (j = <span class="number">0</span>; j &lt; m; j++) &#123; </span><br><span class="line">                    <span class="keyword">if</span> (need[i][j] &gt; avail[j])&#123; </span><br><span class="line">                        flag = <span class="number">1</span>; </span><br><span class="line">                         <span class="keyword">break</span>; </span><br><span class="line">                    &#125; </span><br><span class="line">                &#125; </span><br><span class="line">  </span><br><span class="line">                <span class="keyword">if</span> (flag == <span class="number">0</span>) &#123; </span><br><span class="line">                    ans[index++] = i; </span><br><span class="line">                    <span class="keyword">for</span> (y = <span class="number">0</span>; y &lt; m; y++) </span><br><span class="line">                        avail[y] += alloc[i][y]; </span><br><span class="line">                    finished[i] = <span class="number">1</span>; </span><br><span class="line">                &#125; </span><br><span class="line">            &#125; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Following is the SAFE Sequence\n&quot;</span>); </span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; n - <span class="number">1</span>; i++) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot; P%d -&gt;&quot;</span>, ans[i]); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot; P%d&quot;</span>, ans[n - <span class="number">1</span>]); </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0</span>); </span><br><span class="line">  </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95">银行家算法-wiki</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/bankers-algorithm-in-operating-system-2/">bankers-algorithm</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/11/cache-replacement-policy-lru/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/11/cache-replacement-policy-lru/" class="post-title-link" itemprop="url">cache-replacement-policy-lru</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-05-11 08:39:15" itemprop="dateCreated datePublished" datetime="2020-05-11T08:39:15+08:00">2020-05-11</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>7.4k</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>7 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Cache"><a href="#Cache" class="headerlink" title="Cache"></a>Cache</h2><h3 id="cache"><a href="#cache" class="headerlink" title="cache"></a>cache</h3><p>为啥要有 <code>Cache</code> 呢？根本原因是各种存储速度不匹配。或者为了加快某个过程，直接将多次转换的转换结果直接缓存起来，便于再次使用时直接绕开这些转换过程。典型的就是 <code>MMU</code> 的地址翻译过程，直接将<code>虚拟地址</code>多次转换的最后结果，也就是<code>物理地址</code>，直接缓存到 <code>TLB</code> 中，下次再次访问同一个虚拟地址，直接从虚拟地址拿到物理地址，绕开多次转换过程，这可不就提高了速度。<code>CPU</code> 的速度比 <code>Memory</code> 快得多，为了配上 <code>CPU</code> 超级快的速度，也就有了 <code>L1</code>，<code>L2</code>，<code>L3</code> cache。还有就是存储器层次结构，<em>速度快，容量小</em>的存储作为<em>速度慢，容量大</em>的上级缓存。</p>
-<h3 id="cache-replacement"><a href="#cache-replacement" class="headerlink" title="cache replacement"></a>cache replacement</h3><p>为啥要有 <code>cache replacement</code> 呢？ 因为再大的存储容量也有限，总有使用完的时候，何况速度快的存储，容量本身就小。cache 使用完，再有需要缓存的东西，就需要从缓存中剔除一些，来存放新的内容。那问题就来了，缓存使用完，<em>该剔除哪些已经缓存的内容呢？</em> 这就是所谓的 <code>cache replacement policy</code>。从不同的角度，可以有不同的替换策略。</p>
-<h3 id="least-recently-used"><a href="#least-recently-used" class="headerlink" title="least recently used"></a>least recently used</h3><p>本文来说明这个策略。我不想记忆定义。来通过一个实例来理解这个策略的思想。<br>磁盘要缓存到内存中的内容划分为相等的 page，称之为 <code>virtual page</code>，每一个 page 一个编号，称之为 page number。<br>同理，内存的容量也划分为和磁盘大小一致的 page，称之为 <code>page frame</code>。<br>以下为访问磁盘 page number 的顺序：<br>1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5<br>缓存大小为 3 个 page frame。组成一个<em>缓存 Queue</em></p>
-<h4 id="virtual-page-存放规则"><a href="#virtual-page-存放规则" class="headerlink" title="virtual page 存放规则"></a>virtual page 存放规则</h4><h4 id="缓存队列没满"><a href="#缓存队列没满" class="headerlink" title="缓存队列没满"></a>缓存队列没满</h4><ol>
-<li>virtual page 已在缓存队列中，将代表 virtual page 的队列节点移动到队首。</li>
-<li>virtual page 不在缓存队列中，添加代表这个 virtual page 的队列节点到队首。</li>
-</ol>
-<h4 id="缓存队列已满"><a href="#缓存队列已满" class="headerlink" title="缓存队列已满"></a>缓存队列已满</h4><ol>
-<li>virtual page 已在缓存队列中，将代表 virtual page 的队列节点移动到队首。</li>
-<li>virtual page 不在缓存队列中，<em>移除队尾队列节点</em>，添加代表这个 virtual page 的队列节点到队首。</li>
-</ol>
-<h4 id="LRU-图解"><a href="#LRU-图解" class="headerlink" title="LRU 图解"></a>LRU 图解</h4><p><img src="https://gitee.com/stardustman/pictrues/raw/master/img/lru.svg" alt="lru"></p>
-<p>可以看到一直是对<code>缓存队列队首</code>操作。<br>1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</p>
-<ol>
-<li>访问 page 1，缓存队列中没有，page 1 放到队首。</li>
-<li>访问 page 2，缓存队列中没有，page 2 放到队首。</li>
-<li>访问 page 3，缓存队列中没有，page 3 放到队首。</li>
-<li>访问 page 4，缓存队列中没有，且缓存队列满了。移除队尾 page 1，page 4 放到队首。</li>
-<li>访问 page 1，缓存队列中没有，且缓存队列满了。移除队尾 page 2，page 1 放到队首。</li>
-<li>访问 page 2，缓存队列中没有，且缓存队列满了。移除队尾 page 3，page 2 放到队首。</li>
-<li>访问 page 5，缓存队列中没有，且缓存队列满了。移除队尾 page 4，page 5 放到队首。</li>
-<li>访问 page 1，缓存队列中有，page 1 移动到队首。</li>
-<li>访问 page 2，缓存队列中有，page 2 移动到队首。</li>
-<li>访问 page 3，缓存队列中没有，且缓存队列满了。移除队尾 page 5，page 3 放到队首。</li>
-<li>访问 page 4，缓存队列中没有，且缓存队列满了。移除队尾 page 1，page 4 放到队首。</li>
-<li>访问 page 5，缓存队列中没有，且缓存队列满了。移除队尾 page 2，page 5 放到队首。<br>最后缓存队列中存放的是 page 5，page 4，page 3。</li>
-</ol>
-<blockquote>
-<p>由上可知从队首到队尾包含着一个信息就是，越接近队首，越是最近刚访问的 page。缓存背后的原理其实和<code>程序运行的局部性原理</code>有关。<br>通过上述操作，可以看到队列节点调整非常频繁，且队列节点之间有先后关系。这也决定了队列是个双端队列。<br>QNode 指针数组指向已经在缓存队列中的代表 page 的队列节点。</p>
-</blockquote>
-<h4 id="LRU-实现"><a href="#LRU-实现" class="headerlink" title="LRU 实现"></a>LRU 实现</h4><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A C program to show implementation of LRU cache </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span> </span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span> </span></span><br><span class="line">  </span><br><span class="line"><span class="comment">// A Queue Node (Queue is implemented using Doubly Linked List) </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">QNode</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">QNode</span> *<span class="title">prev</span>, *<span class="title">next</span>;</span> </span><br><span class="line">    <span class="type">unsigned</span> pageNumber;  <span class="comment">// the page number stored in this QNode </span></span><br><span class="line">&#125; QNode; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A Queue (A FIFO collection of Queue Nodes) </span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Queue</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">    <span class="type">unsigned</span> count;  <span class="comment">// Number of filled frames </span></span><br><span class="line">    <span class="type">unsigned</span> numberOfFrames; <span class="comment">// total number of frames </span></span><br><span class="line">    QNode *front, *rear; </span><br><span class="line">&#125; Queue; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A hash (Collection of pointers to Queue Nodes) </span></span><br><span class="line"><span class="comment">// 怎样判定 page 是不是已经在 cache 中，用这个结构。</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">Hash</span> </span></span><br><span class="line"><span class="class">&#123;</span> </span><br><span class="line">    <span class="type">int</span> capacity; <span class="comment">// how many pages can be there </span></span><br><span class="line">    QNode* *<span class="built_in">array</span>; <span class="comment">// an array of queue nodes pointer，QNode 指针数组下标作为 page number 直接索引得到 QNode，或者判定 QNode 存在与否。</span></span><br><span class="line">&#125; Hash; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to create a new Queue Node. The queue Node </span></span><br><span class="line"><span class="comment">// will store the given &#x27;pageNumber&#x27; </span></span><br><span class="line">QNode* <span class="title function_">newQNode</span><span class="params">( <span class="type">unsigned</span> pageNumber )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="comment">// Allocate memory and assign &#x27;pageNumber&#x27; </span></span><br><span class="line">    QNode* temp = (QNode *)<span class="built_in">malloc</span>( <span class="keyword">sizeof</span>( QNode ) ); </span><br><span class="line">    temp-&gt;pageNumber = pageNumber; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Initialize prev and next as NULL</span></span><br><span class="line">    temp-&gt;prev = temp-&gt;next = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> temp; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to create an empty Queue. </span></span><br><span class="line"><span class="comment">// The queue can have at most &#x27;numberOfFrames&#x27; nodes </span></span><br><span class="line">Queue* <span class="title function_">createQueue</span><span class="params">( <span class="type">int</span> numberOfFrames )</span> </span><br><span class="line">&#123; </span><br><span class="line">    Queue* <span class="built_in">queue</span> = (Queue *)<span class="built_in">malloc</span>( <span class="keyword">sizeof</span>( Queue ) ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// The queue is empty </span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;count = <span class="number">0</span>; </span><br><span class="line">    <span class="built_in">queue</span>-&gt;front = <span class="built_in">queue</span>-&gt;rear = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Number of frames that can be stored in memory </span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;numberOfFrames = numberOfFrames; </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to create an empty Hash of given capacity </span></span><br><span class="line"><span class="comment">// capacity 其实就是 page number 范围</span></span><br><span class="line">Hash* <span class="title function_">createHash</span><span class="params">( <span class="type">int</span> capacity )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="comment">// Allocate memory for hash </span></span><br><span class="line">    Hash* hash = (Hash *) <span class="built_in">malloc</span>( <span class="keyword">sizeof</span>( Hash ) ); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;====&gt;%d\n&quot;</span>, <span class="keyword">sizeof</span>(Hash));</span><br><span class="line">    hash-&gt;capacity = capacity; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Create an array of pointers for refering queue nodes </span></span><br><span class="line">    hash-&gt;<span class="built_in">array</span> = (QNode **) <span class="built_in">malloc</span>( hash-&gt;capacity * <span class="keyword">sizeof</span>( QNode* ) ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Initialize all hash entries as empty </span></span><br><span class="line">    <span class="type">int</span> i; </span><br><span class="line">    <span class="keyword">for</span>( i = <span class="number">0</span>; i &lt; hash-&gt;capacity; ++i ) </span><br><span class="line">        hash-&gt;<span class="built_in">array</span>[i] = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> hash; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A function to check if there is slot available in memory </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">AreAllFramesFull</span><span class="params">( Queue* <span class="built_in">queue</span> )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>-&gt;count == <span class="built_in">queue</span>-&gt;numberOfFrames; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to check if queue is empty </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">isQueueEmpty</span><span class="params">( Queue* <span class="built_in">queue</span> )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">queue</span>-&gt;rear == <span class="literal">NULL</span>; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A utility function to delete a frame from queue </span></span><br><span class="line"><span class="type">void</span> <span class="title function_">deQueue</span><span class="params">( Queue* <span class="built_in">queue</span> )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="comment">// 判断队列是不是空</span></span><br><span class="line">    <span class="keyword">if</span>( isQueueEmpty( <span class="built_in">queue</span> ) ) </span><br><span class="line">        <span class="keyword">return</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// If this is the only node in list, then change front </span></span><br><span class="line">    <span class="comment">// 只有一个 node</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">queue</span>-&gt;front == <span class="built_in">queue</span>-&gt;rear) </span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Change rear and remove the previous rear </span></span><br><span class="line">    QNode* temp = <span class="built_in">queue</span>-&gt;rear; </span><br><span class="line">    <span class="built_in">queue</span>-&gt;rear = <span class="built_in">queue</span>-&gt;rear-&gt;prev; </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">queue</span>-&gt;rear) </span><br><span class="line">        <span class="built_in">queue</span>-&gt;rear-&gt;next = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">    <span class="built_in">free</span>( temp ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// decrement the number of full frames by 1 </span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;count--; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// A function to add a page with given &#x27;pageNumber&#x27; to both queue </span></span><br><span class="line"><span class="comment">// and hash </span></span><br><span class="line"><span class="type">void</span> <span class="title function_">Enqueue</span><span class="params">( Queue* <span class="built_in">queue</span>, Hash* hash, <span class="type">unsigned</span> pageNumber )</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="comment">// If all frames are full, remove the page at the rear </span></span><br><span class="line">    <span class="keyword">if</span> ( AreAllFramesFull ( <span class="built_in">queue</span> ) ) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">// remove page from hash </span></span><br><span class="line">        <span class="comment">// 移除队尾 QNode</span></span><br><span class="line">        hash-&gt;<span class="built_in">array</span>[ <span class="built_in">queue</span>-&gt;rear-&gt;pageNumber ] = <span class="literal">NULL</span>; </span><br><span class="line">        deQueue( <span class="built_in">queue</span> ); </span><br><span class="line">    &#125; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Create a new node with given page number, </span></span><br><span class="line">    <span class="comment">// And add the new node to the front of queue </span></span><br><span class="line">    QNode* temp = newQNode( pageNumber ); </span><br><span class="line">    temp-&gt;next = <span class="built_in">queue</span>-&gt;front; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// If queue is empty, change both front and rear pointers </span></span><br><span class="line">    <span class="keyword">if</span> ( isQueueEmpty( <span class="built_in">queue</span> ) ) </span><br><span class="line">        <span class="built_in">queue</span>-&gt;rear = <span class="built_in">queue</span>-&gt;front = temp; </span><br><span class="line">    <span class="keyword">else</span>  <span class="comment">// Else change the front </span></span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">// 队首前一个 Node 是 temp</span></span><br><span class="line">        <span class="built_in">queue</span>-&gt;front-&gt;prev = temp;</span><br><span class="line">        <span class="comment">// 队首调整成 temp </span></span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = temp; </span><br><span class="line">    &#125; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Add page entry to hash also </span></span><br><span class="line">    hash-&gt;<span class="built_in">array</span>[ pageNumber ] = temp; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// increment number of full frames </span></span><br><span class="line">    <span class="built_in">queue</span>-&gt;count++; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// This function is called when a page with given &#x27;pageNumber&#x27; is referenced </span></span><br><span class="line"><span class="comment">// from cache (or memory). There are two cases: </span></span><br><span class="line"><span class="comment">// 1. Frame is not there in memory, we bring it in memory and add to the front </span></span><br><span class="line"><span class="comment">//    of queue </span></span><br><span class="line"><span class="comment">// 2. Frame is there in memory, we move the frame to front of queue </span></span><br><span class="line"><span class="type">void</span> <span class="title function_">ReferencePage</span><span class="params">( Queue* <span class="built_in">queue</span>, Hash* hash, <span class="type">unsigned</span> pageNumber )</span> </span><br><span class="line">&#123; </span><br><span class="line">    QNode* reqPage = hash-&gt;<span class="built_in">array</span>[ pageNumber ]; </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// the page is not in cache, bring it </span></span><br><span class="line">    <span class="keyword">if</span> ( reqPage == <span class="literal">NULL</span> ) </span><br><span class="line">        Enqueue( <span class="built_in">queue</span>, hash, pageNumber ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// page is there and not at front, change pointer </span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (reqPage != <span class="built_in">queue</span>-&gt;front) </span><br><span class="line">    &#123; </span><br><span class="line">        <span class="comment">// Unlink rquested page from its current location </span></span><br><span class="line">        <span class="comment">// in queue. 把这个 Node 从队列上拿下来</span></span><br><span class="line">        reqPage-&gt;prev-&gt;next = reqPage-&gt;next; </span><br><span class="line">        <span class="comment">// 这个 Node 不是最后一个</span></span><br><span class="line">        <span class="keyword">if</span> (reqPage-&gt;next) </span><br><span class="line">           <span class="comment">// reqPage 的下一个 Node 的 prev 指向 reqPage 的前一个 Node</span></span><br><span class="line">           reqPage-&gt;next-&gt;prev = reqPage-&gt;prev; </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// If the requested page is rear, then change rear </span></span><br><span class="line">        <span class="comment">// as this node will be moved to front </span></span><br><span class="line">        <span class="comment">// reqPage 是队尾</span></span><br><span class="line">        <span class="keyword">if</span> (reqPage == <span class="built_in">queue</span>-&gt;rear) </span><br><span class="line">        &#123; </span><br><span class="line">           <span class="comment">// 更改队尾 Node</span></span><br><span class="line">           <span class="built_in">queue</span>-&gt;rear = reqPage-&gt;prev; </span><br><span class="line">           <span class="comment">// 队尾 Node 没有下一个 Node 了</span></span><br><span class="line">           <span class="built_in">queue</span>-&gt;rear-&gt;next = <span class="literal">NULL</span>; </span><br><span class="line">        &#125; </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// Put the requested page before current front </span></span><br><span class="line">        <span class="comment">// reqPage 成为新的队首 Node</span></span><br><span class="line">        reqPage-&gt;next = <span class="built_in">queue</span>-&gt;front; </span><br><span class="line">        reqPage-&gt;prev = <span class="literal">NULL</span>; </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// Change prev of current front </span></span><br><span class="line">        <span class="comment">// old 队首的 prev 变成 reqPage</span></span><br><span class="line">        reqPage-&gt;next-&gt;prev = reqPage; </span><br><span class="line">  </span><br><span class="line">        <span class="comment">// Change front to the requested page </span></span><br><span class="line">        <span class="comment">// 队列的队首是 reqPage</span></span><br><span class="line">        <span class="built_in">queue</span>-&gt;front = reqPage; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line">  </span><br><span class="line"><span class="comment">// Driver program to test above functions </span></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span> </span><br><span class="line">&#123; </span><br><span class="line">    <span class="comment">// 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</span></span><br><span class="line">    <span class="comment">// Let cache can hold 3 pages </span></span><br><span class="line">    Queue* q = createQueue( <span class="number">3</span> ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Let 6 different pages can be requested (pages to be </span></span><br><span class="line">    <span class="comment">// referenced are numbered from 0 to 5 </span></span><br><span class="line">    Hash* hash = createHash( <span class="number">6</span> ); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Let us refer pages  1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5</span></span><br><span class="line">    ReferencePage( q, hash, <span class="number">1</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">2</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">3</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">4</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">1</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">2</span>);</span><br><span class="line">    ReferencePage( q, hash, <span class="number">5</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">1</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">2</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">3</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">4</span>); </span><br><span class="line">    ReferencePage( q, hash, <span class="number">5</span>); </span><br><span class="line">  </span><br><span class="line">    <span class="comment">// Let us print cache frames after the above referenced pages </span></span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;%d &quot;</span>, q-&gt;front-&gt;pageNumber); </span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;%d &quot;</span>, q-&gt;front-&gt;next-&gt;pageNumber); </span><br><span class="line">    <span class="built_in">printf</span> (<span class="string">&quot;%d &quot;</span>, q-&gt;front-&gt;next-&gt;next-&gt;pageNumber); </span><br><span class="line">  </span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>; </span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
-
-
-
-
-
-<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/lru-cache-implementation/">least recently used</a></li>
-<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cache_(computing)">cache wiki</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="en">
-    <link itemprop="mainEntityOfPage" href="http://stardustman.github.io/2020/05/09/network-dhcp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="stardustman">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="stardustman">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2020/05/09/network-dhcp/" class="post-title-link" itemprop="url">network-dhcp</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2020-05-09 09:36:27" itemprop="dateCreated datePublished" datetime="2020-05-09T09:36:27+08:00">2020-05-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2022-03-16 10:17:27" itemprop="dateModified" datetime="2022-03-16T10:17:27+08:00">2022-03-16</time>
-              </span>
-
-          <br>
-            <span class="post-meta-item" title="Symbols count in article">
-              <span class="post-meta-item-icon">
-                <i class="far fa-file-word"></i>
-              </span>
-                <span class="post-meta-item-text">Symbols count in article: </span>
-              <span>133</span>
-            </span>
-            <span class="post-meta-item" title="Reading time">
-              <span class="post-meta-item-icon">
-                <i class="far fa-clock"></i>
-              </span>
-                <span class="post-meta-item-text">Reading time &asymp;</span>
-              <span>1 mins.</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="DHCP-步骤"><a href="#DHCP-步骤" class="headerlink" title="DHCP 步骤"></a>DHCP 步骤</h2><h3 id="Discover"><a href="#Discover" class="headerlink" title="Discover"></a>Discover</h3><h3 id="Offer"><a href="#Offer" class="headerlink" title="Offer"></a>Offer</h3><h3 id="Request"><a href="#Request" class="headerlink" title="Request"></a>Request</h3><h3 id="ACK"><a href="#ACK" class="headerlink" title="ACK"></a>ACK</h3><h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ol>
-<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/vU14pBhHTC-oVp1gBpmSvA">127.0.0.1 和 0.0.0.0</a></li>
-<li><a target="_blank" rel="noopener" href="https://support.microsoft.com/en-gb/help/169289/">DHCP-Basics</a></li>
-<li><a target="_blank" rel="noopener" href="https://medium.com/@bromiley/full-packet-friday-dhcp-abbc6b7b3c77">full-packet-friday-dhcp</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/dynamic-host-configuration-protocol-dhcp/">dynamic-host-configuration-protocal</a></li>
-<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc1541">dhcp-rfc</a></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-
-  
-  <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <p class="site-author-name" itemprop="name">stardustman</p>
-  <div class="site-description" itemprop="description"></div>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>stardustman</a>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">51</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">60</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/categories/>Categories</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<section id=posts class=posts>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/post/asm-java-jit/>asm-java-jit</a></h1>
+<div class=post-meta>
+<span class=post-time> 2021-07-18 </span>
+<span class=more-meta> 736 words </span>
+<span class=more-meta> 2 mins read </span>
 </div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/stardustman" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;stardustman" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:aoyunyoung@gmail.com" title="E-Mail → mailto:aoyunyoung@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://stackoverflow.com/users/9112817/cloud-young" title="StackOverflow → https:&#x2F;&#x2F;stackoverflow.com&#x2F;users&#x2F;9112817&#x2F;cloud-young" rel="noopener" target="_blank"><i class="fab fa-stack-overflow fa-fw"></i>StackOverflow</a>
-      </span>
-  </div>
-
-
-
-      </div>
-        <div class="back-to-top motion-element">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
-        </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2022</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">stardustman</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-chart-area"></i>
-    </span>
-    <span title="Symbols count total">204k</span>
-    <span class="post-meta-divider">|</span>
-    <span class="post-meta-item-icon">
-      <i class="fa fa-coffee"></i>
-    </span>
-    <span title="Reading time total">3:06</span>
+</header>
+<div class=post-content>
+<div class=post-summary>
+前言 无论多么花里胡哨的功能，最终落地到一台计算机上，都是二进制代码。虽然 java 代码跑在 jvm 平台之上，但是 jvm 只是负责执行 java 自定义的一套 bytecode 的工具，只要
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://pisces.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Pisces</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/pisces.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
-
+<div class=read-more>
+<a href=/post/asm-java-jit/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/post/java-keyword-volatile/>java-keyword-volatile</a></h1>
+<div class=post-meta>
+<span class=post-time> 2021-06-18 </span>
+<span class=more-meta> 29 words </span>
+<span class=more-meta> 1 min read </span>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+可见性问题 可见性问题思路 References von-neumann-harvard-architecture out-of-order-execution(dynamic execution) Instruction_scheduling X86/GCC memory fence的一些见解
+</div>
+<div class=read-more>
+<a href=/post/java-keyword-volatile/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/post/cs-semaphores/>cs-semaphores</a></h1>
+<div class=post-meta>
+<span class=post-time> 2021-05-25 </span>
+<span class=more-meta> 0 words </span>
+<span class=more-meta> 0 mins read </span>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+</div>
+<div class=read-more>
+<a href=/post/cs-semaphores/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/post/asm-pointers-and-memory/>asm-pointers-and-memory</a></h1>
+<div class=post-meta>
+<span class=post-time> 2021-04-28 </span>
+<span class=more-meta> 801 words </span>
+<span class=more-meta> 2 mins read </span>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+Basic Pointer 为啥需要 Pointer？ 更容易在不同代码段之间共享信息，在不同代码段之间来回复制也是可以的。但用指针的形式更好。 链式数据结构, 如链表和二
+</div>
+<div class=read-more>
+<a href=/post/asm-pointers-and-memory/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/post/cs-condition-variables/>cs-condition-variables</a></h1>
+<div class=post-meta>
+<span class=post-time> 2021-04-18 </span>
+<span class=more-meta> 205 words </span>
+<span class=more-meta> 1 min read </span>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+condition variable 是啥？ condition variable 是啥？本质上就是一个队列。现实世界中，想要进行下一步的行动，往往需要满足一定的条件(condition)。如十字路口的交通信号
+</div>
+<div class=read-more>
+<a href=/post/cs-condition-variables/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+</section>
+<nav class=pagination>
+<a class=prev href=/>
+<i class="iconfont icon-left"></i>
+<span class=prev-text>Prev</span>
+</a>
+<a class=next href=/page/3/>
+<span class=next-text>Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</div>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<span class=copyright-year>
+&copy;
+2019 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>stardustman</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
 </body>
 </html>

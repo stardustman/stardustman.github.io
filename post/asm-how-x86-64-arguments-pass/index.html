@@ -1,0 +1,288 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>asm-how-x86-64-arguments-pass - stardustman</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="stardustman"><meta name=description content="x86-64 下函数参数传递, 汇编层面分析 To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first"><meta name=keywords content="Hugo,theme,even">
+<meta name=generator content="Hugo 0.91.2 with theme even">
+<link rel=canonical href=http://stardustman.github.io/post/asm-how-x86-64-arguments-pass/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="asm-how-x86-64-arguments-pass">
+<meta property="og:description" content="x86-64 下函数参数传递, 汇编层面分析 To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://stardustman.github.io/post/asm-how-x86-64-arguments-pass/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2019-06-24T09:52:27+08:00">
+<meta property="article:modified_time" content="2019-06-24T09:52:27+08:00">
+<meta itemprop=name content="asm-how-x86-64-arguments-pass">
+<meta itemprop=description content="x86-64 下函数参数传递, 汇编层面分析 To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first"><meta itemprop=datePublished content="2019-06-24T09:52:27+08:00">
+<meta itemprop=dateModified content="2019-06-24T09:52:27+08:00">
+<meta itemprop=wordCount content="562">
+<meta itemprop=keywords content="asm,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="asm-how-x86-64-arguments-pass">
+<meta name=twitter:description content="x86-64 下函数参数传递, 汇编层面分析 To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>stardustman</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/categories/>
+<li class=mobile-menu-item>Categories</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>stardustman</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/categories/>Categories</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>asm-how-x86-64-arguments-pass</h1>
+<div class=post-meta>
+<span class=post-time> 2019-06-24 </span>
+<span class=more-meta> 562 words </span>
+<span class=more-meta> 2 mins read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li>
+<ul>
+<li><a href=#x86-64-下函数参数传递-汇编层面分析>x86-64 下函数参数传递, 汇编层面分析</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#代码分析>代码分析</a>
+<ul>
+<li><a href=#c-main>C main</a>
+<ul>
+<li><a href=#asm-main>Asm main</a></li>
+<li><a href=#c-testargs>C testArgs</a></li>
+<li><a href=#asm-testargs>Asm testArgs</a></li>
+</ul>
+</li>
+<li><a href=#栈帧分析>栈帧分析</a></li>
+<li><a href=#reference>Reference</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<h3 id=x86-64-下函数参数传递-汇编层面分析>x86-64 下函数参数传递, 汇编层面分析</h3>
+<blockquote>
+<p>To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first of the extra parameters (really the seventh parameter) parameter will be stored at the lowest address (this inversion of parameters was historically used to allow functions to be passed a variable number of parameters).</p>
+</blockquote>
+<h1 id=代码分析>代码分析</h1>
+<h2 id=c-main>C main</h2>
+<pre><code class=language-cpp>int main(){
+    int result = 0;
+    result = testArgs(1,2,3,4,5,6,7,8);
+    return 0;
+}
+
+</code></pre>
+<h3 id=asm-main>Asm main</h3>
+<p>gcc -o main main.c</p>
+<pre><code class=language-gas>main:
+        pushq   %rbp
+        movq    %rsp, %rbp
+        subq    $16, %rsp
+        movl    $0, -4(%rbp) //result
+        pushq   $8 // 最后一个参数
+        pushq   $7 // 倒数第二个参数
+        movl    $6, %r9d // 第六个参数
+        movl    $5, %r8d // 第五个参数
+        movl    $4, %ecx // 第四个参数
+        movl    $3, %edx // 第三个参数
+        movl    $2, %esi // 第二个参数
+        movl    $1, %edi // 第一个参数
+        call    testArgs(long, long, long, long, long, long, long, long)
+        addq    $16, %rsp // 回收分配的栈空间
+        movl    %eax, -4(%rbp)
+        movl    $0, %eax
+        leave
+        ret
+</code></pre>
+<h3 id=c-testargs>C testArgs</h3>
+<pre><code class=language-cpp>int testArgs(long a1,long a2,long a3,long a4,long a5,long a6,long a7,long a8){
+    long sum = 0;
+    sum = a1 + a2 + a3 + a4 +a5 + a6 + a7 + a8;
+    return sum;
+}
+</code></pre>
+<h3 id=asm-testargs>Asm testArgs</h3>
+<pre><code class=language-x86asm>testArgs(long, long, long, long, long, long, long, long):
+        pushq   %rbp
+        movq    %rsp, %rbp
+        movq    %rdi, -24(%rbp) ; a1  栈底
+        movq    %rsi, -32(%rbp) ; a2
+        movq    %rdx, -40(%rbp) ; a3
+        movq    %rcx, -48(%rbp) ; a4
+        movq    %r8, -56(%rbp)  ; a5
+        movq    %r9, -64(%rbp)  ; a6
+        movq    $0, -8(%rbp)    ; sum
+        movq    -24(%rbp), %rdx ; a1
+        movq    -32(%rbp), %rax ; a2
+        addq    %rax, %rdx      ; rdx = a1 + a2
+        movq    -40(%rbp), %rax ; a3
+        addq    %rax, %rdx
+        movq    -48(%rbp), %rax ; a4
+        addq    %rax, %rdx
+        movq    -56(%rbp), %rax ; a5
+        addq    %rax, %rdx
+        movq    -64(%rbp), %rax ; a6
+        addq    %rax, %rdx
+        movq    16(%rbp), %rax  ; a7，其实是到 main 的栈帧里取的
+        addq    %rax, %rdx
+        movq    24(%rbp), %rax  ; a8，其实是到 main 的栈帧里取的
+        addq    %rdx, %rax
+        movq    %rax, -8(%rbp)  ; sum = rax
+        movq    -8(%rbp), %rax  ; rax = sum 也就是返回值
+        popq    %rbp
+        ret
+</code></pre>
+<blockquote>
+<p>综上可知，编译器默认会将所有的参数复制到栈上。</p>
+</blockquote>
+<h2 id=栈帧分析>栈帧分析</h2>
+<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-arguments-pass.png alt=x86-64-arguments-pass> #(x86-64-arguments-pass)</p>
+<blockquote>
+<p>上图是执行完 testArgs 前两句汇编的栈帧状态图.
+分析:
+testArgs 中 movq 16(%rbp), %rax // 将 rbp + 16 地址处的数值(a7)复制到 rax
+rbp + 16 的原因是: 参数 a7 是 main 准备的, 属于 main 的栈帧. 16 Bytes 包括 8 Bytes 的 Return address 和 8 Bytes 的 main 的 rbp.</p>
+</blockquote>
+<h2 id=reference>Reference</h2>
+<ol>
+<li><a href=http://web.stanford.edu/class/cs107/guide/x86-64.html>callee-caller</a></li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>stardustman</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2019-06-24
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/post/asm-how-x86-64-arguments-pass/index.md target=_blank>The Markdown version »</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/asm/>asm</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/asm-clang-concepts/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">asm-clang-concepts</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/tools-for-me/>
+<span class="next-text nav-default">tools-for-me</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<span class=copyright-year>
+&copy;
+2019 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>stardustman</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

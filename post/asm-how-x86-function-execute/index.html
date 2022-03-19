@@ -1,0 +1,471 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>asm-how-x86-function-execute - stardustman</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="stardustman"><meta name=description content="前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编"><meta name=keywords content="Hugo,theme,even">
+<meta name=generator content="Hugo 0.91.2 with theme even">
+<link rel=canonical href=http://stardustman.github.io/post/asm-how-x86-function-execute/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="asm-how-x86-function-execute">
+<meta property="og:description" content="前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://stardustman.github.io/post/asm-how-x86-function-execute/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2019-05-28T19:32:16+08:00">
+<meta property="article:modified_time" content="2019-05-28T19:32:16+08:00">
+<meta itemprop=name content="asm-how-x86-function-execute">
+<meta itemprop=description content="前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编"><meta itemprop=datePublished content="2019-05-28T19:32:16+08:00">
+<meta itemprop=dateModified content="2019-05-28T19:32:16+08:00">
+<meta itemprop=wordCount content="3366">
+<meta itemprop=keywords content="asm,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="asm-how-x86-function-execute">
+<meta name=twitter:description content="前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>stardustman</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/categories/>
+<li class=mobile-menu-item>Categories</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>stardustman</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/categories/>Categories</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>asm-how-x86-function-execute</h1>
+<div class=post-meta>
+<span class=post-time> 2019-05-28 </span>
+<span class=more-meta> 3366 words </span>
+<span class=more-meta> 7 mins read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#assembly-syntax-for-x86>assembly syntax for X86</a>
+<ul>
+<li><a href=#gas-gnu-assembler-syntax-也就是-att-风格>gas (gnu assembler syntax), 也就是 AT&T 风格.</a></li>
+<li><a href=#intel-syntax>intel syntax</a></li>
+</ul>
+</li>
+<li><a href=#instruction-suffixes>instruction suffixes</a></li>
+<li><a href=#addressing-mode>addressing mode</a>
+<ul>
+<li><a href=#direct-addressing>direct addressing</a></li>
+<li><a href=#indirect-addressing>indirect addressing</a>
+<ul>
+<li><a href=#register-to-memory>register to memory</a></li>
+<li><a href=#memory-to-register>memory to register</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#program-counter-for-stored-program>program counter for stored program</a></li>
+<li><a href=#change-control-flow>change control flow</a>
+<ul>
+<li><a href=#jmp-label>jmp label</a></li>
+</ul>
+</li>
+<li><a href=#stack-management>stack management</a>
+<ul>
+<li><a href=#stack-pointer>stack pointer</a></li>
+<li><a href=#pushl-eax>pushl %eax</a></li>
+<li><a href=#popl-eax>popl %eax</a></li>
+</ul>
+</li>
+<li><a href=#function-call-and-return>function call and return</a>
+<ul>
+<li><a href=#call-label>call <label></a></li>
+<li><a href=#ret>ret</a></li>
+</ul>
+</li>
+<li><a href=#call-stack>call stack</a>
+<ul>
+<li><a href=#example>example</a></li>
+</ul>
+</li>
+<li><a href=#code-analysis>code analysis</a></li>
+<li><a href=#c-compare-to--assembly>C compare to Assembly</a></li>
+<li><a href=#asm-execute-graph>asm execute graph</a></li>
+<li><a href=#bombs>bombs</a></li>
+<li><a href=#references>references</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<blockquote>
+<p>前一阵子去看 java 虚拟机原理, 忽然痛悟到虚拟机也是机器啊, 呵呵也就是个软件而已. 看到 java 方法调用太复杂. 字节码那一套又不太熟悉, 还不如直接去看 C 编译后的汇编代码.
+目的: 搞明白 X86 架构下函数到底是怎么调用执行的.</p>
+</blockquote>
+<h1 id=assembly-syntax-for-x86>assembly syntax for X86</h1>
+<h2 id=gas-gnu-assembler-syntax-也就是-att-风格>gas (gnu assembler syntax), 也就是 AT&T 风格.</h2>
+<p>本文采用该风格.</p>
+<pre><code class=language-cpp>swap(int, int):
+        pushq   %rbp
+        movq    %rsp, %rbp
+        movl    %edi, -20(%rbp)
+        movl    %esi, -24(%rbp)
+        movl    -20(%rbp), %eax
+        movl    %eax, -4(%rbp)
+        movl    -24(%rbp), %eax
+        movl    %eax, -20(%rbp)
+        movl    -4(%rbp), %eax
+        movl    %eax, -24(%rbp)
+        nop
+        popq    %rbp
+        ret
+</code></pre>
+<h2 id=intel-syntax>intel syntax</h2>
+<pre><code class=language-x86asm>swap(int, int):
+        push    rbp
+        mov     rbp, rsp
+        mov     DWORD PTR [rbp-20], edi
+        mov     DWORD PTR [rbp-24], esi
+        mov     eax, DWORD PTR [rbp-20]
+        mov     DWORD PTR [rbp-4], eax
+        mov     eax, DWORD PTR [rbp-24]
+        mov     DWORD PTR [rbp-20], eax
+        mov     eax, DWORD PTR [rbp-4]
+        mov     DWORD PTR [rbp-24], eax
+        nop
+        pop     rbp
+        ret
+</code></pre>
+<h1 id=instruction-suffixes>instruction suffixes</h1>
+<table>
+<thead>
+<tr>
+<th>缩写</th>
+<th>全称</th>
+<th>位数</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b</td>
+<td>byte</td>
+<td>8bit</td>
+</tr>
+<tr>
+<td>w</td>
+<td>word</td>
+<td>16bit</td>
+</tr>
+<tr>
+<td>l</td>
+<td>long</td>
+<td>32bit</td>
+</tr>
+<tr>
+<td>q</td>
+<td>quad</td>
+<td>64bit</td>
+</tr>
+</tbody>
+</table>
+<h1 id=addressing-mode>addressing mode</h1>
+<blockquote>
+<p>CPU 寻址方式, 也就是拿到数据的方式.</p>
+</blockquote>
+<h2 id=direct-addressing>direct addressing</h2>
+<blockquote>
+<p>movb $0x05,%al
+表示为:R[al] = 0x05;
+将立即数 0x05(1 byte) 复制到寄存器 al</p>
+</blockquote>
+<h2 id=indirect-addressing>indirect addressing</h2>
+<blockquote>
+<p>间接寻址也就是到内存里去找</p>
+</blockquote>
+<h3 id=register-to-memory>register to memory</h3>
+<blockquote>
+<p>movl %eax, -4(%ebp)
+表示为: mem[R[ebp]-4] = R[eax];
+将寄存器 eax 里面的值复制到寄存器 ebp 的值减去 4 指向的内存地址处(也就是 R[ebp] -4 的值是一个内存地址).
+通过寄存器指向了内存地址, 是不是很熟悉的指针啊, 对, 就是指针. C 语言的指针就是这么玩的啊!</p>
+</blockquote>
+<h3 id=memory-to-register>memory to register</h3>
+<blockquote>
+<p>movl -4(%ebp), %eax
+%eax 表示为: R[eax] = mem[R[ebp] -4];
+将寄存器 esp 的值减去 4 的值指向的内存地址处存放的值, 复制到寄存器 eax</p>
+</blockquote>
+<h1 id=program-counter-for-stored-program>program counter for stored program</h1>
+<blockquote>
+<p>PC = PC + (instruction size in bytes)
+(instruction) (src1) (src2) (dst)
+In most processors, the PC is incremented after fetching an instruction,
+and holds the memory address of (&ldquo;points to&rdquo;) the next instruction that would be executed.
+这里就用到了指令周期(instruction cycle)这个概念了, fetch, decode, execute.
+注意到 PC 这个寄存器, 在 CPU fetch 了一条指令后就自动增加了.
+(In a processor where the incrementation precedes the fetch, the PC points to the current instruction being executed.)
+同样的在 CPU fetch 一条指令之前, PC 指向当前正在执行的指令.
+注意: 不允许直接操作 ip(instruction pointer) 也叫 pc(program counter) 这个寄存器, 如果这个能被编译器操作的话, 就完全想跳到哪执行就跳到哪执行了. 实际上 call 和 ret 指令就是在间接操作这两个寄存器. call 带来的效果之一就是 push %rip, ret 带来的效果之一就是 pop %rip. 两者具有对称作用啊!</p>
+</blockquote>
+<h1 id=change-control-flow>change control flow</h1>
+<h2 id=jmp-label>jmp label</h2>
+<blockquote>
+<p>When a jump instruction executes (in the last step of the machine cycle), it puts a new address into the PC. Now the fetch at the top of the next machine cycle fetches the instruction at that new address. Instead of executing the instruction that follows the jump instruction in memory, the processor &ldquo;jumps&rdquo; to an instruction somewhere else in memory.
+jmp 指令把 label 所在的地址, 复制给 pc 寄存器. 这就改变了程序的控制流. 然后程序流程就脱离了原来的执行流. 和 call label 很相似, 对, call指令作用之一就包括了一个隐式的 jmp label. 函数调用也就是把控制权交给了被调用者. 但是控制权要回到调用函数那里. 只不过 call 指令在函数交出控制权之前还多干了一件事, 就是把此时的 pc 值 push 到了栈里.</p>
+</blockquote>
+<h1 id=stack-management>stack management</h1>
+<h2 id=stack-pointer>stack pointer</h2>
+<blockquote>
+<p>A stack register is a computer central processor register whose purpose is to keep track of a call stack.
+push pop 指令操作的是 sp(stack pointer) 这个寄存器.
+栈底地址: 由bp(base pointer) 保存
+栈分配空间: sp 减去需要的地址空间大小(所谓的栈向下生长);
+栈回收空间: sp 加上需要的地址空间大小(所谓的栈向上收缩);(PS: 相当无聊的话)</p>
+</blockquote>
+<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-stack.png alt=x86-64-stack> #(x86-64-stack)</p>
+<h2 id=pushl-eax>pushl %eax</h2>
+<blockquote>
+<p>push value of %eax onto stack
+The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.
+这里可以看到 push 的是多字节的数据, 那就涉及到怎样排列多字节数据的问题了. 也就是所谓的字节序的问题. X86 采用所谓的小端, 也就是把数字按照顺序放到栈里, 数字的高位放在了比较大的内存地址那里.(这里不做讨论)
+等价于</p>
+</blockquote>
+<pre><code class=language-asm>subl $4, %esp //分配4个字节的空间, 所谓的栈向下生长
+movl %eax, (%esp) //将 eax 的值复制到 esp 指到的内存地址处
+</code></pre>
+<h2 id=popl-eax>popl %eax</h2>
+<blockquote>
+<p>pop %eax off stack
+The pop instruction removes the 4-byte data element from the top of the hardware-supported stack into the specified operand (i.e. register or memory location). It first moves the 4 bytes located at memory location [ESP] into the specified register or memory location, and then increments SP by 4.
+等价于</p>
+</blockquote>
+<pre><code class=language-asm>movl (%esp),%eax //将 esp 指向的内存地址里面的值复制到 eax
+addl $4,%esp //回收空间
+</code></pre>
+<h1 id=function-call-and-return>function call and return</h1>
+<h2 id=call-label>call <label></h2>
+<blockquote>
+<p>The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.
+注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. call 指令做了两件事, 第一件事: 将此时的 ip 保存到栈中, 第二件事: jump 到 label 位置, 此时已经改变了 PC 的值.
+call label 作用等价于:
+pushq %rip
+jmp label</p>
+</blockquote>
+<h2 id=ret>ret</h2>
+<blockquote>
+<p>The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (也就是 call 指令压入栈中的 PC, 将这个值复制到 PC 寄存器)(see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.
+所以啊, call(含有一个 push 操作) 和 ret(含有一个 pop 操作) 指令, 这是实现控制流跳转和恢复的关键. 也间接操作了 sp 这个寄存器. 硬件实现的功能, 不需要过多的计较.
+ret 作用等价于:
+popq %rip</p>
+</blockquote>
+<h1 id=call-stack>call stack</h1>
+<blockquote>
+<p>In computer science, a call stack is a stack data structure that stores information about the active subroutines of a computer program. This kind of stack is also known as an execution stack, program stack, control stack, run-time stack, or machine stack, and is often shortened to just &ldquo;the stack&rdquo;.
+A call stack is used for several related purposes, but the main reason for having one is to keep track of the point to which each active subroutine should return control when it finishes executing.
+An active subroutine is one that has been called but is yet to complete execution after which control should be handed back to the point of call. Such activations of subroutines may be nested to any level (recursive as a special case), hence the stack structure.</p>
+</blockquote>
+<h2 id=example>example</h2>
+<blockquote>
+<p>for example, a subroutine DrawSquare calls a subroutine DrawLine from four different places, DrawLine must know where to return when its execution completes. To accomplish this, the address following the instruction that jumps to DrawLine, the return address, is pushed onto the call stack with each call.</p>
+</blockquote>
+<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/callstack-layout-for-upward-growing-stacks.png alt=callstack-layout-for-upward-growing-stacks> #(callstack-layout-for-upward-growing-stacks)</p>
+<h1 id=code-analysis>code analysis</h1>
+<pre><code class=language-cpp>void swap(int a, int b){
+    int tmp = a;
+    a = b;
+    b = tmp;
+}
+</code></pre>
+<pre><code class=language-asm>-- 64 bit 机器 , AT&amp;T 风格的汇编
+swap(int, int):
+        pushq   %rbp // 上一个栈帧(main)的基地址压栈 等价于 subq $8, %rsp; movq %rbp,(%rsp)
+        movq    %rsp, %rbp // 开辟新的函数栈帧, 也就是形成一个新的栈的基地址
+        movl    %edi, -20(%rbp) // 参数 a
+        movl    %esi, -24(%rbp) // 参数 b
+        movl    -20(%rbp), %eax // 把 a 赋值给 %eax
+        movl    %eax, -4(%rbp)  // 把 %eax (a)赋值给 %rbp - 4(a) 的地址处
+        movl    -24(%rbp), %eax // 把 b 赋值给 % eax（b）
+        movl    %eax, -20(%rbp) // 把 %eax (b) 赋值给 %rbp - 20（b） 的地址处,完成 b 的交换
+        movl    -4(%rbp), %eax  // 把 %rbp - 4 地址处的值(a) 赋值给 %eax (a)
+        movl    %eax, -24(%rbp) // 把 %eax (a) 赋值给 %rbp - 24 的地址处, 完成 a 的交换
+        nop // 延时
+        popq    %rbp // 等价于 movq (%rsp), %rbp ; 上一个函数栈帧(main)的基地址恢复; addq $8, %rsp ; 上一个函数的 %rsp 恢复
+        ret // 1. popq %rip. (恢复 main 的 pc, call swap 这条指令压入的 pc ) 2. jmp % rip 处继续执行.(也就是 movl $0, %eax 这条指令的地址)
+</code></pre>
+<pre><code class=language-cpp>int main() {
+    swap(1, 2);
+    return 0;
+}
+</code></pre>
+<pre><code class=language-asm>main:
+        pushq   %rbp
+        movq    %rsp, %rbp
+        movl    $2, %esi // 由 caller 准备函数参数 2
+        movl    $1, %edi // 由 caller 准备函数参数 1
+        call    swap // 在 CPU fetch 了 call 指令后, pc 已经指向了下一条指令, 也就是 movl $0, %eax 这条指令. 此时的 call 指令完成了两件事, 第一件事: 将 pc(old) 压入到栈中(swap 函数 ret 指令(函数返回)就是把这个 pc(old) pop 到 pc 这个寄存器, CPU 就能接着执行 movl $0, %eax 这条指令了), 第二件事: jump 到swap的地址, 开始执行swap的代码.
+        movl    $0, %eax // 返回值 0 
+        popq    %rbp
+        ret
+</code></pre>
+<h1 id=c-compare-to--assembly>C compare to Assembly</h1>
+<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/c-swap-to-asm-swap.png alt=c-swap-to-asm-swap></p>
+<h1 id=asm-execute-graph>asm execute graph</h1>
+<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/asm-execute-graph.png alt=asm-execute-graph></p>
+<blockquote>
+<p>注意: 示意图里面的是 64 bit 的汇编代码.
+注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.
+图1 main 函数执行完 pushq %rbp 和 movq %rsp, %rbp, 开辟 main 函数的栈帧.
+图2 main 函数执行 call swap. call 指令两个作用: 1. 将 movl $0, %eax 这条指令的地址(X)压入栈中. 2. jump 到 swap 的地址.
+图3 是 swap 函数的栈帧, 此时新函数的栈帧 rsp 和 rbp 指向的是相同的内存地址.
+图4 所有的 mov 使用的内存地址, 都是通过 rbp 来偏移得到, rbp 的值并没有发生改变.
+图5 执行完 popq %rsp, 恢复 main 函数的栈基址(rbp), 也就是和图1 一样.
+图6 执行完 ret 恢复为 main 函数的栈帧(这里主要是 rsp, rbp, pc, 个人理解把 pc 视为栈帧的一部分, 因为函数调用控制权发生转移, 幕后也离不开 pc 这个寄存器的变化). ret 的作用等价于 popq %rip. 但是无法直接操作 ip(pc) 这个寄存器. 也就相当于间接改变 ip. 此时 pc 已被 ret 指令恢复成了 X. (此时实际上已经控制权已经回到 main 函数了), 接下来就是继续执行 main 函数的代码. 其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.
+注意: 图1 和 图6 , 图2 和 图5 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的. 在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的 rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址. 也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧. 也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 pc). call 和 ret 指令的也分别有 push %rip 和 pop %rip 的作用. 很对称的操作!</p>
+</blockquote>
+<h1 id=bombs>bombs</h1>
+<pre><code class=language-gas>pushq   %rbp  ; 保留上一个函数(也就是调用者)的栈基址
+movq    %rsp, %rbp ; 新函数的栈基址. 一个新的栈帧 sp 和 bp 指向的是同一个地址
+</code></pre>
+<blockquote>
+<p>一个所谓的栈帧(stack frame)就是由 sp(stack pointer) 和 bp(base pointer) 这两个寄存器来维护的。在编译器没有开启优化情况下，这两句会出现在每一个函数的开始, 那么问题来了 main 函数里面保留的是哪一个调用函数的栈基址呢? 个人推测, 不一定正确, 我们知道创建进程(线程)是 OS 内核的功能, 当然进程销毁也是内核的功能. 内核同样维护着属于内核空间的栈帧, 当进程创建完毕后, 我们写的 C 代码应该是被内核里的函数调用的, 这样的话 main 里面 pushq %rbp 应该是保留的内核函数的栈基址. 这样 main 的 ret 返回后就能接着执行内核函数里面的逻辑了. (估计也就是销毁进程一系列操作了, 这样才能把分配的资源收回来啊!)</p>
+</blockquote>
+<h1 id=references>references</h1>
+<ol>
+<li><a href=https://en.wikipedia.org/wiki/Program_counter>program counter</a></li>
+<li><a href=http://cseweb.ucsd.edu/classes/sp10/cse141/pdf/02/S01_x86_64.key.pdf>A reader&rsquo;s guide to x86 assembly</a></li>
+<li><a href=https://www.cs.virginia.edu/~evans/cs216/guides/x86.html>x86 guide</a></li>
+<li><a href=https://en.wikipedia.org/wiki/Instruction_cycle>instruction cycle</a></li>
+<li><a href=http://chortle.ccsu.edu/assemblytutorial/Chapter-17/ass17_2.html>how jump work</a></li>
+<li><a href=https://en.wikipedia.org/wiki/Stack_register>stack pointer</a></li>
+<li><a href=https://en.wikipedia.org/wiki/Call_stack>call stack</a></li>
+<li><a href=https://www.bogotobogo.com/cplusplus/stackunwinding.php>stack-winding(push)-unwinding(pop)</a></li>
+<li><a href=https://www.bogotobogo.com/cplusplus/assembly.php>understand-heap-assembly</a></li>
+<li><a href=https://keleshev.com/eax-x86-register-meaning-and-history/>eax-x86-register-meaning-and-history</a></li>
+<li><a href=https://flint.cs.yale.edu/cs421/papers/x86-asm/asm.html>flint.cs.yale.edu/cs421/papers/x86-asm/asm.html</a></li>
+<li><a href=https://csiflabs.cs.ucdavis.edu/~ssdavis/50/att-syntax.htm>at&t 语法</a></li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>stardustman</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2019-05-28
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/post/asm-how-x86-function-execute/index.md target=_blank>The Markdown version »</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/asm/>asm</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/post/linux-kernel-analysis-2/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">linux-kernel-analysis-2</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/post/linux-kernel-analysis-1/>
+<span class="next-text nav-default">linux-kernel-analysis-1</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<span class=copyright-year>
+&copy;
+2019 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>stardustman</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
