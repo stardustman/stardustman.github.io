@@ -49,7 +49,7 @@ chassis_asset_tag  chassis_version  product_name    subsystem
 
 ## x86 架构计算机启动流程
 
-![real address mode 1M 内存布局](https://gitee.com/stardustman/pictrues/raw/master/img/real-address-mode-how-computer-startup.svg) #(real address mode 1M 内存布局)
+![real address mode 1M 内存布局](https://github.com/stardustman/pictures/raw/main/img/real-address-mode-how-computer-startup.svg) #(real address mode 1M 内存布局)
 
 1. 如上图所示，当按下 `power on` 之后，此时的 CPU 处于 real address mode。由硬件负责将 `BIOS 64K` 的内容加载到 `0xF0000 到 0xFFFFF`(64K 内存)。并将 `CS(code segment) 置为 0xF000`，`IP(instruction pointer) 置为 0xFFF0`。组合起来的内存地址 `PC` 就是 0xFFFF0。
 

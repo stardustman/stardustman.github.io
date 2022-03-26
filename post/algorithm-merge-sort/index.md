@@ -519,7 +519,7 @@ Disassembly of section .fini:
 
 ### 栈帧调用图解分析
 
-![merge-sort-stack-frame-analysi](https://gitee.com/stardustman/pictrues/raw/master/img/merge-sort-stack-frame-analysis.svg)
+![merge-sort-stack-frame-analysi](https://github.com/stardustman/pictures/raw/main/img/merge-sort-stack-frame-analysis.svg)
 
 > 栈帧图分析
 > mergeSort_L 对应的是左半侧的 merge。mid 为红色
@@ -529,7 +529,7 @@ Disassembly of section .fini:
 
 ### array 归并顺序图解分析
 
-![merge-sort-analysis](https://gitee.com/stardustman/pictrues/raw/master/img/merge-sort-analysis.svg)
+![merge-sort-analysis](https://github.com/stardustman/pictures/raw/main/img/merge-sort-analysis.svg)
 
 > 可以看到对于 array 来说，确实是一半一半 `merge` 的, 这就是分治。
 

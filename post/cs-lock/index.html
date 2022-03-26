@@ -206,7 +206,7 @@ void unlock(lock_t *mutex){
 
 </code></pre>
 <h4 id=loadsstores-分析>Loads/Stores 分析</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-lock-1.svg alt="简单的 flag, Loads/Store"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-lock-1.svg alt="简单的 flag, Loads/Store"></p>
 <ol>
 <li>上图可见，由于中断的存在，在1.检测锁是否被占用 2.获取锁 这两个步骤之间，可能被打断，这样两个线程都获取了这个锁。<code>这不符合锁的基本功能，没有提供互斥</code>。无法保证临界区，任意时刻只有一个线程在执行。</li>
 <li>如果一个线程 T1 已经获取了锁，另外一个线程 T2 在获取锁时，会在 L1 处不停的判断锁的状态，这就是在 L1 处 Spin，这就是所谓的 Spin Lock。</li>
@@ -243,7 +243,7 @@ void unlock(lock_t *lock){
 
 </code></pre>
 <h4 id=test-and-set-spin-lock-分析>test-and-set spin-lock 分析</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-lock-test-and-set.svg alt=test-and-set-spin-lock></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-lock-test-and-set.svg alt=test-and-set-spin-lock></p>
 <h5 id=correctness>correctness</h5>
 <p>由上图分析可知，test-and-set 这个 spin lock 提供了 mutual exclusion，这是锁的基本功能。</p>
 <h5 id=fairness>fairness</h5>
@@ -252,7 +252,7 @@ void unlock(lock_t *lock){
 <h6 id=单处理器>单处理器</h6>
 <p>对于 spin lock，假定有 N 个线程，其中有一个线程已经持有的这个锁。其余 N - 1 个线程来获取这个锁，当调度器调度一个线程获取锁时，会在时间片(T)内一直死循环判定 TestAndSet 的返回值，直到时间片消耗完，线程切出。会浪费 (N - 1) * T 这么多时间。</p>
 <h6 id=多处理器>多处理器</h6>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostem-lock-multi-core-contend-spin-lock.svg alt=多核处理器-spin-lock></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostem-lock-multi-core-contend-spin-lock.svg alt=多核处理器-spin-lock></p>
 <p>由图可知，在多处理器环境中，若 critical section 很短，在 Thread1 释放这个锁后，其余的线程是可以获取这个锁的。耗时并不长。</p>
 <h3 id=compare-and-swapexchange-构建锁>Compare-And-Swap(Exchange) 构建锁</h3>
 <h4 id=c-语言表示-compare-and-swap-语义>C 语言表示 Compare-And-Swap 语义</h4>
@@ -398,12 +398,12 @@ void unlock(lock_t *m) {
 </code></pre>
 <h2 id=spin-lock-的问题>Spin Lock 的问题</h2>
 <h3 id=spin-forever>spin forever</h3>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-spin-lock-spin-forever.svg alt=spin-lock-spin-forever></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-spin-lock-spin-forever.svg alt=spin-lock-spin-forever></p>
 <p>线程有优先级的概念。
 Thread1(priority1) &lt; Thread(priority2), 在 Thread1 和 Thread2 都是 runnable 情况下，调度器保证先运行 Thread2。
 由上图可知，Thread2 可能永远无法获取锁，导致系统挂掉。</p>
 <h3 id=priority-inversion>Priority Inversion</h3>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-spin-lock-priority-inversion.svg alt=spin-lock-priority-inversion></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-spin-lock-priority-inversion.svg alt=spin-lock-priority-inversion></p>
 <p>有上图可知 Thread2 有可能在 Thread3 之前运行，这不符合线程优先级的要求。
 Thread2 和 Thread3 的优先级反转了。</p>
 <h2 id=two-phrase-lock>two-phrase-lock</h2>

@@ -64,7 +64,7 @@ A、B、C 三种系统资源。分别视为是银行三种贵金属：金块、�
 
 #### 银行家算法图解分析
 
-![银行家算法](https://gitee.com/stardustman/pictrues/raw/master/img/banks-algorithm.svg)
+![银行家算法](https://github.com/stardustman/pictures/raw/main/img/banks-algorithm.svg)
 存在的一个序列 P1 -> P3 -> P4 -> P0 -> P2
 
 ### 有没有其他方法解决此问题

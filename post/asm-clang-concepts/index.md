@@ -19,7 +19,7 @@ C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&T �
 
 ## movq operand combinations
 
-![movq operand combinations](https://gitee.com/stardustman/pictrues/raw/master/img/address-modes.png)
+![movq operand combinations](https://github.com/stardustman/pictures/raw/main/img/address-modes.png)
 
 ## 代码分析
 
@@ -82,11 +82,11 @@ main:
         ret
 ```
 
-![swap-c-asm](https://gitee.com/stardustman/pictrues/raw/master/img/swap-c-asm.png)
+![swap-c-asm](https://github.com/stardustman/pictures/raw/main/img/swap-c-asm.png)
 
 ### 栈帧分析
 
-![main-swap-call-stack](https://gitee.com/stardustman/pictrues/raw/master/img/swap-pointer.png)
+![main-swap-call-stack](https://github.com/stardustman/pictures/raw/main/img/swap-pointer.png)
 
 > 该图是 swap 执行完 int temp = *pa 后的状态.
 
@@ -107,11 +107,11 @@ main:
 
 ### x86-64 registers
 
-![x86-64-registers](https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-registers.png)
+![x86-64-registers](https://github.com/stardustman/pictures/raw/main/img/x86-64-registers.png)
 
 ### IA32 registers
 
-![IA32-registers](https://gitee.com/stardustman/pictrues/raw/master/img/IA32-registers.png)
+![IA32-registers](https://github.com/stardustman/pictures/raw/main/img/IA32-registers.png)
 
 ### 代码分析
 
@@ -490,11 +490,11 @@ test_variable_shadow():
         ret
 ```
 
-![c-variable-shadow](https://gitee.com/stardustman/pictrues/raw/master/img/c-variable-shadow.png)
+![c-variable-shadow](https://github.com/stardustman/pictures/raw/main/img/c-variable-shadow.png)
 
 ## 汇编代码分析
 
-![块级变量隐藏](https://gitee.com/stardustman/pictrues/raw/master/img/variable_shadowing.png)
+![块级变量隐藏](https://github.com/stardustman/pictures/raw/main/img/variable_shadowing.png)
 
 # funcation pointer
 
@@ -549,7 +549,7 @@ main:
         ret
 ```
 
-![函数指针](https://gitee.com/stardustman/pictrues/raw/master/img/function-pointer.png)
+![函数指针](https://github.com/stardustman/pictures/raw/main/img/function-pointer.png)
 
 # enum
 
@@ -584,7 +584,7 @@ main:
         ret
 ```
 
-![ 枚举](https://gitee.com/stardustman/pictrues/raw/master/img/c-enum.png)
+![ 枚举](https://github.com/stardustman/pictures/raw/main/img/c-enum.png)
 
 # references
 

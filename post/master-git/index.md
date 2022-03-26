@@ -415,7 +415,7 @@ root@aliyun:~/blog# cat .git/refs/heads/master
 
 ## git add | git commit | git branch 图解
 
-![git](https://gitee.com/stardustman/pictrues/raw/master/img/git.svg)
+![git](https://github.com/stardustman/pictures/raw/main/img/git.svg)
 
 ## Fast-forward Merge
 
@@ -500,7 +500,7 @@ ce907fabd08138058b05428d7cac017507b33c44 # 更新了 master 指向，指向了 n
 
 ### Fast-Forward 图解
 
-![git fast forward](https://gitee.com/stardustman/pictrues/raw/master/img/fast-forward-merge.svg)
+![git fast forward](https://github.com/stardustman/pictures/raw/main/img/fast-forward-merge.svg)
 
 ## 删除 master 分支上的 file1 文件，然后提交
 
@@ -641,7 +641,7 @@ ce907fabd08138058b05428d7cac017507b33c44 f24e8b6fb771347156b615c795f7fd886dc4908
 
 ### master 分支删除 file1 图解
 
-![delete file1 on maste](https://gitee.com/stardustman/pictrues/raw/master/img/git-delete-a-file-and-commit.svg)
+![delete file1 on maste](https://github.com/stardustman/pictures/raw/main/img/git-delete-a-file-and-commit.svg)
 
 #### master 分支删除 file1 图解分析
 
@@ -854,7 +854,7 @@ root@aliyun:~/blog-delete-new-branch-file4# tree .git/objects/ # 在 master 分�
 
 ##### new-branch 分支添加 file4 图解
 
-![new-branch-add-file4](https://gitee.com/stardustman/pictrues/raw/master/img/new-branch-add-file4.svg)
+![new-branch-add-file4](https://github.com/stardustman/pictures/raw/main/img/new-branch-add-file4.svg)
 
 #### master 分支添加 file5
 
@@ -1019,7 +1019,7 @@ root@aliyun:~/blog-delete-master-file5# git cat-file -p 374938
 
 ##### master 分支添加 file5 图解
 
-![master-add-file5](https://gitee.com/stardustman/pictrues/raw/master/img/git-master-add-file5.svg)
+![master-add-file5](https://github.com/stardustman/pictures/raw/main/img/git-master-add-file5.svg)
 
 #### master 分支合并到 new-branch 分支
 
@@ -1166,7 +1166,7 @@ c9918cea80e46648c4e98da5b1c4b072f0794795 fc094b5b4e7a0f4028c5735d95f844b1aea1a9b
 
 ##### master 分支合并到 new-branch 图解
 
-![git-merge-master](https://gitee.com/stardustman/pictrues/raw/master/img/git-merge-master.svg)
+![git-merge-master](https://github.com/stardustman/pictures/raw/main/img/git-merge-master.svg)
 master 分支合并到 new-branch 分支实质：
 
 1. 生成一个新的 `tree object 4f1d41` 指向 `master` 分支和 `new-branch` 分支共有的`文件 blob`。

@@ -137,25 +137,25 @@ Since there are <code>n</code> selection lines, there will be 2^n possible combi
 <p>聚合 I<sub>0</sub>, I<sub>1</sub>, I<sub>2</sub>, I<sub>3</sub> 这 4 个输入, 通过 S1 和 S0 来选择一个输出.</p>
 </blockquote>
 <h3 id=block-diagram-of-4x1-multiplexer>Block diagram of 4x1 Multiplexer</h3>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/4x1_Multiplexer.png alt=4x1_Multiplexer></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/4x1_Multiplexer.png alt=4x1_Multiplexer></p>
 <h3 id=ysuboutputsub-输出值的分析>Y<sub>(output)</sub> 输出值的分析</h3>
 <h4 id=ssub1sub--0-ssub0sub--0-时-y-的值由-isub0sub-决定>S<sub>1</sub> = 0, S<sub>0</sub> = 0 时 Y 的值由 I<sub>0</sub> 决定</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I0.png alt=multiplexers_S1_S0_I0></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/multiplexers_S1_S0_I0.png alt=multiplexers_S1_S0_I0></p>
 <blockquote>
 <p>S1 = 0, S0 = 0. 此时的 I1, I2, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I0 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I0.</p>
 </blockquote>
 <h4 id=ssub1sub--0-ssub0sub--1-时-y-的值由-isub1sub-决定>S<sub>1</sub> = 0, S<sub>0</sub> = 1 时 Y 的值由 I<sub>1</sub> 决定</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I1.png alt=multiplexers_S1_S0_I1></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/multiplexers_S1_S0_I1.png alt=multiplexers_S1_S0_I1></p>
 <blockquote>
 <p>S1 = 0, S0 = 1. 此时的 I0, I2, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I1 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I1.</p>
 </blockquote>
 <h4 id=ssub1sub--1-ssub0sub--0-时-y-的值由-isub2sub-决定>S<sub>1</sub> = 1, S<sub>0</sub> = 0 时 Y 的值由 I<sub>2</sub> 决定</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I2.png alt=multiplexers_S1_S0_I2></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/multiplexers_S1_S0_I2.png alt=multiplexers_S1_S0_I2></p>
 <blockquote>
 <p>S1 = 1, S0 = 0. 此时的 I0, I1, I3, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I2 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I2.</p>
 </blockquote>
 <h4 id=ssub1sub--1-ssub1sub--0-时-y-的值由-isub3sub-决定>S<sub>1</sub> = 1, S<sub>1</sub> = 0 时 Y 的值由 I<sub>3</sub> 决定</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/multiplexers_S1_S0_I3.png alt=multiplexers_S1_S0_I3></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/multiplexers_S1_S0_I3.png alt=multiplexers_S1_S0_I3></p>
 <blockquote>
 <p>S1 = 1, S0 = 1. 此时的 I0, I1, I2, 无论是 0 还是 1, 对应的 <code>and gate</code> 输出都是 0, 对最终输出 <code>Y</code> 没有影响. 此时 I3 的输入决定 <code>Y</code> 的值. 也就是 <code>Y</code> = I3.</p>
 </blockquote>

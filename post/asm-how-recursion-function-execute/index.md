@@ -13,7 +13,7 @@
 
 > 假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新生育出的兔子对数等于所有在 n 月就已存在的 a 对.
 
-![fibonacci-sequence](https://gitee.com/stardustman/pictrues/raw/master/img/fibonacci-sequence.png) #(fibonacci-sequence)
+![fibonacci-sequence](https://github.com/stardustman/pictures/raw/main/img/fibonacci-sequence.png) #(fibonacci-sequence)
 
 # 代码分析
 
@@ -81,7 +81,7 @@ main:
 
 ```
 
-![fib-label](https://gitee.com/stardustman/pictrues/raw/master/img/fib-label.png)
+![fib-label](https://github.com/stardustman/pictures/raw/main/img/fib-label.png)
 
 ### 反编译可执行代码
 
@@ -124,7 +124,7 @@ main:
         nop
 ```
 
-![fib](https://gitee.com/stardustman/pictrues/raw/master/img/fib-label.png)
+![fib](https://github.com/stardustman/pictures/raw/main/img/fib-label.png)
 
 > fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.
 
@@ -132,7 +132,7 @@ main:
 
 ### 调用栈图解分析
 
-![fib(4)调用栈分析](https://gitee.com/stardustman/pictrues/raw/master/img/fib(4)-call-stack.png) #(fib(4)调用栈分析)
+![fib(4)调用栈分析](https://github.com/stardustman/pictures/raw/main/img/fib(4)-call-stack.png) #(fib(4)调用栈分析)
 
 ### 符合递归终止时调用栈执行顺序
 
@@ -140,7 +140,7 @@ main:
 
 #### 代码执行顺序
 
-![fib(3)-execute-sequence](https://gitee.com/stardustman/pictrues/raw/master/img/fib(3)-execute-sequence.png) #(fib(3)-execute-sequence)
+![fib(3)-execute-sequence](https://github.com/stardustman/pictures/raw/main/img/fib(3)-execute-sequence.png) #(fib(3)-execute-sequence)
 
 #### 二叉树后序遍历的视角来分析
 
@@ -149,7 +149,7 @@ main:
 > fib(1) = 1 视为右叶子节点
 > fib(3) = fib(2) + fib(1) 视为父节点
 
-![fib(3)-execute-squence-treefy](https://gitee.com/stardustman/pictrues/raw/master/img/fib(3)-execute-squence-treefy.png) #(符合递归退出代码执行流程)
+![fib(3)-execute-squence-treefy](https://github.com/stardustman/pictures/raw/main/img/fib(3)-execute-squence-treefy.png) #(符合递归退出代码执行流程)
 > fib(3) 调用 fib(2), 计算出参数 n = 2. 进入左叶子节点. 
 > fib(2) 返回 fib(3), fib(2) 的返回值 rax = 1, 复制给 rbx. 
 > fib(3) 调用 fib(1), 计算出参数 n = 1. 进入右叶子节点.
@@ -164,7 +164,7 @@ main:
 > 方框由白色变为着色: 栈帧创建
 > 方框由着色变为白色: 栈帧销毁
 
-![fib-dynamic-stack-frame](https://gitee.com/stardustman/pictrues/raw/master/img/fib-dynamic-stack-frame.png)
+![fib-dynamic-stack-frame](https://github.com/stardustman/pictures/raw/main/img/fib-dynamic-stack-frame.png)
 
 > 从图中可以看出假如 main 调用 fib(5), 会一直调用到 f(2) 才会终止. 则调用栈状态如图 0. 此时递归最大的栈深度是 4, 如果 n 值过大, 会很容易发生 Stack Overflow 这种错误. 比方说 fib(1000) 会一直创建到 fib(2) 这个栈帧, 递归才会开始返回.
 > fib(2) 返回 1 给 fib(3), fib(3) 保存这个返回值. f(2) 栈帧销毁. 如图 1.
@@ -260,7 +260,7 @@ int main(){
 
 ### 优化递归函数栈帧
 
-![fib-optimize-stack-frame](https://gitee.com/stardustman/pictrues/raw/master/img/fib-optimize-stack-frame.png)
+![fib-optimize-stack-frame](https://github.com/stardustman/pictures/raw/main/img/fib-optimize-stack-frame.png)
 *fib(5)递归栈帧)*
 
 > 着色方框-开辟销毁的栈帧
@@ -323,7 +323,7 @@ unsigned long   fibonacc(unsigned long n){
 
 ##### fib(n) 汇编代码分析
 
-![fib-tail-recursion](https://gitee.com/stardustman/pictrues/raw/master/img/fib-tail-recursion.png)
+![fib-tail-recursion](https://github.com/stardustman/pictures/raw/main/img/fib-tail-recursion.png)
 #(尾递归汇编代码)
 
 > 尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n <= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.

@@ -75,7 +75,7 @@ explicitly asked for.
 space and bandwidth.
 聚焦在时间局部性上，如果没有较好的空间局部性，提前 `fetch` 了数据，那就浪费了空间和带宽。
 
-![cache_organization](https://gitee.com/stardustman/pictrues/raw/master/img/cache_organization.svg) #(cache 组织方式)
+![cache_organization](https://github.com/stardustman/pictures/raw/main/img/cache_organization.svg) #(cache 组织方式)
 
 ### 实例分析
 
@@ -104,7 +104,7 @@ One group of lines corresponds to each index.
 set = ？
 
 {% asset_img cache-2-ways-cache.svg 2-ways-cache%}
-![2-ways-cache](https://gitee.com/stardustman/pictrues/raw/master/img/cache-2-ways-cache.svg)
+![2-ways-cache](https://github.com/stardustman/pictures/raw/main/img/cache-2-ways-cache.svg)
 
 ### cache 哪一种 address？
 
@@ -112,7 +112,7 @@ set = ？
 
 #### physical memory address
 
-![cache-memory-address-type](https://gitee.com/stardustman/pictrues/raw/master/img/cache-memory-address-type.svg) #(缓存类型)
+![cache-memory-address-type](https://github.com/stardustman/pictures/raw/main/img/cache-memory-address-type.svg) #(缓存类型)
 
 ## References
 

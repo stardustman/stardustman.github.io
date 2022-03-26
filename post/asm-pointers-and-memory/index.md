@@ -32,7 +32,7 @@ copy real value
 
 ## two levels
 
-![two-levels](https://gitee.com/stardustman/pictrues/raw/master/img/clang/memory_and_pointers-two-levels.svg)
+![two-levels](https://github.com/stardustman/pictures/raw/main/img/clang/memory_and_pointers-two-levels.svg)
 
 ### C 语言下指针探析
 
@@ -56,7 +56,7 @@ pointer:
         ret
 ```
 
-![clang-pointer](https://gitee.com/stardustman/pictrues/raw/master/img/clang/asm-pointer.png)
+![clang-pointer](https://github.com/stardustman/pictures/raw/main/img/clang/asm-pointer.png)
 
 由上可知：`long *p = (long*)ptr` 被编译成
 
@@ -96,7 +96,7 @@ local memory 通过调用函数时创建的`栈帧`来体现。
 栈帧中的变量。
 local/automatic 底层经常使用 stack 结构来实现。
 
-![栈帧-lexical-scope](https://gitee.com/stardustman/pictrues/raw/master/img/clang/clang-square-function.png)
+![栈帧-lexical-scope](https://github.com/stardustman/pictures/raw/main/img/clang/clang-square-function.png)
 
 ##### advantage of locals
 

@@ -5,7 +5,7 @@
 
 ## physical organization of a modern system
 
-![现代计算机系统物理架构](https://gitee.com/stardustman/pictrues/raw/master/img/physical-organization-of-a-modern-system.png)
+![现代计算机系统物理架构](https://github.com/stardustman/pictures/raw/main/img/physical-organization-of-a-modern-system.png)
 
 ## the abstracttion: a process
 
@@ -44,7 +44,7 @@ kill a process or halt it
 
 ## process creation: a little detail
 
-![loading-from-program-to-process.png](https://gitee.com/stardustman/pictrues/raw/master/img/loading-from-program-to-process.png)
+![loading-from-program-to-process.png](https://github.com/stardustman/pictures/raw/main/img/loading-from-program-to-process.png)
 把程序从磁盘加载到内存. 问题来了:
 
 1. 是要全部加载到内存吗? (eagerly)
@@ -56,7 +56,7 @@ kill a process or halt it
 7. set up related I/O
 8. execute program, 跳到 entry point, 也就是 main().
 
-![程序加载执行流程](https://gitee.com/stardustman/pictrues/raw/master/img/load-process.svg)
+![程序加载执行流程](https://github.com/stardustman/pictures/raw/main/img/load-process.svg)
 
 ## process states
 
@@ -74,7 +74,7 @@ kill a process or halt it
 
 **a process has performmed some kind of operation that makes it not ready to run until some other event takes place. A common example: when a process initiates an I/O request to a disk, it becomes blocked and thus some other process can use the processor**
 
-![process-state-transition](https://gitee.com/stardustman/pictrues/raw/master/img/process-state-transition.png)
+![process-state-transition](https://github.com/stardustman/pictures/raw/main/img/process-state-transition.png)
 
 ## data structures
 

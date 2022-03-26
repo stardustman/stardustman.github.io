@@ -126,7 +126,7 @@ For example, early computer processors (e.g., 8088 and 80286) were 16-bit proces
 </blockquote>
 <h3 id=1m-的寻址空间带来的问题与解决方法>1M 的寻址空间带来的问题与解决方法</h3>
 <h4 id=intel-8086-地址引脚>Intel 8086 地址引脚</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/intel8086_address.png alt=intel8086_address> #(Intel 8086 寻址空间)</p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/intel8086_address.png alt=intel8086_address> #(Intel 8086 寻址空间)</p>
 <blockquote>
 <p>上图的 AD<sub>0</sub> ~ AD<sub>15</sub> 是复用(Multiplex)引脚
 A<sub>16</sub> ~ A<sub>19</sub> 也是复用引脚</p>
@@ -139,7 +139,7 @@ A<sub>16</sub> ~ A<sub>19</sub> 也是复用引脚</p>
 <blockquote>
 <p>20 bit 来表示一个内存地址. 但是 Intel 8086 是一个 <code>16 bit</code> 的处理器(其实就是一次只能传输 16 bit 的数据). 怎样来表示 <code>20 bit</code> 的内存地址呢? 比如一个内存地址是: <code>0x18AC9</code>, 该怎样表示呢? 其实道理很简单, 既然没法一次传输 20 bit, 那就分两次好了. 最后用两个 <code>16 bit</code> 的数据来合成 <code>0x18AC9</code> 这个地址. 很显然要有生成 <code>0x18AC9</code> 这个地址的策略. 在 Intel 8086 中, 将 <code>0x18AC9</code> 拆分为 <code>0x1234</code>(segment address) 和 <code>0x6789</code>(offset address) 这两个 <code>16 bit</code> 的地址, 这就是所谓的逻辑地址(logical address). 怎样生成 <code>0x18AC9</code> 这个真实的物理地址呢? 也很简单使用一个 <code>20 bit</code> 的 <code>adder</code>(加法器). 0x18AC9 = 0x1234 * 16 + 0x6789</p>
 </blockquote>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/intel8086_real_address_mode_translation.png alt=intel8086_real_address_mode_translation></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/intel8086_real_address_mode_translation.png alt=intel8086_real_address_mode_translation></p>
 <h4 id=real-address-mode>Real Address Mode</h4>
 <blockquote>
 <p>物理地址由两部分组成: segment address 和 offset address. 这两个地址不能直接使用, 是用来合成真正的物理地址的. 这两个地址称之为 <code>逻辑地址</code>. 16 * segment address + offset address 合成的地址称之为 <code>物理地址</code>, 也叫 <code>线性地址</code>(也就是从 0 ~ 2^20 -1 地址空间). Intel 8086 这种得到物理地址的机制就叫做 <code>real address mode</code>. 也就是所谓的 <code>实模式</code>.

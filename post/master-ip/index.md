@@ -6,17 +6,17 @@
 
 # IP header format
 
-  ![ip-header-format](https://gitee.com/stardustman/pictrues/raw/master/img/ip-header-format.png)
+  ![ip-header-format](https://github.com/stardustman/pictures/raw/main/img/ip-header-format.png)
 
 # Ip datagram
 
-![ip-format](https://gitee.com/stardustman/pictrues/raw/master/img/ip-format.png)
+![ip-format](https://github.com/stardustman/pictures/raw/main/img/ip-format.png)
 
 # IPV4 example
 
-![ip-capture-wireshark](https://gitee.com/stardustman/pictrues/raw/master/img/ip-capture-wireshark.jpg)
+![ip-capture-wireshark](https://github.com/stardustman/pictures/raw/main/img/ip-capture-wireshark.jpg)
 
-![ip-capture-wireshark-example](https://gitee.com/stardustman/pictrues/raw/master/img/ip-capture-wireshark-example.png)
+![ip-capture-wireshark-example](https://github.com/stardustman/pictures/raw/main/img/ip-capture-wireshark-example.png)
 
 ## version(4 bits)
 

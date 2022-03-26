@@ -22,17 +22,17 @@
 
 #### DNS 层级树
 
-![DNS 层级树](https://gitee.com/stardustman/pictrues/raw/master/img/dns-hierarchy.svg)
+![DNS 层级树](https://github.com/stardustman/pictures/raw/main/img/dns-hierarchy.svg)
 > 可以看到整个 DNS 的入口就是 root。也就是记录顶级域名在哪些服务器上的信息。这是 `root` 也就是不需要解析这些记录顶级域名的服务器。直接固定了这些 [root server 的 IP](https://www.iana.org/domains/root/servers) 地址。实现 DNS 功能的软件，直接内置这些固定的 IP。DNS 查询第一步就是向这些 root server 查询顶级域名对应哪些 nameserver，也就是顶级域名对应的 IP。其实 DNS也就是个分布式层级数据库。注册域名也就是向数据库添加一条记录。但是不是免费注册的。
 
 #### DNS Zone
 
-![DNS Zone](https://gitee.com/stardustman/pictrues/raw/master/img/dns-zone.svg)
+![DNS Zone](https://github.com/stardustman/pictures/raw/main/img/dns-zone.svg)
 > 可以看到整个 DNS 层级树，每一个节点对应一个 Zone。
 
 #### uncached DNS lookup
 
-![dns-look-up](https://gitee.com/stardustman/pictrues/raw/master/img/network-dns.svg)
+![dns-look-up](https://github.com/stardustman/pictures/raw/main/img/network-dns.svg)
 > 图中 `OS stub resovler` 就是负责 DNS 解析的进程，发起 DNS 递归查询请求。
 > `local dns server` 发起迭代查询，查询域名对应的 IP。之后返给 `OS stub resovler`。
 
@@ -77,7 +77,7 @@ github.com.  17 IN A 52.74.223.119  # github.com. 这个域名对应的一个 ip
 
 #### TCP/IP stack
 
-![tcp-ip-stack](https://gitee.com/stardustman/pictrues/raw/master/img/tcp-ip-stack-dns.png)
+![tcp-ip-stack](https://github.com/stardustman/pictures/raw/main/img/tcp-ip-stack-dns.png)
 
 ### dig +trace domainname
 

@@ -1,11 +1,11 @@
 
 ## 可见性问题
 
-![thread stack frame](https://gitee.com/stardustman/pictrues/raw/master/img/java/java-volatile.svg)
+![thread stack frame](https://github.com/stardustman/pictures/raw/main/img/java/java-volatile.svg)
 
 ## 可见性问题思路
 
-![线程可见性问题思路](https://gitee.com/stardustman/pictrues/raw/master/img/java/thread-visibility.svg)
+![线程可见性问题思路](https://github.com/stardustman/pictures/raw/main/img/java/thread-visibility.svg)
 
 ## References
 

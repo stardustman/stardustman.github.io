@@ -158,7 +158,7 @@ java -> null</p>
 <h4 id=deep-copy>deep copy</h4>
 <p>copy real value</p>
 <h2 id=two-levels>two levels</h2>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/clang/memory_and_pointers-two-levels.svg alt=two-levels></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/clang/memory_and_pointers-two-levels.svg alt=two-levels></p>
 <h3 id=c-语言下指针探析>C 语言下指针探析</h3>
 <pre><code class=language-c>long pointer(void * ptr){
     long *p = (long*)ptr;
@@ -176,7 +176,7 @@ java -> null</p>
         popq    %rbp
         ret
 </code></pre>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/clang/asm-pointer.png alt=clang-pointer></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/clang/asm-pointer.png alt=clang-pointer></p>
 <p>由上可知：<code>long *p = (long*)ptr</code> 被编译成</p>
 <ol>
 <li>movq -8(%rbp), %rax %rax 这个寄存器里放的是传来的指针</li>
@@ -202,7 +202,7 @@ Local memory 最根本的性质：相互独立，这是本地内存优点和缺�
 <h5 id=localstackautomatic-variable>local/stack/automatic variable</h5>
 <p>栈帧中的变量。
 local/automatic 底层经常使用 stack 结构来实现。</p>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/clang/clang-square-function.png alt=栈帧-lexical-scope></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/clang/clang-square-function.png alt=栈帧-lexical-scope></p>
 <h5 id=advantage-of-locals>advantage of locals</h5>
 <ol>
 <li>convenient. 函数需要临时的内存空间做计算，计算完毕后，释放。</li>

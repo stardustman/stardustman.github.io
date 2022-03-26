@@ -4,7 +4,7 @@ reliable **host-to-host** protocol between hosts in **packet-switched** computer
 
 # TCP header format
 
-![tcp header](https://gitee.com/stardustman/pictrues/raw/master/img/master-tcp-tcp-header.png)
+![tcp header](https://github.com/stardustman/pictures/raw/main/img/master-tcp-tcp-header.png)
 
 ## basic data transfer
 

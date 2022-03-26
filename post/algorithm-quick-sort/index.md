@@ -467,7 +467,7 @@ Before:: [4, 7, 6, 5, 3, 2, 8, 1]
 
 #### partition 逻辑图解
 
-![quick-sort-partition-flow-chart ](https://gitee.com/stardustman/pictrues/raw/master/img/quick-sort-partition-flow-chart.svg)
+![quick-sort-partition-flow-chart ](https://github.com/stardustman/pictures/raw/main/img/quick-sort-partition-flow-chart.svg)
 
 
 ### 系统调用 strace 分析

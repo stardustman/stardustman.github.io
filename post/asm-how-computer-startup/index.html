@@ -155,7 +155,7 @@ chassis_asset_tag  chassis_version  product_name    subsystem
 
 </code></pre>
 <h2 id=x86-架构计算机启动流程>x86 架构计算机启动流程</h2>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/real-address-mode-how-computer-startup.svg alt="real address mode 1M 内存布局"> #(real address mode 1M 内存布局)</p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/real-address-mode-how-computer-startup.svg alt="real address mode 1M 内存布局"> #(real address mode 1M 内存布局)</p>
 <ol>
 <li>
 <p>如上图所示，当按下 <code>power on</code> 之后，此时的 CPU 处于 real address mode。由硬件负责将 <code>BIOS 64K</code> 的内容加载到 <code>0xF0000 到 0xFFFFF</code>(64K 内存)。并将 <code>CS(code segment) 置为 0xF000</code>，<code>IP(instruction pointer) 置为 0xFFF0</code>。组合起来的内存地址 <code>PC</code> 就是 0xFFFF0。</p>

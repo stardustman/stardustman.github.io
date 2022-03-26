@@ -144,17 +144,17 @@
 <h4 id=second-level-domain>second level domain</h4>
 <p>以 <code>www.google.com.</code> 为例 <code>google</code> 就是二级域名。其他的依此类推。</p>
 <h4 id=dns-层级树>DNS 层级树</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/dns-hierarchy.svg alt="DNS 层级树"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/dns-hierarchy.svg alt="DNS 层级树"></p>
 <blockquote>
 <p>可以看到整个 DNS 的入口就是 root。也就是记录顶级域名在哪些服务器上的信息。这是 <code>root</code> 也就是不需要解析这些记录顶级域名的服务器。直接固定了这些 <a href=https://www.iana.org/domains/root/servers>root server 的 IP</a> 地址。实现 DNS 功能的软件，直接内置这些固定的 IP。DNS 查询第一步就是向这些 root server 查询顶级域名对应哪些 nameserver，也就是顶级域名对应的 IP。其实 DNS也就是个分布式层级数据库。注册域名也就是向数据库添加一条记录。但是不是免费注册的。</p>
 </blockquote>
 <h4 id=dns-zone>DNS Zone</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/dns-zone.svg alt="DNS Zone"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/dns-zone.svg alt="DNS Zone"></p>
 <blockquote>
 <p>可以看到整个 DNS 层级树，每一个节点对应一个 Zone。</p>
 </blockquote>
 <h4 id=uncached-dns-lookup>uncached DNS lookup</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/network-dns.svg alt=dns-look-up></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/network-dns.svg alt=dns-look-up></p>
 <blockquote>
 <p>图中 <code>OS stub resovler</code> 就是负责 DNS 解析的进程，发起 DNS 递归查询请求。
 <code>local dns server</code> 发起迭代查询，查询域名对应的 IP。之后返给 <code>OS stub resovler</code>。</p>
@@ -194,7 +194,7 @@ github.com.  17 IN A 52.74.223.119  # github.com. 这个域名对应的一个 ip
 </code></pre>
 <h3 id=wireshark-抓包验证实际的网络架构>wireshark 抓包验证实际的网络架构</h3>
 <h4 id=tcpip-stack>TCP/IP stack</h4>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/tcp-ip-stack-dns.png alt=tcp-ip-stack></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/tcp-ip-stack-dns.png alt=tcp-ip-stack></p>
 <h3 id=dig-trace-domainname>dig +trace domainname</h3>
 <pre><code class=language-bash>~ dig +trace github.com
 

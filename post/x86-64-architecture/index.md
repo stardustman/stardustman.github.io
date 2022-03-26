@@ -12,7 +12,7 @@
 
 #### Intel 8086 地址引脚
 
-![intel8086_address](https://gitee.com/stardustman/pictrues/raw/master/img/intel8086_address.png) #(Intel 8086 寻址空间)
+![intel8086_address](https://github.com/stardustman/pictures/raw/main/img/intel8086_address.png) #(Intel 8086 寻址空间)
 
 > 上图的 AD<sub>0</sub> ~ AD<sub>15</sub> 是复用(Multiplex)引脚
 > A<sub>16</sub> ~ A<sub>19</sub> 也是复用引脚
@@ -24,7 +24,7 @@
 
 > 20 bit 来表示一个内存地址. 但是 Intel 8086 是一个 `16 bit` 的处理器(其实就是一次只能传输 16 bit 的数据). 怎样来表示 `20 bit` 的内存地址呢? 比如一个内存地址是: `0x18AC9`, 该怎样表示呢? 其实道理很简单, 既然没法一次传输 20 bit, 那就分两次好了. 最后用两个 `16 bit` 的数据来合成 `0x18AC9` 这个地址. 很显然要有生成 `0x18AC9` 这个地址的策略. 在 Intel 8086 中, 将 `0x18AC9` 拆分为 `0x1234`(segment address) 和 `0x6789`(offset address) 这两个 `16 bit` 的地址, 这就是所谓的逻辑地址(logical address). 怎样生成 `0x18AC9` 这个真实的物理地址呢? 也很简单使用一个 `20 bit` 的 `adder`(加法器). 0x18AC9 = 0x1234 * 16 + 0x6789
 
-![intel8086_real_address_mode_translation](https://gitee.com/stardustman/pictrues/raw/master/img/intel8086_real_address_mode_translation.png)
+![intel8086_real_address_mode_translation](https://github.com/stardustman/pictures/raw/main/img/intel8086_real_address_mode_translation.png)
 
 #### Real Address Mode
 

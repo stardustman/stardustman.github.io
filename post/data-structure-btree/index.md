@@ -20,7 +20,7 @@
 
 ##### 拆分已满节点
 
-![btree-full-root-split](https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split.svg) #(btree-拆分已满节点)
+![btree-full-root-split](https://github.com/stardustman/pictures/raw/main/img/btree-full-root-split.svg) #(btree-拆分已满节点)
 
 1. 如上图，节点1 已经满了，对此时的 root 节点进行拆分。
 2. 创建节点2，s 节点，作为新的 root 节点，同时设置 s.child[0] = root。
@@ -29,7 +29,7 @@
 
 ##### 拆分已满节点(有子节点)
 
-![ btree-full-root-split2](https://gitee.com/stardustman/pictrues/raw/master/img/btree-full-root-split2.svg) #(btree-拆分已满节点2)
+![ btree-full-root-split2](https://github.com/stardustman/pictures/raw/main/img/btree-full-root-split2.svg) #(btree-拆分已满节点2)
 
 B-Tree 是向上扩张的(grow)。可以看到所有的 key 都是在 leaf 节点插入的。节点的 key 值的数量一旦等于 2t - 1 = 5 时，就会对该节点进行拆分。所以这也是每一个节点(root 除外)至少有 t-1 = 2 个 key 的原因。
 

@@ -1,7 +1,7 @@
 
 ### TCP 要解决的问题
 
-![notions_tcp](https://gitee.com/stardustman/pictrues/raw/master/img/notions_tcp.svg)
+![notions_tcp](https://github.com/stardustman/pictures/raw/main/img/notions_tcp.svg)
 
 ## references
 

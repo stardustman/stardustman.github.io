@@ -195,7 +195,7 @@ leaq -8(%rbp), %rdx
 将 rax 的值(X)指向的内存地址处的值复制到 rdx. 此时 rax 的值(X)就是指针, 所谓指针在汇编层面就是将一个内存地址放到寄存器, 利用寄存器间接寻址去获取这个地址的数值. 这就是 C 语言里指针的本质.</p>
 </blockquote>
 <h2 id=movq-operand-combinations>movq operand combinations</h2>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/address-modes.png alt="movq operand combinations"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/address-modes.png alt="movq operand combinations"></p>
 <h2 id=代码分析>代码分析</h2>
 <h3 id=swap>swap</h3>
 <pre><code class=language-cpp>void swap(int *pa, int *pb){
@@ -246,9 +246,9 @@ leaq -8(%rbp), %rdx
         leave   ; 等价于 1. mov %rbp, %rsp(回收分配的栈空间) 2.pop %rbp(恢复 main 的 rbp)
         ret
 </code></pre>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/swap-c-asm.png alt=swap-c-asm></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/swap-c-asm.png alt=swap-c-asm></p>
 <h3 id=栈帧分析>栈帧分析</h3>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/swap-pointer.png alt=main-swap-call-stack></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/swap-pointer.png alt=main-swap-call-stack></p>
 <blockquote>
 <p>该图是 swap 执行完 int temp = *pa 后的状态.</p>
 </blockquote>
@@ -266,9 +266,9 @@ C 语言的函数返回值为 void, 在汇编层面也就是不用设置 rax.</p
 <h1 id=数据类型转化>数据类型转化</h1>
 <h2 id=整数类型>整数类型</h2>
 <h3 id=x86-64-registers>x86-64 registers</h3>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-registers.png alt=x86-64-registers></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/x86-64-registers.png alt=x86-64-registers></p>
 <h3 id=ia32-registers>IA32 registers</h3>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/IA32-registers.png alt=IA32-registers></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/IA32-registers.png alt=IA32-registers></p>
 <h3 id=代码分析-1>代码分析</h3>
 <pre><code class=language-cpp>void testTypeConvert(){
      unsigned long i64bit = 1844674407370955199;
@@ -609,9 +609,9 @@ main:
         popq    %rbp
         ret
 </code></pre>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/c-variable-shadow.png alt=c-variable-shadow></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/c-variable-shadow.png alt=c-variable-shadow></p>
 <h2 id=汇编代码分析>汇编代码分析</h2>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/variable_shadowing.png alt=块级变量隐藏></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/variable_shadowing.png alt=块级变量隐藏></p>
 <h1 id=funcation-pointer>funcation pointer</h1>
 <blockquote>
 <p>A function pointer can be declared as: (return type of function) (*name of pointer) (type of function arguments)</p>
@@ -659,7 +659,7 @@ main:
         leave
         ret
 </code></pre>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/function-pointer.png alt=函数指针></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/function-pointer.png alt=函数指针></p>
 <h1 id=enum>enum</h1>
 <blockquote>
 <p>编译器在背后搞鬼，自动为每一个 enum 常量进行编号。</p>
@@ -687,7 +687,7 @@ int main(){
         popq    %rbp
         ret
 </code></pre>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/c-enum.png alt=" 枚举"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/c-enum.png alt=" 枚举"></p>
 <h1 id=references>references</h1>
 <ol>
 <li><a href=https://en.wikipedia.org/wiki/Pointer_(computer_programming)>pointer</a></li>

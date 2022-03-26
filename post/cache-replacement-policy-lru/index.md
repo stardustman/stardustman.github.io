@@ -32,7 +32,7 @@
 
 #### LRU 图解
 
-![lru](https://gitee.com/stardustman/pictrues/raw/master/img/lru.svg)
+![lru](https://github.com/stardustman/pictures/raw/main/img/lru.svg)
 
 可以看到一直是对`缓存队列队首`操作。
 1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5

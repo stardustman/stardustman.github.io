@@ -87,7 +87,7 @@ void unlock(lock_t *mutex){
 
 #### Loads/Stores 分析
 
-![简单的 flag, Loads/Store](https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-lock-1.svg)
+![简单的 flag, Loads/Store](https://github.com/stardustman/pictures/raw/main/img/sync/ostep-lock-1.svg)
 
 
 1. 上图可见，由于中断的存在，在1.检测锁是否被占用 2.获取锁 这两个步骤之间，可能被打断，这样两个线程都获取了这个锁。`这不符合锁的基本功能，没有提供互斥`。无法保证临界区，任意时刻只有一个线程在执行。
@@ -134,7 +134,7 @@ void unlock(lock_t *lock){
 
 #### test-and-set spin-lock 分析
 
-![test-and-set-spin-lock](https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-lock-test-and-set.svg)
+![test-and-set-spin-lock](https://github.com/stardustman/pictures/raw/main/img/sync/ostep-lock-test-and-set.svg)
 
 ##### correctness
 
@@ -152,7 +152,7 @@ spin lock 不是公平的，可能导致线程饥饿。
 
 ###### 多处理器
 
-![多核处理器-spin-lock](https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostem-lock-multi-core-contend-spin-lock.svg)
+![多核处理器-spin-lock](https://github.com/stardustman/pictures/raw/main/img/sync/ostem-lock-multi-core-contend-spin-lock.svg)
 
 由图可知，在多处理器环境中，若 critical section 很短，在 Thread1 释放这个锁后，其余的线程是可以获取这个锁的。耗时并不长。
 
@@ -328,7 +328,7 @@ void unlock(lock_t *m) {
 
 ### spin forever
 
-![spin-lock-spin-forever](https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-spin-lock-spin-forever.svg)
+![spin-lock-spin-forever](https://github.com/stardustman/pictures/raw/main/img/sync/ostep-spin-lock-spin-forever.svg)
 
 线程有优先级的概念。
 Thread1(priority1) < Thread(priority2), 在 Thread1 和 Thread2 都是 runnable 情况下，调度器保证先运行 Thread2。
@@ -336,7 +336,7 @@ Thread1(priority1) < Thread(priority2), 在 Thread1 和 Thread2 都是 runnable 
 
 ### Priority Inversion
 
-![spin-lock-priority-inversion](https://gitee.com/stardustman/pictrues/raw/master/img/sync/ostep-spin-lock-priority-inversion.svg)
+![spin-lock-priority-inversion](https://github.com/stardustman/pictures/raw/main/img/sync/ostep-spin-lock-priority-inversion.svg)
 
 有上图可知 Thread2 有可能在 Thread3 之前运行，这不符合线程优先级的要求。
 Thread2 和 Thread3 的优先级反转了。

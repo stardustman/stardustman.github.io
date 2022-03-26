@@ -108,7 +108,7 @@ q | quad | 64bit
 > 栈分配空间: sp 减去需要的地址空间大小(所谓的栈向下生长); 
 > 栈回收空间: sp 加上需要的地址空间大小(所谓的栈向上收缩);(PS: 相当无聊的话)
 
-![x86-64-stack](https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-stack.png) #(x86-64-stack)
+![x86-64-stack](https://github.com/stardustman/pictures/raw/main/img/x86-64-stack.png) #(x86-64-stack)
 
 ## pushl %eax
 
@@ -160,7 +160,7 @@ addl $4,%esp //回收空间
 
 > for example, a subroutine DrawSquare calls a subroutine DrawLine from four different places, DrawLine must know where to return when its execution completes. To accomplish this, the address following the instruction that jumps to DrawLine, the return address, is pushed onto the call stack with each call.
 
-![callstack-layout-for-upward-growing-stacks](https://gitee.com/stardustman/pictrues/raw/master/img/callstack-layout-for-upward-growing-stacks.png) #(callstack-layout-for-upward-growing-stacks)
+![callstack-layout-for-upward-growing-stacks](https://github.com/stardustman/pictures/raw/main/img/callstack-layout-for-upward-growing-stacks.png) #(callstack-layout-for-upward-growing-stacks)
 
 # code analysis
 
@@ -211,11 +211,11 @@ main:
 
 # C compare to  Assembly
 
-![c-swap-to-asm-swap](https://gitee.com/stardustman/pictrues/raw/master/img/c-swap-to-asm-swap.png)
+![c-swap-to-asm-swap](https://github.com/stardustman/pictures/raw/main/img/c-swap-to-asm-swap.png)
 
 # asm execute graph
 
-![asm-execute-graph](https://gitee.com/stardustman/pictrues/raw/master/img/asm-execute-graph.png)
+![asm-execute-graph](https://github.com/stardustman/pictures/raw/main/img/asm-execute-graph.png)
 
 > 注意: 示意图里面的是 64 bit 的汇编代码.
 > 注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.

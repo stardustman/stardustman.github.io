@@ -135,7 +135,7 @@
 <code>mechanisms</code> 和 <code>policies</code> 分离, 和 java 中接口和实现非常相似. 实际上这也是软件设计的原则. <code>OS</code> 本身也是软件.</p>
 </blockquote>
 <h2 id=physical-organization-of-a-modern-system>physical organization of a modern system</h2>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/physical-organization-of-a-modern-system.png alt=现代计算机系统物理架构></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/physical-organization-of-a-modern-system.png alt=现代计算机系统物理架构></p>
 <h2 id=the-abstracttion-a-process>the abstracttion: a process</h2>
 <h3 id=address-space>address space</h3>
 <p>存放程序的 <code>instructions</code> 和 <code>data</code>.</p>
@@ -155,7 +155,7 @@
 <em>resume</em> process, contine it running</p>
 <h3 id=status>status</h3>
 <h2 id=process-creation-a-little-detail>process creation: a little detail</h2>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/loading-from-program-to-process.png alt=loading-from-program-to-process.png>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/loading-from-program-to-process.png alt=loading-from-program-to-process.png>
 把程序从磁盘加载到内存. 问题来了:</p>
 <ol>
 <li>是要全部加载到内存吗? (eagerly)</li>
@@ -167,7 +167,7 @@
 <li>set up related I/O</li>
 <li>execute program, 跳到 entry point, 也就是 main().</li>
 </ol>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/load-process.svg alt=程序加载执行流程></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/load-process.svg alt=程序加载执行流程></p>
 <h2 id=process-states>process states</h2>
 <p>简单来说, 分为 3 种状态:</p>
 <ol>
@@ -182,7 +182,7 @@
 <li>blocked</li>
 </ol>
 <p><strong>a process has performmed some kind of operation that makes it not ready to run until some other event takes place. A common example: when a process initiates an I/O request to a disk, it becomes blocked and thus some other process can use the processor</strong></p>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/process-state-transition.png alt=process-state-transition></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/process-state-transition.png alt=process-state-transition></p>
 <h2 id=data-structures>data structures</h2>
 <blockquote>
 <p>以下是 xv6 这个 <code>MIT</code> 教学 <code>OS</code> 的 <a href=https://github.com/stardustman/xv6-public/blob/master/proc.h>proc.h</a></p>

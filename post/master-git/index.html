@@ -514,7 +514,7 @@ root@aliyun:~/blog# cat .git/refs/heads/master
 </code></pre>
 <p>查看 <code>master</code> 和 <code>new-branch</code> 两个分支可知, 每一分支对应的 <code>HEAD</code> 和 <code>.git/refs/heads/branch_name</code> 记录的 <code>commit</code> 不同. 这就是 git 分支的实现.</p>
 <h2 id=git-add--git-commit--git-branch-图解>git add | git commit | git branch 图解</h2>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/git.svg alt=git></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/git.svg alt=git></p>
 <h2 id=fast-forward-merge>Fast-forward Merge</h2>
 <blockquote>
 <p>两次 git add 和 git commit 之后，创建 <code>new-branch</code> ，在 <code>new-branch</code> 进行了修改。
@@ -591,7 +591,7 @@ ce907fabd08138058b05428d7cac017507b33c44 # 更新了 master 指向，指向了 n
 
 </code></pre>
 <h3 id=fast-forward-图解>Fast-Forward 图解</h3>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/fast-forward-merge.svg alt="git fast forward"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/fast-forward-merge.svg alt="git fast forward"></p>
 <h2 id=删除-master-分支上的-file1-文件然后提交>删除 master 分支上的 file1 文件，然后提交</h2>
 <pre><code>root@aliyun:~# cp -r blog blog-delete # 复制一份，在 master 分支上删除 file1
 root@aliyun:~# cd blog-delete/
@@ -727,7 +727,7 @@ root@aliyun:~/blog-delete# cat .git/logs/refs/heads/master # 查看 master 分�
 ce907fabd08138058b05428d7cac017507b33c44 f24e8b6fb771347156b615c795f7fd886dc49088 root &lt;root@aliyun&gt; 1586307459 +0800 commit: delete file1 on master
 </code></pre>
 <h3 id=master-分支删除-file1-图解>master 分支删除 file1 图解</h3>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/git-delete-a-file-and-commit.svg alt="delete file1 on maste"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/git-delete-a-file-and-commit.svg alt="delete file1 on maste"></p>
 <h4 id=master-分支删除-file1-图解分析>master 分支删除 file1 图解分析</h4>
 <p>master 分支 git 中删除一个文件的实质是：</p>
 <ol>
@@ -932,7 +932,7 @@ root@aliyun:~/blog-delete-new-branch-file4# tree .git/objects/ # 在 master 分�
 
 </code></pre>
 <h5 id=new-branch-分支添加-file4-图解>new-branch 分支添加 file4 图解</h5>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/new-branch-add-file4.svg alt=new-branch-add-file4></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/new-branch-add-file4.svg alt=new-branch-add-file4></p>
 <h4 id=master-分支添加-file5>master 分支添加 file5</h4>
 <h5 id=master-分支添加-file5-步骤>master 分支添加 file5 步骤</h5>
 <pre><code>root@aliyun:~# cp -r blog-delete blog-delete-master-file5 # 复制一份
@@ -1091,7 +1091,7 @@ root@aliyun:~/blog-delete-master-file5# git cat-file -p 374938
 
 </code></pre>
 <h5 id=master-分支添加-file5-图解>master 分支添加 file5 图解</h5>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/git-master-add-file5.svg alt=master-add-file5></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/git-master-add-file5.svg alt=master-add-file5></p>
 <h4 id=master-分支合并到-new-branch-分支>master 分支合并到 new-branch 分支</h4>
 <h5 id=master-分支合并到-new-branch-分支步骤>master 分支合并到 new-branch 分支步骤</h5>
 <pre><code>root@aliyun:~# cp -r blog-delete-master-file5/ blog-delete-file4-file5-merge
@@ -1232,7 +1232,7 @@ c9918cea80e46648c4e98da5b1c4b072f0794795 fc094b5b4e7a0f4028c5735d95f844b1aea1a9b
 
 </code></pre>
 <h5 id=master-分支合并到-new-branch-图解>master 分支合并到 new-branch 图解</h5>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/git-merge-master.svg alt=git-merge-master>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/git-merge-master.svg alt=git-merge-master>
 master 分支合并到 new-branch 分支实质：</p>
 <ol>
 <li>生成一个新的 <code>tree object 4f1d41</code> 指向 <code>master</code> 分支和 <code>new-branch</code> 分支共有的<code>文件 blob</code>。</li>

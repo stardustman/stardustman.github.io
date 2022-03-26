@@ -126,7 +126,7 @@
 2017 年已经有 33 多亿的注册域名了。</p>
 </blockquote>
 <p>如果让你组织数量如此庞大的域名，你该怎样组织呢？没错，也是组织成层级结构，来管理数量如此庞大的域名。一开始的解决方法是直接把域名信息放在 /etc/hosts 文件，随着域名增多，单独的一个文件没法满足要求，数量太多了嘛，放在一个文件，且不论能不能全部存储，查找都是一个大问题。</p>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/dns-root-server.png alt=domain-name-hierarchy></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/dns-root-server.png alt=domain-name-hierarchy></p>
 <h5 id=ip-分配管理方式>IP 分配管理方式</h5>
 <p>IP Addresses are <code>unique identifiers</code> used to determine who is who on the Internet.
 IP 地址是一个 32bit 的无符号整数。范围是 [0,2^32-1], 一共有 4294967296 个整数。将近 43 亿个 ip 地址(这里不考虑公网、私网)该怎样分配使用呢？由 <a href=https://www.iana.org/numbers>Internet Assigned Numbers Authority (IANA)</a> 负责协调管理所有 IP，同时负责分配自治系统号(Autonomous System number)。</p>
@@ -134,17 +134,17 @@ IP 地址是一个 32bit 的无符号整数。范围是 [0,2^32-1], 一共有 42
 <p>Both IPv4 and IPv6 addresses are generally assigned in a <code>hierarchical manner</code>. Users are assigned IP addresses by <code>Internet service providers (ISPs)</code>. ISPs obtain allocations of IP addresses from a <code>local Internet registry (LIR</code>) or <code>National Internet Registry (NIR)</code>, or from their appropriate <code>Regional Internet Registry (RIR)</code>:</p>
 </blockquote>
 <p>数量庞大的 IP 地址怎样分配管理呢？组成层级结构。通过一级一级<code>委托</code>，管理数量庞大的 IP 地址。</p>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/IP_AS_Number.svg alt=地址分配管理></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/IP_AS_Number.svg alt=地址分配管理></p>
 <h5 id=文件组织方式>文件组织方式</h5>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/file_system_hierarchy.png alt="file system hierarchy"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/file_system_hierarchy.png alt="file system hierarchy"></p>
 <h4 id=不同性质的事物怎样组织呢>不同性质的事物，怎样组织呢？</h4>
 <h5 id=memory-hierarchy>memory hierarchy</h5>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/ComputerMemoryHierarchy.svg alt=ComputerMemoryHierarchy></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/ComputerMemoryHierarchy.svg alt=ComputerMemoryHierarchy></p>
 <h5 id=typical-memory-hierarchy>Typical memory hierarchy</h5>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/typical-memory-hierarchy.png alt=" typical-memory-hierarchy "></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/typical-memory-hierarchy.png alt=" typical-memory-hierarchy "></p>
 <h5 id=osi-参考模型>OSI 参考模型</h5>
 <p>网络每一层，功能不同。</p>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/network-layer.svg alt="OSI VS TCP/IP"></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/network-layer.svg alt="OSI VS TCP/IP"></p>
 <h3 id=group分组>group(分组)</h3>
 <p>体量庞大的东西的基层组织。</p>
 <ol>

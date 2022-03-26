@@ -272,7 +272,7 @@ push pop 指令操作的是 sp(stack pointer) 这个寄存器.
 栈分配空间: sp 减去需要的地址空间大小(所谓的栈向下生长);
 栈回收空间: sp 加上需要的地址空间大小(所谓的栈向上收缩);(PS: 相当无聊的话)</p>
 </blockquote>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/x86-64-stack.png alt=x86-64-stack> #(x86-64-stack)</p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/x86-64-stack.png alt=x86-64-stack> #(x86-64-stack)</p>
 <h2 id=pushl-eax>pushl %eax</h2>
 <blockquote>
 <p>push value of %eax onto stack
@@ -318,7 +318,7 @@ An active subroutine is one that has been called but is yet to complete executio
 <blockquote>
 <p>for example, a subroutine DrawSquare calls a subroutine DrawLine from four different places, DrawLine must know where to return when its execution completes. To accomplish this, the address following the instruction that jumps to DrawLine, the return address, is pushed onto the call stack with each call.</p>
 </blockquote>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/callstack-layout-for-upward-growing-stacks.png alt=callstack-layout-for-upward-growing-stacks> #(callstack-layout-for-upward-growing-stacks)</p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/callstack-layout-for-upward-growing-stacks.png alt=callstack-layout-for-upward-growing-stacks> #(callstack-layout-for-upward-growing-stacks)</p>
 <h1 id=code-analysis>code analysis</h1>
 <pre><code class=language-cpp>void swap(int a, int b){
     int tmp = a;
@@ -358,9 +358,9 @@ swap(int, int):
         ret
 </code></pre>
 <h1 id=c-compare-to--assembly>C compare to Assembly</h1>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/c-swap-to-asm-swap.png alt=c-swap-to-asm-swap></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/c-swap-to-asm-swap.png alt=c-swap-to-asm-swap></p>
 <h1 id=asm-execute-graph>asm execute graph</h1>
-<p><img src=https://gitee.com/stardustman/pictrues/raw/master/img/asm-execute-graph.png alt=asm-execute-graph></p>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/asm-execute-graph.png alt=asm-execute-graph></p>
 <blockquote>
 <p>注意: 示意图里面的是 64 bit 的汇编代码.
 注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.

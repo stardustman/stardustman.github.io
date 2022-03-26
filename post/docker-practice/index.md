@@ -4,7 +4,7 @@
 
 ## docker info
 
-![docker-info](https://gitee.com/stardustman/pictrues/raw/master/img/docker-info.png) #(docker-info)
+![docker-info](https://github.com/stardustman/pictures/raw/main/img/docker-info.png) #(docker-info)
 
 ## docker inspect
 
@@ -269,11 +269,11 @@
 }
 ```
 
-![local-var-lib-docker-container](https://gitee.com/stardustman/pictrues/raw/master/img/local-var-lib-docker-container.png) #(本地存储的容器的网络配置)
+![local-var-lib-docker-container](https://github.com/stardustman/pictures/raw/main/img/local-var-lib-docker-container.png) #(本地存储的容器的网络配置)
 
 ## Container 网络配置
 
-![container-etc](https://gitee.com/stardustman/pictrues/raw/master/img/container-etc.png) #(容器的网络配置)
+![container-etc](https://github.com/stardustman/pictures/raw/main/img/container-etc.png) #(容器的网络配置)
 
 ## Docker Images 分层
 
@@ -295,7 +295,7 @@
 
 > 这个 MergedDir 层就是一个 Linux 镜像
 
-![merged-dir](https://gitee.com/stardustman/pictrues/raw/master/img/merged-dir.png) #( 镜像 Merged 层)
+![merged-dir](https://github.com/stardustman/pictures/raw/main/img/merged-dir.png) #( 镜像 Merged 层)
 
 ## Reference
 
