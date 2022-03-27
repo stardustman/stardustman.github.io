@@ -1,0 +1,436 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>os-banker's-algorithm - stardustman</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="librarian"><meta name=description content="Banker&amp;rsquo;s Algorithm 银行家算法是什么 银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行"><meta name=keywords content="Hugo,theme,even">
+<meta name=generator content="Hugo 0.91.2 with theme even">
+<link rel=canonical href=http://stardustman.github.io/2020/05/13/os-bankers-algorithm/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="os-banker's-algorithm">
+<meta property="og:description" content="Banker&rsquo;s Algorithm 银行家算法是什么 银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://stardustman.github.io/2020/05/13/os-bankers-algorithm/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2020-05-13T15:31:05+08:00">
+<meta property="article:modified_time" content="2020-05-13T15:31:05+08:00">
+<meta itemprop=name content="os-banker's-algorithm">
+<meta itemprop=description content="Banker&rsquo;s Algorithm 银行家算法是什么 银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行"><meta itemprop=datePublished content="2020-05-13T15:31:05+08:00">
+<meta itemprop=dateModified content="2020-05-13T15:31:05+08:00">
+<meta itemprop=wordCount content="1218">
+<meta itemprop=keywords content="os,dead lock,recource allocation,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="os-banker's-algorithm">
+<meta name=twitter:description content="Banker&rsquo;s Algorithm 银行家算法是什么 银行家主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>keep writing</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/categories/>
+<li class=mobile-menu-item>Categories</li>
+</a><a href=/2022/03/27/about/>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>keep writing</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/categories/>Categories</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/2022/03/27/about/>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>os-banker's-algorithm</h1>
+<div class=post-meta>
+<span class=post-time> 2020-05-13 </span>
+<span class=more-meta> 1218 words </span>
+<span class=more-meta> 3 mins read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li><a href=#bankers-algorithm>Banker&rsquo;s Algorithm</a>
+<ul>
+<li><a href=#银行家算法是什么>银行家算法是什么</a></li>
+<li><a href=#银行家算法解决什么问题>银行家算法解决什么问题</a></li>
+<li><a href=#银行家算法怎样解决问题>银行家算法怎样解决问题</a></li>
+<li><a href=#有没有其他方法解决此问题>有没有其他方法解决此问题</a></li>
+<li><a href=#bankers-algorithm-implemention>Banker&rsquo;s Algorithm implemention</a></li>
+</ul>
+</li>
+<li><a href=#references>References</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<h2 id=bankers-algorithm>Banker&rsquo;s Algorithm</h2>
+<h3 id=银行家算法是什么>银行家算法是什么</h3>
+<p><code>银行家</code>主要就是通过放贷来赚钱的。那最重要的问题是啥？当然是把钱借给还得起的人咯。试想，银行把钱都借给了还不起的人，那银行就完蛋了。假设有一批人（多个进程）来借钱（将要申请资源），但是银行剩下的钱满足不了任何人，那就直接拒绝借贷。当然了，有一部分已经借出的钱回收之后（回收已经分配的资源），又可以满足一批人中某些人的借贷需求。依次类推，银行可以判定能不能按照某个顺序来给这批人放贷。类似的思路延伸到计算机世界，同理。操作系统给多个进程分配资源，<code>能不能找到一个顺序给这些进程分配资源，并逐渐回收资源？</code>从而满足多个进程的资源需求。采用银行家放贷和收贷的思路（这里排除利息，放多少贷，收多少钱。呵呵，哪有此种好事？）来分配和回收系统资源就是所谓的<code>银行家算法</code>。</p>
+<h3 id=银行家算法解决什么问题>银行家算法解决什么问题</h3>
+<p><code>resource allocation and deadlock avoidance algorithm</code>。银行家算法用来进行资源分配和避免死锁。</p>
+<h3 id=银行家算法怎样解决问题>银行家算法怎样解决问题</h3>
+<p>P0、P1、P2、P3、P4 5个进程，视为需要钱的 5 个人。
+A、B、C 三种系统资源。分别视为是银行三种贵金属：金块、银块、铜块。</p>
+<h4 id=allocation-table-已放贷表>allocation table 已放贷表</h4>
+<p>每个人已经借的金银铜个数列表</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center></th>
+<th style=text-align:center>A</th>
+<th style=text-align:center>B</th>
+<th style=text-align:center>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>P0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>0</td>
+</tr>
+<tr>
+<td style=text-align:center>P1</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+</tr>
+<tr>
+<td style=text-align:center>P2</td>
+<td style=text-align:center>3</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>2</td>
+</tr>
+<tr>
+<td style=text-align:center>P3</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+</tr>
+<tr>
+<td style=text-align:center>P4</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>2</td>
+</tr>
+</tbody>
+</table>
+<h4 id=max-table-最大借贷表>max table 最大借贷表</h4>
+<p>每个人需要金银铜最大个数列表</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center></th>
+<th style=text-align:center>A</th>
+<th style=text-align:center>B</th>
+<th style=text-align:center>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>P0</td>
+<td style=text-align:center>7</td>
+<td style=text-align:center>5</td>
+<td style=text-align:center>3</td>
+</tr>
+<tr>
+<td style=text-align:center>P1</td>
+<td style=text-align:center>3</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>2</td>
+</tr>
+<tr>
+<td style=text-align:center>P2</td>
+<td style=text-align:center>9</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>2</td>
+</tr>
+<tr>
+<td style=text-align:center>P3</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>2</td>
+</tr>
+<tr>
+<td style=text-align:center>P4</td>
+<td style=text-align:center>4</td>
+<td style=text-align:center>3</td>
+<td style=text-align:center>3</td>
+</tr>
+</tbody>
+</table>
+<h4 id=need-table-还需放贷表>need table 还需放贷表</h4>
+<p>每个人还需要的金银铜个数列表。由 max table - allocation table 得到。</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center></th>
+<th style=text-align:center>A</th>
+<th style=text-align:center>B</th>
+<th style=text-align:center>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>P0</td>
+<td style=text-align:center>7</td>
+<td style=text-align:center>4</td>
+<td style=text-align:center>3</td>
+</tr>
+<tr>
+<td style=text-align:center>P1</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>2</td>
+<td style=text-align:center>2</td>
+</tr>
+<tr>
+<td style=text-align:center>P2</td>
+<td style=text-align:center>6</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>0</td>
+</tr>
+<tr>
+<td style=text-align:center>P3</td>
+<td style=text-align:center>0</td>
+<td style=text-align:center>1</td>
+<td style=text-align:center>1</td>
+</tr>
+<tr>
+<td style=text-align:center>P4</td>
+<td style=text-align:center>4</td>
+<td style=text-align:center>3</td>
+<td style=text-align:center>1</td>
+</tr>
+</tbody>
+</table>
+<h4 id=available-table-剩余资源表>available table 剩余资源表</h4>
+<p>银行还剩下的金银铜个数。</p>
+<table>
+<thead>
+<tr>
+<th style=text-align:center>A</th>
+<th style=text-align:center>B</th>
+<th style=text-align:center>C</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style=text-align:center>3</td>
+<td style=text-align:center>3</td>
+<td style=text-align:center>2</td>
+</tr>
+</tbody>
+</table>
+<h4 id=剩余系统资源分配顺序推演>剩余系统资源分配顺序推演</h4>
+<ol>
+<li>拿着 available table （剩余资源表），到 need table（还需放贷表） 比对。若 available table 的 A B C 满足 need table 的某一行（也就是 available table 每一列都大于等于 need table 的某一行的每一列）。说明可以分配给这个进程，标记这一行。同时回收这一行对应的 allocation table 中已经分配的 A B C。更新 available table 的 A B C。以此类推，继续比对 need table 中其他未标记的行。若最后 need table 所有行都有标记，说明存在一个给 P0、P1、P2、P3、P4 进程分配资源的顺序。</li>
+<li>拿着 available table 剩余资源表，不满足 need table 中任何一行。说明不存在一个给 P0、P1、P2、P3、P4 进程分配资源的顺序。系统有可能进入死锁。</li>
+</ol>
+<h4 id=银行家算法图解分析>银行家算法图解分析</h4>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/banks-algorithm.svg alt=银行家算法>
+存在的一个序列 P1 -> P3 -> P4 -> P0 -> P2</p>
+<h3 id=有没有其他方法解决此问题>有没有其他方法解决此问题</h3>
+<h3 id=bankers-algorithm-implemention>Banker&rsquo;s Algorithm implemention</h3>
+<pre><code class=language-c>// Banker's Algorithm 
+#include &lt;stdio.h&gt; 
+int main() 
+{ 
+    // P0, P1, P2, P3, P4 are the Process names here 
+  
+    int n, m, i, j, k; 
+    n = 5; // Number of processes 
+    m = 3; // Number of resources 
+    int alloc[5][3] = { { 0, 1, 0 }, // P0    // Allocation Matrix 
+                        { 2, 0, 0 }, // P1 
+                        { 3, 0, 2 }, // P2 
+                        { 2, 1, 1 }, // P3 
+                        { 0, 0, 2 } }; // P4 
+  
+    int max[5][3] = { { 7, 5, 3 }, // P0    // MAX Matrix 
+                      { 3, 2, 2 }, // P1 
+                      { 9, 0, 2 }, // P2 
+                      { 2, 2, 2 }, // P3 
+                      { 4, 3, 3 } }; // P4 
+  
+    int avail[3] = { 3, 3, 2 }; // Available Resources 
+  
+    int finished[n], ans[n], index = 0; 
+    for (k = 0; k &lt; n; k++) { 
+        finished[k] = 0; 
+    } 
+    int need[n][m]; 
+    for (i = 0; i &lt; n; i++) { 
+        for (j = 0; j &lt; m; j++) 
+            // 计算 need matrix
+            need[i][j] = max[i][j] - alloc[i][j]; 
+    } 
+    int y = 0; 
+    for (k = 0; k &lt; 5; k++) { 
+        for (i = 0; i &lt; n; i++) { 
+            if (finished[i] == 0) { 
+  
+                int flag = 0; 
+                for (j = 0; j &lt; m; j++) { 
+                    if (need[i][j] &gt; avail[j]){ 
+                        flag = 1; 
+                         break; 
+                    } 
+                } 
+  
+                if (flag == 0) { 
+                    ans[index++] = i; 
+                    for (y = 0; y &lt; m; y++) 
+                        avail[y] += alloc[i][y]; 
+                    finished[i] = 1; 
+                } 
+            } 
+        } 
+    } 
+  
+    printf(&quot;Following is the SAFE Sequence\n&quot;); 
+    for (i = 0; i &lt; n - 1; i++) 
+        printf(&quot; P%d -&gt;&quot;, ans[i]); 
+    printf(&quot; P%d&quot;, ans[n - 1]); 
+  
+    return (0); 
+  
+} 
+</code></pre>
+<h2 id=references>References</h2>
+<ol>
+<li><a href=https://zh.wikipedia.org/wiki/%E9%93%B6%E8%A1%8C%E5%AE%B6%E7%AE%97%E6%B3%95>银行家算法-wiki</a></li>
+<li><a href=https://www.geeksforgeeks.org/bankers-algorithm-in-operating-system-2/>bankers-algorithm</a></li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>librarian</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2020-05-13
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2020/05/13/os-bankers-algorithm/index.md target=_blank>The Markdown version »</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/os/>os</a>
+<a href=/tags/dead-lock/>dead lock</a>
+<a href=/tags/recource-allocation/>recource allocation</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/2020/05/18/data-structure-heap/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">data-structure-heap</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/2020/05/11/cache-replacement-policy-lru/>
+<span class="next-text nav-default">cache-replacement-policy-lru</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<span class=copyright-year>
+&copy;
+2019 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>librarian</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

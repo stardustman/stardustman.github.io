@@ -11,7 +11,7 @@
 <meta name=msapplication-navbutton-color content="#f8f5ec">
 <meta name=apple-mobile-web-app-capable content="yes">
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="stardustman"><meta name=description content="Hugo theme even example site."><meta name=keywords content="Hugo,theme,even">
+<meta name=author content="librarian"><meta name=description content="Hugo theme even example site."><meta name=keywords content="Hugo,theme,even">
 <meta name=generator content="Hugo 0.91.2 with theme even">
 <link rel=canonical href=http://stardustman.github.io/>
 <link href=http://stardustman.github.io/index.xml rel=alternate type=application/rss+xml title=stardustman>
@@ -36,7 +36,7 @@
 <body>
 <div id=mobile-navbar class=mobile-navbar>
 <div class=mobile-header-logo>
-<a href=/ class=logo>stardustman</a>
+<a href=/ class=logo>keep writing</a>
 </div>
 <div class=mobile-navbar-icon>
 <span></span>
@@ -54,13 +54,15 @@
 <li class=mobile-menu-item>Tags</li>
 </a><a href=/categories/>
 <li class=mobile-menu-item>Categories</li>
+</a><a href=/2022/03/27/about/>
+<li class=mobile-menu-item>About</li>
 </a>
 </ul>
 </nav>
 <div class=container id=mobile-panel>
 <header id=header class=header>
 <div class=logo-wrapper>
-<a href=/ class=logo>stardustman</a>
+<a href=/ class=logo>keep writing</a>
 </div>
 <nav class=site-navbar>
 <ul id=menu class=menu>
@@ -72,6 +74,8 @@
 <a class=menu-item-link href=/tags/>Tags</a>
 </li><li class=menu-item>
 <a class=menu-item-link href=/categories/>Categories</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/2022/03/27/about/>About</a>
 </li>
 </ul>
 </nav>
@@ -82,7 +86,25 @@
 <section id=posts class=posts>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/algorithm-quick-sort/>algorithm-quick-sort</a></h1>
+<h1 class=post-title><a class=post-link href=/2020/04/23/network-dns/>network-dns</a></h1>
+<div class=post-meta>
+<span class=post-time> 2020-04-23 </span>
+<span class=more-meta> 1752 words </span>
+<span class=more-meta> 4 mins read </span>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+怎样学习一个新的东西，也可以按照一定的套路的。这个东西解决什么问题？这个东西怎样解决问题？ 还有没有其他方法？ 三步走分析一下 DNS 解决什么问题 根据
+</div>
+<div class=read-more>
+<a href=/2020/04/23/network-dns/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title><a class=post-link href=/2020/04/14/algorithm-quick-sort/>algorithm-quick-sort</a></h1>
 <div class=post-meta>
 <span class=post-time> 2020-04-14 </span>
 <span class=more-meta> 3717 words </span>
@@ -94,13 +116,13 @@
 quick sort C 代码 #include &lt;stdio.h> int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二
 </div>
 <div class=read-more>
-<a href=/post/algorithm-quick-sort/ class=read-more-link>Read more...</a>
+<a href=/2020/04/14/algorithm-quick-sort/ class=read-more-link>Read more...</a>
 </div>
 </div>
 </article>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/algorithm-merge-sort/>algorithm-merge-sort</a></h1>
+<h1 class=post-title><a class=post-link href=/2020/04/10/algorithm-merge-sort/>algorithm-merge-sort</a></h1>
 <div class=post-meta>
 <span class=post-time> 2020-04-10 </span>
 <span class=more-meta> 5064 words </span>
@@ -112,13 +134,13 @@ quick sort C 代码 #include &lt;stdio.h> int partition(int* array, int startInd
 merge sort merge sort C code #include &lt;stdio.h> void merge(int* array, int start, int mid, int end){ // start = 0 // mid = 3 // end = 7 int tempArrayLength = end - start + 1; // 8 int tempArray[tempArrayLength]; // tempArray[8] int p1 = start; // 0 int p2 = mid + 1; // 4 int p = 0; // 比较两个小集合，
 </div>
 <div class=read-more>
-<a href=/post/algorithm-merge-sort/ class=read-more-link>Read more...</a>
+<a href=/2020/04/10/algorithm-merge-sort/ class=read-more-link>Read more...</a>
 </div>
 </div>
 </article>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/three-easy-pieces-4-process/>three-easy-pieces-4-process</a></h1>
+<h1 class=post-title><a class=post-link href=/2020/01/14/three-easy-pieces-4-process/>three-easy-pieces-4-process</a></h1>
 <div class=post-meta>
 <span class=post-time> 2020-01-14 </span>
 <span class=more-meta> 1077 words </span>
@@ -130,13 +152,13 @@ merge sort merge sort C code #include &lt;stdio.h> void merge(int* array, int st
 我们知道一个计算机 CPU 数量有限, 但是却可以同时跑数量远远多于 CPU 数量的程序. 其实这就是 virtualizing. 怎样进行 CPU 虚拟化呢? 通过抽象出 process 这个基本概念, 也就是 running program.
 </div>
 <div class=read-more>
-<a href=/post/three-easy-pieces-4-process/ class=read-more-link>Read more...</a>
+<a href=/2020/01/14/three-easy-pieces-4-process/ class=read-more-link>Read more...</a>
 </div>
 </div>
 </article>
 <article class=post>
 <header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/master-git/>master-git</a></h1>
+<h1 class=post-title><a class=post-link href=/2019/12/28/master-git/>master-git</a></h1>
 <div class=post-meta>
 <span class=post-time> 2019-12-28 </span>
 <span class=more-meta> 5676 words </span>
@@ -148,25 +170,7 @@ merge sort merge sort C code #include &lt;stdio.h> void merge(int* array, int st
 git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │
 </div>
 <div class=read-more>
-<a href=/post/master-git/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/post/katacoda-what-is-a-container/>katacoda-what-is-a-container</a></h1>
-<div class=post-meta>
-<span class=post-time> 2019-12-24 </span>
-<span class=more-meta> 1362 words </span>
-<span class=more-meta> 3 mins read </span>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-Processes Containers are just normal Linux Processes with additional configuration applied. 容器只是应用了附加配置的普通 Linux 进程。 redis container lanch redis-server process Usage: docker run [OPTIONS] IMAGE [COMMAND] [ARG&mldr;] docker run &ndash;help -d, &ndash;detach Run container in background and print container ID &ndash;name string Assign a name to the container docker run -d --name=db redis:alpine 在后台
-</div>
-<div class=read-more>
-<a href=/post/katacoda-what-is-a-container/ class=read-more-link>Read more...</a>
+<a href=/2019/12/28/master-git/ class=read-more-link>Read more...</a>
 </div>
 </div>
 </article>
@@ -204,7 +208,7 @@ Theme -
 <span class=copyright-year>
 &copy;
 2019 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>stardustman</span>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>librarian</span>
 </span>
 </div>
 </footer>

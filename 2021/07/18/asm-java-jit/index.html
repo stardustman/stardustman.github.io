@@ -1,0 +1,304 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>asm-java-jit - stardustman</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="librarian"><meta name=description content="前言 无论多么花里胡哨的功能，最终落地到一台计算机上，都是二进制代码。虽然 java 代码跑在 jvm 平台之上，但是 jvm 只是负责执行 java 自定义的一套 bytecode 的工具，只要"><meta name=keywords content="Hugo,theme,even">
+<meta name=generator content="Hugo 0.91.2 with theme even">
+<link rel=canonical href=http://stardustman.github.io/2021/07/18/asm-java-jit/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="asm-java-jit">
+<meta property="og:description" content="前言 无论多么花里胡哨的功能，最终落地到一台计算机上，都是二进制代码。虽然 java 代码跑在 jvm 平台之上，但是 jvm 只是负责执行 java 自定义的一套 bytecode 的工具，只要">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://stardustman.github.io/2021/07/18/asm-java-jit/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2021-07-18T10:43:46+08:00">
+<meta property="article:modified_time" content="2021-07-18T10:43:46+08:00">
+<meta itemprop=name content="asm-java-jit">
+<meta itemprop=description content="前言 无论多么花里胡哨的功能，最终落地到一台计算机上，都是二进制代码。虽然 java 代码跑在 jvm 平台之上，但是 jvm 只是负责执行 java 自定义的一套 bytecode 的工具，只要"><meta itemprop=datePublished content="2021-07-18T10:43:46+08:00">
+<meta itemprop=dateModified content="2021-07-18T10:43:46+08:00">
+<meta itemprop=wordCount content="736">
+<meta itemprop=keywords content="java,jit,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="asm-java-jit">
+<meta name=twitter:description content="前言 无论多么花里胡哨的功能，最终落地到一台计算机上，都是二进制代码。虽然 java 代码跑在 jvm 平台之上，但是 jvm 只是负责执行 java 自定义的一套 bytecode 的工具，只要"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>keep writing</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/categories/>
+<li class=mobile-menu-item>Categories</li>
+</a><a href=/2022/03/27/about/>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>keep writing</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/categories/>Categories</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/2022/03/27/about/>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>asm-java-jit</h1>
+<div class=post-meta>
+<span class=post-time> 2021-07-18 </span>
+<span class=more-meta> 736 words </span>
+<span class=more-meta> 2 mins read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li><a href=#前言>前言</a></li>
+<li><a href=#二进制代码探析>二进制代码探析</a>
+<ul>
+<li><a href=#c-语言举例>C 语言举例</a></li>
+</ul>
+</li>
+<li><a href=#references>References</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<h2 id=前言>前言</h2>
+<p>无论多么花里胡哨的功能，最终落地到一台计算机上，都是二进制代码。虽然 java 代码跑在 jvm 平台之上，但是 jvm 只是负责执行 java 自定义的一套 bytecode 的工具，只要能解释字节码，这个工具用什么语言写都是可以的。主流的 HotSpot 虚拟机选择的 C++。</p>
+<h2 id=二进制代码探析>二进制代码探析</h2>
+<h3 id=c-语言举例>C 语言举例</h3>
+<h4 id=gcc-不开启优化>gcc 不开启优化</h4>
+<pre><code class=language-c>#include&lt;stdio.h&gt;
+
+long  desc(long a) {
+    return a - 1;
+}
+
+int main() {
+    printf(&quot;%ld\n&quot;, desc(3));
+    return 0;
+}
+</code></pre>
+<p>具体<a href=https://stardustman.github.io/2019/06/24/asm-how-x86-64-arguments-pass/>汇编级别的参数传递</a> 可以参考这篇。x86 架构下<a href=https://stardustman.github.io/2019/05/28/asm-how-x86-function-execute/>函数如何之行</a> 可以参考这篇。</p>
+<p>gcc -o descv1 desc.c 之后通过 objdump -d descv11 可以找到 <code>long desc(long a)</code> 的汇编代码如下：</p>
+<pre><code class=language-asm>000000000000064a &lt;desc&gt;:
+ 64a:   55                      push   %rbp              ;❶ 保存上一个栈帧的 base，进入一个函数的常规操作。
+ 64b:   48 89 e5                mov    %rsp,%rbp         ;❷ 开辟新的栈帧
+ 64e:   48 89 7d f8             mov    %rdi,-0x8(%rbp)   ;❸ 参数 a（rdi）入栈
+ 652:   48 8b 45 f8             mov    -0x8(%rbp),%rax   ;❹ 参数 a 从栈中复制到 rax
+ 656:   48 83 e8 01             sub    $0x1,%rax         ;❺ a = a - 1
+ 65a:   5d                      pop    %rbp              ;❻ 弹出 rbp，也即是恢复上一个栈帧的 base
+ 65b:   c3                      retq                     ;❼ 函数返回
+</code></pre>
+<p>可以看到 ❸ 和 ❹ 这两步有些多余，这是没有开启优化，gcc 默认采用的方式，把所有的参数先放到栈上。我们可以进行优化。</p>
+<h4 id=对-gcc-不开启优化选项的汇编代码优化>对 gcc 不开启优化选项的汇编代码优化</h4>
+<pre><code class=language-c>#include &lt;stdio.h&gt;
+#include &lt;memory.h&gt;
+#include &lt;sys/mman.h&gt;
+
+typedef int (*desc_func)(int a);
+int main()
+{
+    char desc_code[] = {
+        0x55,             // ❶ push rbp
+        0x48, 0x89, 0xe5, // ❷ mov rsp, rbp
+
+        0x89, 0xf8,             // mov edi, eax ??
+        0x48, 0x83, 0xe8, 0x01, //  sub  $0x1,%rax
+
+        0x5d, // ❻ pop rbp
+        0xc3  // ❼ ret
+    };
+
+    void *temp = mmap(NULL, sizeof(desc_code),
+                      PROT_WRITE | PROT_EXEC,
+                      MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+
+    memcpy(temp, desc_code, sizeof(desc_code));
+    desc_func p_desc = (desc_func)temp;
+    printf(&quot;%d\n&quot;, p_desc(3));
+
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>可以看到在运行中创建 desc 函数，<code>运行时生成可执行的机器码</code>这种方式其实就是 JIT 实现的核心操作。
+同时可以看到，根本没有必要开辟栈帧来执行这个 desc 函数。也就是可以把 ➊ ➋ ➏ 栈帧相关操作删除。</p>
+</blockquote>
+<h4 id=进一步优化消除栈帧>进一步优化，消除栈帧</h4>
+<pre><code class=language-c>#include &lt;stdio.h&gt;
+#include &lt;memory.h&gt;
+#include &lt;sys/mman.h&gt;
+
+typedef int (*desc_func)(int a);
+int main()
+{
+    char desc_code[] = {
+
+        0x89, 0xf8,             // mov edi, eax ??
+        0x48, 0x83, 0xe8, 0x01, //  sub  $0x1,%rax
+        0xc3  // ❼ ret
+    };
+
+    void *temp = mmap(NULL, sizeof(desc_code),
+                      PROT_WRITE | PROT_EXEC,
+                      MAP_ANONYMOUS | MAP_PRIVATE, -1, 0);
+
+    memcpy(temp, desc_code, sizeof(desc_code));
+    desc_func p_desc = (desc_func)temp;
+    printf(&quot;%d\n&quot;, p_desc(3));
+
+    return 0;
+}
+</code></pre>
+<blockquote>
+<p>可以看到不开辟栈帧，一样可以执行代码。</p>
+</blockquote>
+<h4 id=lea-addr-dst-优化>lea addr dst 优化</h4>
+<pre><code class=language-c> char code[] = { 
+        0x48, 0x8d, 0x47 0xff,    // lea -0x1(rdi), rax lea 直接将 rdi 寄存器里的值减去 1 复制给 rax
+        0xc3                 // ret
+    };
+</code></pre>
+<blockquote>
+<p>这个和 gcc -o desc desc.c -O2 结果是一样的。</p>
+</blockquote>
+<h2 id=references>References</h2>
+<ol>
+<li><a href=https://mp.weixin.qq.com/s/TokGNbdnf2XkhHSbneppgg>java 杂谈之 JIT</a></li>
+<li><a href=http://ref.x86asm.net/coder64.html>x64-instruction-table</a></li>
+<li><a href=https://web.stanford.edu/class/archive/cs/cs107/cs107.1166/guide_x86-64.html>https://web.stanford.edu/class/archive/cs/cs107/cs107.1166/guide_x86-64.html</a></li>
+<li><a href=http://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf>http://cs.brown.edu/courses/cs033/docs/guides/x64_cheatsheet.pdf</a></li>
+<li><a href=https://www.felixcloutier.com/x86/lea>load-effective-address(lea)</a></li>
+<li><a href=https://docs.oracle.com/javase/specs/jvms/se7/html/jvms-6.html>java-bytecode</a></li>
+<li><a href=https://blog.csdn.net/appleyuchi/article/details/84036985>圆圈数字等</a></li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>librarian</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2021-07-18
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2021/07/18/asm-java-jit/index.md target=_blank>The Markdown version »</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/java/>java</a>
+<a href=/tags/jit/>jit</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/2021/09/11/what-happens-when-you-type-google.com-into-your-browser-and-press-enter/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">What-happens-when-you-type-google.com-into-your-browser-and-press-enter</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/2021/06/18/java-keyword-volatile/>
+<span class="next-text nav-default">java-keyword-volatile</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<span class=copyright-year>
+&copy;
+2019 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>librarian</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>

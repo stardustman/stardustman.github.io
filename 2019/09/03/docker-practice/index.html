@@ -1,0 +1,495 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>docker-practice - stardustman</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="librarian"><meta name=description content="Centos7 Linux 运行的 Docker 容器是: mssql-node-docker-demo-app docker info #(docker-info) docker inspect [ { &amp;quot;Id&amp;quot;: &amp;quot;405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655&amp;quot;, &amp;quot;Created&amp;quot;: &amp;quot;2019-08-01T02:57:14.067532309Z&amp;quot;, &amp;quot;Path&amp;quot;: &amp;quot;/bin/sh&amp;quot;, &amp;quot;Args&amp;quot;: [ &amp;quot;-c&amp;quot;, &amp;quot;/bin/bash ./entrypoint.sh&amp;quot; ], &amp;quot;State&amp;quot;: { &amp;quot;Status&amp;quot;: &amp;quot;running&amp;quot;, &amp;quot;Running&amp;quot;: true, &amp;quot;Paused&amp;quot;: false, &amp;quot;Restarting&amp;quot;: false, &amp;quot;OOMKilled&amp;quot;: false, &amp;quot;Dead&amp;quot;: false, &amp;quot;Pid&amp;quot;: 12164, &amp;quot;ExitCode&amp;quot;: 0, &amp;quot;Error&amp;quot;: &amp;quot;&amp;quot;, &amp;quot;StartedAt&amp;quot;: &amp;quot;2019-08-22T06:08:43.334320939Z&amp;quot;, &amp;quot;FinishedAt&amp;quot;: &amp;quot;2019-08-21T09:25:32.130119566Z&amp;quot; }, &amp;quot;Image&amp;quot;: &amp;quot;sha256:e600f86aa4e2aced43a193a28aa507651bfb77daa09ca8dbf286451a630cf27e&amp;quot;, // node-web-app 的 docker 镜像 id &amp;quot;ResolvConfPath&amp;quot;: &amp;quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf&amp;quot;, &amp;quot;HostnamePath&amp;quot;: &amp;quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname&amp;quot;, &amp;quot;HostsPath&amp;quot;: &amp;quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts&amp;quot;,"><meta name=keywords content="Hugo,theme,even">
+<meta name=generator content="Hugo 0.91.2 with theme even">
+<link rel=canonical href=http://stardustman.github.io/2019/09/03/docker-practice/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="docker-practice">
+<meta property="og:description" content="Centos7 Linux 运行的 Docker 容器是: mssql-node-docker-demo-app docker info #(docker-info) docker inspect [ { &#34;Id&#34;: &#34;405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655&#34;, &#34;Created&#34;: &#34;2019-08-01T02:57:14.067532309Z&#34;, &#34;Path&#34;: &#34;/bin/sh&#34;, &#34;Args&#34;: [ &#34;-c&#34;, &#34;/bin/bash ./entrypoint.sh&#34; ], &#34;State&#34;: { &#34;Status&#34;: &#34;running&#34;, &#34;Running&#34;: true, &#34;Paused&#34;: false, &#34;Restarting&#34;: false, &#34;OOMKilled&#34;: false, &#34;Dead&#34;: false, &#34;Pid&#34;: 12164, &#34;ExitCode&#34;: 0, &#34;Error&#34;: &#34;&#34;, &#34;StartedAt&#34;: &#34;2019-08-22T06:08:43.334320939Z&#34;, &#34;FinishedAt&#34;: &#34;2019-08-21T09:25:32.130119566Z&#34; }, &#34;Image&#34;: &#34;sha256:e600f86aa4e2aced43a193a28aa507651bfb77daa09ca8dbf286451a630cf27e&#34;, // node-web-app 的 docker 镜像 id &#34;ResolvConfPath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf&#34;, &#34;HostnamePath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname&#34;, &#34;HostsPath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts&#34;,">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://stardustman.github.io/2019/09/03/docker-practice/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2019-09-03T14:20:16+08:00">
+<meta property="article:modified_time" content="2019-09-03T14:20:16+08:00">
+<meta itemprop=name content="docker-practice">
+<meta itemprop=description content="Centos7 Linux 运行的 Docker 容器是: mssql-node-docker-demo-app docker info #(docker-info) docker inspect [ { &#34;Id&#34;: &#34;405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655&#34;, &#34;Created&#34;: &#34;2019-08-01T02:57:14.067532309Z&#34;, &#34;Path&#34;: &#34;/bin/sh&#34;, &#34;Args&#34;: [ &#34;-c&#34;, &#34;/bin/bash ./entrypoint.sh&#34; ], &#34;State&#34;: { &#34;Status&#34;: &#34;running&#34;, &#34;Running&#34;: true, &#34;Paused&#34;: false, &#34;Restarting&#34;: false, &#34;OOMKilled&#34;: false, &#34;Dead&#34;: false, &#34;Pid&#34;: 12164, &#34;ExitCode&#34;: 0, &#34;Error&#34;: &#34;&#34;, &#34;StartedAt&#34;: &#34;2019-08-22T06:08:43.334320939Z&#34;, &#34;FinishedAt&#34;: &#34;2019-08-21T09:25:32.130119566Z&#34; }, &#34;Image&#34;: &#34;sha256:e600f86aa4e2aced43a193a28aa507651bfb77daa09ca8dbf286451a630cf27e&#34;, // node-web-app 的 docker 镜像 id &#34;ResolvConfPath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf&#34;, &#34;HostnamePath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname&#34;, &#34;HostsPath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts&#34;,"><meta itemprop=datePublished content="2019-09-03T14:20:16+08:00">
+<meta itemprop=dateModified content="2019-09-03T14:20:16+08:00">
+<meta itemprop=wordCount content="592">
+<meta itemprop=keywords content="docker,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="docker-practice">
+<meta name=twitter:description content="Centos7 Linux 运行的 Docker 容器是: mssql-node-docker-demo-app docker info #(docker-info) docker inspect [ { &#34;Id&#34;: &#34;405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655&#34;, &#34;Created&#34;: &#34;2019-08-01T02:57:14.067532309Z&#34;, &#34;Path&#34;: &#34;/bin/sh&#34;, &#34;Args&#34;: [ &#34;-c&#34;, &#34;/bin/bash ./entrypoint.sh&#34; ], &#34;State&#34;: { &#34;Status&#34;: &#34;running&#34;, &#34;Running&#34;: true, &#34;Paused&#34;: false, &#34;Restarting&#34;: false, &#34;OOMKilled&#34;: false, &#34;Dead&#34;: false, &#34;Pid&#34;: 12164, &#34;ExitCode&#34;: 0, &#34;Error&#34;: &#34;&#34;, &#34;StartedAt&#34;: &#34;2019-08-22T06:08:43.334320939Z&#34;, &#34;FinishedAt&#34;: &#34;2019-08-21T09:25:32.130119566Z&#34; }, &#34;Image&#34;: &#34;sha256:e600f86aa4e2aced43a193a28aa507651bfb77daa09ca8dbf286451a630cf27e&#34;, // node-web-app 的 docker 镜像 id &#34;ResolvConfPath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf&#34;, &#34;HostnamePath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname&#34;, &#34;HostsPath&#34;: &#34;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts&#34;,"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>keep writing</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/categories/>
+<li class=mobile-menu-item>Categories</li>
+</a><a href=/2022/03/27/about/>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>keep writing</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/categories/>Categories</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/2022/03/27/about/>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>docker-practice</h1>
+<div class=post-meta>
+<span class=post-time> 2019-09-03 </span>
+<span class=more-meta> 592 words </span>
+<span class=more-meta> 2 mins read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li>
+<ul>
+<li><a href=#docker-info>docker info</a></li>
+<li><a href=#docker-inspect>docker inspect</a></li>
+<li><a href=#docker-volume>docker volume</a>
+<ul>
+<li><a href=#mount>mount</a></li>
+</ul>
+</li>
+<li><a href=#local-docker-container-网络>Local Docker container 网络</a></li>
+<li><a href=#container-网络配置>Container 网络配置</a></li>
+<li><a href=#docker-images-分层>Docker Images 分层</a>
+<ul>
+<li><a href=#mergeddir>MergedDir</a></li>
+</ul>
+</li>
+<li><a href=#reference>Reference</a></li>
+</ul>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<blockquote>
+<p>Centos7 Linux
+运行的 Docker 容器是: mssql-node-docker-demo-app</p>
+</blockquote>
+<h2 id=docker-info>docker info</h2>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/docker-info.png alt=docker-info> #(docker-info)</p>
+<h2 id=docker-inspect>docker inspect</h2>
+<pre><code class=language-json>[
+    {
+        &quot;Id&quot;: &quot;405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655&quot;,
+        &quot;Created&quot;: &quot;2019-08-01T02:57:14.067532309Z&quot;,
+        &quot;Path&quot;: &quot;/bin/sh&quot;,
+        &quot;Args&quot;: [
+            &quot;-c&quot;,
+            &quot;/bin/bash ./entrypoint.sh&quot;
+        ],
+        &quot;State&quot;: {
+            &quot;Status&quot;: &quot;running&quot;,
+            &quot;Running&quot;: true,
+            &quot;Paused&quot;: false,
+            &quot;Restarting&quot;: false,
+            &quot;OOMKilled&quot;: false,
+            &quot;Dead&quot;: false,
+            &quot;Pid&quot;: 12164,
+            &quot;ExitCode&quot;: 0,
+            &quot;Error&quot;: &quot;&quot;,
+            &quot;StartedAt&quot;: &quot;2019-08-22T06:08:43.334320939Z&quot;,
+            &quot;FinishedAt&quot;: &quot;2019-08-21T09:25:32.130119566Z&quot;
+        },
+        &quot;Image&quot;: &quot;sha256:e600f86aa4e2aced43a193a28aa507651bfb77daa09ca8dbf286451a630cf27e&quot;, // node-web-app 的 docker 镜像 id
+        &quot;ResolvConfPath&quot;: &quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf&quot;,
+        &quot;HostnamePath&quot;: &quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname&quot;,
+        &quot;HostsPath&quot;: &quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts&quot;,
+        &quot;LogPath&quot;: &quot;&quot;,
+        &quot;Name&quot;: &quot;/friendly_hamilton&quot;, // docker container 的名称
+        &quot;RestartCount&quot;: 0,
+        &quot;Driver&quot;: &quot;overlay2&quot;, // storage driver
+        &quot;MountLabel&quot;: &quot;&quot;,
+        &quot;ProcessLabel&quot;: &quot;&quot;,
+        &quot;AppArmorProfile&quot;: &quot;&quot;,
+        &quot;ExecIDs&quot;: null,
+        &quot;HostConfig&quot;: {
+            &quot;Binds&quot;: null,
+            &quot;ContainerIDFile&quot;: &quot;&quot;,
+            &quot;LogConfig&quot;: {
+                &quot;Type&quot;: &quot;journald&quot;,
+                &quot;Config&quot;: {}
+            },
+            &quot;NetworkMode&quot;: &quot;default&quot;,
+            &quot;PortBindings&quot;: {
+                &quot;1433/tcp&quot;: [
+                    {
+                        &quot;HostIp&quot;: &quot;&quot;,
+                        &quot;HostPort&quot;: &quot;1433&quot;
+                    }
+                ],
+                &quot;8080/tcp&quot;: [
+                    {
+                        &quot;HostIp&quot;: &quot;&quot;,
+                        &quot;HostPort&quot;: &quot;8080&quot;
+                    }
+                ]
+            },
+            &quot;RestartPolicy&quot;: {
+                &quot;Name&quot;: &quot;no&quot;,
+                &quot;MaximumRetryCount&quot;: 0
+            },
+            &quot;AutoRemove&quot;: false,
+            &quot;VolumeDriver&quot;: &quot;&quot;,
+            &quot;VolumesFrom&quot;: null,
+            &quot;CapAdd&quot;: null,
+            &quot;CapDrop&quot;: null,
+            &quot;Dns&quot;: [],
+            &quot;DnsOptions&quot;: [],
+            &quot;DnsSearch&quot;: [],
+            &quot;ExtraHosts&quot;: null,
+            &quot;GroupAdd&quot;: null,
+            &quot;IpcMode&quot;: &quot;&quot;,
+            &quot;Cgroup&quot;: &quot;&quot;,
+            &quot;Links&quot;: null,
+            &quot;OomScoreAdj&quot;: 0,
+            &quot;PidMode&quot;: &quot;&quot;,
+            &quot;Privileged&quot;: false,
+            &quot;PublishAllPorts&quot;: false,
+            &quot;ReadonlyRootfs&quot;: false,
+            &quot;SecurityOpt&quot;: null,
+            &quot;UTSMode&quot;: &quot;&quot;,
+            &quot;UsernsMode&quot;: &quot;&quot;,
+            &quot;ShmSize&quot;: 67108864,
+            &quot;Runtime&quot;: &quot;docker-runc&quot;,
+            &quot;ConsoleSize&quot;: [
+                0,
+                0
+            ],
+            &quot;Isolation&quot;: &quot;&quot;,
+            &quot;CpuShares&quot;: 0,
+            &quot;Memory&quot;: 0,
+            &quot;NanoCpus&quot;: 0,
+            &quot;CgroupParent&quot;: &quot;&quot;,
+            &quot;BlkioWeight&quot;: 0,
+            &quot;BlkioWeightDevice&quot;: null,
+            &quot;BlkioDeviceReadBps&quot;: null,
+            &quot;BlkioDeviceWriteBps&quot;: null,
+            &quot;BlkioDeviceReadIOps&quot;: null,
+            &quot;BlkioDeviceWriteIOps&quot;: null,
+            &quot;CpuPeriod&quot;: 0,
+            &quot;CpuQuota&quot;: 0,
+            &quot;CpuRealtimePeriod&quot;: 0,
+            &quot;CpuRealtimeRuntime&quot;: 0,
+            &quot;CpusetCpus&quot;: &quot;&quot;,
+            &quot;CpusetMems&quot;: &quot;&quot;,
+            &quot;Devices&quot;: [],
+            &quot;DiskQuota&quot;: 0,
+            &quot;KernelMemory&quot;: 0,
+            &quot;MemoryReservation&quot;: 0,
+            &quot;MemorySwap&quot;: 0,
+            &quot;MemorySwappiness&quot;: -1,
+            &quot;OomKillDisable&quot;: false,
+            &quot;PidsLimit&quot;: 0,
+            &quot;Ulimits&quot;: null,
+            &quot;CpuCount&quot;: 0,
+            &quot;CpuPercent&quot;: 0,
+            &quot;IOMaximumIOps&quot;: 0,
+            &quot;IOMaximumBandwidth&quot;: 0
+        },
+        &quot;GraphDriver&quot;: {
+            &quot;Name&quot;: &quot;overlay2&quot;,
+            &quot;Data&quot;: {
+                &quot;LowerDir&quot;: &quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2-init/diff:/var/lib/docker/overlay2/83b7194d94d42c0ef8f78a2f4105cc7a7a215a8e885b695a933a8f8212db9cfa/diff:/var/lib/docker/overlay2/9549118d3883d39414fadf0dc17e654d1408878be3296b294711ee65ef336b98/diff:/var/lib/docker/overlay2/8e85764472e79d42f469dd3681883cd415e85098d6c42fb3dd239471212f87b3/diff:/var/lib/docker/overlay2/8dc8ec519bade76b07994adc690d1e6fcad408147835198a250b4c66c489a151/diff:/var/lib/docker/overlay2/b07d1c7463b2a4ff25f7800729381fdf5b036c12a065973b9d079580c3a50a5e/diff:/var/lib/docker/overlay2/60c9257cc9d8a7ac4b66d1c4cae5ff994471976f0a344f8ac1856a4fba7b290e/diff:/var/lib/docker/overlay2/2a00c5b47427e151e000ffe05de8121e956dbf15b0d356cfc9ad2754dc5554d5/diff:/var/lib/docker/overlay2/3495bcc2d508cbdad81b1f3eb49645fe0eb05caf0e99fbb6310d40fbdd8118a2/diff:/var/lib/docker/overlay2/9df322481c6f8b91b3583016634664e6ad991b8b846a9585385227a02b898770/diff:/var/lib/docker/overlay2/163747850da2115bac28b39ac6d2e08ca5c0e409fe6cae624155f8e61489aacd/diff:/var/lib/docker/overlay2/52405978404b67e0a67ba95cb12682d0e8a8ae781fd2b21dc2ab94197e97c38b/diff:/var/lib/docker/overlay2/c987c31253bca839eb789feb3e4fe7bc247b1e88dc88c67e2b4209fc26025fe8/diff:/var/lib/docker/overlay2/ed663d4b2fffda783f9b69e5eb7c139f34142e0e2d868460a3c1e1d925ec3e7e/diff:/var/lib/docker/overlay2/a0e3d07a65b7ee70d3869fa41418ecf71056b9ac0ba1182170621c83c77bba94/diff:/var/lib/docker/overlay2/aa4c66b37aae4e55a94aa60ac763a60851af34271ccb1a80f547e3d90e7ac2bf/diff:/var/lib/docker/overlay2/527b1a014d302c1fe835d778be6cd008de6741d290fbc0f2e64e3f25f7a7b8d0/diff&quot;,
+                &quot;MergedDir&quot;: &quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/merged&quot;,
+                &quot;UpperDir&quot;: &quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/diff&quot;,
+                &quot;WorkDir&quot;: &quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/work&quot;
+            }
+        },
+        &quot;Mounts&quot;: [
+            {
+                &quot;Type&quot;: &quot;volume&quot;,
+                &quot;Name&quot;: &quot;7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834&quot;,
+                &quot;Source&quot;: &quot;/var/lib/docker/volumes/7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834/_data&quot;, // host 主机的被挂在的目录
+                &quot;Destination&quot;: &quot;/var/opt/mssql&quot;, // Volume 挂载点
+                &quot;Driver&quot;: &quot;local&quot;,
+                &quot;Mode&quot;: &quot;&quot;,
+                &quot;RW&quot;: true,
+                &quot;Propagation&quot;: &quot;&quot;
+            }
+        ],
+        &quot;Config&quot;: {
+            &quot;Hostname&quot;: &quot;405a378d6f88&quot;,
+            &quot;Domainname&quot;: &quot;&quot;,
+            &quot;User&quot;: &quot;&quot;,
+            &quot;AttachStdin&quot;: false,
+            &quot;AttachStdout&quot;: false,
+            &quot;AttachStderr&quot;: false,
+            &quot;ExposedPorts&quot;: {
+                &quot;1433/tcp&quot;: {},
+                &quot;8080/tcp&quot;: {}
+            },
+            &quot;Tty&quot;: false,
+            &quot;OpenStdin&quot;: false,
+            &quot;StdinOnce&quot;: false,
+            &quot;Env&quot;: [
+                &quot;ACCEPT_EULA=Y&quot;,
+                &quot;SA_PASSWORD=Yukon900&quot;,
+                &quot;PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin&quot;
+            ],
+            &quot;Cmd&quot;: [
+                &quot;/bin/sh&quot;,
+                &quot;-c&quot;,
+                &quot;/bin/bash ./entrypoint.sh&quot;
+            ],
+            &quot;ArgsEscaped&quot;: true,
+            &quot;Image&quot;: &quot;node-web-app&quot;,
+            &quot;Volumes&quot;: {
+                &quot;/var/opt/mssql&quot;: {}
+            },
+            &quot;WorkingDir&quot;: &quot;/usr/src/app&quot;,
+            &quot;Entrypoint&quot;: null,
+            &quot;OnBuild&quot;: null,
+            &quot;Labels&quot;: {
+                &quot;com.microsoft.product&quot;: &quot;Microsoft SQL Server&quot;,
+                &quot;com.microsoft.version&quot;: &quot;14.0.3048.4&quot;,
+                &quot;vendor&quot;: &quot;Microsoft&quot;
+            }
+        },
+        &quot;NetworkSettings&quot;: {
+            &quot;Bridge&quot;: &quot;&quot;,
+            &quot;SandboxID&quot;: &quot;d21ee4834e9078042da65677d8db9717748eb7f86a6954c5e4eee29636159aa7&quot;,
+            &quot;HairpinMode&quot;: false,
+            &quot;LinkLocalIPv6Address&quot;: &quot;&quot;,
+            &quot;LinkLocalIPv6PrefixLen&quot;: 0,
+            &quot;Ports&quot;: {
+                &quot;1433/tcp&quot;: [
+                    {
+                        &quot;HostIp&quot;: &quot;0.0.0.0&quot;,
+                        &quot;HostPort&quot;: &quot;1433&quot;
+                    }
+                ],
+                &quot;8080/tcp&quot;: [
+                    {
+                        &quot;HostIp&quot;: &quot;0.0.0.0&quot;,
+                        &quot;HostPort&quot;: &quot;8080&quot;
+                    }
+                ]
+            },
+            &quot;SandboxKey&quot;: &quot;/var/run/docker/netns/d21ee4834e90&quot;,
+            &quot;SecondaryIPAddresses&quot;: null,
+            &quot;SecondaryIPv6Addresses&quot;: null,
+            &quot;EndpointID&quot;: &quot;46dac1ff81a297ede919100e0d06a743b845e34b802b54bca8cb8f02dcd33c85&quot;,
+            &quot;Gateway&quot;: &quot;172.17.0.1&quot;,
+            &quot;GlobalIPv6Address&quot;: &quot;&quot;,
+            &quot;GlobalIPv6PrefixLen&quot;: 0,
+            &quot;IPAddress&quot;: &quot;172.17.0.2&quot;,
+            &quot;IPPrefixLen&quot;: 16,
+            &quot;IPv6Gateway&quot;: &quot;&quot;,
+            &quot;MacAddress&quot;: &quot;02:42:ac:11:00:02&quot;,
+            &quot;Networks&quot;: {
+                &quot;bridge&quot;: {
+                    &quot;IPAMConfig&quot;: null,
+                    &quot;Links&quot;: null,
+                    &quot;Aliases&quot;: null,
+                    &quot;NetworkID&quot;: &quot;a8af0599996912141c3f2ce4b0a2bcc48eea9164a35672aac6307333450acb6b&quot;, //a8af05999969 
+                    &quot;EndpointID&quot;: &quot;46dac1ff81a297ede919100e0d06a743b845e34b802b54bca8cb8f02dcd33c85&quot;,
+                    &quot;Gateway&quot;: &quot;172.17.0.1&quot;,
+                    &quot;IPAddress&quot;: &quot;172.17.0.2&quot;,
+                    &quot;IPPrefixLen&quot;: 16,
+                    &quot;IPv6Gateway&quot;: &quot;&quot;,
+                    &quot;GlobalIPv6Address&quot;: &quot;&quot;,
+                    &quot;GlobalIPv6PrefixLen&quot;: 0,
+                    &quot;MacAddress&quot;: &quot;02:42:ac:11:00:02&quot; 
+                }
+            }
+        }
+    }
+]
+
+</code></pre>
+<h2 id=docker-volume>docker volume</h2>
+<h3 id=mount>mount</h3>
+<pre><code class=language-json>   &quot;Mounts&quot;: [
+            {
+                &quot;Type&quot;: &quot;volume&quot;,
+                &quot;Name&quot;: &quot;7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834&quot;,
+                &quot;Source&quot;: &quot;/var/lib/docker/volumes/7bc1a7ad23925077cf8463c2d7a21b0cafc7d91305d89504f85fa76c33138834/_data&quot;, // host 主机的被挂载的目录
+                &quot;Destination&quot;: &quot;/var/opt/mssql&quot;, // Volume 挂载点
+                &quot;Driver&quot;: &quot;local&quot;,
+                &quot;Mode&quot;: &quot;&quot;,
+                &quot;RW&quot;: true,
+                &quot;Propagation&quot;: &quot;&quot;
+            }
+        ]
+</code></pre>
+<h2 id=local-docker-container-网络>Local Docker container 网络</h2>
+<pre><code class=language-json>{
+&quot;ResolvConfPath&quot;: &quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/resolv.conf&quot;,
+&quot;HostnamePath&quot;: &quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hostname&quot;,
+&quot;HostsPath&quot;: &quot;/var/lib/docker/containers/405a378d6f88f903dda5972dbfb8f037efff22296c3aaf4c50d44ebd68ad8655/hosts&quot;,
+}
+</code></pre>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/local-var-lib-docker-container.png alt=local-var-lib-docker-container> #(本地存储的容器的网络配置)</p>
+<h2 id=container-网络配置>Container 网络配置</h2>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/container-etc.png alt=container-etc> #(容器的网络配置)</p>
+<h2 id=docker-images-分层>Docker Images 分层</h2>
+<pre><code class=language-json>{
+&quot;GraphDriver&quot;: {
+            &quot;Name&quot;: &quot;overlay2&quot;,
+            &quot;Data&quot;: {
+                &quot;LowerDir&quot;: &quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2-init/diff:/var/lib/docker/overlay2/83b7194d94d42c0ef8f78a2f4105cc7a7a215a8e885b695a933a8f8212db9cfa/diff:/var/lib/docker/overlay2/9549118d3883d39414fadf0dc17e654d1408878be3296b294711ee65ef336b98/diff:/var/lib/docker/overlay2/8e85764472e79d42f469dd3681883cd415e85098d6c42fb3dd239471212f87b3/diff:/var/lib/docker/overlay2/8dc8ec519bade76b07994adc690d1e6fcad408147835198a250b4c66c489a151/diff:/var/lib/docker/overlay2/b07d1c7463b2a4ff25f7800729381fdf5b036c12a065973b9d079580c3a50a5e/diff:/var/lib/docker/overlay2/60c9257cc9d8a7ac4b66d1c4cae5ff994471976f0a344f8ac1856a4fba7b290e/diff:/var/lib/docker/overlay2/2a00c5b47427e151e000ffe05de8121e956dbf15b0d356cfc9ad2754dc5554d5/diff:/var/lib/docker/overlay2/3495bcc2d508cbdad81b1f3eb49645fe0eb05caf0e99fbb6310d40fbdd8118a2/diff:/var/lib/docker/overlay2/9df322481c6f8b91b3583016634664e6ad991b8b846a9585385227a02b898770/diff:/var/lib/docker/overlay2/163747850da2115bac28b39ac6d2e08ca5c0e409fe6cae624155f8e61489aacd/diff:/var/lib/docker/overlay2/52405978404b67e0a67ba95cb12682d0e8a8ae781fd2b21dc2ab94197e97c38b/diff:/var/lib/docker/overlay2/c987c31253bca839eb789feb3e4fe7bc247b1e88dc88c67e2b4209fc26025fe8/diff:/var/lib/docker/overlay2/ed663d4b2fffda783f9b69e5eb7c139f34142e0e2d868460a3c1e1d925ec3e7e/diff:/var/lib/docker/overlay2/a0e3d07a65b7ee70d3869fa41418ecf71056b9ac0ba1182170621c83c77bba94/diff:/var/lib/docker/overlay2/aa4c66b37aae4e55a94aa60ac763a60851af34271ccb1a80f547e3d90e7ac2bf/diff:/var/lib/docker/overlay2/527b1a014d302c1fe835d778be6cd008de6741d290fbc0f2e64e3f25f7a7b8d0/diff&quot;,
+                &quot;MergedDir&quot;: &quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/merged&quot;,
+                &quot;UpperDir&quot;: &quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/diff&quot;,
+                &quot;WorkDir&quot;: &quot;/var/lib/docker/overlay2/efead8cb8732e4ccfc24485c253d02838842d6dfd9a2ee60a9142c69cb54f4a2/work&quot;
+            }
+        }
+}
+</code></pre>
+<h3 id=mergeddir>MergedDir</h3>
+<blockquote>
+<p>这个 MergedDir 层就是一个 Linux 镜像</p>
+</blockquote>
+<p><img src=https://github.com/stardustman/pictures/raw/main/img/merged-dir.png alt=merged-dir> #( 镜像 Merged 层)</p>
+<h2 id=reference>Reference</h2>
+<ol>
+<li>
+<p><a href=https://github.com/twright-msft/mssql-node-docker-demo-app/blob/master/Dockerfile>mssql-node-docker-demo-app</a></p>
+</li>
+<li>
+<p><a href=https://docs.docker.com/storage/storagedriver/>storage driver</a></p>
+</li>
+<li>
+<p><a href=https://medium.com/better-programming/about-var-run-docker-sock-3bfd276e12fd>var-run-docker-sock</a></p>
+</li>
+<li>
+<p><a href=https://blog.csdn.net/boling_cavalry/article/details/92846483>docker 的 /var/run/docker.sock 参数</a></p>
+</li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>librarian</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2019-09-03
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2019/09/03/docker-practice/index.md target=_blank>The Markdown version »</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/docker/>docker</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/2019/09/10/wireshark/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">wireshark</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/2019/07/17/clang-structure/>
+<span class="next-text nav-default">clang-structure</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<span class=copyright-year>
+&copy;
+2019 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>librarian</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
