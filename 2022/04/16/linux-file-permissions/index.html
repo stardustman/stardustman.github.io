@@ -1,0 +1,310 @@
+<!doctype html><html lang=en>
+<head>
+<meta charset=utf-8>
+<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
+<title>Linux File Permissions - stardustman</title>
+<meta name=renderer content="webkit">
+<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
+<meta http-equiv=cache-control content="no-transform">
+<meta http-equiv=cache-control content="no-siteapp">
+<meta name=theme-color content="#f8f5ec">
+<meta name=msapplication-navbutton-color content="#f8f5ec">
+<meta name=apple-mobile-web-app-capable content="yes">
+<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
+<meta name=author content="librarian"><meta name=description content="最近在使用 k8s 过程中，需要给 mount 的文件配置权限。 提起 file 的权限只想到 rwx，是不全面的,完整的权限是 rwxsStT。 权限列表 权限导图 特殊权限 setuid Setuid is"><meta name=keywords content="Hugo,theme,even">
+<meta name=generator content="Hugo 0.91.2 with theme even">
+<link rel=canonical href=http://stardustman.github.io/2022/04/16/linux-file-permissions/>
+<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
+<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
+<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
+<link rel=manifest href=/manifest.json>
+<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
+<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
+<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
+<meta property="og:title" content="Linux File Permissions">
+<meta property="og:description" content="最近在使用 k8s 过程中，需要给 mount 的文件配置权限。 提起 file 的权限只想到 rwx，是不全面的,完整的权限是 rwxsStT。 权限列表 权限导图 特殊权限 setuid Setuid is">
+<meta property="og:type" content="article">
+<meta property="og:url" content="http://stardustman.github.io/2022/04/16/linux-file-permissions/"><meta property="article:section" content="post">
+<meta property="article:published_time" content="2022-04-16T17:33:29+08:00">
+<meta property="article:modified_time" content="2022-04-16T17:33:29+08:00">
+<meta itemprop=name content="Linux File Permissions">
+<meta itemprop=description content="最近在使用 k8s 过程中，需要给 mount 的文件配置权限。 提起 file 的权限只想到 rwx，是不全面的,完整的权限是 rwxsStT。 权限列表 权限导图 特殊权限 setuid Setuid is"><meta itemprop=datePublished content="2022-04-16T17:33:29+08:00">
+<meta itemprop=dateModified content="2022-04-16T17:33:29+08:00">
+<meta itemprop=wordCount content="838">
+<meta itemprop=keywords content="linux,file,"><meta name=twitter:card content="summary">
+<meta name=twitter:title content="Linux File Permissions">
+<meta name=twitter:description content="最近在使用 k8s 过程中，需要给 mount 的文件配置权限。 提起 file 的权限只想到 rwx，是不全面的,完整的权限是 rwxsStT。 权限列表 权限导图 特殊权限 setuid Setuid is"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
+</head>
+<body>
+<div id=mobile-navbar class=mobile-navbar>
+<div class=mobile-header-logo>
+<a href=/ class=logo>keep writing</a>
+</div>
+<div class=mobile-navbar-icon>
+<span></span>
+<span></span>
+<span></span>
+</div>
+</div>
+<nav id=mobile-menu class="mobile-menu slideout-menu">
+<ul class=mobile-menu-list>
+<a href=/>
+<li class=mobile-menu-item>Home</li>
+</a><a href=/post/>
+<li class=mobile-menu-item>Archives</li>
+</a><a href=/tags/>
+<li class=mobile-menu-item>Tags</li>
+</a><a href=/categories/>
+<li class=mobile-menu-item>Categories</li>
+</a><a href=/2022/03/27/about/>
+<li class=mobile-menu-item>About</li>
+</a>
+</ul>
+</nav>
+<div class=container id=mobile-panel>
+<header id=header class=header>
+<div class=logo-wrapper>
+<a href=/ class=logo>keep writing</a>
+</div>
+<nav class=site-navbar>
+<ul id=menu class=menu>
+<li class=menu-item>
+<a class=menu-item-link href=/>Home</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/post/>Archives</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/tags/>Tags</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/categories/>Categories</a>
+</li><li class=menu-item>
+<a class=menu-item-link href=/2022/03/27/about/>About</a>
+</li>
+</ul>
+</nav>
+</header>
+<main id=main class=main>
+<div class=content-wrapper>
+<div id=content class=content>
+<article class=post>
+<header class=post-header>
+<h1 class=post-title>Linux File Permissions</h1>
+<div class=post-meta>
+<span class=post-time> 2022-04-16 </span>
+<span class=more-meta> 838 words </span>
+<span class=more-meta> 2 mins read </span>
+</div>
+</header>
+<div class=post-toc id=post-toc>
+<h2 class=post-toc-title>Contents</h2>
+<div class="post-toc-content always-active">
+<nav id=TableOfContents>
+<ul>
+<li><a href=#权限列表>权限列表</a></li>
+<li><a href=#权限导图>权限导图</a></li>
+<li><a href=#特殊权限>特殊权限</a>
+<ul>
+<li><a href=#setuid>setuid</a></li>
+<li><a href=#setgid>setgid</a>
+<ul>
+<li><a href=#作用于-file>作用于 file</a></li>
+<li><a href=#作用于-directory>作用于 directory</a></li>
+</ul>
+</li>
+<li><a href=#sticky-bit>sticky-bit</a>
+<ul>
+<li><a href=#tmp-默认开启了-sticky-bit>/tmp 默认开启了 <code>sticky bit</code></a></li>
+<li><a href=#tmp-关闭-sticky-bit>/tmp 关闭 <code>sticky-bit</code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href=#references>References</a></li>
+</ul>
+</nav>
+</div>
+</div>
+<div class=post-content>
+<blockquote>
+<p>最近在使用 k8s 过程中，需要给 mount 的文件配置权限。
+提起 file 的权限只想到 rwx，是不全面的,完整的权限是 rwxsStT。</p>
+</blockquote>
+<h1 id=权限列表>权限列表</h1>
+<p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/file-permission.jpg alt=file-permission></p>
+<h1 id=权限导图>权限导图</h1>
+<p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/Linux-File-Permission-Map.png alt=file-permission-map></p>
+<h1 id=特殊权限>特殊权限</h1>
+<h2 id=setuid>setuid</h2>
+<blockquote>
+<p><code>Setuid</code> is a Linux file permission setting that allows a user to <code>execute</code> that file or program with the permission of the <code>owner</code> of that file.
+很明显，setuid 这个权限要和 execute 权限一起使用，作用于可执行文件。</p>
+</blockquote>
+<p>以 <code>passwd</code> 这个命令为例：</p>
+<pre><code class=language-bash>stardust@os:bin$ ls -l /usr/bin/passwd 
+-rwsr-xr-x 1 root root 68208 Jul 15  2021 /usr/bin/passwd
+stardust@os:bin$ stat $(which passwd)
+  File: /usr/bin/passwd
+  Size: 68208           Blocks: 136        IO Block: 4096   regular file
+Device: 812h/2066d      Inode: 659228      Links: 1
+Access: (4755/-rwsr-xr-x)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2022-04-16 20:28:18.403355543 +0800
+Modify: 2021-07-15 06:08:18.000000000 +0800
+Change: 2021-10-30 22:33:09.394547633 +0800
+ Birth: -
+</code></pre>
+<blockquote>
+<p>可以看到 <code>passwd</code> 这个可执行文件的权限是 rwsr-xr-x 也就是 4755，这才是完整的权限。
+rws 中 <code>s</code> 表明 user 组的权限中启用了 <code>setuid</code>。s 表明 execute + setuid。
+查看 man passwd 得知 user 的密码以及密码相关信息保存在 <a href=https://linuxize.com/post/etc-shadow-file/>/etc/shadow</a> 中，但是 /etc/shadow 的权限是:</p>
+</blockquote>
+<pre><code class=language-bash>stardust@os:~$ ls -l /etc/shadow
+-rw-r----- 1 root shadow 1669 Mar 31 23:08 /etc/shadow
+</code></pre>
+<p>可以看到 <code>/etc/shadow</code> 只允许 <code>root</code> 用户进行修改。但是执行 <code>passwd</code> 却可以修改这个文件，这是为什么呢？
+因为 <code>passwd</code> user 权限启用了 setuid，并且 <code>passwd</code> 这个可执行文件的 <code>owner</code> 是 <code>root</code>，这就是 <code>setuid</code> 的作用了。
+由于 <code>passwd</code> 启用了 <code>setuid</code>，普通用户，如 <code>stardust</code> 这个用户在执行 <code>passwd</code> 这个程序时，会以 <code>root</code> 用户, 而不是以 <code>stardust</code> 这个用户运行程序，所以 <code>stardust</code> 执行 <code>passwd</code> 是可以修改 <code>/etc/shadow</code> 这个文件的。</p>
+<pre><code class=language-bash># 1. 查看 passwd 启用了 setuid
+stardust@os:~$ ls -l /usr/bin/passwd 
+-rwsr-xr-x 1 root root 68208 Jul 15  2021 /usr/bin/passwd 
+# 2. 修改 stardust 密码
+stardust@os:~$ passwd stardust
+Changing password for stardust.
+Current password: 
+# 另外一个终端查看
+stardust@os:Namespaces$ ps -ef | grep passwd
+root      299906  299450  0 12:03 pts/5    00:00:00 passwd stardust # 3. 可以看出 passwd stardust 是以 root 用户执行的
+stardust  300029  299940  0 12:03 pts/6    00:00:00 grep --color=auto passwd
+</code></pre>
+<p>开启 setuid 权限经常使用的命令还有 <code>sudo</code>。</p>
+<pre><code class=language-bash>stardust@os:~$ ls -al /usr/bin/sudo
+-rwsr-xr-x 1 root root 166056 Jan 19  2021 /usr/bin/sudo
+</code></pre>
+<h2 id=setgid>setgid</h2>
+<h3 id=作用于-file>作用于 file</h3>
+<blockquote>
+<p>setgid 作用于文件和 setuid 所起作用类似。</p>
+</blockquote>
+<h3 id=作用于-directory>作用于 directory</h3>
+<blockquote>
+<p>在该目录下创建的文件或者目录继承该目录的 group。</p>
+</blockquote>
+<h2 id=sticky-bit>sticky-bit</h2>
+<blockquote>
+<p>When <code>sticky bit</code> is set on a directory, the files in that directory can <code>only</code> be removed by the owner.
+A typical use of this is <code>/tmp/</code>
+The /tmp directory can be written to by any user, but other users cannot delete the files of others.</p>
+</blockquote>
+<h3 id=tmp-默认开启了-sticky-bit>/tmp 默认开启了 <code>sticky bit</code></h3>
+<pre><code class=language-bash>stardust@os:tmp$ ls -ld /tmp
+drwxrwxrwt 25 root root 4096 Apr 17 18:22 /tmp
+stardust@os:tmp$ mkdir -v stardust-sticky
+mkdir: created directory 'stardust-sticky'
+stardust@os:tmp$ ls -ld stardust-sticky/
+drwxrwxr-x 2 stardust stardust 4096 Apr 17 18:22 stardust-sticky/
+stardust@os:tmp$ su test
+Password: 
+$ id
+uid=1002(test) gid=1002(test) groups=1002(test),1000(stardust)
+$ rm -rf /tmp/stardust-sticky
+rm: cannot remove '/tmp/stardust-sticky': Operation not permitted # test 这个 user 无法删除 /tmp/stardust-sticky 这个 directory 的。
+
+</code></pre>
+<h3 id=tmp-关闭-sticky-bit>/tmp 关闭 <code>sticky-bit</code></h3>
+<pre><code class=language-bash>stardust@os:tmp$ sudo chmod o-t /tmp # 关闭 /tmp 这个目录的 sticky bit
+stardust@os:tmp$ ls -ld /tmp
+drwxrwxrwx 25 root root 4096 Apr 17 18:22 /tmp
+stardust@os:tmp$ su test
+Password: 
+$ rm -rf /tmp/stardust-sticky # test 这个 user 可以成功删除 stardust 这个用户的 /tmp/stardust-sticky 目录
+$ exit
+stardust@os:tmp$ ls -ld stardust-sticky
+ls: cannot access 'stardust-sticky': No such file or directory
+
+</code></pre>
+<h1 id=references>References</h1>
+<ol>
+<li><a href=https://www.liquidweb.com/kb/how-do-i-set-up-setuid-setgid-and-sticky-bits-on-linux/>how-do-i-set-up-setuid-setgid-and-sticky-bits-on-linux/</a></li>
+<li><a href=https://linuxize.com/post/understanding-linux-file-permissions/>understanding-linux-file-permissions</a></li>
+<li><a href=https://trendoceans.com/what-is-sticky-bit-permission-and-how-to-use-it>what-is-sticky-bit-permission-and-how-to-use-it</a></li>
+<li><a href=https://www.liquidweb.com/kb/new-user-tutorial-basic-file-permissions/>basic-file-permissions</a></li>
+<li><a href=https://wiki.archlinux.org/title/File_permissions_and_attributes>https://wiki.archlinux.org/title/File_permissions_and_attributes</a></li>
+<li><a href=https://linuxize.com/post/etc-shadow-file/>etc-shadow-file</a></li>
+<li><a href=https://www.man7.org/linux/man-pages/man1/crontab.1.html>crontab</a></li>
+<li><a href=https://linuxize.com/post/how-to-create-users-in-linux-using-the-useradd-command/>useradd</a></li>
+</ol>
+</div>
+<div class=post-copyright>
+<p class=copyright-item>
+<span class=item-title>Author</span>
+<span class=item-content>librarian</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>LastMod</span>
+<span class=item-content>
+2022-04-16
+</span>
+</p>
+<p class=copyright-item>
+<span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2022/04/16/linux-file-permissions/index.md target=_blank>The Markdown version »</a></span>
+</p>
+</div>
+<footer class=post-footer>
+<div class=post-tags>
+<a href=/tags/linux/>linux</a>
+<a href=/tags/file/>file</a>
+</div>
+<nav class=post-nav>
+<a class=prev href=/2022/03/27/about/>
+<i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">About</span>
+<span class="prev-text nav-mobile">Prev</span>
+</a>
+<a class=next href=/2022/03/19/githubpage-hugo-website/>
+<span class="next-text nav-default">Githubpage Hugo Website</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i>
+</a>
+</nav>
+</footer>
+</article>
+</div>
+<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
+<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
+</div>
+</main>
+<footer id=footer class=footer>
+<div class=social-links>
+<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
+</div>
+<div class=copyright>
+<span class=power-by>
+Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
+</span>
+<span class=division>|</span>
+<span class=theme-info>
+Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
+</span>
+<span class=copyright-year>
+&copy;
+2019 -
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>librarian</span>
+</span>
+</div>
+</footer>
+<div class=back-to-top id=back-to-top>
+<i class="iconfont icon-up"></i>
+</div>
+</div>
+<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
+</body>
+</html>
