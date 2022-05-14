@@ -342,6 +342,93 @@ main:
 
 > 由 main 可以看出, 编译器对待数组 a , a 就是数组第一个元素的地址.
 
+## gdb 分析 array
+
+### arrays.c
+
+```c
+int main(){
+    int a[] = {1,2,3};
+    int b[] = {7,8,9,10};
+    return 0;
+}
+```
+
+### gdb arrays
+
+```bash
+stardust@os:container$ gcc -g arrays.c -o arrays
+stardust@os:container$ gdb arrays 
+
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from arrays...
+(gdb) break main
+Breakpoint 1 at 0x1149: file arrays.c, line 1.
+(gdb) run
+Starting program: /home/stardust/Desktop/k8s/container/arrays 
+
+Breakpoint 1, main () at arrays.c:1
+1       int main(){
+(gdb) next
+2           int a[] = {1,2,3};
+(gdb) print a
+$1 = {32767, 1431654832, 21845}
+(gdb) next 
+3           int b[] = {7,8,9,10};
+(gdb) print b
+$2 = {0, 0, 1431654496, 21845}
+(gdb) next
+4           return 0;
+(gdb) print b
+$3 = {7, 8, 9, 10}
+(gdb) ptype b # 数组 b 的类型为 int [4]
+type = int [4]
+(gdb) ptype a # 数组 a 的类型为 int [3]
+type = int [3]
+(gdb) print a
+$4 = {1, 2, 3}
+(gdb) print b
+$5 = {7, 8, 9, 10}
+(gdb) print &a
+$6 = (int (*)[3]) 0x7fffffffdb14
+(gdb) print &b
+$7 = (int (*)[4]) 0x7fffffffdb20
+(gdb) print sizeof(a)
+$8 = 12
+(gdb) print sizeof(b)
+$9 = 16
+(gdb) x/12xb &a
+0x7fffffffdb14: 0x01    0x00    0x00    0x00    0x02    0x00    0x00    0x00
+0x7fffffffdb1c: 0x03    0x00    0x00    0x00
+(gdb) print a + 1 # 指针运算
+$10 = (int *) 0x7fffffffdb18
+(gdb) print a + 2 # 指针运算
+$11 = (int *) 0x7fffffffdb1c
+(gdb) print x/4b a + 1
+(gdb) x/4xb a + 1 # 查看 a[1]
+0x7fffffffdb18: 0x02    0x00    0x00    0x00
+(gdb) x/4xb a # 查看 a[0]
+0x7fffffffdb14: 0x01    0x00    0x00    0x00
+(gdb) print a[0]
+$12 = 1
+(gdb) print *(a + 1)
+$13 = 2
+(gdb) print a[1]
+$14 = 2
+(gdb) ptype &a # &a 的类型是指向 3 个 int 元素的数组的指针
+type = int (*)[3]
+(gdb) ptype &b
+type = int (*)[4] # &b 的类型是指向 4 个 int 元素的数组的指针
+(gdb) print a + 1
+$15 = (int *) 0x7fffffffdb18
+(gdb) print &a + 1 # 下一个【指向 3 个 int 元素的数组的指针】的地址
+$16 = (int (*)[3]) 0x7fffffffdb20
+(gdb) print &b
+$18 = (int (*)[4]) 0x7fffffffdb20
+
+```
+
 # struct
 
 > A struct in the C programming language (and many derivatives) is a composite data type (or record) declaration that defines a physically grouped list of variables to be placed under one name in a block of memory, allowing the different variables to be accessed via a single pointer, or the struct declared name which returns the same address.
@@ -596,3 +683,5 @@ main:
 6. [pass-2d-array-parameter-c](https://www.geeksforgeeks.org/pass-2d-array-parameter-c/)
 7. [Variable Shadowing](https://en.wikipedia.org/wiki/Variable_shadowing)
 8. [function pointer](https://www.thegeekstuff.com/2012/01/advanced-c-pointers)
+9. [5-learning-c-with-gdb](https://www.recurse.com/blog/5-learning-c-with-gdb)
+10. [用 gdb 学 C 语言](https://zhuanlan.zhihu.com/p/483372519)

@@ -30,7 +30,7 @@
 <meta itemprop=name content="asm-clang-concepts">
 <meta itemprop=description content="C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&T 风格. 编译器是 gcc-x86-64-9.1 指针 A pointer is a programming language object that stores the memory address of another value located in computer memory. A pointer references a location in memory, and obtaining the value stored at that location is known"><meta itemprop=datePublished content="2019-06-25T16:57:59+08:00">
 <meta itemprop=dateModified content="2019-06-25T16:57:59+08:00">
-<meta itemprop=wordCount content="3553">
+<meta itemprop=wordCount content="3957">
 <meta itemprop=keywords content="asm,"><meta name=twitter:card content="summary">
 <meta name=twitter:title content="asm-clang-concepts">
 <meta name=twitter:description content="C 语言里的概念在 X86-64 汇编层面的分析. 汇编风格使用 AT&T 风格. 编译器是 gcc-x86-64-9.1 指针 A pointer is a programming language object that stores the memory address of another value located in computer memory. A pointer references a location in memory, and obtaining the value stored at that location is known"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
@@ -91,7 +91,7 @@
 <h1 class=post-title>asm-clang-concepts</h1>
 <div class=post-meta>
 <span class=post-time> 2019-06-25 </span>
-<span class=more-meta> 3553 words </span>
+<span class=more-meta> 3957 words </span>
 <span class=more-meta> 8 mins read </span>
 </div>
 </header>
@@ -142,6 +142,12 @@
 <li><a href=#sumarray-1>sumArray</a></li>
 <li><a href=#asm-summatrix>Asm sumMatrix</a></li>
 <li><a href=#asm-main>Asm main</a></li>
+</ul>
+</li>
+<li><a href=#gdb-分析-array>gdb 分析 array</a>
+<ul>
+<li><a href=#arraysc>arrays.c</a></li>
+<li><a href=#gdb-arrays>gdb arrays</a></li>
 </ul>
 </li>
 </ul>
@@ -477,6 +483,86 @@ C 语言中二维数组作为函数参数传递时, 一定要给出列的数目,
 <blockquote>
 <p>由 main 可以看出, 编译器对待数组 a , a 就是数组第一个元素的地址.</p>
 </blockquote>
+<h2 id=gdb-分析-array>gdb 分析 array</h2>
+<h3 id=arraysc>arrays.c</h3>
+<pre><code class=language-c>int main(){
+    int a[] = {1,2,3};
+    int b[] = {7,8,9,10};
+    return 0;
+}
+</code></pre>
+<h3 id=gdb-arrays>gdb arrays</h3>
+<pre><code class=language-bash>stardust@os:container$ gcc -g arrays.c -o arrays
+stardust@os:container$ gdb arrays 
+
+For help, type &quot;help&quot;.
+Type &quot;apropos word&quot; to search for commands related to &quot;word&quot;...
+Reading symbols from arrays...
+(gdb) break main
+Breakpoint 1 at 0x1149: file arrays.c, line 1.
+(gdb) run
+Starting program: /home/stardust/Desktop/k8s/container/arrays 
+
+Breakpoint 1, main () at arrays.c:1
+1       int main(){
+(gdb) next
+2           int a[] = {1,2,3};
+(gdb) print a
+$1 = {32767, 1431654832, 21845}
+(gdb) next 
+3           int b[] = {7,8,9,10};
+(gdb) print b
+$2 = {0, 0, 1431654496, 21845}
+(gdb) next
+4           return 0;
+(gdb) print b
+$3 = {7, 8, 9, 10}
+(gdb) ptype b # 数组 b 的类型为 int [4]
+type = int [4]
+(gdb) ptype a # 数组 a 的类型为 int [3]
+type = int [3]
+(gdb) print a
+$4 = {1, 2, 3}
+(gdb) print b
+$5 = {7, 8, 9, 10}
+(gdb) print &amp;a
+$6 = (int (*)[3]) 0x7fffffffdb14
+(gdb) print &amp;b
+$7 = (int (*)[4]) 0x7fffffffdb20
+(gdb) print sizeof(a)
+$8 = 12
+(gdb) print sizeof(b)
+$9 = 16
+(gdb) x/12xb &amp;a
+0x7fffffffdb14: 0x01    0x00    0x00    0x00    0x02    0x00    0x00    0x00
+0x7fffffffdb1c: 0x03    0x00    0x00    0x00
+(gdb) print a + 1 # 指针运算
+$10 = (int *) 0x7fffffffdb18
+(gdb) print a + 2 # 指针运算
+$11 = (int *) 0x7fffffffdb1c
+(gdb) print x/4b a + 1
+(gdb) x/4xb a + 1 # 查看 a[1]
+0x7fffffffdb18: 0x02    0x00    0x00    0x00
+(gdb) x/4xb a # 查看 a[0]
+0x7fffffffdb14: 0x01    0x00    0x00    0x00
+(gdb) print a[0]
+$12 = 1
+(gdb) print *(a + 1)
+$13 = 2
+(gdb) print a[1]
+$14 = 2
+(gdb) ptype &amp;a # &amp;a 的类型是指向 3 个 int 元素的数组的指针
+type = int (*)[3]
+(gdb) ptype &amp;b
+type = int (*)[4] # &amp;b 的类型是指向 4 个 int 元素的数组的指针
+(gdb) print a + 1
+$15 = (int *) 0x7fffffffdb18
+(gdb) print &amp;a + 1 # 下一个【指向 3 个 int 元素的数组的指针】的地址
+$16 = (int (*)[3]) 0x7fffffffdb20
+(gdb) print &amp;b
+$18 = (int (*)[4]) 0x7fffffffdb20
+
+</code></pre>
 <h1 id=struct>struct</h1>
 <blockquote>
 <p>A struct in the C programming language (and many derivatives) is a composite data type (or record) declaration that defines a physically grouped list of variables to be placed under one name in a block of memory, allowing the different variables to be accessed via a single pointer, or the struct declared name which returns the same address.</p>
@@ -702,6 +788,8 @@ int main(){
 <li><a href=https://www.geeksforgeeks.org/pass-2d-array-parameter-c/>pass-2d-array-parameter-c</a></li>
 <li><a href=https://en.wikipedia.org/wiki/Variable_shadowing>Variable Shadowing</a></li>
 <li><a href=https://www.thegeekstuff.com/2012/01/advanced-c-pointers>function pointer</a></li>
+<li><a href=https://www.recurse.com/blog/5-learning-c-with-gdb>5-learning-c-with-gdb</a></li>
+<li><a href=https://zhuanlan.zhihu.com/p/483372519>用 gdb 学 C 语言</a></li>
 </ol>
 </div>
 <div class=post-copyright>
