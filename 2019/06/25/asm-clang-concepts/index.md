@@ -416,13 +416,13 @@ $12 = 1
 $13 = 2
 (gdb) print a[1]
 $14 = 2
-(gdb) ptype &a # &a 的类型是指向 3 个 int 元素的数组的指针
+(gdb) ptype &a # &a 的类型是指向【 3 个 int 元素的数组 】的指针
 type = int (*)[3]
 (gdb) ptype &b
-type = int (*)[4] # &b 的类型是指向 4 个 int 元素的数组的指针
+type = int (*)[4] # &b 的类型是指向【 4 个 int 元素的数组 】的指针
 (gdb) print a + 1
 $15 = (int *) 0x7fffffffdb18
-(gdb) print &a + 1 # 下一个【指向 3 个 int 元素的数组的指针】的地址
+(gdb) print &a + 1 # 下一个【 指向 3 个 int 元素的数组的指针 】的地址
 $16 = (int (*)[3]) 0x7fffffffdb20
 (gdb) print &b
 $18 = (int (*)[4]) 0x7fffffffdb20
