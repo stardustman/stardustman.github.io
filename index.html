@@ -11,7 +11,7 @@
 <meta name=msapplication-navbutton-color content="#f8f5ec">
 <meta name=apple-mobile-web-app-capable content="yes">
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="librarian"><meta name=description content="Hugo theme even example site."><meta name=keywords content="Hugo,theme,even">
+<meta name=author content="stardust"><meta name=description content="Hugo theme even example site."><meta name=keywords content="Hugo,theme,even">
 <meta name=generator content="Hugo 0.91.2 with theme even">
 <link rel=canonical href=http://stardustman.github.io/>
 <link href=http://stardustman.github.io/index.xml rel=alternate type=application/rss+xml title=stardustman>
@@ -104,6 +104,24 @@ You can&rsquo;t connect the dots looking forward; you can only connect them look
 </article>
 <article class=post>
 <header class=post-header>
+<h1 class=post-title><a class=post-link href=/2022/05/22/virtual-memory-address-explore/>Virtual Memory Address Explore</a></h1>
+<div class=post-meta>
+<span class=post-time> 2022-05-22 </span>
+<span class=more-meta> 466 words </span>
+<span class=more-meta> 1 min read </span>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!("Hello, world!"); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!("Goodbye, world!"); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore
+</div>
+<div class=read-more>
+<a href=/2022/05/22/virtual-memory-address-explore/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
 <h1 class=post-title><a class=post-link href=/2022/04/16/linux-file-permissions/>Linux File Permissions</a></h1>
 <div class=post-meta>
 <span class=post-time> 2022-04-16 </span>
@@ -156,24 +174,6 @@ https://www.bilibili.com/video/BV1Cx411S7HJ?p=2 https://see.stanford.edu/Course/
 </div>
 </div>
 </article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/2021/12/25/asm-executable-and-linkable-format/>asm-executable-and-linkable-format</a></h1>
-<div class=post-meta>
-<span class=post-time> 2021-12-25 </span>
-<span class=more-meta> 10 words </span>
-<span class=more-meta> 1 min read </span>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-References 彻底理解连接器系列
-</div>
-<div class=read-more>
-<a href=/2021/12/25/asm-executable-and-linkable-format/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
 </section>
 <nav class=pagination>
 <a class=next href=/page/2/>
@@ -204,7 +204,7 @@ Theme -
 <span class=copyright-year>
 &copy;
 2019 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>librarian</span>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span>
 </span>
 </div>
 </footer>

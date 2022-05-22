@@ -11,7 +11,7 @@
 <meta name=msapplication-navbutton-color content="#f8f5ec">
 <meta name=apple-mobile-web-app-capable content="yes">
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="librarian"><meta name=description content="Hugo theme even example site."><meta name=keywords content="Hugo,theme,even">
+<meta name=author content="stardust"><meta name=description content="Hugo theme even example site."><meta name=keywords content="Hugo,theme,even">
 <meta name=generator content="Hugo 0.91.2 with theme even">
 <link rel=canonical href=http://stardustman.github.io/>
 <link href=http://stardustman.github.io/index.xml rel=alternate type=application/rss+xml title=stardustman>
@@ -86,6 +86,24 @@
 <section id=posts class=posts>
 <article class=post>
 <header class=post-header>
+<h1 class=post-title><a class=post-link href=/2020/12/14/cs-lock/>cs-lock</a></h1>
+<div class=post-meta>
+<span class=post-time> 2020-12-14 </span>
+<span class=more-meta> 2207 words </span>
+<span class=more-meta> 5 mins read </span>
+</div>
+</header>
+<div class=post-content>
+<div class=post-summary>
+为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证
+</div>
+<div class=read-more>
+<a href=/2020/12/14/cs-lock/ class=read-more-link>Read more...</a>
+</div>
+</div>
+</article>
+<article class=post>
+<header class=post-header>
 <h1 class=post-title><a class=post-link href=/2020/12/01/cs-cache/>cs-cache</a></h1>
 <div class=post-meta>
 <span class=post-time> 2020-12-01 </span>
@@ -156,24 +174,6 @@ TCP 要解决的问题 references tcp-congestion-control tcp-congestion-control-
 </div>
 </div>
 </article>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title><a class=post-link href=/2020/06/12/data-structure-btree/>data-structure-btree</a></h1>
-<div class=post-meta>
-<span class=post-time> 2020-06-12 </span>
-<span class=more-meta> 604 words </span>
-<span class=more-meta> 2 mins read </span>
-</div>
-</header>
-<div class=post-content>
-<div class=post-summary>
-B-tree 特性 所有的 leaves 都在同一层级。 B-Tree 被 minimum degree t 定义。t 依赖于 disk block size。 除了 root，其余节点必须至少有 t - 1 个 key。root 节点至少有 1 个 ke
-</div>
-<div class=read-more>
-<a href=/2020/06/12/data-structure-btree/ class=read-more-link>Read more...</a>
-</div>
-</div>
-</article>
 </section>
 <nav class=pagination>
 <a class=prev href=/page/3/>
@@ -208,7 +208,7 @@ Theme -
 <span class=copyright-year>
 &copy;
 2019 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>librarian</span>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span>
 </span>
 </div>
 </footer>

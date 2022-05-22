@@ -11,7 +11,7 @@
 <meta name=msapplication-navbutton-color content="#f8f5ec">
 <meta name=apple-mobile-web-app-capable content="yes">
 <meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="librarian"><meta name=description content="x86-64 下函数参数传递, 汇编层面分析 To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first"><meta name=keywords content="Hugo,theme,even">
+<meta name=author content="stardust"><meta name=description content="x86-64 下函数参数传递, 汇编层面分析 To pass parameters to the subroutine, we put up to six of them into registers (in order: rdi, rsi, rdx, rcx, r8, r9). If there are more than six parameters to the subroutine, then push the rest onto the stack in reverse order (i.e. last parameter first) – since the stack grows down, the first"><meta name=keywords content="Hugo,theme,even">
 <meta name=generator content="Hugo 0.91.2 with theme even">
 <link rel=canonical href=http://stardustman.github.io/2019/06/24/asm-how-x86-64-arguments-pass/>
 <link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
@@ -219,7 +219,7 @@ rbp + 16 的原因是: 参数 a7 是 main 准备的, 属于 main 的栈帧. 16 B
 <div class=post-copyright>
 <p class=copyright-item>
 <span class=item-title>Author</span>
-<span class=item-content>librarian</span>
+<span class=item-content>stardust</span>
 </p>
 <p class=copyright-item>
 <span class=item-title>LastMod</span>
@@ -275,7 +275,7 @@ Theme -
 <span class=copyright-year>
 &copy;
 2019 -
-2022<span class=heart><i class="iconfont icon-heart"></i></span><span>librarian</span>
+2022<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span>
 </span>
 </div>
 </footer>
