@@ -30,7 +30,7 @@
 <meta itemprop=name content="Virtual Memory Address Explore">
 <meta itemprop=description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><meta itemprop=datePublished content="2022-05-22T16:26:36+08:00">
 <meta itemprop=dateModified content="2022-05-22T16:26:36+08:00">
-<meta itemprop=wordCount content="466">
+<meta itemprop=wordCount content="574">
 <meta itemprop=keywords content="binary,linux,"><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Virtual Memory Address Explore">
 <meta name=twitter:description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
@@ -91,8 +91,8 @@
 <h1 class=post-title>Virtual Memory Address Explore</h1>
 <div class=post-meta>
 <span class=post-time> 2022-05-22 </span>
-<span class=more-meta> 466 words </span>
-<span class=more-meta> 1 min read </span>
+<span class=more-meta> 574 words </span>
+<span class=more-meta> 2 mins read </span>
 </div>
 </header>
 <div class=post-toc id=post-toc>
@@ -108,6 +108,7 @@
 <li><a href=#text>text</a></li>
 <li><a href=#stack>stack</a></li>
 <li><a href=#heap>heap</a></li>
+<li><a href=#heap-与-stack-会不会相互覆盖>heap 与 stack 会不会相互覆盖？</a></li>
 </ul>
 </li>
 <li><a href=#references>References</a></li>
@@ -123,8 +124,7 @@
 <li><code>cargo new vas-explore</code></li>
 </ol>
 <p>main.rs</p>
-<pre><code class=language-rust>
-use std::{thread,time};
+<pre><code class=language-rust>use std::{thread,time};
 fn main() {
     println!(&quot;Hello, world!&quot;);
     let sl = time::Duration::from_millis(10000000);
@@ -189,9 +189,14 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <h2 id=text>text</h2>
 <p>代码段，程序的可执行代码在这里。</p>
 <h2 id=stack>stack</h2>
-<p>栈区，从 maps 可以看到 7ffe91c09000-7ffe91c2a000，这个区域是这个进程的栈区，可读、可写。<code>7ffe91c09000</code> 这个 48bits 的地址就是虚拟内存地址。为什么是 48bits，因为 amd64 的虚拟地址用 48bits(256TB)地址空间足够了。</p>
+<p>栈区，从 maps 可以看到 <code>7ffe91c09000-7ffe91c2a000</code>，这个区域是这个进程的栈区，可读、可写。<code>7ffe91c09000</code> 这个 48bits 的地址就是虚拟内存地址。为什么是 48bits，因为 amd64 的虚拟地址用 48bits(256TB)地址空间足够了。</p>
 <h2 id=heap>heap</h2>
-<p>556a8c01b000-556a8c03c000 可以看到 heap 的地址，是比较小的地址段。</p>
+<p><code>556a8c01b000-556a8c03c000</code> 可以看到 heap 的地址，是比较小的地址段。</p>
+<h2 id=heap-与-stack-会不会相互覆盖>heap 与 stack 会不会相互覆盖？</h2>
+<p>查看 /proc/pid/maps 计算：</p>
+<p>(low address stack - high address heap) / 1024 / 1024 /1024 / 1024
+= (0x7ffe91c09000 - 0x556a8c03c000) / 1024 / 1024 /1024 / 1024 = 351TB
+可以看出相差有 351TB 的空间。就算真的覆盖了，内核会终止这个程序。这也就是虚拟内存的作用之一，程序可以使用远远超过实际物理内存的空间。</p>
 <h1 id=references>References</h1>
 <ol>
 <li><a href=https://www.baeldung.com/linux/proc-id-maps>/proc/pid/maps</a></li>

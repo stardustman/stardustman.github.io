@@ -10,7 +10,6 @@
 main.rs
 
 ```rust
-
 use std::{thread,time};
 fn main() {
     println!("Hello, world!");
@@ -84,11 +83,19 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 
 ## stack
 
-栈区，从 maps 可以看到 7ffe91c09000-7ffe91c2a000，这个区域是这个进程的栈区，可读、可写。`7ffe91c09000` 这个 48bits 的地址就是虚拟内存地址。为什么是 48bits，因为 amd64 的虚拟地址用 48bits(256TB)地址空间足够了。
+栈区，从 maps 可以看到 `7ffe91c09000-7ffe91c2a000`，这个区域是这个进程的栈区，可读、可写。`7ffe91c09000` 这个 48bits 的地址就是虚拟内存地址。为什么是 48bits，因为 amd64 的虚拟地址用 48bits(256TB)地址空间足够了。
 
 ## heap
 
-556a8c01b000-556a8c03c000 可以看到 heap 的地址，是比较小的地址段。
+`556a8c01b000-556a8c03c000` 可以看到 heap 的地址，是比较小的地址段。
+
+## heap 与 stack 会不会相互覆盖？
+
+查看 /proc/pid/maps 计算：
+
+(low address stack - high address heap) / 1024 / 1024 /1024 / 1024
+= (0x7ffe91c09000 - 0x556a8c03c000) / 1024 / 1024 /1024 / 1024 = 351TB
+可以看出相差有 351TB 的空间。就算真的覆盖了，内核会终止这个程序。这也就是虚拟内存的作用之一，程序可以使用远远超过实际物理内存的空间。
 
 # References
 
