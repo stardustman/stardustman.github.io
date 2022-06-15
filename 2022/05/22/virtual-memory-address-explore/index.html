@@ -30,7 +30,7 @@
 <meta itemprop=name content="Virtual Memory Address Explore">
 <meta itemprop=description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><meta itemprop=datePublished content="2022-05-22T16:26:36+08:00">
 <meta itemprop=dateModified content="2022-05-22T16:26:36+08:00">
-<meta itemprop=wordCount content="574">
+<meta itemprop=wordCount content="759">
 <meta itemprop=keywords content="binary,linux,"><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Virtual Memory Address Explore">
 <meta name=twitter:description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
@@ -91,7 +91,7 @@
 <h1 class=post-title>Virtual Memory Address Explore</h1>
 <div class=post-meta>
 <span class=post-time> 2022-05-22 </span>
-<span class=more-meta> 574 words </span>
+<span class=more-meta> 759 words </span>
 <span class=more-meta> 2 mins read </span>
 </div>
 </header>
@@ -109,6 +109,11 @@
 <li><a href=#stack>stack</a></li>
 <li><a href=#heap>heap</a></li>
 <li><a href=#heap-与-stack-会不会相互覆盖>heap 与 stack 会不会相互覆盖？</a></li>
+<li><a href=#rust-程序内存布局分析>rust 程序内存布局分析</a>
+<ul>
+<li><a href=#查看变量在虚拟内存中的分布>查看变量在虚拟内存中的分布</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li><a href=#references>References</a></li>
@@ -197,6 +202,45 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <p>(low address stack - high address heap) / 1024 / 1024 /1024 / 1024
 = (0x7ffe91c09000 - 0x556a8c03c000) / 1024 / 1024 /1024 / 1024 = 351TB
 可以看出相差有 351TB 的空间。就算真的覆盖了，内核会终止这个程序。这也就是虚拟内存的作用之一，程序可以使用远远超过实际物理内存的空间。</p>
+<h2 id=rust-程序内存布局分析>rust 程序内存布局分析</h2>
+<pre><code class=language-rust>static MAX: u32 = 0;
+fn foo() {}
+fn main() {
+    let hello = &quot;hello world&quot;.to_string();
+    let data = Box::new(1);
+
+    // string literals 指向 RODATA section 地址
+    println!(&quot;RODATA: {:p}&quot;, &quot;hello world!&quot;);
+
+    // static 变量在 DATA section
+    println!(&quot;DATA: (static var): {:p}&quot;, &amp;MAX);
+
+    // function 在 TEXT section
+    println!(&quot;TEXT: (function):{:p}&quot;, foo as *const ());
+
+    // string 结构体分配在栈上，所以其引用是指向的是一个栈地址
+    println!(&quot;STACK: (&amp;hello):{:p}&quot;, &amp;hello);
+
+    // 通过 deference 获取指向的 heap 上的数据，然后获取其引用
+    println!(&quot;HEAP: (&amp;(*hello)):{:p}&quot;, &amp;(*hello));
+
+    // Box 实现了 Pointer trait, 无须额外 deference
+    println!(&quot;HEAP: (Box impl Pointer trait){:p},{:p}&quot;, data, &amp;(data));
+}
+
+</code></pre>
+<h3 id=查看变量在虚拟内存中的分布>查看变量在虚拟内存中的分布</h3>
+<pre><code class=language-bash>cargo run
+   Compiling stack-or-heap v0.1.0 (/Users/stardust/Downloads/rust-projects/stack-or-heap)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/stack-or-heap`
+RODATA: 0x106df1090
+DATA: (static var): 0x106df1080
+TEXT: (function):0x106db61b0
+STACK: (&amp;hello):0x7ff7b9149950
+HEAP: (&amp;(*hello)):0x60000346c050
+HEAP: (Box impl Pointer trait)0x60000346c060,0x7ff7b9149968
+</code></pre>
 <h1 id=references>References</h1>
 <ol>
 <li><a href=https://www.baeldung.com/linux/proc-id-maps>/proc/pid/maps</a></li>

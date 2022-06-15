@@ -97,6 +97,49 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 = (0x7ffe91c09000 - 0x556a8c03c000) / 1024 / 1024 /1024 / 1024 = 351TB
 可以看出相差有 351TB 的空间。就算真的覆盖了，内核会终止这个程序。这也就是虚拟内存的作用之一，程序可以使用远远超过实际物理内存的空间。
 
+## rust 程序内存布局分析
+
+```rust
+static MAX: u32 = 0;
+fn foo() {}
+fn main() {
+    let hello = "hello world".to_string();
+    let data = Box::new(1);
+
+    // string literals 指向 RODATA section 地址
+    println!("RODATA: {:p}", "hello world!");
+
+    // static 变量在 DATA section
+    println!("DATA: (static var): {:p}", &MAX);
+
+    // function 在 TEXT section
+    println!("TEXT: (function):{:p}", foo as *const ());
+
+    // string 结构体分配在栈上，所以其引用是指向的是一个栈地址
+    println!("STACK: (&hello):{:p}", &hello);
+
+    // 通过 deference 获取指向的 heap 上的数据，然后获取其引用
+    println!("HEAP: (&(*hello)):{:p}", &(*hello));
+
+    // Box 实现了 Pointer trait, 无须额外 deference
+    println!("HEAP: (Box impl Pointer trait){:p},{:p}", data, &(data));
+}
+
+```
+### 查看变量在虚拟内存中的分布
+
+```bash
+cargo run
+   Compiling stack-or-heap v0.1.0 (/Users/stardust/Downloads/rust-projects/stack-or-heap)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/stack-or-heap`
+RODATA: 0x106df1090
+DATA: (static var): 0x106df1080
+TEXT: (function):0x106db61b0
+STACK: (&hello):0x7ff7b9149950
+HEAP: (&(*hello)):0x60000346c050
+HEAP: (Box impl Pointer trait)0x60000346c060,0x7ff7b9149968
+```
 # References
 
 1. [/proc/pid/maps](https://www.baeldung.com/linux/proc-id-maps)
