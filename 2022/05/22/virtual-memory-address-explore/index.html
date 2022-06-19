@@ -200,8 +200,8 @@ ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsysca
 <h2 id=heap-与-stack-会不会相互覆盖>heap 与 stack 会不会相互覆盖？</h2>
 <p>查看 /proc/pid/maps 计算：</p>
 <p>(low address stack - high address heap) / 1024 / 1024 /1024 / 1024
-= (0x7ffe91c09000 - 0x556a8c03c000) / 1024 / 1024 /1024 / 1024 = 351TB
-可以看出相差有 351TB 的空间。就算真的覆盖了，内核会终止这个程序。这也就是虚拟内存的作用之一，程序可以使用远远超过实际物理内存的空间。</p>
+= (0x7ffe91c09000 - 0x556a8c03c000) / 1024 / 1024 /1024 / 1024 = 42TB
+可以看出相差有 42TB 的空间。就算真的覆盖了，内核会终止这个程序。这也就是虚拟内存的作用之一，程序可以使用远远超过实际物理内存的空间。</p>
 <h2 id=rust-程序内存布局分析>rust 程序内存布局分析</h2>
 <pre><code class=language-rust>static MAX: u32 = 0;
 fn foo() {}
