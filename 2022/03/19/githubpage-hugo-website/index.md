@@ -4,11 +4,14 @@
 ## 安装软件
 
 1. [git](https://git-scm.com/)
-   * 配置好 git
-   * git config --global user.name "your username"
-   * git config --global user.email "your email"
 
-2. [hugo](https://gohugo.io/getting-started/installing/)
+```bash
+  # 配置好 git
+  git config --global user.name "your username"
+  git config --global user.email "your email"
+```
+
+1. [hugo](https://gohugo.io/getting-started/installing/)
 
 ## hugo 创建本地 website
 
