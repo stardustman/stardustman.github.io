@@ -11,7 +11,7 @@
   git config --global user.email "your email"
 ```
 
-1. [hugo](https://gohugo.io/getting-started/installing/)
+2. [hugo](https://gohugo.io/getting-started/installing/)
 
 ## hugo 创建本地 website
 
@@ -28,12 +28,14 @@
 
 ## github 上创建两个公开仓库
 
-1. username.github.io, 部署静态博客的仓库，username 修改为对应的 github 账号 ID。
-2. blog，这个保存本地的 `blog` 的仓库。
+1. `username.github.io`, 部署静态博客的仓库，username 修改为对应的 github 账号 ID。
+2. `blog`，这个保存本地的 `blog` 的仓库。
 3. 在 `blog` 中执行以下命令:
-   * git remote add origin git@github.com:username/blog.git # username 修改为自己账号的 github ID
-   * git branch -M main
-   * git push -u origin main
+   ```bash
+   git remote add origin git@github.com:username/blog.git # username 修改为自己账号的 github ID
+   git branch -M main
+   git push -u origin main
+   ```
 
 ## 配置 github actions
 
@@ -45,20 +47,22 @@
 
 ```bash
  ssh-keygen -t rsa -b 4096 -C "$(git config user.email)" -f gh-pages -N ""
+ #  gh-pages.pub  公钥
+ #  gh-pages      私钥
  ```
 
-2. 添加 gh-pages.pub 添加到 username.github.io 这个仓库的 deploy key 中，勾选 `Allow write access`
+2. 添加公钥 `gh-pages.pub` 添加到 username.github.io 这个仓库的 deploy key 中，勾选 `Allow write access`
 
 > <https://github.com/username/username.github.io/settings/keys/new>
 
-3. 添加 gh-pages 到 `blog` 中的 secret
+3. 添加私钥 `gh-pages` 到 `blog` 中的 secret
 
 > <https://github.com/username/blog/settings/secrets/actions/new>
 
 1. `Name` ACTIONS_DEPLOY_KEY
-2. `Value` gh-pages 文件内容
+2. `Value` gh-pages 私钥文件内容
 
-## 本地 blog 添加 deploy.yml
+## 本地 `blog` 添加 deploy.yml
 
 1. mkdir -p .github/workfows/
 2. touch .github/workflows/deploy.yml
@@ -105,9 +109,11 @@ jobs:
 
 ## 提交 本地 blog 到 github blog 仓库
 
-1. git add .
-2. git commit -m "commit info"
-3. git push
+```bash
+git add .
+git commit -m "commit info"
+git push
+```
 
 # Reference
 

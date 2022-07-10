@@ -30,7 +30,7 @@
 <meta itemprop=name content="Githubpage Hugo Website">
 <meta itemprop=description content="步骤 安装软件 git # 配置好 git git config --global user.name &#34;your username&#34; git config --global user.email &#34;your email&#34; hugo hugo 创建本地 website 参考：https://gohugo.io/getting-started/qu"><meta itemprop=datePublished content="2022-03-19T16:50:38+08:00">
 <meta itemprop=dateModified content="2022-03-19T16:50:38+08:00">
-<meta itemprop=wordCount content="568">
+<meta itemprop=wordCount content="582">
 <meta itemprop=keywords content="actions,hugo,"><meta name=twitter:card content="summary">
 <meta name=twitter:title content="Githubpage Hugo Website">
 <meta name=twitter:description content="步骤 安装软件 git # 配置好 git git config --global user.name &#34;your username&#34; git config --global user.email &#34;your email&#34; hugo hugo 创建本地 website 参考：https://gohugo.io/getting-started/qu"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
@@ -91,7 +91,7 @@
 <h1 class=post-title>Githubpage Hugo Website</h1>
 <div class=post-meta>
 <span class=post-time> 2022-03-19 </span>
-<span class=more-meta> 568 words </span>
+<span class=more-meta> 582 words </span>
 <span class=more-meta> 2 mins read </span>
 </div>
 </header>
@@ -106,7 +106,7 @@
 <li><a href=#hugo-创建本地-website>hugo 创建本地 website</a></li>
 <li><a href=#github-上创建两个公开仓库>github 上创建两个公开仓库</a></li>
 <li><a href=#配置-github-actions>配置 github actions</a></li>
-<li><a href=#本地-blog-添加-deployyml>本地 blog 添加 deploy.yml</a></li>
+<li><a href=#本地-blog-添加-deployyml>本地 <code>blog</code> 添加 deploy.yml</a></li>
 <li><a href=#提交-本地-blog-到-github-blog-仓库>提交 本地 blog 到 github blog 仓库</a></li>
 </ul>
 </li>
@@ -125,7 +125,7 @@
   git config --global user.name &quot;your username&quot;
   git config --global user.email &quot;your email&quot;
 </code></pre>
-<ol>
+<ol start=2>
 <li><a href=https://gohugo.io/getting-started/installing/>hugo</a></li>
 </ol>
 <h2 id=hugo-创建本地-website>hugo 创建本地 website</h2>
@@ -144,14 +144,13 @@
 </ol>
 <h2 id=github-上创建两个公开仓库>github 上创建两个公开仓库</h2>
 <ol>
-<li>username.github.io, 部署静态博客的仓库，username 修改为对应的 github 账号 ID。</li>
-<li>blog，这个保存本地的 <code>blog</code> 的仓库。</li>
+<li><code>username.github.io</code>, 部署静态博客的仓库，username 修改为对应的 github 账号 ID。</li>
+<li><code>blog</code>，这个保存本地的 <code>blog</code> 的仓库。</li>
 <li>在 <code>blog</code> 中执行以下命令:
-<ul>
-<li>git remote add origin <a href=mailto:git@github.com>git@github.com</a>:username/blog.git # username 修改为自己账号的 github ID</li>
-<li>git branch -M main</li>
-<li>git push -u origin main</li>
-</ul>
+<pre><code class=language-bash>git remote add origin git@github.com:username/blog.git # username 修改为自己账号的 github ID
+git branch -M main
+git push -u origin main
+</code></pre>
 </li>
 </ol>
 <h2 id=配置-github-actions>配置 github actions</h2>
@@ -164,24 +163,26 @@
 <li>生成一对 public key(gh-pages.pub) 和 private key(gh-pages)</li>
 </ol>
 <pre><code class=language-bash> ssh-keygen -t rsa -b 4096 -C &quot;$(git config user.email)&quot; -f gh-pages -N &quot;&quot;
+ #  gh-pages.pub  公钥
+ #  gh-pages      私钥
 </code></pre>
 <ol start=2>
-<li>添加 gh-pages.pub 添加到 username.github.io 这个仓库的 deploy key 中，勾选 <code>Allow write access</code></li>
+<li>添加公钥 <code>gh-pages.pub</code> 添加到 username.github.io 这个仓库的 deploy key 中，勾选 <code>Allow write access</code></li>
 </ol>
 <blockquote>
 <p><a href=https://github.com/username/username.github.io/settings/keys/new>https://github.com/username/username.github.io/settings/keys/new</a></p>
 </blockquote>
 <ol start=3>
-<li>添加 gh-pages 到 <code>blog</code> 中的 secret</li>
+<li>添加私钥 <code>gh-pages</code> 到 <code>blog</code> 中的 secret</li>
 </ol>
 <blockquote>
 <p><a href=https://github.com/username/blog/settings/secrets/actions/new>https://github.com/username/blog/settings/secrets/actions/new</a></p>
 </blockquote>
 <ol>
 <li><code>Name</code> ACTIONS_DEPLOY_KEY</li>
-<li><code>Value</code> gh-pages 文件内容</li>
+<li><code>Value</code> gh-pages 私钥文件内容</li>
 </ol>
-<h2 id=本地-blog-添加-deployyml>本地 blog 添加 deploy.yml</h2>
+<h2 id=本地-blog-添加-deployyml>本地 <code>blog</code> 添加 deploy.yml</h2>
 <ol>
 <li>mkdir -p .github/workfows/</li>
 <li>touch .github/workflows/deploy.yml</li>
@@ -225,11 +226,10 @@ jobs:
           publish_dir: ./public
 </code></pre>
 <h2 id=提交-本地-blog-到-github-blog-仓库>提交 本地 blog 到 github blog 仓库</h2>
-<ol>
-<li>git add .</li>
-<li>git commit -m &ldquo;commit info&rdquo;</li>
-<li>git push</li>
-</ol>
+<pre><code class=language-bash>git add .
+git commit -m &quot;commit info&quot;
+git push
+</code></pre>
 <h1 id=reference>Reference</h1>
 <ol>
 <li><a href=https://zhuanlan.zhihu.com/p/38480155>github pages</a></li>
