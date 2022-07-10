@@ -22,7 +22,7 @@
 3. git init
 4. git submodule add <https://github.com/theNewDynamic/gohugo-theme-ananke.git> themes/ananke # theme 根据需要修改
 5. 把 content/posts 目录修改为 content/post
-6. hugo new posts/my-first-post.md
+6. hugo new post/my-first-post.md
 7. hugo server -D
 8. 根据选择的主题，修改主题相关的配置
 
