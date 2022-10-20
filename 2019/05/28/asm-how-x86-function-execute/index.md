@@ -218,22 +218,14 @@ main:
 ![asm-execute-graph](https://github.com/stardustman/pictures/raw/main/img/asm-execute-graph.png)
 
 > 注意: 示意图里面的是 64 bit 的汇编代码.  
-        
-> 注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.  
-        
-> 图1 main 函数执行完 pushq %rbp 和 movq %rsp, %rbp, 开辟 main 函数的栈帧.  
-        
-> 图2 main 函数执行 call swap. call 指令两个作用: 1. 将 movl $0, %eax 这条指令的地址(X)压入栈中. 2. jump 到 swap 的地址.  
-        
-> 图3 是 swap 函数的栈帧, 此时新函数的栈帧 rsp 和 rbp 指向的是相同的内存地址.  
-        
-> 图4 所有的 mov 使用的内存地址, 都是通过 rbp 来偏移得到, rbp 的值并没有发生改变.   
-        
-> 图5 执行完 popq %rsp, 恢复 main 函数的栈基址(rbp), 也就是和图1 一样.  
-        
-> 图6 执行完 ret 恢复为 main 函数的栈帧(这里主要是 rsp, rbp, pc, 个人理解把 pc 视为栈帧的一部分, 因为函数调用控制权发生转移, 幕后也离不开 pc 这个寄存器的变化). ret 的作用等价于 popq %rip. 但是无法直接操作 ip(pc) 这个寄存器. 也就相当于间接改变 ip. 此时 pc 已被 ret 指令恢复成了 X. (此时实际上已经控制权已经回到 main 函数了), 接下来就是继续执行 main 函数的代码. 其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.  
-        
-> 注意: 图1 和 图6 , 图2 和 图5 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的. 在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的 rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址. 也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧. 也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 pc). call 和 ret 指令的也分别有 push %rip 和 pop %rip 的作用. 很对称的操作!
+  注意: 所有的 push 和 pop 指令都会改变 sp 寄存器的值.  
+  图1 main 函数执行完 pushq %rbp 和 movq %rsp, %rbp, 开辟 main 函数的栈帧.  
+  图2 main 函数执行 call swap. call 指令两个作用: 1. 将 movl $0, %eax 这条指令的地址(X)压入栈中. 2. jump 到 swap 的地址.  
+  图3 是 swap 函数的栈帧, 此时新函数的栈帧 rsp 和 rbp 指向的是相同的内存地址.  
+  图4 所有的 mov 使用的内存地址, 都是通过 rbp 来偏移得到, rbp 的值并没有发生改变.   
+  图5 执行完 popq %rsp, 恢复 main 函数的栈基址(rbp), 也就是和图1 一样.  
+  图6 执行完 ret 恢复为 main 函数的栈帧(这里主要是 rsp, rbp, pc, 个人理解把 pc 视为栈帧的一部分, 因为函数调用控制权发生转移, 幕后也离不开 pc 这个寄存器的变化). ret 的作用等价于 popq %rip. 但是无法直接操作 ip(pc) 这个寄存器. 也就相当于间接改变 ip. 此时 pc 已被 ret 指令恢复成了 X. (此时实际上已经控制权已经回到 main 函数了), 接下来就是继续执行 main 函数的代码. 其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.  
+  注意: 图1 和 图6 , 图2 和 图5 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的. 在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的 rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址. 也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧. 也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 pc). call 和 ret 指令的也分别有 push %rip 和 pop %rip 的作用. 很对称的操作!
 
 # bombs
 
