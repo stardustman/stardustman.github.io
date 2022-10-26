@@ -20,3 +20,4 @@
 4. [decode-an-ssl-certificate](https://www.oreilly.com/library/view/linux-security-cookbook/0596003919/ch04s05.html)
 5. [csr-在线解析](http://web.chacuo.net/netcsrdecoder/)
 6. [github-public-key](https://github.com/stardustman.keys)
+7. [dns-caa-record](https://geekflare.com/dns-caa-record/)
