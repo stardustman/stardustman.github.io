@@ -3,6 +3,8 @@
 
 1. association
    > a connection or cooperative link between people or organizations
+2. allot
+   > to assign as a share or portion
 
 ## b
 
