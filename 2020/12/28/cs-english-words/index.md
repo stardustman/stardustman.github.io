@@ -54,11 +54,13 @@
 ## p
 
 1. precedence 
-    >the condition of being considered more important than someone or something else; priority in importance, order, or rank. 优先级
+    > the condition of being considered more important than someone or something else; priority in importance, order, or rank. 优先级
 2. parenthesis
-   >括号
+   > 括号
 3. preemptive
-   serving or intended to preempt or forestall something, especially to prevent attack by disabling the enemy.
+   > serving or intended to preempt or forestall something, especially to prevent attack by disabling the enemy.
+4. populate
+   > to provide with members 对象填充成员属性
 
 ## q
 
