@@ -14,6 +14,8 @@
 
 1. context
    the circumstances that form the setting for an event, statement, or idea, and in terms of which it can be fully understood and asserted.
+2. cardinality
+   the number of elements in a given mathematical set 给定集合的元素数量
 
 ## d
 
