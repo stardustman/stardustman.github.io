@@ -65,6 +65,8 @@
    > to provide with members 对象填充成员属性
 5. parameter
    > Parameters are factors or limits which `affect` the way that something can be done or made.
+6. proxy
+   > A proxy is a person or thing that is acting or being used in the place of someone or something else. 
 
 ## q
 
