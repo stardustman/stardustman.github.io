@@ -5,6 +5,9 @@
    > a connection or cooperative link between people or organizations
 2. allot
    > to assign as a share or portion
+3. ad-hoc
+   > An ad hoc activity or organization is done or formed only because a situation has made it necessary and is `not planned in advance`.
+     想起了 ansible cli 可以直接执行一次性的命令，这就是 ad-hoc，也可以提前写好 playbook，写好剧本，这就是计划好的。
 
 ## b
 
