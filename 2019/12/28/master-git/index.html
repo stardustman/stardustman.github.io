@@ -1,171 +1,10 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>master-git - stardustman</title>
-<meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="stardust"><meta name=description content="git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │"><meta name=keywords content="Hugo,theme,even">
-<meta name=generator content="Hugo 0.91.2 with theme even">
-<link rel=canonical href=http://stardustman.github.io/2019/12/28/master-git/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="master-git">
-<meta property="og:description" content="git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │">
-<meta property="og:type" content="article">
-<meta property="og:url" content="http://stardustman.github.io/2019/12/28/master-git/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2019-12-28T13:15:29+08:00">
-<meta property="article:modified_time" content="2019-12-28T13:15:29+08:00">
-<meta itemprop=name content="master-git">
-<meta itemprop=description content="git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │"><meta itemprop=datePublished content="2019-12-28T13:15:29+08:00">
-<meta itemprop=dateModified content="2019-12-28T13:15:29+08:00">
-<meta itemprop=wordCount content="5676">
-<meta itemprop=keywords content="git,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="master-git">
-<meta name=twitter:description content="git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head>
-<body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>keep writing</a>
-</div>
-<div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>master-git - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2019/12/28/master-git/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="master-git"><meta property="og:description" content="git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2019/12/28/master-git/"><meta property="article:section" content="post"><meta property="article:published_time" content="2019-12-28T13:15:29+08:00"><meta property="article:modified_time" content="2019-12-28T13:15:29+08:00"><meta itemprop=name content="master-git"><meta itemprop=description content="git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │"><meta itemprop=datePublished content="2019-12-28T13:15:29+08:00"><meta itemprop=dateModified content="2019-12-28T13:15:29+08:00"><meta itemprop=wordCount content="5676"><meta itemprop=keywords content="git,"><meta name=twitter:card content="summary"><meta name=twitter:title content="master-git"><meta name=twitter:description content="git init Create an empty Git repository or reinitialize an existing one 也即是向 working directory 里添加 .git 文件夹 .git/ ├── branches # git 分支 ├── config # git 配置 ├── description ├── HEAD # HEAD 指针, 指向当前分支最新的 commit ├── hooks │"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>keep writing</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div>
-</div>
-<nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li>
-</a><a href=/post/>
-<li class=mobile-menu-item>Archives</li>
-</a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li>
-</a><a href=/categories/>
-<li class=mobile-menu-item>Categories</li>
-</a><a href=/2022/03/27/about/>
-<li class=mobile-menu-item>About</li>
-</a>
-</ul>
-</nav>
-<div class=container id=mobile-panel>
-<header id=header class=header>
-<div class=logo-wrapper>
-<a href=/ class=logo>keep writing</a>
-</div>
-<nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/categories/>Categories</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/2022/03/27/about/>About</a>
-</li>
-</ul>
-</nav>
-</header>
-<main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>master-git</h1>
-<div class=post-meta>
-<span class=post-time> 2019-12-28 </span>
-<span class=more-meta> 5676 words </span>
-<span class=more-meta> 12 mins read </span>
-</div>
-</header>
-<div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2>
-<div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li>
-<ul>
-<li><a href=#git-init>git init</a></li>
-<li><a href=#第一次-git-add--git-commit>第一次 git add | git commit</a>
-<ul>
-<li><a href=#git-add>git add</a></li>
-<li><a href=#git-commit>git commit</a></li>
-<li><a href=#查看-head>查看 HEAD</a></li>
-</ul>
-</li>
-<li><a href=#第二次-git-add--git-commit>第二次 git add | git commit</a>
-<ul>
-<li><a href=#git-add-file1>git add file1</a></li>
-<li><a href=#git-commit--m-modify-file1>git commit -m &ldquo;modify file1&rdquo;</a></li>
-<li><a href=#查看-head-1>查看 HEAD</a></li>
-<li><a href=#git-add--git-commit-实质>git add | git commit 实质</a></li>
-</ul>
-</li>
-<li><a href=#git-branch>git branch</a>
-<ul>
-<li><a href=#创建一个-new-branch-的分支>创建一个 <code>new-branch</code> 的分支</a></li>
-<li><a href=#git-branch----list-查看分支>git branch - -list 查看分支</a></li>
-<li><a href=#git-checkout-new-branch-切换分支>git checkout new-branch 切换分支</a></li>
-<li><a href=#查看-head-2>查看 HEAD</a></li>
-</ul>
-</li>
-<li><a href=#第三次-git-add--git-commit>第三次 git add | git commit</a>
-<ul>
-<li><a href=#git-add-file3>git add file3</a></li>
-<li><a href=#git-commit--m-file3-on-new-branch>git commit -m &ldquo;file3 on new-branch&rdquo;</a></li>
-<li><a href=#查看-head-3>查看 HEAD</a></li>
-<li><a href=#切换到-master-分支查看-head>切换到 master 分支查看 HEAD</a></li>
-</ul>
-</li>
-<li><a href=#git-add--git-commit--git-branch-图解>git add | git commit | git branch 图解</a></li>
-<li><a href=#fast-forward-merge>Fast-forward Merge</a>
-<ul>
-<li><a href=#切换到-master-分支>切换到 master 分支</a></li>
-<li><a href=#合并-new-branch-分支到-master-分支>合并 new-branch 分支到 master 分支</a></li>
-<li><a href=#fast-forward-图解>Fast-Forward 图解</a></li>
-</ul>
-</li>
-<li><a href=#删除-master-分支上的-file1-文件然后提交>删除 master 分支上的 file1 文件，然后提交</a>
-<ul>
-<li><a href=#master-分支删除-file1-图解>master 分支删除 file1 图解</a></li>
-</ul>
-</li>
-<li><a href=#合并分支combine-work>合并分支(combine work)</a>
-<ul>
-<li><a href=#使用-git-merge>使用 git merge</a></li>
-</ul>
-</li>
-<li><a href=#reference>Reference</a></li>
-</ul>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-<div class=post-content>
-<h2 id=git-init>git init</h2>
-<blockquote>
-<p>Create an empty Git repository or reinitialize an existing one
-也即是向 <code>working directory</code> 里添加 <code>.git</code> 文件夹</p>
-</blockquote>
-<pre><code class=language-bash>.git/
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/2022/03/27/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>keep writing</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/2022/03/27/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>master-git</h1><div class=post-meta><span class=post-time>2019-12-28</span>
+<span class=more-meta>5676 words</span>
+<span class=more-meta>12 mins read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#git-init>git init</a></li><li><a href=#第一次-git-add--git-commit>第一次 git add | git commit</a><ul><li><a href=#git-add>git add</a></li><li><a href=#git-commit>git commit</a></li><li><a href=#查看-head>查看 HEAD</a></li></ul></li><li><a href=#第二次-git-add--git-commit>第二次 git add | git commit</a><ul><li><a href=#git-add-file1>git add file1</a></li><li><a href=#git-commit--m-modify-file1>git commit -m &ldquo;modify file1&rdquo;</a></li><li><a href=#查看-head-1>查看 HEAD</a></li><li><a href=#git-add--git-commit-实质>git add | git commit 实质</a></li></ul></li><li><a href=#git-branch>git branch</a><ul><li><a href=#创建一个-new-branch-的分支>创建一个 <code>new-branch</code> 的分支</a></li><li><a href=#git-branch----list-查看分支>git branch - -list 查看分支</a></li><li><a href=#git-checkout-new-branch-切换分支>git checkout new-branch 切换分支</a></li><li><a href=#查看-head-2>查看 HEAD</a></li></ul></li><li><a href=#第三次-git-add--git-commit>第三次 git add | git commit</a><ul><li><a href=#git-add-file3>git add file3</a></li><li><a href=#git-commit--m-file3-on-new-branch>git commit -m &ldquo;file3 on new-branch&rdquo;</a></li><li><a href=#查看-head-3>查看 HEAD</a></li><li><a href=#切换到-master-分支查看-head>切换到 master 分支查看 HEAD</a></li></ul></li><li><a href=#git-add--git-commit--git-branch-图解>git add | git commit | git branch 图解</a></li><li><a href=#fast-forward-merge>Fast-forward Merge</a><ul><li><a href=#切换到-master-分支>切换到 master 分支</a></li><li><a href=#合并-new-branch-分支到-master-分支>合并 new-branch 分支到 master 分支</a></li><li><a href=#fast-forward-图解>Fast-Forward 图解</a></li></ul></li><li><a href=#删除-master-分支上的-file1-文件然后提交>删除 master 分支上的 file1 文件，然后提交</a><ul><li><a href=#master-分支删除-file1-图解>master 分支删除 file1 图解</a></li></ul></li><li><a href=#合并分支combine-work>合并分支(combine work)</a><ul><li><a href=#使用-git-merge>使用 git merge</a></li></ul></li><li><a href=#reference>Reference</a></li></ul></li></ul></nav></div></div><div class=post-content><h2 id=git-init>git init</h2><blockquote><p>Create an empty Git repository or reinitialize an existing one
+也即是向 <code>working directory</code> 里添加 <code>.git</code> 文件夹</p></blockquote><pre><code class=language-bash>.git/
 ├── branches # git 分支
 ├── config   # git 配置
 ├── description
@@ -191,70 +30,29 @@
     ├── heads 
     └── tags  # git 标签
 
-</code></pre>
-<h2 id=第一次-git-add--git-commit>第一次 git add | git commit</h2>
-<h3 id=git-add>git add</h3>
-<blockquote>
-<p>Add file contents to the index
-添加文件内容到 <code>index</code> 区</p>
-</blockquote>
-<ol>
-<li>
-<p>添加两个文件 <code>file1</code> 和 <code>file2</code>, 文件内容分别是 <code>111</code> 和 <code>222</code></p>
-</li>
-<li>
-<p>git add file_name</p>
-</li>
-</ol>
-<pre><code class=language-sh>git add file1
-</code></pre>
-<ol start=3>
-<li>tree .git/objects 查看添加的 git object</li>
-</ol>
-<pre><code class=language-bash>.git/objects/
+</code></pre><h2 id=第一次-git-add--git-commit>第一次 git add | git commit</h2><h3 id=git-add>git add</h3><blockquote><p>Add file contents to the index
+添加文件内容到 <code>index</code> 区</p></blockquote><ol><li><p>添加两个文件 <code>file1</code> 和 <code>file2</code>, 文件内容分别是 <code>111</code> 和 <code>222</code></p></li><li><p>git add file_name</p></li></ol><pre><code class=language-sh>git add file1
+</code></pre><ol start=3><li>tree .git/objects 查看添加的 git object</li></ol><pre><code class=language-bash>.git/objects/
 ├── 58
 │   └── c9bdf9d017fcd178dc8c073cbfcbb7ff240d6c
 ├── info
 └── pack
-</code></pre>
-<blockquote>
-<p>对 file1 文件内容也就是 <code>111</code> 和一些其他的信息做 <code>SHA-1</code> 运算得出 <code>58c9bdf9d017fcd178dc8c073cbfcbb7ff240d6c</code> 这个 <code>40</code> 位 <code>16 进制</code>的值.</p>
-</blockquote>
-<ol>
-<li>git cat-file 查看 objects 相关信息
-<strong>查看 object 类型</strong></li>
-</ol>
-<pre><code class=language-sh>git cat-file -t 58c9bd
+</code></pre><blockquote><p>对 file1 文件内容也就是 <code>111</code> 和一些其他的信息做 <code>SHA-1</code> 运算得出 <code>58c9bdf9d017fcd178dc8c073cbfcbb7ff240d6c</code> 这个 <code>40</code> 位 <code>16 进制</code>的值.</p></blockquote><ol><li>git cat-file 查看 objects 相关信息
+<strong>查看 object 类型</strong></li></ol><pre><code class=language-sh>git cat-file -t 58c9bd
 blob
-</code></pre>
-<p><strong>查看 object 大小</strong></p>
-<pre><code class=language-sh>git cat-file -s 58c9bd
+</code></pre><p><strong>查看 object 大小</strong></p><pre><code class=language-sh>git cat-file -s 58c9bd
 4
-</code></pre>
-<p><strong>查看 object 内容</strong></p>
-<pre><code class=language-sh>git cat-file -p 58c9bd
+</code></pre><p><strong>查看 object 内容</strong></p><pre><code class=language-sh>git cat-file -p 58c9bd
 111
-</code></pre>
-<ol start=5>
-<li>对文件内容为 <code>222</code> 的 <code>file2</code> 进行步骤 2 ~ 4.</li>
-</ol>
-<p>查看 .git/objects 如下:</p>
-<pre><code class=language-sh>.git/objects/
+</code></pre><ol start=5><li>对文件内容为 <code>222</code> 的 <code>file2</code> 进行步骤 2 ~ 4.</li></ol><p>查看 .git/objects 如下:</p><pre><code class=language-sh>.git/objects/
 ├── 58
 │   └── c9bdf9d017fcd178dc8c073cbfcbb7ff240d6c # file1:blob
 ├── c2
 │   └── 00906efd24ec5e783bee7f23b5d7c941b0c12c # file2:blob
 ├── info
 └── pack
-</code></pre>
-<h3 id=git-commit>git commit</h3>
-<blockquote>
-<p>Stores the current contents of the index in a new commit along with a log message from the user describing the changes.
-A <em>commit</em> in a git repository records a <em>snapshot of all the files</em> in your directory.</p>
-</blockquote>
-<h4 id=执行-git-commit--m-add-file1-and-file2>执行 git commit -m &ldquo;add file1 and file2&rdquo;</h4>
-<h4 id=查看-gitobjects-的变化>查看 .git/objects 的变化</h4>
-<pre><code class=language-sh>tree .git/objects
+</code></pre><h3 id=git-commit>git commit</h3><blockquote><p>Stores the current contents of the index in a new commit along with a log message from the user describing the changes.
+A <em>commit</em> in a git repository records a <em>snapshot of all the files</em> in your directory.</p></blockquote><h4 id=执行-git-commit--m-add-file1-and-file2>执行 git commit -m &ldquo;add file1 and file2&rdquo;</h4><h4 id=查看-gitobjects-的变化>查看 .git/objects 的变化</h4><pre><code class=language-sh>tree .git/objects
 .git/objects/
 ├── 58
 │   └── c9bdf9d017fcd178dc8c073cbfcbb7ff240d6c # file1:blob
@@ -266,19 +64,11 @@ A <em>commit</em> in a git repository records a <em>snapshot of all the files</e
 │   └── 64f468f776fac72a049a884ae24e7dbb838fd0 # 1:tree
 ├── info
 └── pack
-</code></pre>
-<h3 id=查看-head>查看 HEAD</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# cat .git/HEAD
+</code></pre><h3 id=查看-head>查看 HEAD</h3><pre><code class=language-sh>root@aliyun:~/blog# cat .git/HEAD
 ref: refs/heads/master # 目前在 master 分支上
 root@aliyun:~/blog# cat .git/refs/heads/master
 73622e96d5b5389d63dd74e3c40db9d4c4296ff5 # 1:commit 
-</code></pre>
-<h2 id=第二次-git-add--git-commit>第二次 git add | git commit</h2>
-<blockquote>
-<p>修改 <code>file1</code> 的文件内容为 <code>333</code></p>
-</blockquote>
-<h3 id=git-add-file1>git add file1</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# git add file1
+</code></pre><h2 id=第二次-git-add--git-commit>第二次 git add | git commit</h2><blockquote><p>修改 <code>file1</code> 的文件内容为 <code>333</code></p></blockquote><h3 id=git-add-file1>git add file1</h3><pre><code class=language-sh>root@aliyun:~/blog# git add file1
 root@aliyun:~/blog# tree .git/objects/
 .git/objects/
 ├── 55
@@ -293,9 +83,7 @@ root@aliyun:~/blog# tree .git/objects/
 │   └── 64f468f776fac72a049a884ae24e7dbb838fd0
 ├── info
 └── pack
-</code></pre>
-<h3 id=git-commit--m-modify-file1>git commit -m &ldquo;modify file1&rdquo;</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# git commit -m &quot;modify file1&quot;
+</code></pre><h3 id=git-commit--m-modify-file1>git commit -m &ldquo;modify file1&rdquo;</h3><pre><code class=language-sh>root@aliyun:~/blog# git commit -m &quot;modify file1&quot;
 [master 558e28c] modify file1
  1 file changed, 1 insertion(+), 1 deletion(-)
 root@aliyun:~/blog# tree .git/objects/
@@ -315,24 +103,14 @@ root@aliyun:~/blog# tree .git/objects/
 │   └── 64f468f776fac72a049a884ae24e7dbb838fd0
 ├── info
 └── pack
-</code></pre>
-<h3 id=查看-head-1>查看 HEAD</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# cat .git/HEAD
+</code></pre><h3 id=查看-head-1>查看 HEAD</h3><pre><code class=language-sh>root@aliyun:~/blog# cat .git/HEAD
 ref: refs/heads/master
 root@aliyun:~/blog# cat .git/refs/heads/master
 558e28c67089eea9bdfbfd748d32baa8f2ce944e # 指向了第二次 commit 的 hash 值
-</code></pre>
-<h3 id=git-add--git-commit-实质>git add | git commit 实质</h3>
-<p>git add: 向 <code>.git/objects</code> 添加类型是 <code>blob</code> 的文件
-git commit: 向 <code>.git/objects</code> 添加类型是 <code>tree</code> 和 <code>commit</code> 的文件</p>
-<h2 id=git-branch>git branch</h2>
-<blockquote>
-<p>List, create, or delete branches
+</code></pre><h3 id=git-add--git-commit-实质>git add | git commit 实质</h3><p>git add: 向 <code>.git/objects</code> 添加类型是 <code>blob</code> 的文件
+git commit: 向 <code>.git/objects</code> 添加类型是 <code>tree</code> 和 <code>commit</code> 的文件</p><h2 id=git-branch>git branch</h2><blockquote><p>List, create, or delete branches
 Branches in Git are incredibly lightweight as well. They are simply pointers to a specific commit &ndash; nothing more. 仅仅是添加了一个指向特定 commit 的指针。
-a branch essentially says &ldquo;I want to include the work of this commit and all parent commits.&rdquo; 一个分支就是我想要这个 commit 以及这个 commit 的所有 <code>parent commits</code></p>
-</blockquote>
-<h3 id=创建一个-new-branch-的分支>创建一个 <code>new-branch</code> 的分支</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# git branch new-branch
+a branch essentially says &ldquo;I want to include the work of this commit and all parent commits.&rdquo; 一个分支就是我想要这个 commit 以及这个 commit 的所有 <code>parent commits</code></p></blockquote><h3 id=创建一个-new-branch-的分支>创建一个 <code>new-branch</code> 的分支</h3><pre><code class=language-sh>root@aliyun:~/blog# git branch new-branch
 root@aliyun:~/blog# tree .git/
 .git/
 ├── branches
@@ -384,43 +162,22 @@ root@aliyun:~/blog# tree .git/
     └── tags
 
 18 directories, 29 files
-</code></pre>
-<h3 id=git-branch----list-查看分支>git branch - -list 查看分支</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# git branch --list
+</code></pre><h3 id=git-branch----list-查看分支>git branch - -list 查看分支</h3><pre><code class=language-sh>root@aliyun:~/blog# git branch --list
 * master # * 表示当前所在分支
   new-branch # 新创建的 new-branch 分支
-</code></pre>
-<h3 id=git-checkout-new-branch-切换分支>git checkout new-branch 切换分支</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# git checkout new-branch
+</code></pre><h3 id=git-checkout-new-branch-切换分支>git checkout new-branch 切换分支</h3><pre><code class=language-sh>root@aliyun:~/blog# git checkout new-branch
 Switched to branch 'new-branch'
 root@aliyun:~/blog# git branch --list
   master
 * new-branch
-</code></pre>
-<p>创建分支 <code>new-branch</code>, 并切换到 <code>new-branch</code> 分支.</p>
-<ol>
-<li>git branch new-branch</li>
-<li>git checkout new-branch
-可以简化为:</li>
-</ol>
-<pre><code class=language-sh>git checkout -b new-branch
-</code></pre>
-<h3 id=查看-head-2>查看 HEAD</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# cat .git/HEAD
+</code></pre><p>创建分支 <code>new-branch</code>, 并切换到 <code>new-branch</code> 分支.</p><ol><li>git branch new-branch</li><li>git checkout new-branch
+可以简化为:</li></ol><pre><code class=language-sh>git checkout -b new-branch
+</code></pre><h3 id=查看-head-2>查看 HEAD</h3><pre><code class=language-sh>root@aliyun:~/blog# cat .git/HEAD
 ref: refs/heads/new-branch
 root@aliyun:~/blog# cat .git/refs/heads/new-branch
 558e28c67089eea9bdfbfd748d32baa8f2ce944e # 指向了第二次 commit 的 hash值
-</code></pre>
-<p>由此可知 git branch new-branch 创建一个分支,实际上做了两件事情:</p>
-<ol>
-<li>添加 .git/logs/refs/heads/new-branch 记录该分支的 <code>log</code></li>
-<li>添加 .git/refs/heads/new-branch 指向最新的 <code>commit</code>
-这也就是 <code>git</code> 创建新的分支如此快的原因.</li>
-</ol>
-<h2 id=第三次-git-add--git-commit>第三次 git add | git commit</h2>
-<p>切换到 <code>new-branch</code> 分支, 新建一个 <code>file3</code> 的文件, 内容是 <code>new-branch-file3</code></p>
-<h3 id=git-add-file3>git add file3</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# git add file3
+</code></pre><p>由此可知 git branch new-branch 创建一个分支,实际上做了两件事情:</p><ol><li>添加 .git/logs/refs/heads/new-branch 记录该分支的 <code>log</code></li><li>添加 .git/refs/heads/new-branch 指向最新的 <code>commit</code>
+这也就是 <code>git</code> 创建新的分支如此快的原因.</li></ol><h2 id=第三次-git-add--git-commit>第三次 git add | git commit</h2><p>切换到 <code>new-branch</code> 分支, 新建一个 <code>file3</code> 的文件, 内容是 <code>new-branch-file3</code></p><h3 id=git-add-file3>git add file3</h3><pre><code class=language-sh>root@aliyun:~/blog# git add file3
 root@aliyun:~/blog# tree .git/objects/
 .git/objects/
 ├── 2e
@@ -449,9 +206,7 @@ new-branch-file3
 root@aliyun:~/blog# git cat-file -s 2e79
 17
 
-</code></pre>
-<h3 id=git-commit--m-file3-on-new-branch>git commit -m &ldquo;file3 on new-branch&rdquo;</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# git commit -m &quot;add file3 on new-branch&quot;
+</code></pre><h3 id=git-commit--m-file3-on-new-branch>git commit -m &ldquo;file3 on new-branch&rdquo;</h3><pre><code class=language-sh>root@aliyun:~/blog# git commit -m &quot;add file3 on new-branch&quot;
 [new-branch ce907fa] add file3 on new-branch
  1 file changed, 1 insertion(+)
  create mode 100644 file3
@@ -500,33 +255,20 @@ add file3 on new-branch # commit message
 root@aliyun:~/blog# git cat-file -s ce90
 208
 
-</code></pre>
-<h3 id=查看-head-3>查看 HEAD</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# cat .git/HEAD
+</code></pre><h3 id=查看-head-3>查看 HEAD</h3><pre><code class=language-sh>root@aliyun:~/blog# cat .git/HEAD
 ref: refs/heads/new-branch # 当前在 new-branch 分支上
 root@aliyun:~/blog# cat .git/refs/heads/new-branch
 ce907fabd08138058b05428d7cac017507b33c44 # new-branch 分支最新的提交
 
-</code></pre>
-<h3 id=切换到-master-分支查看-head>切换到 master 分支查看 HEAD</h3>
-<pre><code class=language-sh>root@aliyun:~/blog# git checkout master
+</code></pre><h3 id=切换到-master-分支查看-head>切换到 master 分支查看 HEAD</h3><pre><code class=language-sh>root@aliyun:~/blog# git checkout master
 Switched to branch 'master'
 root@aliyun:~/blog# cat .git/HEAD
 ref: refs/heads/master # 当前在 master 分支
 root@aliyun:~/blog# cat .git/refs/heads/master
 558e28c67089eea9bdfbfd748d32baa8f2ce944e # master 分支最新的提交
-</code></pre>
-<p>查看 <code>master</code> 和 <code>new-branch</code> 两个分支可知, 每一分支对应的 <code>HEAD</code> 和 <code>.git/refs/heads/branch_name</code> 记录的 <code>commit</code> 不同. 这就是 git 分支的实现.</p>
-<h2 id=git-add--git-commit--git-branch-图解>git add | git commit | git branch 图解</h2>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/git.svg alt=git></p>
-<h2 id=fast-forward-merge>Fast-forward Merge</h2>
-<blockquote>
-<p>两次 git add 和 git commit 之后，创建 <code>new-branch</code> ，在 <code>new-branch</code> 进行了修改。
+</code></pre><p>查看 <code>master</code> 和 <code>new-branch</code> 两个分支可知, 每一分支对应的 <code>HEAD</code> 和 <code>.git/refs/heads/branch_name</code> 记录的 <code>commit</code> 不同. 这就是 git 分支的实现.</p><h2 id=git-add--git-commit--git-branch-图解>git add | git commit | git branch 图解</h2><p><img src=https://github.com/stardustman/pictures/raw/main/img/git.svg alt=git></p><h2 id=fast-forward-merge>Fast-forward Merge</h2><blockquote><p>两次 git add 和 git commit 之后，创建 <code>new-branch</code> ，在 <code>new-branch</code> 进行了修改。
 但是 <code>master</code> 分支没有做任何更改。也就是 <code>master</code> 此时分支落后了 <code>new-branch</code> 分支。
-<code>new-branch</code> 分支的修改 <code>master</code> 分支怎样看到呢？可以进行所谓的 <code>Fast-forward merge</code>。</p>
-</blockquote>
-<h3 id=切换到-master-分支>切换到 master 分支</h3>
-<pre><code>root@aliyun:~/blog# git checkout master  # 切换到 master 分支
+<code>new-branch</code> 分支的修改 <code>master</code> 分支怎样看到呢？可以进行所谓的 <code>Fast-forward merge</code>。</p></blockquote><h3 id=切换到-master-分支>切换到 master 分支</h3><pre><code>root@aliyun:~/blog# git checkout master  # 切换到 master 分支
 Switched to branch 'master'
 root@aliyun:~/blog# cat .git/refs/heads/master # master 分支仍然指向第二次的 commit。
 558e28c67089eea9bdfbfd748d32baa8f2ce944e
@@ -555,9 +297,7 @@ root@aliyun:~/blog# tree .git/objects/ # 查看 objects 对象。
 └── pack
 
 11 directories, 10 files
-</code></pre>
-<h3 id=合并-new-branch-分支到-master-分支>合并 new-branch 分支到 master 分支</h3>
-<pre><code>root@aliyun:~/blog# git merge new-branch # 合并 new-branch 分支
+</code></pre><h3 id=合并-new-branch-分支到-master-分支>合并 new-branch 分支到 master 分支</h3><pre><code>root@aliyun:~/blog# git merge new-branch # 合并 new-branch 分支
 Updating 558e28c..ce907fa ### 更新 558e 这个object
 Fast-forward # fast-forward
  file3 | 1 +
@@ -593,11 +333,7 @@ root@aliyun:~/blog# tree .git/objects/ # 查看 objects 对象。并没增加任
 root@aliyun:~/blog# cat .git/refs/heads/master 
 ce907fabd08138058b05428d7cac017507b33c44 # 更新了 master 指向，指向了 new-branch 的 commit。
 
-</code></pre>
-<h3 id=fast-forward-图解>Fast-Forward 图解</h3>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fast-forward-merge.svg alt="git fast forward"></p>
-<h2 id=删除-master-分支上的-file1-文件然后提交>删除 master 分支上的 file1 文件，然后提交</h2>
-<pre><code>root@aliyun:~# cp -r blog blog-delete # 复制一份，在 master 分支上删除 file1
+</code></pre><h3 id=fast-forward-图解>Fast-Forward 图解</h3><p><img src=https://github.com/stardustman/pictures/raw/main/img/fast-forward-merge.svg alt="git fast forward"></p><h2 id=删除-master-分支上的-file1-文件然后提交>删除 master 分支上的 file1 文件，然后提交</h2><pre><code>root@aliyun:~# cp -r blog blog-delete # 复制一份，在 master 分支上删除 file1
 root@aliyun:~# cd blog-delete/
 root@aliyun:~/blog-delete# ls
 file1  file2  file3
@@ -729,27 +465,7 @@ root@aliyun:~/blog-delete# cat .git/logs/refs/heads/master # 查看 master 分�
 73622e96d5b5389d63dd74e3c40db9d4c4296ff5 558e28c67089eea9bdfbfd748d32baa8f2ce944e root &lt;root@aliyun&gt; 1578036269 +0800 commit: modify file1
 558e28c67089eea9bdfbfd748d32baa8f2ce944e ce907fabd08138058b05428d7cac017507b33c44 root &lt;root@aliyun&gt; 1586241477 +0800 merge new-branch: Fast-forward
 ce907fabd08138058b05428d7cac017507b33c44 f24e8b6fb771347156b615c795f7fd886dc49088 root &lt;root@aliyun&gt; 1586307459 +0800 commit: delete file1 on master
-</code></pre>
-<h3 id=master-分支删除-file1-图解>master 分支删除 file1 图解</h3>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/git-delete-a-file-and-commit.svg alt="delete file1 on maste"></p>
-<h4 id=master-分支删除-file1-图解分析>master 分支删除 file1 图解分析</h4>
-<p>master 分支 git 中删除一个文件的实质是：</p>
-<ol>
-<li>生成一个 <code>tree object ba61ba</code>，指向剩下的每一个文件的最新的 blob object。<code>blob c20090 file2</code> 和 <code>blob 2e799a file3</code></li>
-<li>生成一个 <code>commit f24e8b</code> 节点，指向本次提交的上一个 <code>commit object(ce907f)</code> 和这次提交生成的 <code>tree object(ba61ba)</code>。</li>
-<li>移动 <code>master</code> 和 <code>HEAD</code> 的指向，指向本次提交的 <code>commit object f24e8b</code>。</li>
-<li>在 master 的 <code>.git/logs/refs/heads/master</code> 分支添加本次提交的 git log。</li>
-<li>删除 file1，但是 git object 下 file1 的 <code>blob(58c9bd)</code> 并没有删除。这也意味着可以恢复 file1。</li>
-<li>其他分支同理。</li>
-</ol>
-<h2 id=合并分支combine-work>合并分支(combine work)</h2>
-<h3 id=使用-git-merge>使用 git merge</h3>
-<blockquote>
-<p>Merging in Git <strong>creates a special commit</strong> that has <strong>two unique parents</strong>. A commit with two parents essentially means &ldquo;I want to include all the work from this parent over here and this one over here, and the set of all their parents.&rdquo;</p>
-</blockquote>
-<h4 id=new-branch-分支添加-file4>new-branch 分支添加 file4</h4>
-<h5 id=new-branch-分支添加-file4-步骤>new-branch 分支添加 file4 步骤</h5>
-<pre><code>root@aliyun:~# cd blog-delete
+</code></pre><h3 id=master-分支删除-file1-图解>master 分支删除 file1 图解</h3><p><img src=https://github.com/stardustman/pictures/raw/main/img/git-delete-a-file-and-commit.svg alt="delete file1 on maste"></p><h4 id=master-分支删除-file1-图解分析>master 分支删除 file1 图解分析</h4><p>master 分支 git 中删除一个文件的实质是：</p><ol><li>生成一个 <code>tree object ba61ba</code>，指向剩下的每一个文件的最新的 blob object。<code>blob c20090 file2</code> 和 <code>blob 2e799a file3</code></li><li>生成一个 <code>commit f24e8b</code> 节点，指向本次提交的上一个 <code>commit object(ce907f)</code> 和这次提交生成的 <code>tree object(ba61ba)</code>。</li><li>移动 <code>master</code> 和 <code>HEAD</code> 的指向，指向本次提交的 <code>commit object f24e8b</code>。</li><li>在 master 的 <code>.git/logs/refs/heads/master</code> 分支添加本次提交的 git log。</li><li>删除 file1，但是 git object 下 file1 的 <code>blob(58c9bd)</code> 并没有删除。这也意味着可以恢复 file1。</li><li>其他分支同理。</li></ol><h2 id=合并分支combine-work>合并分支(combine work)</h2><h3 id=使用-git-merge>使用 git merge</h3><blockquote><p>Merging in Git <strong>creates a special commit</strong> that has <strong>two unique parents</strong>. A commit with two parents essentially means &ldquo;I want to include all the work from this parent over here and this one over here, and the set of all their parents.&rdquo;</p></blockquote><h4 id=new-branch-分支添加-file4>new-branch 分支添加 file4</h4><h5 id=new-branch-分支添加-file4-步骤>new-branch 分支添加 file4 步骤</h5><pre><code>root@aliyun:~# cd blog-delete
 root@aliyun:~/blog-delete# ls
 file2  file3
 root@aliyun:~/blog-delete# git branch --list  # 查看分支
@@ -934,12 +650,7 @@ root@aliyun:~/blog-delete-new-branch-file4# tree .git/objects/ # 在 master 分�
 
 16 directories, 15 files 
 
-</code></pre>
-<h5 id=new-branch-分支添加-file4-图解>new-branch 分支添加 file4 图解</h5>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/new-branch-add-file4.svg alt=new-branch-add-file4></p>
-<h4 id=master-分支添加-file5>master 分支添加 file5</h4>
-<h5 id=master-分支添加-file5-步骤>master 分支添加 file5 步骤</h5>
-<pre><code>root@aliyun:~# cp -r blog-delete blog-delete-master-file5 # 复制一份
+</code></pre><h5 id=new-branch-分支添加-file4-图解>new-branch 分支添加 file4 图解</h5><p><img src=https://github.com/stardustman/pictures/raw/main/img/new-branch-add-file4.svg alt=new-branch-add-file4></p><h4 id=master-分支添加-file5>master 分支添加 file5</h4><h5 id=master-分支添加-file5-步骤>master 分支添加 file5 步骤</h5><pre><code>root@aliyun:~# cp -r blog-delete blog-delete-master-file5 # 复制一份
 root@aliyun:~# cd blog-delete-master-file5/
 root@aliyun:~/blog-delete-master-file5# ls
 file1  file2  file3  file4
@@ -1093,12 +804,7 @@ root@aliyun:~/blog-delete-master-file5# git cat-file -s 374938
 root@aliyun:~/blog-delete-master-file5# git cat-file -p 374938
 555
 
-</code></pre>
-<h5 id=master-分支添加-file5-图解>master 分支添加 file5 图解</h5>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/git-master-add-file5.svg alt=master-add-file5></p>
-<h4 id=master-分支合并到-new-branch-分支>master 分支合并到 new-branch 分支</h4>
-<h5 id=master-分支合并到-new-branch-分支步骤>master 分支合并到 new-branch 分支步骤</h5>
-<pre><code>root@aliyun:~# cp -r blog-delete-master-file5/ blog-delete-file4-file5-merge
+</code></pre><h5 id=master-分支添加-file5-图解>master 分支添加 file5 图解</h5><p><img src=https://github.com/stardustman/pictures/raw/main/img/git-master-add-file5.svg alt=master-add-file5></p><h4 id=master-分支合并到-new-branch-分支>master 分支合并到 new-branch 分支</h4><h5 id=master-分支合并到-new-branch-分支步骤>master 分支合并到 new-branch 分支步骤</h5><pre><code>root@aliyun:~# cp -r blog-delete-master-file5/ blog-delete-file4-file5-merge
 root@aliyun:~# cd blog-delete-file4-file5-merge/
 root@aliyun:~/blog-delete-file4-file5-merge# git branch --list
 * master
@@ -1234,99 +940,28 @@ ce907fabd08138058b05428d7cac017507b33c44 c9918cea80e46648c4e98da5b1c4b072f079479
 c9918cea80e46648c4e98da5b1c4b072f0794795 fc094b5b4e7a0f4028c5735d95f844b1aea1a9b6 root &lt;root@aliyun&gt; 1586344983 +0800 merge master: Merge made by the 'recursive' strategy. # 本次 merge 的 log
 
 
-</code></pre>
-<h5 id=master-分支合并到-new-branch-图解>master 分支合并到 new-branch 图解</h5>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/git-merge-master.svg alt=git-merge-master>
-master 分支合并到 new-branch 分支实质：</p>
-<ol>
-<li>生成一个新的 <code>tree object 4f1d41</code> 指向 <code>master</code> 分支和 <code>new-branch</code> 分支共有的<code>文件 blob</code>。</li>
-<li>生成一个新的 <code>commit object fc094b</code> 指向新生成的 <code>tree object 4f1d41</code>以及合并前的 master 分支的 commit
-和 new-branch 分支的 commit。</li>
-<li><code>.git/refs/heads/new-branch</code>指向新生成的 <code>commit object fc094b</code>。</li>
-<li><code>.git/logs/refs/heads/new-branch</code> 添加本次 merge 的 log。</li>
-<li><code>.git/refs/heads/master</code> master 分支的指向并没有发生改变。</li>
-</ol>
-<h2 id=reference>Reference</h2>
-<ol>
-<li><a href=https://www.lzane.com/slide/git-under-the-hood/index.html#/>git-under-the-hood</a></li>
-<li><a href=https://www.bilibili.com/video/av77252063>Bilibili-git-under-the-hood</a></li>
-<li><a href=https://zh.wikipedia.org/wiki/SHA-1>SHA-1</a></li>
-<li><a href=https://learngitbranching.js.org/>git-branch</a></li>
-<li><a href=http://marklodato.github.io/visual-git-guide/index-en.html>visual-git-reference</a></li>
-<li><a href=https://dev.to/lydiahallie/cs-visualized-useful-git-commands-37p1>visualized-useful-git-commands</a></li>
-</ol>
-</div>
-<div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>stardust</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2019-12-28
-</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>Markdown</span>
-<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2019/12/28/master-git/index.md target=_blank>The Markdown version »</a></span>
-</p>
-</div>
-<footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/git/>git</a>
-</div>
-<nav class=post-nav>
-<a class=prev href=/2020/01/14/three-easy-pieces-4-process/>
-<i class="iconfont icon-left"></i>
+</code></pre><h5 id=master-分支合并到-new-branch-图解>master 分支合并到 new-branch 图解</h5><p><img src=https://github.com/stardustman/pictures/raw/main/img/git-merge-master.svg alt=git-merge-master>
+master 分支合并到 new-branch 分支实质：</p><ol><li>生成一个新的 <code>tree object 4f1d41</code> 指向 <code>master</code> 分支和 <code>new-branch</code> 分支共有的<code>文件 blob</code>。</li><li>生成一个新的 <code>commit object fc094b</code> 指向新生成的 <code>tree object 4f1d41</code>以及合并前的 master 分支的 commit
+和 new-branch 分支的 commit。</li><li><code>.git/refs/heads/new-branch</code>指向新生成的 <code>commit object fc094b</code>。</li><li><code>.git/logs/refs/heads/new-branch</code> 添加本次 merge 的 log。</li><li><code>.git/refs/heads/master</code> master 分支的指向并没有发生改变。</li></ol><h2 id=reference>Reference</h2><ol><li><a href=https://www.lzane.com/slide/git-under-the-hood/index.html#/>git-under-the-hood</a></li><li><a href=https://www.bilibili.com/video/av77252063>Bilibili-git-under-the-hood</a></li><li><a href=https://zh.wikipedia.org/wiki/SHA-1>SHA-1</a></li><li><a href=https://learngitbranching.js.org/>git-branch</a></li><li><a href=http://marklodato.github.io/visual-git-guide/index-en.html>visual-git-reference</a></li><li><a href=https://dev.to/lydiahallie/cs-visualized-useful-git-commands-37p1>visualized-useful-git-commands</a></li></ol></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>stardust</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2019-12-28</span></p><p class=copyright-item><span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2019/12/28/master-git/index.md target=_blank>The Markdown version »</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/git/>git</a></div><nav class=post-nav><a class=prev href=/2020/01/14/three-easy-pieces-4-process/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">three-easy-pieces-4-process</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/2019/12/24/katacoda-what-is-a-container/>
-<span class="next-text nav-default">katacoda-what-is-a-container</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/2019/12/24/katacoda-what-is-a-container/><span class="next-text nav-default">katacoda-what-is-a-container</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav>
-</footer>
-</article>
-</div>
-<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
-</div>
-</main>
-<footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
 <a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
-<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div>
-<div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<span class=copyright-year>
-&copy;
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
 2019 -
-2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span>
-</span>
-</div>
-</footer>
-<div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div>
-</div>
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
 <script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
-<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
-</body>
-</html>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script></body></html>

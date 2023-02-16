@@ -1,126 +1,9 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>algorithm-quick-sort - stardustman</title>
-<meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="stardust"><meta name=description content="quick sort C 代码 #include &amp;lt;stdio.h&amp;gt; int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二"><meta name=keywords content="Hugo,theme,even">
-<meta name=generator content="Hugo 0.91.2 with theme even">
-<link rel=canonical href=http://stardustman.github.io/2020/04/14/algorithm-quick-sort/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="algorithm-quick-sort">
-<meta property="og:description" content="quick sort C 代码 #include <stdio.h> int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二">
-<meta property="og:type" content="article">
-<meta property="og:url" content="http://stardustman.github.io/2020/04/14/algorithm-quick-sort/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2020-04-14T20:02:16+08:00">
-<meta property="article:modified_time" content="2020-04-14T20:02:16+08:00">
-<meta itemprop=name content="algorithm-quick-sort">
-<meta itemprop=description content="quick sort C 代码 #include <stdio.h> int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二"><meta itemprop=datePublished content="2020-04-14T20:02:16+08:00">
-<meta itemprop=dateModified content="2020-04-14T20:02:16+08:00">
-<meta itemprop=wordCount content="3717">
-<meta itemprop=keywords content="algorithm,sort,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="algorithm-quick-sort">
-<meta name=twitter:description content="quick sort C 代码 #include <stdio.h> int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head>
-<body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>keep writing</a>
-</div>
-<div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>algorithm-quick-sort - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="quick sort C 代码 #include &amp;lt;stdio.h&amp;gt; int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2020/04/14/algorithm-quick-sort/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="algorithm-quick-sort"><meta property="og:description" content="quick sort C 代码 #include <stdio.h> int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2020/04/14/algorithm-quick-sort/"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-04-14T20:02:16+08:00"><meta property="article:modified_time" content="2020-04-14T20:02:16+08:00"><meta itemprop=name content="algorithm-quick-sort"><meta itemprop=description content="quick sort C 代码 #include <stdio.h> int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二"><meta itemprop=datePublished content="2020-04-14T20:02:16+08:00"><meta itemprop=dateModified content="2020-04-14T20:02:16+08:00"><meta itemprop=wordCount content="3717"><meta itemprop=keywords content="algorithm,sort,"><meta name=twitter:card content="summary"><meta name=twitter:title content="algorithm-quick-sort"><meta name=twitter:description content="quick sort C 代码 #include <stdio.h> int partition(int* array, int startIndex, int endIndex){ int left = startIndex; int right = endIndex; int pivot = array[startIndex]; int temp = 0; // 第一个 while 循环，其实就是从两个方向遍历一次数组，根据 pivot 进行分割。 while (left != right) { // 第二"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>keep writing</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div>
-</div>
-<nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li>
-</a><a href=/post/>
-<li class=mobile-menu-item>Archives</li>
-</a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li>
-</a><a href=/categories/>
-<li class=mobile-menu-item>Categories</li>
-</a><a href=/2022/03/27/about/>
-<li class=mobile-menu-item>About</li>
-</a>
-</ul>
-</nav>
-<div class=container id=mobile-panel>
-<header id=header class=header>
-<div class=logo-wrapper>
-<a href=/ class=logo>keep writing</a>
-</div>
-<nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/categories/>Categories</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/2022/03/27/about/>About</a>
-</li>
-</ul>
-</nav>
-</header>
-<main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>algorithm-quick-sort</h1>
-<div class=post-meta>
-<span class=post-time> 2020-04-14 </span>
-<span class=more-meta> 3717 words </span>
-<span class=more-meta> 8 mins read </span>
-</div>
-</header>
-<div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2>
-<div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li>
-<ul>
-<li><a href=#quick-sort>quick sort</a>
-<ul>
-<li><a href=#c-代码>C 代码</a></li>
-<li><a href=#汇编代码分析>汇编代码分析</a></li>
-<li><a href=#partition-分析>partition 分析</a></li>
-<li><a href=#系统调用-strace-分析>系统调用 strace 分析</a></li>
-<li><a href=#reference>reference</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-<div class=post-content>
-<h2 id=quick-sort>quick sort</h2>
-<h3 id=c-代码>C 代码</h3>
-<pre><code class=language-c>#include &lt;stdio.h&gt;
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/2022/03/27/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>keep writing</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/2022/03/27/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>algorithm-quick-sort</h1><div class=post-meta><span class=post-time>2020-04-14</span>
+<span class=more-meta>3717 words</span>
+<span class=more-meta>8 mins read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#quick-sort>quick sort</a><ul><li><a href=#c-代码>C 代码</a></li><li><a href=#汇编代码分析>汇编代码分析</a></li><li><a href=#partition-分析>partition 分析</a></li><li><a href=#系统调用-strace-分析>系统调用 strace 分析</a></li><li><a href=#reference>reference</a></li></ul></li></ul></li></ul></nav></div></div><div class=post-content><h2 id=quick-sort>quick sort</h2><h3 id=c-代码>C 代码</h3><pre><code class=language-c>#include &lt;stdio.h&gt;
 
 int partition(int* array, int startIndex, int endIndex){
     int left = startIndex;
@@ -178,9 +61,7 @@ int main(){
     }
     return 0;
 }
-</code></pre>
-<h3 id=汇编代码分析>汇编代码分析</h3>
-<pre><code class=language-asm>quickSort:     file format elf64-x86-64
+</code></pre><h3 id=汇编代码分析>汇编代码分析</h3><pre><code class=language-asm>quickSort:     file format elf64-x86-64
 
 
 Disassembly of section .init:
@@ -563,9 +444,7 @@ Disassembly of section .fini:
  988:	48 83 c4 08          	add    $0x8,%rsp
  98c:	c3                   	retq   
 
-</code></pre>
-<h3 id=partition-分析>partition 分析</h3>
-<pre><code>Before:: [4, 7, 6, 5, 3, 2, 8, 1]
+</code></pre><h3 id=partition-分析>partition 分析</h3><pre><code>Before:: [4, 7, 6, 5, 3, 2, 8, 1]
 第 1 次 partition [3, 1, 2, 4, 5, 6, 8, 7]  returned index is: 3
 第 2 次 partition [2, 1, 3, 4, 5, 6, 8, 7]  returned index is: 2
 第 3 次 partition [1, 2, 3, 4, 5, 6, 8, 7]  returned index is: 1
@@ -573,11 +452,7 @@ Disassembly of section .fini:
 第 5 次 partition [1, 2, 3, 4, 5, 6, 8, 7]  returned index is: 5
 第 6 次 partition [1, 2, 3, 4, 5, 6, 7, 8]  returned index is: 7
  After:: [1, 2, 3, 4, 5, 6, 7, 8]
-</code></pre>
-<h4 id=partition-逻辑图解>partition 逻辑图解</h4>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/quick-sort-partition-flow-chart.svg alt="quick-sort-partition-flow-chart "></p>
-<h3 id=系统调用-strace-分析>系统调用 strace 分析</h3>
-<pre><code>root@aliyun:~# strace -Ti ./quickSort 
+</code></pre><h4 id=partition-逻辑图解>partition 逻辑图解</h4><p><img src=https://github.com/stardustman/pictures/raw/main/img/quick-sort-partition-flow-chart.svg alt="quick-sort-partition-flow-chart "></p><h3 id=系统调用-strace-分析>系统调用 strace 分析</h3><pre><code>root@aliyun:~# strace -Ti ./quickSort 
 [00007f2ee3f68e37] execve(&quot;./quickSort&quot;, [&quot;./quickSort&quot;], 0x7ffffe4dc528 /* 27 vars */) = 0 &lt;0.000122&gt;
 [00007f0045366ec9] brk(NULL)            = 0x55e15d32b000 &lt;0.000006&gt;
 [00007f004535a7de] access(&quot;/etc/ld.so.nohwcap&quot;, F_OK) = -1 ENOENT (No such file or directory) &lt;0.000010&gt;
@@ -607,86 +482,27 @@ Disassembly of section .fini:
 [00007f004506a154] write(1, &quot;1 2 3 4 5 6 7 8 &quot;, 161 2 3 4 5 6 7 8 ) = 16 &lt;0.000024&gt;
 [00007f004503ee06] exit_group(0)        = ?
 [????????????????] +++ exited with 0 +++
-</code></pre>
-<h3 id=reference>reference</h3>
-<ol>
-<li><a href=http://man7.org/linux/man-pages/man2/execve.2.html>system-call-execve</a></li>
-<li><a href=http://man7.org/linux/man-pages/man2/brk.2.html>system-call-brk</a></li>
-<li><a href=http://man7.org/linux/man-pages/man2/access.2.html>system-call-access</a></li>
-</ol>
-</div>
-<div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>stardust</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2020-04-14
-</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>Markdown</span>
-<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2020/04/14/algorithm-quick-sort/index.md target=_blank>The Markdown version »</a></span>
-</p>
-</div>
-<footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/algorithm/>algorithm</a>
-<a href=/tags/sort/>sort</a>
-</div>
-<nav class=post-nav>
-<a class=prev href=/2020/04/23/network-dns/>
-<i class="iconfont icon-left"></i>
+</code></pre><h3 id=reference>reference</h3><ol><li><a href=http://man7.org/linux/man-pages/man2/execve.2.html>system-call-execve</a></li><li><a href=http://man7.org/linux/man-pages/man2/brk.2.html>system-call-brk</a></li><li><a href=http://man7.org/linux/man-pages/man2/access.2.html>system-call-access</a></li></ol></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>stardust</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2020-04-14</span></p><p class=copyright-item><span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2020/04/14/algorithm-quick-sort/index.md target=_blank>The Markdown version »</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/algorithm/>algorithm</a>
+<a href=/tags/sort/>sort</a></div><nav class=post-nav><a class=prev href=/2020/04/23/network-dns/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">network-dns</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/2020/04/10/algorithm-merge-sort/>
-<span class="next-text nav-default">algorithm-merge-sort</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/2020/04/10/algorithm-merge-sort/><span class="next-text nav-default">algorithm-merge-sort</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav>
-</footer>
-</article>
-</div>
-<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
-</div>
-</main>
-<footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
 <a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
-<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div>
-<div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<span class=copyright-year>
-&copy;
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
 2019 -
-2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span>
-</span>
-</div>
-</footer>
-<div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div>
-</div>
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
 <script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
-<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
-</body>
-</html>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script></body></html>

@@ -1,193 +1,18 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>cs-lock - stardustman</title>
-<meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="stardust"><meta name=description content="为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证"><meta name=keywords content="Hugo,theme,even">
-<meta name=generator content="Hugo 0.91.2 with theme even">
-<link rel=canonical href=http://stardustman.github.io/2020/12/14/cs-lock/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="cs-lock">
-<meta property="og:description" content="为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证">
-<meta property="og:type" content="article">
-<meta property="og:url" content="http://stardustman.github.io/2020/12/14/cs-lock/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2020-12-14T15:20:26+08:00">
-<meta property="article:modified_time" content="2020-12-14T15:20:26+08:00">
-<meta itemprop=name content="cs-lock">
-<meta itemprop=description content="为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证"><meta itemprop=datePublished content="2020-12-14T15:20:26+08:00">
-<meta itemprop=dateModified content="2020-12-14T15:20:26+08:00">
-<meta itemprop=wordCount content="2207">
-<meta itemprop=keywords content="lock,synchronization,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="cs-lock">
-<meta name=twitter:description content="为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head>
-<body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>keep writing</a>
-</div>
-<div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>cs-lock - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2020/12/14/cs-lock/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="cs-lock"><meta property="og:description" content="为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2020/12/14/cs-lock/"><meta property="article:section" content="post"><meta property="article:published_time" content="2020-12-14T15:20:26+08:00"><meta property="article:modified_time" content="2020-12-14T15:20:26+08:00"><meta itemprop=name content="cs-lock"><meta itemprop=description content="为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证"><meta itemprop=datePublished content="2020-12-14T15:20:26+08:00"><meta itemprop=dateModified content="2020-12-14T15:20:26+08:00"><meta itemprop=wordCount content="2207"><meta itemprop=keywords content="lock,synchronization,"><meta name=twitter:card content="summary"><meta name=twitter:title content="cs-lock"><meta name=twitter:description content="为啥需要 lock？ 多处理器的存在 中断的存在 lock 是啥？ lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>keep writing</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div>
-</div>
-<nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li>
-</a><a href=/post/>
-<li class=mobile-menu-item>Archives</li>
-</a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li>
-</a><a href=/categories/>
-<li class=mobile-menu-item>Categories</li>
-</a><a href=/2022/03/27/about/>
-<li class=mobile-menu-item>About</li>
-</a>
-</ul>
-</nav>
-<div class=container id=mobile-panel>
-<header id=header class=header>
-<div class=logo-wrapper>
-<a href=/ class=logo>keep writing</a>
-</div>
-<nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/categories/>Categories</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/2022/03/27/about/>About</a>
-</li>
-</ul>
-</nav>
-</header>
-<main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>cs-lock</h1>
-<div class=post-meta>
-<span class=post-time> 2020-12-14 </span>
-<span class=more-meta> 2207 words </span>
-<span class=more-meta> 5 mins read </span>
-</div>
-</header>
-<div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2>
-<div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li>
-<ul>
-<li><a href=#为啥需要-lock>为啥需要 lock？</a></li>
-<li><a href=#lock-是啥>lock 是啥？</a></li>
-<li><a href=#critical-section>critical section</a></li>
-<li><a href=#如何评估估锁>如何评估估锁</a>
-<ul>
-<li><a href=#mutual-exclusion>mutual exclusion</a></li>
-<li><a href=#fairless>fairless</a></li>
-<li><a href=#performance>performance</a></li>
-</ul>
-</li>
-<li><a href=#构建-lock>构建 Lock</a>
-<ul>
-<li><a href=#控制中断>控制中断</a></li>
-<li><a href=#失败的尝试只用-loadsstores>失败的尝试，只用 Loads/Stores</a></li>
-<li><a href=#test-and-setatomic-exchange-构建锁>test-and-set(atomic exchange) 构建锁</a></li>
-<li><a href=#compare-and-swapexchange-构建锁>Compare-And-Swap(Exchange) 构建锁</a></li>
-<li><a href=#fetch-and-add-构建锁>Fetch-And-Add 构建锁</a></li>
-</ul>
-</li>
-<li><a href=#如何避免-spin>如何避免 spin？</a>
-<ul>
-<li><a href=#yield放弃-cpu>yield(放弃 CPU)</a></li>
-<li><a href=#using-queues-sleeping-instead-of-spinning>Using Queues: Sleeping Instead Of Spinning</a></li>
-</ul>
-</li>
-<li><a href=#spin-lock-的问题>Spin Lock 的问题</a>
-<ul>
-<li><a href=#spin-forever>spin forever</a></li>
-<li><a href=#priority-inversion>Priority Inversion</a></li>
-</ul>
-</li>
-<li><a href=#two-phrase-lock>two-phrase-lock</a></li>
-<li><a href=#references>References</a></li>
-</ul>
-</li>
-</ul>
-</nav>
-</div>
-</div>
-<div class=post-content>
-<h2 id=为啥需要-lock>为啥需要 lock？</h2>
-<ol>
-<li>多处理器的存在</li>
-<li>中断的存在</li>
-</ol>
-<h2 id=lock-是啥>lock 是啥？</h2>
-<p>lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证线程的原子性。锁有两种状态：</p>
-<ol>
-<li>被占用</li>
-<li>空闲</li>
-</ol>
-<h2 id=critical-section>critical section</h2>
-<pre><code class=language-c>    balance = balance + 1;
-</code></pre>
-<p>在多线程环境下，这段代码执行有问题。如何保证任意时刻，只有一个线程在执行这段代码呢？用 lock，获取这个锁之后，才可以执行这段代码，这段代码执行完毕后，释放这个锁。没有获取锁的线程，无法执行这段代码。也可以认为通过 lock 来<code>监视</code>这段代码任意时刻只能有一个线程执行。不错，monitor 本质上也是一个锁。</p>
-<h2 id=如何评估估锁>如何评估估锁</h2>
-<h3 id=mutual-exclusion>mutual exclusion</h3>
-<p>锁，提供互斥功能。</p>
-<h3 id=fairless>fairless</h3>
-<p>是否会有线程饥饿</p>
-<h3 id=performance>performance</h3>
-<h2 id=构建-lock>构建 Lock</h2>
-<h3 id=控制中断>控制中断</h3>
-<pre><code class=language-c>void lock(){
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/2022/03/27/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>keep writing</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/2022/03/27/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>cs-lock</h1><div class=post-meta><span class=post-time>2020-12-14</span>
+<span class=more-meta>2207 words</span>
+<span class=more-meta>5 mins read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><ul><li><a href=#为啥需要-lock>为啥需要 lock？</a></li><li><a href=#lock-是啥>lock 是啥？</a></li><li><a href=#critical-section>critical section</a></li><li><a href=#如何评估估锁>如何评估估锁</a><ul><li><a href=#mutual-exclusion>mutual exclusion</a></li><li><a href=#fairless>fairless</a></li><li><a href=#performance>performance</a></li></ul></li><li><a href=#构建-lock>构建 Lock</a><ul><li><a href=#控制中断>控制中断</a></li><li><a href=#失败的尝试只用-loadsstores>失败的尝试，只用 Loads/Stores</a></li><li><a href=#test-and-setatomic-exchange-构建锁>test-and-set(atomic exchange) 构建锁</a></li><li><a href=#compare-and-swapexchange-构建锁>Compare-And-Swap(Exchange) 构建锁</a></li><li><a href=#fetch-and-add-构建锁>Fetch-And-Add 构建锁</a></li></ul></li><li><a href=#如何避免-spin>如何避免 spin？</a><ul><li><a href=#yield放弃-cpu>yield(放弃 CPU)</a></li><li><a href=#using-queues-sleeping-instead-of-spinning>Using Queues: Sleeping Instead Of Spinning</a></li></ul></li><li><a href=#spin-lock-的问题>Spin Lock 的问题</a><ul><li><a href=#spin-forever>spin forever</a></li><li><a href=#priority-inversion>Priority Inversion</a></li></ul></li><li><a href=#two-phrase-lock>two-phrase-lock</a></li><li><a href=#references>References</a></li></ul></li></ul></nav></div></div><div class=post-content><h2 id=为啥需要-lock>为啥需要 lock？</h2><ol><li>多处理器的存在</li><li>中断的存在</li></ol><h2 id=lock-是啥>lock 是啥？</h2><p>lock 本质上是一个变量。变量本质上是一块内存。归根结底，lock 就是一块内存，用这块内存来保证线程的原子性。锁有两种状态：</p><ol><li>被占用</li><li>空闲</li></ol><h2 id=critical-section>critical section</h2><pre><code class=language-c>    balance = balance + 1;
+</code></pre><p>在多线程环境下，这段代码执行有问题。如何保证任意时刻，只有一个线程在执行这段代码呢？用 lock，获取这个锁之后，才可以执行这段代码，这段代码执行完毕后，释放这个锁。没有获取锁的线程，无法执行这段代码。也可以认为通过 lock 来<code>监视</code>这段代码任意时刻只能有一个线程执行。不错，monitor 本质上也是一个锁。</p><h2 id=如何评估估锁>如何评估估锁</h2><h3 id=mutual-exclusion>mutual exclusion</h3><p>锁，提供互斥功能。</p><h3 id=fairless>fairless</h3><p>是否会有线程饥饿</p><h3 id=performance>performance</h3><h2 id=构建-lock>构建 Lock</h2><h3 id=控制中断>控制中断</h3><pre><code class=language-c>void lock(){
     disableInterrupts(); // 关闭中断
 }
 
 void unlock(){
     enableInterrputs(); // 开启中断
 }
-</code></pre>
-<blockquote>
-<p>对于单处理器，可以直接来关闭中断、开启中断的方式来实现线程的原子性。
-关闭、开启中断的指令是特权指令。</p>
-</blockquote>
-<h4 id=优点>优点</h4>
-<p>实现简单、便于理解。在关闭中断的情况下，可以保证线程的执行不会被打断。</p>
-<h4 id=缺点>缺点</h4>
-<ol>
-<li>需要特权指令。可能被滥用。若一个程序关闭中断后，执行死循环，那么就霸占了 CPU，想要解决这个问题，就只好重启了。</li>
-<li>在多核的处理器上，关闭中断没有用。因为其他线程可以在其他处理器上运行，也可以进入临界区。</li>
-<li>可能会丢失其他的中断信号。一直在处理这个中断，没空搭理其他的中断请求。</li>
-<li>低效。处理中断还是很麻烦的。</li>
-</ol>
-<h3 id=失败的尝试只用-loadsstores>失败的尝试，只用 Loads/Stores</h3>
-<pre><code class=language-c>typedef struct __lock_t{
+</code></pre><blockquote><p>对于单处理器，可以直接来关闭中断、开启中断的方式来实现线程的原子性。
+关闭、开启中断的指令是特权指令。</p></blockquote><h4 id=优点>优点</h4><p>实现简单、便于理解。在关闭中断的情况下，可以保证线程的执行不会被打断。</p><h4 id=缺点>缺点</h4><ol><li>需要特权指令。可能被滥用。若一个程序关闭中断后，执行死循环，那么就霸占了 CPU，想要解决这个问题，就只好重启了。</li><li>在多核的处理器上，关闭中断没有用。因为其他线程可以在其他处理器上运行，也可以进入临界区。</li><li>可能会丢失其他的中断信号。一直在处理这个中断，没空搭理其他的中断请求。</li><li>低效。处理中断还是很麻烦的。</li></ol><h3 id=失败的尝试只用-loadsstores>失败的尝试，只用 Loads/Stores</h3><pre><code class=language-c>typedef struct __lock_t{
     int flag; // lock 状态
 } lock_t;
 
@@ -208,24 +33,12 @@ void unlock(lock_t *mutex){
     mutex-&gt;flag = 0; // 释放锁(U1)
 }
 
-</code></pre>
-<h4 id=loadsstores-分析>Loads/Stores 分析</h4>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-lock-1.svg alt="简单的 flag, Loads/Store"></p>
-<ol>
-<li>上图可见，由于中断的存在，在1.检测锁是否被占用 2.获取锁 这两个步骤之间，可能被打断，这样两个线程都获取了这个锁。<code>这不符合锁的基本功能，没有提供互斥</code>。无法保证临界区，任意时刻只有一个线程在执行。</li>
-<li>如果一个线程 T1 已经获取了锁，另外一个线程 T2 在获取锁时，会在 L1 处不停的判断锁的状态，这就是在 L1 处 Spin，这就是所谓的 Spin Lock。</li>
-</ol>
-<h3 id=test-and-setatomic-exchange-构建锁>test-and-set(atomic exchange) 构建锁</h3>
-<p>因为只是简单的 Loads/Stores(Reads/Writes) 不能构建出 Lock。所以引入和支持构建 Lock 的 test-and-set 指令。在 x86 下，指令是 <a href=https://www.felixcloutier.com/x86/xchg>xchg</a>。Exchanges the contents of the destination (first) and source (second) operands. The operands can be <code>two general-purpose registers</code> or a <code>register and a memory location</code>. If a memory operand is referenced, the processor’s locking protocol is automatically implemented for the duration of the exchange operation, <code>regardless of the presence or absence of the LOCK prefix or of the value of the IOPL</code>. 用 <code>xchg</code> 原子交换来实现。</p>
-<h4 id=c-语言表示-test-and-set-语义>C 语言表示 test-and-set 语义</h4>
-<pre><code class=language-c>int TestAndSet(int *old_ptr, int new) {
+</code></pre><h4 id=loadsstores-分析>Loads/Stores 分析</h4><p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-lock-1.svg alt="简单的 flag, Loads/Store"></p><ol><li>上图可见，由于中断的存在，在1.检测锁是否被占用 2.获取锁 这两个步骤之间，可能被打断，这样两个线程都获取了这个锁。<code>这不符合锁的基本功能，没有提供互斥</code>。无法保证临界区，任意时刻只有一个线程在执行。</li><li>如果一个线程 T1 已经获取了锁，另外一个线程 T2 在获取锁时，会在 L1 处不停的判断锁的状态，这就是在 L1 处 Spin，这就是所谓的 Spin Lock。</li></ol><h3 id=test-and-setatomic-exchange-构建锁>test-and-set(atomic exchange) 构建锁</h3><p>因为只是简单的 Loads/Stores(Reads/Writes) 不能构建出 Lock。所以引入和支持构建 Lock 的 test-and-set 指令。在 x86 下，指令是 <a href=https://www.felixcloutier.com/x86/xchg>xchg</a>。Exchanges the contents of the destination (first) and source (second) operands. The operands can be <code>two general-purpose registers</code> or a <code>register and a memory location</code>. If a memory operand is referenced, the processor’s locking protocol is automatically implemented for the duration of the exchange operation, <code>regardless of the presence or absence of the LOCK prefix or of the value of the IOPL</code>. 用 <code>xchg</code> 原子交换来实现。</p><h4 id=c-语言表示-test-and-set-语义>C 语言表示 test-and-set 语义</h4><pre><code class=language-c>int TestAndSet(int *old_ptr, int new) {
     int old = *old_ptr; // fetch old value at old_ptr, Read
     *old_ptr = new; // store ’new’ into old_ptr, Write
     return old; // return the old value
 }
-</code></pre>
-<h4 id=test-and-set-构建锁>test-and-set 构建锁</h4>
-<pre><code class=language-c>typedef struct __lock_t{
+</code></pre><h4 id=test-and-set-构建锁>test-and-set 构建锁</h4><pre><code class=language-c>typedef struct __lock_t{
     int flag; // lock 状态
 } lock_t;
 
@@ -245,31 +58,14 @@ void unlock(lock_t *lock){
     lock-&gt;flag = 0; // 释放锁(U1)
 }
 
-</code></pre>
-<h4 id=test-and-set-spin-lock-分析>test-and-set spin-lock 分析</h4>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-lock-test-and-set.svg alt=test-and-set-spin-lock></p>
-<h5 id=correctness>correctness</h5>
-<p>由上图分析可知，test-and-set 这个 spin lock 提供了 mutual exclusion，这是锁的基本功能。</p>
-<h5 id=fairness>fairness</h5>
-<p>spin lock 不是公平的，可能导致线程饥饿。</p>
-<h5 id=performance-1>performance</h5>
-<h6 id=单处理器>单处理器</h6>
-<p>对于 spin lock，假定有 N 个线程，其中有一个线程已经持有的这个锁。其余 N - 1 个线程来获取这个锁，当调度器调度一个线程获取锁时，会在时间片(T)内一直死循环判定 TestAndSet 的返回值，直到时间片消耗完，线程切出。会浪费 (N - 1) * T 这么多时间。</p>
-<h6 id=多处理器>多处理器</h6>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostem-lock-multi-core-contend-spin-lock.svg alt=多核处理器-spin-lock></p>
-<p>由图可知，在多处理器环境中，若 critical section 很短，在 Thread1 释放这个锁后，其余的线程是可以获取这个锁的。耗时并不长。</p>
-<h3 id=compare-and-swapexchange-构建锁>Compare-And-Swap(Exchange) 构建锁</h3>
-<h4 id=c-语言表示-compare-and-swap-语义>C 语言表示 Compare-And-Swap 语义</h4>
-<pre><code class=language-c>int CompareAndSwap(int *ptr, int expected, int new) {
+</code></pre><h4 id=test-and-set-spin-lock-分析>test-and-set spin-lock 分析</h4><p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-lock-test-and-set.svg alt=test-and-set-spin-lock></p><h5 id=correctness>correctness</h5><p>由上图分析可知，test-and-set 这个 spin lock 提供了 mutual exclusion，这是锁的基本功能。</p><h5 id=fairness>fairness</h5><p>spin lock 不是公平的，可能导致线程饥饿。</p><h5 id=performance-1>performance</h5><h6 id=单处理器>单处理器</h6><p>对于 spin lock，假定有 N 个线程，其中有一个线程已经持有的这个锁。其余 N - 1 个线程来获取这个锁，当调度器调度一个线程获取锁时，会在时间片(T)内一直死循环判定 TestAndSet 的返回值，直到时间片消耗完，线程切出。会浪费 (N - 1) * T 这么多时间。</p><h6 id=多处理器>多处理器</h6><p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostem-lock-multi-core-contend-spin-lock.svg alt=多核处理器-spin-lock></p><p>由图可知，在多处理器环境中，若 critical section 很短，在 Thread1 释放这个锁后，其余的线程是可以获取这个锁的。耗时并不长。</p><h3 id=compare-and-swapexchange-构建锁>Compare-And-Swap(Exchange) 构建锁</h3><h4 id=c-语言表示-compare-and-swap-语义>C 语言表示 Compare-And-Swap 语义</h4><pre><code class=language-c>int CompareAndSwap(int *ptr, int expected, int new) {
     int original = *ptr;
     if (original == expected)
     *ptr = new;
     return original;
 }
 
-</code></pre>
-<h4 id=compare-and-swap-构建锁>Compare-And-Swap 构建锁</h4>
-<pre><code class=language-c>typedef struct __lock_t{
+</code></pre><h4 id=compare-and-swap-构建锁>Compare-And-Swap 构建锁</h4><pre><code class=language-c>typedef struct __lock_t{
     int flag; // lock 状态
 } lock_t;
 
@@ -289,9 +85,7 @@ void unlock(lock_t *lock){
     lock-&gt;flag = 0; // 释放锁(U1)
 }
 
-</code></pre>
-<h5 id=x86-version-of-compare-and-swap>x86-version of compare-and-swap</h5>
-<pre><code class=language-c>char compare_and_swap(int *ptr, int old, int new) {
+</code></pre><h5 id=x86-version-of-compare-and-swap>x86-version of compare-and-swap</h5><pre><code class=language-c>char compare_and_swap(int *ptr, int old, int new) {
     unsigned char ret;
     // Note that sete sets a ’byte’ not the word
     __asm__ __volatile__ (
@@ -304,18 +98,13 @@ void unlock(lock_t *lock){
     return ret;
 }
 
-</code></pre>
-<h3 id=fetch-and-add-构建锁>Fetch-And-Add 构建锁</h3>
-<h4 id=c-语言表示-fetch-and-add-语义>C 语言表示 Fetch-And-Add 语义</h4>
-<pre><code class=language-c>int FetchAndAdd(int *ptr) {
+</code></pre><h3 id=fetch-and-add-构建锁>Fetch-And-Add 构建锁</h3><h4 id=c-语言表示-fetch-and-add-语义>C 语言表示 Fetch-And-Add 语义</h4><pre><code class=language-c>int FetchAndAdd(int *ptr) {
     int old = *ptr;
     *ptr = old + 1;
     return old;
 }
 
-</code></pre>
-<h4 id=构建-ticket-lock>构建 ticket lock</h4>
-<pre><code class=language-c>typedef struct __lock_t{
+</code></pre><h4 id=构建-ticket-lock>构建 ticket lock</h4><pre><code class=language-c>typedef struct __lock_t{
     int ticket;
     int turn;
 } lock_t;
@@ -335,10 +124,7 @@ void lock(lock_t *lock){
 void unlock(lock_t *lock){
     lock-&gt;turn = lock-&gt;turn + 1; // 下一位
 }
-</code></pre>
-<h2 id=如何避免-spin>如何避免 spin？</h2>
-<h3 id=yield放弃-cpu>yield(放弃 CPU)</h3>
-<pre><code class=language-c>void init() {
+</code></pre><h2 id=如何避免-spin>如何避免 spin？</h2><h3 id=yield放弃-cpu>yield(放弃 CPU)</h3><pre><code class=language-c>void init() {
     flag = 0;
 }
 
@@ -351,14 +137,10 @@ void unlock() {
     flag = 0;
 }
 
-</code></pre>
-<p>当一个线程无法获取锁时，不是 spin，而是 yield(), 线程状态由 running 变为 ready。
+</code></pre><p>当一个线程无法获取锁时，不是 spin，而是 yield(), 线程状态由 running 变为 ready。
 这样就节约了时间。但是无法解决饥饿问题。
 若一个线程不停的获取锁，进入临界区，释放锁。
-其他的尝试获取锁的线程就会不断的 yield。</p>
-<h3 id=using-queues-sleeping-instead-of-spinning>Using Queues: Sleeping Instead Of Spinning</h3>
-<h4 id=lock-with-queues-test-and-set-yield-and-wakeup>Lock With Queues, Test-and-set, Yield, And Wakeup</h4>
-<pre><code class=language-c>typedef struct __lock_t {
+其他的尝试获取锁的线程就会不断的 yield。</p><h3 id=using-queues-sleeping-instead-of-spinning>Using Queues: Sleeping Instead Of Spinning</h3><h4 id=lock-with-queues-test-and-set-yield-and-wakeup>Lock With Queues, Test-and-set, Yield, And Wakeup</h4><pre><code class=language-c>typedef struct __lock_t {
     int flag;   // lock
     int guard;  // spin lock
     queue_t *q; // 队列,需要锁的线程放在队列里，避免饥饿。
@@ -399,108 +181,30 @@ void unlock(lock_t *m) {
     m-&gt;guard = 0;
 }
 
-</code></pre>
-<h2 id=spin-lock-的问题>Spin Lock 的问题</h2>
-<h3 id=spin-forever>spin forever</h3>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-spin-lock-spin-forever.svg alt=spin-lock-spin-forever></p>
-<p>线程有优先级的概念。
+</code></pre><h2 id=spin-lock-的问题>Spin Lock 的问题</h2><h3 id=spin-forever>spin forever</h3><p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-spin-lock-spin-forever.svg alt=spin-lock-spin-forever></p><p>线程有优先级的概念。
 Thread1(priority1) &lt; Thread(priority2), 在 Thread1 和 Thread2 都是 runnable 情况下，调度器保证先运行 Thread2。
-由上图可知，Thread2 可能永远无法获取锁，导致系统挂掉。</p>
-<h3 id=priority-inversion>Priority Inversion</h3>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-spin-lock-priority-inversion.svg alt=spin-lock-priority-inversion></p>
-<p>有上图可知 Thread2 有可能在 Thread3 之前运行，这不符合线程优先级的要求。
-Thread2 和 Thread3 的优先级反转了。</p>
-<h2 id=two-phrase-lock>two-phrase-lock</h2>
-<ol>
-<li>spin(先旋转一段时间，看能不能获取锁)</li>
-<li>sleep(先旋转一段时间，不能获取锁，线程进入 sleep 状态，放弃 CPU)</li>
-</ol>
-<h2 id=references>References</h2>
-<ol>
-<li><a href=https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf>Lock</a></li>
-<li><a href=https://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html>gcc-inline-assembly-howto</a></li>
-<li><a href=https://www.felixcloutier.com/x86/xchg>atomic-exchange</a></li>
-<li><a href=https://github.com/remzi-arpacidusseau/ostep-code/tree/master/threads-locks>compare-and-swap-lock</a></li>
-<li><a href=https://www.felixcloutier.com/x86/lock>lock</a></li>
-<li><a href=https://www.felixcloutier.com/x86/cmpxchg>cpmxchg</a></li>
-<li><a href=https://www.felixcloutier.com/x86/xadd>xadd</a></li>
-<li><a href=https://filippo.io/linux-syscall-table/>system-call-table</a></li>
-<li><a href=https://man7.org/linux/man-pages/man2/sched_yield.2.html>sched_yield</a></li>
-<li><a href=https://man7.org/linux/man-pages/man2/gettid.2.html>gettid</a></li>
-</ol>
-</div>
-<div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>stardust</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2020-12-14
-</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>Markdown</span>
-<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2020/12/14/cs-lock/index.md target=_blank>The Markdown version »</a></span>
-</p>
-</div>
-<footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/lock/>lock</a>
-<a href=/tags/synchronization/>synchronization</a>
-</div>
-<nav class=post-nav>
-<a class=prev href=/2020/12/28/cs-english-words/>
-<i class="iconfont icon-left"></i>
+由上图可知，Thread2 可能永远无法获取锁，导致系统挂掉。</p><h3 id=priority-inversion>Priority Inversion</h3><p><img src=https://github.com/stardustman/pictures/raw/main/img/sync/ostep-spin-lock-priority-inversion.svg alt=spin-lock-priority-inversion></p><p>有上图可知 Thread2 有可能在 Thread3 之前运行，这不符合线程优先级的要求。
+Thread2 和 Thread3 的优先级反转了。</p><h2 id=two-phrase-lock>two-phrase-lock</h2><ol><li>spin(先旋转一段时间，看能不能获取锁)</li><li>sleep(先旋转一段时间，不能获取锁，线程进入 sleep 状态，放弃 CPU)</li></ol><h2 id=references>References</h2><ol><li><a href=https://pages.cs.wisc.edu/~remzi/OSTEP/threads-locks.pdf>Lock</a></li><li><a href=https://www.ibiblio.org/gferg/ldp/GCC-Inline-Assembly-HOWTO.html>gcc-inline-assembly-howto</a></li><li><a href=https://www.felixcloutier.com/x86/xchg>atomic-exchange</a></li><li><a href=https://github.com/remzi-arpacidusseau/ostep-code/tree/master/threads-locks>compare-and-swap-lock</a></li><li><a href=https://www.felixcloutier.com/x86/lock>lock</a></li><li><a href=https://www.felixcloutier.com/x86/cmpxchg>cpmxchg</a></li><li><a href=https://www.felixcloutier.com/x86/xadd>xadd</a></li><li><a href=https://filippo.io/linux-syscall-table/>system-call-table</a></li><li><a href=https://man7.org/linux/man-pages/man2/sched_yield.2.html>sched_yield</a></li><li><a href=https://man7.org/linux/man-pages/man2/gettid.2.html>gettid</a></li></ol></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>stardust</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2020-12-14</span></p><p class=copyright-item><span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2020/12/14/cs-lock/index.md target=_blank>The Markdown version »</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/lock/>lock</a>
+<a href=/tags/synchronization/>synchronization</a></div><nav class=post-nav><a class=prev href=/2020/12/28/cs-english-words/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">cs-english-words</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/2020/12/01/cs-cache/>
-<span class="next-text nav-default">cs-cache</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/2020/12/01/cs-cache/><span class="next-text nav-default">cs-cache</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav>
-</footer>
-</article>
-</div>
-<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
-</div>
-</main>
-<footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
 <a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
-<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div>
-<div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<span class=copyright-year>
-&copy;
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
 2019 -
-2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span>
-</span>
-</div>
-</footer>
-<div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div>
-</div>
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
 <script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
-<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
-</body>
-</html>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script></body></html>

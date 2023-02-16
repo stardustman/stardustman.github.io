@@ -1,149 +1,16 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>Virtual Memory Address Explore - stardustman</title>
-<meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="stardust"><meta name=description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&amp;quot;Hello, world!&amp;quot;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&amp;quot;Goodbye, world!&amp;quot;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><meta name=keywords content="Hugo,theme,even">
-<meta name=generator content="Hugo 0.91.2 with theme even">
-<link rel=canonical href=http://stardustman.github.io/2022/05/22/virtual-memory-address-explore/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="Virtual Memory Address Explore">
-<meta property="og:description" content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore">
-<meta property="og:type" content="article">
-<meta property="og:url" content="http://stardustman.github.io/2022/05/22/virtual-memory-address-explore/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2022-05-22T16:26:36+08:00">
-<meta property="article:modified_time" content="2022-05-22T16:26:36+08:00">
-<meta itemprop=name content="Virtual Memory Address Explore">
-<meta itemprop=description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><meta itemprop=datePublished content="2022-05-22T16:26:36+08:00">
-<meta itemprop=dateModified content="2022-05-22T16:26:36+08:00">
-<meta itemprop=wordCount content="759">
-<meta itemprop=keywords content="binary,linux,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="Virtual Memory Address Explore">
-<meta name=twitter:description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head>
-<body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>keep writing</a>
-</div>
-<div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Virtual Memory Address Explore - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&amp;quot;Hello, world!&amp;quot;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&amp;quot;Goodbye, world!&amp;quot;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2022/05/22/virtual-memory-address-explore/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Virtual Memory Address Explore"><meta property="og:description" content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2022/05/22/virtual-memory-address-explore/"><meta property="article:section" content="post"><meta property="article:published_time" content="2022-05-22T16:26:36+08:00"><meta property="article:modified_time" content="2022-05-22T16:26:36+08:00"><meta itemprop=name content="Virtual Memory Address Explore"><meta itemprop=description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><meta itemprop=datePublished content="2022-05-22T16:26:36+08:00"><meta itemprop=dateModified content="2022-05-22T16:26:36+08:00"><meta itemprop=wordCount content="759"><meta itemprop=keywords content="binary,linux,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Virtual Memory Address Explore"><meta name=twitter:description content="virtual memory address space layout 代码测试 cargo new vas-explore main.rs use std::{thread,time}; fn main() { println!(&#34;Hello, world!&#34;); let sl = time::Duration::from_millis(10000000); thread::sleep(sl); println!(&#34;Goodbye, world!&#34;); } cargo build ./target/debug/vas-explore pidof vas-explore /proc/pid/maps stardust@os:x86_64-linux-gnu$ pidof vas-explore 75599 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps 556a8a831000-556a8a837000 r--p 00000000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a837000-556a8a86e000 r-xp 00006000 08:12 815699 /home/stardust/Desktop/rust/ vas-explore/target/debug/vas-explore # text(code segment) segment 556a8a86e000-556a8a87c000 r--p 0003d000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore 556a8a87d000-556a8a880000 r--p 0004b000 08:12 815699 /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>keep writing</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div>
-</div>
-<nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li>
-</a><a href=/post/>
-<li class=mobile-menu-item>Archives</li>
-</a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li>
-</a><a href=/categories/>
-<li class=mobile-menu-item>Categories</li>
-</a><a href=/2022/03/27/about/>
-<li class=mobile-menu-item>About</li>
-</a>
-</ul>
-</nav>
-<div class=container id=mobile-panel>
-<header id=header class=header>
-<div class=logo-wrapper>
-<a href=/ class=logo>keep writing</a>
-</div>
-<nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/categories/>Categories</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/2022/03/27/about/>About</a>
-</li>
-</ul>
-</nav>
-</header>
-<main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>Virtual Memory Address Explore</h1>
-<div class=post-meta>
-<span class=post-time> 2022-05-22 </span>
-<span class=more-meta> 759 words </span>
-<span class=more-meta> 2 mins read </span>
-</div>
-</header>
-<div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2>
-<div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#virtual-memory-address-space-layout>virtual memory address space layout</a>
-<ul>
-<li><a href=#代码测试>代码测试</a></li>
-<li><a href=#procpidmaps>/proc/pid/maps</a></li>
-<li><a href=#row-format>row format</a></li>
-<li><a href=#text>text</a></li>
-<li><a href=#stack>stack</a></li>
-<li><a href=#heap>heap</a></li>
-<li><a href=#heap-与-stack-会不会相互覆盖>heap 与 stack 会不会相互覆盖？</a></li>
-<li><a href=#rust-程序内存布局分析>rust 程序内存布局分析</a>
-<ul>
-<li><a href=#查看变量在虚拟内存中的分布>查看变量在虚拟内存中的分布</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li><a href=#references>References</a></li>
-</ul>
-</nav>
-</div>
-</div>
-<div class=post-content>
-<h1 id=virtual-memory-address-space-layout>virtual memory address space layout</h1>
-<p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/virtual-memory-address-space.jpg alt=virtual-memory-address-space></p>
-<h2 id=代码测试>代码测试</h2>
-<ol>
-<li><code>cargo new vas-explore</code></li>
-</ol>
-<p>main.rs</p>
-<pre><code class=language-rust>use std::{thread,time};
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/2022/03/27/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>keep writing</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/2022/03/27/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Virtual Memory Address Explore</h1><div class=post-meta><span class=post-time>2022-05-22</span>
+<span class=more-meta>759 words</span>
+<span class=more-meta>2 mins read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#virtual-memory-address-space-layout>virtual memory address space layout</a><ul><li><a href=#代码测试>代码测试</a></li><li><a href=#procpidmaps>/proc/pid/maps</a></li><li><a href=#row-format>row format</a></li><li><a href=#text>text</a></li><li><a href=#stack>stack</a></li><li><a href=#heap>heap</a></li><li><a href=#heap-与-stack-会不会相互覆盖>heap 与 stack 会不会相互覆盖？</a></li><li><a href=#rust-程序内存布局分析>rust 程序内存布局分析</a><ul><li><a href=#查看变量在虚拟内存中的分布>查看变量在虚拟内存中的分布</a></li></ul></li></ul></li><li><a href=#references>References</a></li></ul></nav></div></div><div class=post-content><h1 id=virtual-memory-address-space-layout>virtual memory address space layout</h1><p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/virtual-memory-address-space.jpg alt=virtual-memory-address-space></p><h2 id=代码测试>代码测试</h2><ol><li><code>cargo new vas-explore</code></li></ol><p>main.rs</p><pre><code class=language-rust>use std::{thread,time};
 fn main() {
     println!(&quot;Hello, world!&quot;);
     let sl = time::Duration::from_millis(10000000);
     thread::sleep(sl);
     println!(&quot;Goodbye, world!&quot;);
 }
-</code></pre>
-<ol start=2>
-<li>cargo build</li>
-<li>./target/debug/vas-explore</li>
-<li>pidof vas-explore</li>
-</ol>
-<h2 id=procpidmaps>/proc/pid/maps</h2>
-<pre><code class=language-bash>stardust@os:x86_64-linux-gnu$ pidof vas-explore
+</code></pre><ol start=2><li>cargo build</li><li>./target/debug/vas-explore</li><li>pidof vas-explore</li></ol><h2 id=procpidmaps>/proc/pid/maps</h2><pre><code class=language-bash>stardust@os:x86_64-linux-gnu$ pidof vas-explore
 75599      
 stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps
 556a8a831000-556a8a837000 r--p 00000000 08:12 815699                     /home/stardust/Desktop/rust/vas-explore/target/debug/vas-explore
@@ -188,22 +55,9 @@ stardust@os:x86_64-linux-gnu$ cat /proc/75599/maps
 7ffe91c38000-7ffe91c3b000 r--p 00000000 00:00 0                          [vvar]
 7ffe91c3b000-7ffe91c3c000 r-xp 00000000 00:00 0                          [vdso]
 ffffffffff600000-ffffffffff601000 --xp 00000000 00:00 0                  [vsyscall]
-</code></pre>
-<h2 id=row-format>row format</h2>
-<p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/virtual-memory-address-space-format.jpg alt="row format"></p>
-<h2 id=text>text</h2>
-<p>代码段，程序的可执行代码在这里。</p>
-<h2 id=stack>stack</h2>
-<p>栈区，从 maps 可以看到 <code>7ffe91c09000-7ffe91c2a000</code>，这个区域是这个进程的栈区，可读、可写。<code>7ffe91c09000</code> 这个 48bits 的地址就是虚拟内存地址。为什么是 48bits，因为 amd64 的虚拟地址用 48bits(256TB)地址空间足够了。</p>
-<h2 id=heap>heap</h2>
-<p><code>556a8c01b000-556a8c03c000</code> 可以看到 heap 的地址，是比较小的地址段。</p>
-<h2 id=heap-与-stack-会不会相互覆盖>heap 与 stack 会不会相互覆盖？</h2>
-<p>查看 /proc/pid/maps 计算：</p>
-<p>(low address stack - high address heap) / 1024 / 1024 /1024 / 1024
+</code></pre><h2 id=row-format>row format</h2><p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/virtual-memory-address-space-format.jpg alt="row format"></p><h2 id=text>text</h2><p>代码段，程序的可执行代码在这里。</p><h2 id=stack>stack</h2><p>栈区，从 maps 可以看到 <code>7ffe91c09000-7ffe91c2a000</code>，这个区域是这个进程的栈区，可读、可写。<code>7ffe91c09000</code> 这个 48bits 的地址就是虚拟内存地址。为什么是 48bits，因为 amd64 的虚拟地址用 48bits(256TB)地址空间足够了。</p><h2 id=heap>heap</h2><p><code>556a8c01b000-556a8c03c000</code> 可以看到 heap 的地址，是比较小的地址段。</p><h2 id=heap-与-stack-会不会相互覆盖>heap 与 stack 会不会相互覆盖？</h2><p>查看 /proc/pid/maps 计算：</p><p>(low address stack - high address heap) / 1024 / 1024 /1024 / 1024
 = (0x7ffe91c09000 - 0x556a8c03c000) / 1024 / 1024 /1024 / 1024 = 42TB
-可以看出相差有 42TB 的空间。就算真的覆盖了，内核会终止这个程序。这也就是虚拟内存的作用之一，程序可以使用远远超过实际物理内存的空间。</p>
-<h2 id=rust-程序内存布局分析>rust 程序内存布局分析</h2>
-<pre><code class=language-rust>static MAX: u32 = 0;
+可以看出相差有 42TB 的空间。就算真的覆盖了，内核会终止这个程序。这也就是虚拟内存的作用之一，程序可以使用远远超过实际物理内存的空间。</p><h2 id=rust-程序内存布局分析>rust 程序内存布局分析</h2><pre><code class=language-rust>static MAX: u32 = 0;
 fn foo() {}
 fn main() {
     let hello = &quot;hello world&quot;.to_string();
@@ -228,9 +82,7 @@ fn main() {
     println!(&quot;HEAP: (Box impl Pointer trait){:p},{:p}&quot;, data, &amp;(data));
 }
 
-</code></pre>
-<h3 id=查看变量在虚拟内存中的分布>查看变量在虚拟内存中的分布</h3>
-<pre><code class=language-bash>cargo run
+</code></pre><h3 id=查看变量在虚拟内存中的分布>查看变量在虚拟内存中的分布</h3><pre><code class=language-bash>cargo run
    Compiling stack-or-heap v0.1.0 (/Users/stardust/Downloads/rust-projects/stack-or-heap)
     Finished dev [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/stack-or-heap`
@@ -240,86 +92,27 @@ TEXT: (function):0x106db61b0
 STACK: (&amp;hello):0x7ff7b9149950
 HEAP: (&amp;(*hello)):0x60000346c050
 HEAP: (Box impl Pointer trait)0x60000346c060,0x7ff7b9149968
-</code></pre>
-<h1 id=references>References</h1>
-<ol>
-<li><a href=https://www.baeldung.com/linux/proc-id-maps>/proc/pid/maps</a></li>
-<li><a href=https://en.wikipedia.org/wiki/Virtual_address_space>virtual memory address space</a></li>
-<li><a href=https://elinux.org/images/b/b0/Introduction_to_Memory_Management_in_Linux.pdf>Memory_Management_in_Linux</a></li>
-</ol>
-</div>
-<div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>stardust</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2022-05-22
-</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>Markdown</span>
-<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2022/05/22/virtual-memory-address-explore/index.md target=_blank>The Markdown version »</a></span>
-</p>
-</div>
-<footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/binary/>binary</a>
-<a href=/tags/linux/>linux</a>
-</div>
-<nav class=post-nav>
-<a class=prev href=/2022/06/20/java-thread-pool-params/>
-<i class="iconfont icon-left"></i>
+</code></pre><h1 id=references>References</h1><ol><li><a href=https://www.baeldung.com/linux/proc-id-maps>/proc/pid/maps</a></li><li><a href=https://en.wikipedia.org/wiki/Virtual_address_space>virtual memory address space</a></li><li><a href=https://elinux.org/images/b/b0/Introduction_to_Memory_Management_in_Linux.pdf>Memory_Management_in_Linux</a></li></ol></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>stardust</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2022-05-22</span></p><p class=copyright-item><span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2022/05/22/virtual-memory-address-explore/index.md target=_blank>The Markdown version »</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/binary/>binary</a>
+<a href=/tags/linux/>linux</a></div><nav class=post-nav><a class=prev href=/2022/06/20/java-thread-pool-params/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">Java Thread Pool Params</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/2022/04/16/linux-file-permissions/>
-<span class="next-text nav-default">Linux File Permissions</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/2022/04/16/linux-file-permissions/><span class="next-text nav-default">Linux File Permissions</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav>
-</footer>
-</article>
-</div>
-<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
-</div>
-</main>
-<footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
 <a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
-<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div>
-<div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<span class=copyright-year>
-&copy;
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
 2019 -
-2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span>
-</span>
-</div>
-</footer>
-<div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div>
-</div>
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
 <script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
-<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
-</body>
-</html>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script></body></html>

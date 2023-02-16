@@ -1,159 +1,13 @@
-<!doctype html><html lang=en>
-<head>
-<meta charset=utf-8>
-<meta http-equiv=x-ua-compatible content="IE=edge,chrome=1">
-<title>asm-how-recursion-function-execute - stardustman</title>
-<meta name=renderer content="webkit">
-<meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1">
-<meta http-equiv=cache-control content="no-transform">
-<meta http-equiv=cache-control content="no-siteapp">
-<meta name=theme-color content="#f8f5ec">
-<meta name=msapplication-navbutton-color content="#f8f5ec">
-<meta name=apple-mobile-web-app-capable content="yes">
-<meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec">
-<meta name=author content="stardust"><meta name=description content="斐波那契数列 问题描述 第一个月初有一对刚诞生的兔子 第二个月之后(第三个月)它们可以生育 每月每对可生育的兔子会诞生下一对新兔子 兔子永不死 问第 n 月"><meta name=keywords content="Hugo,theme,even">
-<meta name=generator content="Hugo 0.91.2 with theme even">
-<link rel=canonical href=http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/>
-<link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png>
-<link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png>
-<link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png>
-<link rel=manifest href=/manifest.json>
-<link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5>
-<link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet>
-<link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous>
-<meta property="og:title" content="asm-how-recursion-function-execute">
-<meta property="og:description" content="斐波那契数列 问题描述 第一个月初有一对刚诞生的兔子 第二个月之后(第三个月)它们可以生育 每月每对可生育的兔子会诞生下一对新兔子 兔子永不死 问第 n 月">
-<meta property="og:type" content="article">
-<meta property="og:url" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/"><meta property="article:section" content="post">
-<meta property="article:published_time" content="2019-07-06T16:35:51+08:00">
-<meta property="article:modified_time" content="2019-07-06T16:35:51+08:00">
-<meta itemprop=name content="asm-how-recursion-function-execute">
-<meta itemprop=description content="斐波那契数列 问题描述 第一个月初有一对刚诞生的兔子 第二个月之后(第三个月)它们可以生育 每月每对可生育的兔子会诞生下一对新兔子 兔子永不死 问第 n 月"><meta itemprop=datePublished content="2019-07-06T16:35:51+08:00">
-<meta itemprop=dateModified content="2019-07-06T16:35:51+08:00">
-<meta itemprop=wordCount content="2333">
-<meta itemprop=keywords content="asm,"><meta name=twitter:card content="summary">
-<meta name=twitter:title content="asm-how-recursion-function-execute">
-<meta name=twitter:description content="斐波那契数列 问题描述 第一个月初有一对刚诞生的兔子 第二个月之后(第三个月)它们可以生育 每月每对可生育的兔子会诞生下一对新兔子 兔子永不死 问第 n 月"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
-<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]-->
-</head>
-<body>
-<div id=mobile-navbar class=mobile-navbar>
-<div class=mobile-header-logo>
-<a href=/ class=logo>keep writing</a>
-</div>
-<div class=mobile-navbar-icon>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>asm-how-recursion-function-execute - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="斐波那契数列 问题描述 第一个月初有一对刚诞生的兔子 第二个月之后(第三个月)它们可以生育 每月每对可生育的兔子会诞生下一对新兔子 兔子永不死 问第 n 月"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="asm-how-recursion-function-execute"><meta property="og:description" content="斐波那契数列 问题描述 第一个月初有一对刚诞生的兔子 第二个月之后(第三个月)它们可以生育 每月每对可生育的兔子会诞生下一对新兔子 兔子永不死 问第 n 月"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/"><meta property="article:section" content="post"><meta property="article:published_time" content="2019-07-06T16:35:51+08:00"><meta property="article:modified_time" content="2019-07-06T16:35:51+08:00"><meta itemprop=name content="asm-how-recursion-function-execute"><meta itemprop=description content="斐波那契数列 问题描述 第一个月初有一对刚诞生的兔子 第二个月之后(第三个月)它们可以生育 每月每对可生育的兔子会诞生下一对新兔子 兔子永不死 问第 n 月"><meta itemprop=datePublished content="2019-07-06T16:35:51+08:00"><meta itemprop=dateModified content="2019-07-06T16:35:51+08:00"><meta itemprop=wordCount content="2333"><meta itemprop=keywords content="asm,"><meta name=twitter:card content="summary"><meta name=twitter:title content="asm-how-recursion-function-execute"><meta name=twitter:description content="斐波那契数列 问题描述 第一个月初有一对刚诞生的兔子 第二个月之后(第三个月)它们可以生育 每月每对可生育的兔子会诞生下一对新兔子 兔子永不死 问第 n 月"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>keep writing</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
-<span></span>
-<span></span>
-</div>
-</div>
-<nav id=mobile-menu class="mobile-menu slideout-menu">
-<ul class=mobile-menu-list>
-<a href=/>
-<li class=mobile-menu-item>Home</li>
-</a><a href=/post/>
-<li class=mobile-menu-item>Archives</li>
-</a><a href=/tags/>
-<li class=mobile-menu-item>Tags</li>
-</a><a href=/categories/>
-<li class=mobile-menu-item>Categories</li>
-</a><a href=/2022/03/27/about/>
-<li class=mobile-menu-item>About</li>
-</a>
-</ul>
-</nav>
-<div class=container id=mobile-panel>
-<header id=header class=header>
-<div class=logo-wrapper>
-<a href=/ class=logo>keep writing</a>
-</div>
-<nav class=site-navbar>
-<ul id=menu class=menu>
-<li class=menu-item>
-<a class=menu-item-link href=/>Home</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/post/>Archives</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/tags/>Tags</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/categories/>Categories</a>
-</li><li class=menu-item>
-<a class=menu-item-link href=/2022/03/27/about/>About</a>
-</li>
-</ul>
-</nav>
-</header>
-<main id=main class=main>
-<div class=content-wrapper>
-<div id=content class=content>
-<article class=post>
-<header class=post-header>
-<h1 class=post-title>asm-how-recursion-function-execute</h1>
-<div class=post-meta>
-<span class=post-time> 2019-07-06 </span>
-<span class=more-meta> 2333 words </span>
-<span class=more-meta> 5 mins read </span>
-</div>
-</header>
-<div class=post-toc id=post-toc>
-<h2 class=post-toc-title>Contents</h2>
-<div class="post-toc-content always-active">
-<nav id=TableOfContents>
-<ul>
-<li><a href=#斐波那契数列>斐波那契数列</a>
-<ul>
-<li><a href=#问题描述>问题描述</a></li>
-<li><a href=#图解>图解</a></li>
-</ul>
-</li>
-<li><a href=#代码分析>代码分析</a>
-<ul>
-<li><a href=#c-代码>C 代码</a></li>
-<li><a href=#asm-代码>Asm 代码</a>
-<ul>
-<li><a href=#中间代码>中间代码</a></li>
-<li><a href=#反编译可执行代码>反编译可执行代码</a></li>
-</ul>
-</li>
-<li><a href=#调用栈调用顺序分析>调用栈调用顺序分析</a>
-<ul>
-<li><a href=#调用栈图解分析>调用栈图解分析</a></li>
-<li><a href=#符合递归终止时调用栈执行顺序>符合递归终止时调用栈执行顺序</a></li>
-</ul>
-</li>
-<li><a href=#优化递归>优化递归</a>
-<ul>
-<li><a href=#空间换时间优化代码>空间换时间优化代码</a></li>
-<li><a href=#优化递归函数栈帧>优化递归函数栈帧</a></li>
-<li><a href=#尾递归优化>尾递归优化</a></li>
-</ul>
-</li>
-<li><a href=#结论>结论</a></li>
-</ul>
-</li>
-<li><a href=#references>References</a></li>
-</ul>
-</nav>
-</div>
-</div>
-<div class=post-content>
-<h1 id=斐波那契数列>斐波那契数列</h1>
-<h2 id=问题描述>问题描述</h2>
-<blockquote>
-<p>第一个月初有一对刚诞生的兔子
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/2022/03/27/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>keep writing</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/2022/03/27/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>asm-how-recursion-function-execute</h1><div class=post-meta><span class=post-time>2019-07-06</span>
+<span class=more-meta>2333 words</span>
+<span class=more-meta>5 mins read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#斐波那契数列>斐波那契数列</a><ul><li><a href=#问题描述>问题描述</a></li><li><a href=#图解>图解</a></li></ul></li><li><a href=#代码分析>代码分析</a><ul><li><a href=#c-代码>C 代码</a></li><li><a href=#asm-代码>Asm 代码</a><ul><li><a href=#中间代码>中间代码</a></li><li><a href=#反编译可执行代码>反编译可执行代码</a></li></ul></li><li><a href=#调用栈调用顺序分析>调用栈调用顺序分析</a><ul><li><a href=#调用栈图解分析>调用栈图解分析</a></li><li><a href=#符合递归终止时调用栈执行顺序>符合递归终止时调用栈执行顺序</a></li></ul></li><li><a href=#优化递归>优化递归</a><ul><li><a href=#空间换时间优化代码>空间换时间优化代码</a></li><li><a href=#优化递归函数栈帧>优化递归函数栈帧</a></li><li><a href=#尾递归优化>尾递归优化</a></li></ul></li><li><a href=#结论>结论</a></li></ul></li><li><a href=#references>References</a></li></ul></nav></div></div><div class=post-content><h1 id=斐波那契数列>斐波那契数列</h1><h2 id=问题描述>问题描述</h2><blockquote><p>第一个月初有一对刚诞生的兔子
 第二个月之后(第三个月)它们可以生育
 每月每对可生育的兔子会诞生下一对新兔子
 兔子永不死
-问第 n 月有多少对兔子?</p>
-</blockquote>
-<h2 id=图解>图解</h2>
-<blockquote>
-<p>假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新生育出的兔子对数等于所有在 n 月就已存在的 a 对.</p>
-</blockquote>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fibonacci-sequence.png alt=fibonacci-sequence> #(fibonacci-sequence)</p>
-<h1 id=代码分析>代码分析</h1>
-<h2 id=c-代码>C 代码</h2>
-<pre><code class=language-cpp>#include &lt;stdio.h&gt;
+问第 n 月有多少对兔子?</p></blockquote><h2 id=图解>图解</h2><blockquote><p>假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新生育出的兔子对数等于所有在 n 月就已存在的 a 对.</p></blockquote><p><img src=https://github.com/stardustman/pictures/raw/main/img/fibonacci-sequence.png alt=fibonacci-sequence> #(fibonacci-sequence)</p><h1 id=代码分析>代码分析</h1><h2 id=c-代码>C 代码</h2><pre><code class=language-cpp>#include &lt;stdio.h&gt;
 long fib(long n){
     if(n &lt;= 2){
         return 1;
@@ -167,10 +21,7 @@ int main(){
     //printf(&quot;%d\n&quot;,result);
     return 0;
 }
-</code></pre>
-<h2 id=asm-代码>Asm 代码</h2>
-<h3 id=中间代码>中间代码</h3>
-<pre><code class=language-gas>fib(long):
+</code></pre><h2 id=asm-代码>Asm 代码</h2><h3 id=中间代码>中间代码</h3><pre><code class=language-gas>fib(long):
         pushq   %rbp
         movq    %rsp, %rbp
         pushq   %rbx
@@ -208,10 +59,7 @@ main:
         leave
         ret
 
-</code></pre>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-label.png alt=fib-label></p>
-<h3 id=反编译可执行代码>反编译可执行代码</h3>
-<pre><code class=language-gas>fib(long):
+</code></pre><p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-label.png alt=fib-label></p><h3 id=反编译可执行代码>反编译可执行代码</h3><pre><code class=language-gas>fib(long):
         push   %rbp
         mov    %rsp,%rbp
         push   %rbx
@@ -247,59 +95,24 @@ main:
         leaveq 
         retq   
         nop
-</code></pre>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-label.png alt=fib></p>
-<blockquote>
-<p>fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.</p>
-</blockquote>
-<h2 id=调用栈调用顺序分析>调用栈调用顺序分析</h2>
-<h3 id=调用栈图解分析>调用栈图解分析</h3>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fib(4)-call-stack.png alt=fib(4)调用栈分析> #(fib(4)调用栈分析)</p>
-<h3 id=符合递归终止时调用栈执行顺序>符合递归终止时调用栈执行顺序</h3>
-<blockquote>
-<p>fib(3) = fib(2) + fib(1), 就符合递归退出的条件.</p>
-</blockquote>
-<h4 id=代码执行顺序>代码执行顺序</h4>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fib(3)-execute-sequence.png alt=fib(3)-execute-sequence> #(fib(3)-execute-sequence)</p>
-<h4 id=二叉树后序遍历的视角来分析>二叉树后序遍历的视角来分析</h4>
-<blockquote>
-<p>递归终止条件:
+</code></pre><p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-label.png alt=fib></p><blockquote><p>fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.</p></blockquote><h2 id=调用栈调用顺序分析>调用栈调用顺序分析</h2><h3 id=调用栈图解分析>调用栈图解分析</h3><p><img src=https://github.com/stardustman/pictures/raw/main/img/fib(4)-call-stack.png alt=fib(4)调用栈分析> #(fib(4)调用栈分析)</p><h3 id=符合递归终止时调用栈执行顺序>符合递归终止时调用栈执行顺序</h3><blockquote><p>fib(3) = fib(2) + fib(1), 就符合递归退出的条件.</p></blockquote><h4 id=代码执行顺序>代码执行顺序</h4><p><img src=https://github.com/stardustman/pictures/raw/main/img/fib(3)-execute-sequence.png alt=fib(3)-execute-sequence> #(fib(3)-execute-sequence)</p><h4 id=二叉树后序遍历的视角来分析>二叉树后序遍历的视角来分析</h4><blockquote><p>递归终止条件:
 fib(2) = 1 视为左叶子节点
 fib(1) = 1 视为右叶子节点
-fib(3) = fib(2) + fib(1) 视为父节点</p>
-</blockquote>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fib(3)-execute-squence-treefy.png alt=fib(3)-execute-squence-treefy> #(符合递归退出代码执行流程)</p>
-<blockquote>
-<p>fib(3) 调用 fib(2), 计算出参数 n = 2. 进入左叶子节点.
+fib(3) = fib(2) + fib(1) 视为父节点</p></blockquote><p><img src=https://github.com/stardustman/pictures/raw/main/img/fib(3)-execute-squence-treefy.png alt=fib(3)-execute-squence-treefy> #(符合递归退出代码执行流程)</p><blockquote><p>fib(3) 调用 fib(2), 计算出参数 n = 2. 进入左叶子节点.
 fib(2) 返回 fib(3), fib(2) 的返回值 rax = 1, 复制给 rbx.
 fib(3) 调用 fib(1), 计算出参数 n = 1. 进入右叶子节点.
 fib(1) 返回 fib(3), fib(1) 的返回值 rax = 1
-fib(3) 计算 fib(3) = fib(2) + fib(1) = rbx + rax = 1 + 1 = 2</p>
-</blockquote>
-<h4 id=栈帧的创建和销毁-二叉树后序遍历>栈帧的创建和销毁-二叉树后序遍历</h4>
-<blockquote>
-<p>fib(n) = fib(n-1) + fib(n-2)(n > 2) 递归调用可以看作是栈帧按照二叉树按照后续遍历的顺序动态的创建和销毁.
+fib(3) 计算 fib(3) = fib(2) + fib(1) = rbx + rax = 1 + 1 = 2</p></blockquote><h4 id=栈帧的创建和销毁-二叉树后序遍历>栈帧的创建和销毁-二叉树后序遍历</h4><blockquote><p>fib(n) = fib(n-1) + fib(n-2)(n > 2) 递归调用可以看作是栈帧按照二叉树按照后续遍历的顺序动态的创建和销毁.
 着色方框为创建的栈帧
 白色方框为销毁的栈帧或者还未创建的栈帧
 方框由白色变为着色: 栈帧创建
-方框由着色变为白色: 栈帧销毁</p>
-</blockquote>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-dynamic-stack-frame.png alt=fib-dynamic-stack-frame></p>
-<blockquote>
-<p>从图中可以看出假如 main 调用 fib(5), 会一直调用到 f(2) 才会终止. 则调用栈状态如图 0. 此时递归最大的栈深度是 4, 如果 n 值过大, 会很容易发生 Stack Overflow 这种错误. 比方说 fib(1000) 会一直创建到 fib(2) 这个栈帧, 递归才会开始返回.
+方框由着色变为白色: 栈帧销毁</p></blockquote><p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-dynamic-stack-frame.png alt=fib-dynamic-stack-frame></p><blockquote><p>从图中可以看出假如 main 调用 fib(5), 会一直调用到 f(2) 才会终止. 则调用栈状态如图 0. 此时递归最大的栈深度是 4, 如果 n 值过大, 会很容易发生 Stack Overflow 这种错误. 比方说 fib(1000) 会一直创建到 fib(2) 这个栈帧, 递归才会开始返回.
 fib(2) 返回 1 给 fib(3), fib(3) 保存这个返回值. f(2) 栈帧销毁. 如图 1.
 fib(3) 调用 fib(2) 如图 2.
 fib(2) 返回 1 给 fib(3), fib(3) 将 fib(2)返回值和 fib(1) 的返回值相加. 如图 3.
-fib(3) 返回 fib(2)返回值和 fib(1) 的返回值相加的结果. 如图 4.</p>
-</blockquote>
-<h5 id=效率低原因分析>效率低原因分析</h5>
-<blockquote>
-<p>计算的结果并没有保存. 每一次进入递归之后都是从基本的 fib(2) 和 fib(1) 向上返回. 中间伴随着大量的栈帧创建和销毁, 以及重复的函数计算.函数栈帧的创建和销毁是耗时的操作, 这可就很慢了.
+fib(3) 返回 fib(2)返回值和 fib(1) 的返回值相加的结果. 如图 4.</p></blockquote><h5 id=效率低原因分析>效率低原因分析</h5><blockquote><p>计算的结果并没有保存. 每一次进入递归之后都是从基本的 fib(2) 和 fib(1) 向上返回. 中间伴随着大量的栈帧创建和销毁, 以及重复的函数计算.函数栈帧的创建和销毁是耗时的操作, 这可就很慢了.
 fib(n) 开辟栈帧总数量可以表示为: sum(n) = 2^(n - 2) + 1 (n >= 3).
-时间复杂度是: O(2^n)</p>
-</blockquote>
-<h5 id=运行时间测试>运行时间测试</h5>
-<pre><code class=language-cpp>#include &lt;stdio.h&gt;
+时间复杂度是: O(2^n)</p></blockquote><h5 id=运行时间测试>运行时间测试</h5><pre><code class=language-cpp>#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;time.h&gt;
 #define LENGTH 51
@@ -320,22 +133,12 @@ int main(){
     printf(&quot; %d :: %lu \n&quot;, LENGTH - 1, result);
     return 0;
 }
-</code></pre>
-<blockquote>
-<p>fib(n) 开辟栈帧总数量可以表示为: sum(n) = 2^(n - 2) + 1 (n >= 3).
+</code></pre><blockquote><p>fib(n) 开辟栈帧总数量可以表示为: sum(n) = 2^(n - 2) + 1 (n >= 3).
 时间复杂度是: O(2^n)
 fib(50) 开辟栈帧总量是: sum(50) = 2^(48) + 1
 时间复杂度是: O(2 ^ 50)
-计算 fib(50) 费了 65 秒左右</p>
-</blockquote>
-<h5 id=解决方法>解决方法</h5>
-<blockquote>
-<p>用数组保存已经计算出来的 fib(n) 的结果. 修改计算逻辑, 如果 fib(n) 已经被计算, 直接使用, 不再进入递归计算.
-这可不就是有拿空间换时间的感觉.</p>
-</blockquote>
-<h2 id=优化递归>优化递归</h2>
-<h3 id=空间换时间优化代码>空间换时间优化代码</h3>
-<pre><code class=language-cpp>#include &lt;stdio.h&gt;
+计算 fib(50) 费了 65 秒左右</p></blockquote><h5 id=解决方法>解决方法</h5><blockquote><p>用数组保存已经计算出来的 fib(n) 的结果. 修改计算逻辑, 如果 fib(n) 已经被计算, 直接使用, 不再进入递归计算.
+这可不就是有拿空间换时间的感觉.</p></blockquote><h2 id=优化递归>优化递归</h2><h3 id=空间换时间优化代码>空间换时间优化代码</h3><pre><code class=language-cpp>#include &lt;stdio.h&gt;
 #include &lt;stdlib.h&gt;
 #include &lt;time.h&gt;
 # define LENGTH 51
@@ -371,12 +174,8 @@ int main(){
         printf(&quot; %i :: %lu \n&quot;, i, result[i]);
     }
 }
-</code></pre>
-<h3 id=优化递归函数栈帧>优化递归函数栈帧</h3>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-optimize-stack-frame.png alt=fib-optimize-stack-frame>
-<em>fib(5)递归栈帧)</em></p>
-<blockquote>
-<p>着色方框-开辟销毁的栈帧
+</code></pre><h3 id=优化递归函数栈帧>优化递归函数栈帧</h3><p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-optimize-stack-frame.png alt=fib-optimize-stack-frame>
+<em>fib(5)递归栈帧)</em></p><blockquote><p>着色方框-开辟销毁的栈帧
 白色方框-不用开辟的栈帧
 优化后的 fib(n) 开辟栈帧总数量可以表示为: sum(n) = (n - 2)(n >= 3).
 时间复杂度是: O(n)
@@ -384,37 +183,22 @@ int main(){
 fib(50) = 3996334433
 时间复杂度是 O(50), 结果几乎秒算.
 unsigned long result[LENGTH];
-拿空间换时间, 其实这句话有问题的, 拿出来空间, 计算逻辑也是要优化的.</p>
-</blockquote>
-<h3 id=尾递归优化>尾递归优化</h3>
-<h4 id=非优化递归>非优化递归</h4>
-<pre><code class=language-cpp>unsigned long fib(unsigned long n){
+拿空间换时间, 其实这句话有问题的, 拿出来空间, 计算逻辑也是要优化的.</p></blockquote><h3 id=尾递归优化>尾递归优化</h3><h4 id=非优化递归>非优化递归</h4><pre><code class=language-cpp>unsigned long fib(unsigned long n){
     if(n &lt;= 2){
         return 1;
     }
    return fib(n-1) + fib(n-2);
 }
-</code></pre>
-<blockquote>
-<p>汇编视角下这里 fib(n-1) 和 fib(n-2) 与 fib(n) 其实根本不是同一个函数.
-三者的逻辑其实不同, 但是函数之间有依赖.</p>
-</blockquote>
-<h4 id=优化递归-1>优化递归</h4>
-<blockquote>
-<p>尾递归的实现, 往往需要改写递归函数, 确保最后一步只调用自身. 做到这一点的方法, 就是把所有用到的内部变量改写成函数的参数.
-尾调用的概念非常简单, 一句话就能说清楚, 就是指某个函数的最后一步是调用另一个函数.</p>
-</blockquote>
-<h5 id=中间变量改成函数的参数>中间变量改成函数的参数</h5>
-<pre><code class=language-cpp>unsigned long fib(unsigned long n, unsigned long prev, unsigned long sum ){
+</code></pre><blockquote><p>汇编视角下这里 fib(n-1) 和 fib(n-2) 与 fib(n) 其实根本不是同一个函数.
+三者的逻辑其实不同, 但是函数之间有依赖.</p></blockquote><h4 id=优化递归-1>优化递归</h4><blockquote><p>尾递归的实现, 往往需要改写递归函数, 确保最后一步只调用自身. 做到这一点的方法, 就是把所有用到的内部变量改写成函数的参数.
+尾调用的概念非常简单, 一句话就能说清楚, 就是指某个函数的最后一步是调用另一个函数.</p></blockquote><h5 id=中间变量改成函数的参数>中间变量改成函数的参数</h5><pre><code class=language-cpp>unsigned long fib(unsigned long n, unsigned long prev, unsigned long sum ){
     if(n &lt;= 3){
         return sum;
     }
     return fib(n-1, sum , prev + sum); // 尾调用
 }
 &gt; 这里 fib(n-1, sum , prev + sum) 的才是和 fib(unsigned long n, unsigned long prev, unsigned long sum ) 完全一样的函数.
-</code></pre>
-<h5 id=包装一层>包装一层</h5>
-<pre><code class=language-cpp>unsigned long   fibonacc(unsigned long n){
+</code></pre><h5 id=包装一层>包装一层</h5><pre><code class=language-cpp>unsigned long   fibonacc(unsigned long n){
     if( n &lt;= 2){
         return 1;
     } 
@@ -422,103 +206,28 @@ unsigned long result[LENGTH];
     // 2 : fib(2) + fib(1) = fib(3)
     return fib(n, 1, 2);
 }
-</code></pre>
-<blockquote>
-<p>计算结果保存在参数里.</p>
-</blockquote>
-<h5 id=fibn-汇编代码分析>fib(n) 汇编代码分析</h5>
-<p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-tail-recursion.png alt=fib-tail-recursion>
-#(尾递归汇编代码)</p>
-<blockquote>
-<p>尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n &lt;= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.</p>
-</blockquote>
-<h2 id=结论>结论</h2>
-<blockquote>
-<p>用简单的一句话,递归就是调用函数本身. 这句话是相当不负责任的. 递归函数在汇编级别的调用自己, 尽管调用的是自己, 递归的函数名尽管相同, 但是函数返回地址是不相同的. 这也意味着其实逻辑完全可能不一样.
-结合栈帧的创建和销毁, 就可以理解 <code>Stack Overflow</code> 这种错误.</p>
-</blockquote>
-<h1 id=references>References</h1>
-<ol>
-<li><a href=https://stackoverflow.com/questions/21440403/what-does-the-cmpq-instruction-do>asm-cmpq</a></li>
-<li><a href=https://www.aldeid.com/wiki/X86-assembly/Instructions/jg>asm-jg</a></li>
-<li><a href=http://faydoc.tripod.com/cpu/jg.htm>asm-jp-table</a></li>
-<li><a href=https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97>斐波那契数列</a></li>
-<li><a href=https://godbolt.org/>asm-tool</a></li>
-<li><a href=http://www.ruanyifeng.com/blog/2015/04/tail-call.html>尾调用(tail-call)之尾递归</a></li>
-<li><a href=https://mp.weixin.qq.com/s/GncAsmZ1dZKyNMOwN5-sjw>动态规划</a></li>
-</ol>
-</div>
-<div class=post-copyright>
-<p class=copyright-item>
-<span class=item-title>Author</span>
-<span class=item-content>stardust</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>LastMod</span>
-<span class=item-content>
-2019-07-06
-</span>
-</p>
-<p class=copyright-item>
-<span class=item-title>Markdown</span>
-<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/index.md target=_blank>The Markdown version »</a></span>
-</p>
-</div>
-<footer class=post-footer>
-<div class=post-tags>
-<a href=/tags/asm/>asm</a>
-</div>
-<nav class=post-nav>
-<a class=prev href=/2019/07/17/clang-structure/>
-<i class="iconfont icon-left"></i>
+</code></pre><blockquote><p>计算结果保存在参数里.</p></blockquote><h5 id=fibn-汇编代码分析>fib(n) 汇编代码分析</h5><p><img src=https://github.com/stardustman/pictures/raw/main/img/fib-tail-recursion.png alt=fib-tail-recursion>
+#(尾递归汇编代码)</p><blockquote><p>尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n &lt;= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.</p></blockquote><h2 id=结论>结论</h2><blockquote><p>用简单的一句话,递归就是调用函数本身. 这句话是相当不负责任的. 递归函数在汇编级别的调用自己, 尽管调用的是自己, 递归的函数名尽管相同, 但是函数返回地址是不相同的. 这也意味着其实逻辑完全可能不一样.
+结合栈帧的创建和销毁, 就可以理解 <code>Stack Overflow</code> 这种错误.</p></blockquote><h1 id=references>References</h1><ol><li><a href=https://stackoverflow.com/questions/21440403/what-does-the-cmpq-instruction-do>asm-cmpq</a></li><li><a href=https://www.aldeid.com/wiki/X86-assembly/Instructions/jg>asm-jg</a></li><li><a href=http://faydoc.tripod.com/cpu/jg.htm>asm-jp-table</a></li><li><a href=https://zh.wikipedia.org/wiki/%E6%96%90%E6%B3%A2%E9%82%A3%E5%A5%91%E6%95%B0%E5%88%97>斐波那契数列</a></li><li><a href=https://godbolt.org/>asm-tool</a></li><li><a href=http://www.ruanyifeng.com/blog/2015/04/tail-call.html>尾调用(tail-call)之尾递归</a></li><li><a href=https://mp.weixin.qq.com/s/GncAsmZ1dZKyNMOwN5-sjw>动态规划</a></li></ol></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>stardust</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2019-07-06</span></p><p class=copyright-item><span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2019/07/06/asm-how-recursion-function-execute/index.md target=_blank>The Markdown version »</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/asm/>asm</a></div><nav class=post-nav><a class=prev href=/2019/07/17/clang-structure/><i class="iconfont icon-left"></i>
 <span class="prev-text nav-default">clang-structure</span>
-<span class="prev-text nav-mobile">Prev</span>
-</a>
-<a class=next href=/2019/06/25/asm-clang-concepts/>
-<span class="next-text nav-default">asm-clang-concepts</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/2019/06/25/asm-clang-concepts/><span class="next-text nav-default">asm-clang-concepts</span>
 <span class="next-text nav-mobile">Next</span>
-<i class="iconfont icon-right"></i>
-</a>
-</nav>
-</footer>
-</article>
-</div>
-<script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script>
-<noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript>
-</div>
-</main>
-<footer id=footer class=footer>
-<div class=social-links>
-<a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
 <a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
 <a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
 <a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
-<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a>
-</div>
-<div class=copyright>
-<span class=power-by>
-Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a>
-</span>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
 <span class=division>|</span>
-<span class=theme-info>
-Theme -
-<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a>
-</span>
-<span class=copyright-year>
-&copy;
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
 2019 -
-2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span>
-</span>
-</div>
-</footer>
-<div class=back-to-top id=back-to-top>
-<i class="iconfont icon-up"></i>
-</div>
-</div>
-<script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
 <script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
 <script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
-<script type=text/javascript src=/js/main.min.c99b103c33d1539acf3025e1913697534542c4a5aa5af0ccc20475ed2863603b.js></script>
-</body>
-</html>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script></body></html>
