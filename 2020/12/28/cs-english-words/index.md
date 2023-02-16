@@ -24,6 +24,8 @@
 
 1. domain
    > an area of territory owned or controlled by a ruler or government.
+2. durable
+   > Something that is durable is strong and lasts a `long time without breaking` or becoming weaker
 
 ## e
 
