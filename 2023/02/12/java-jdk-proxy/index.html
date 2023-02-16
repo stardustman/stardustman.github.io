@@ -1,0 +1,106 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Java Jdk Proxy - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="分析环境: jdk8 dynamic proxy 是啥？ A dynamic proxy class is a class that implements a list of interfaces1 specified at runtime such that a method invocation through one of the interfaces on an instance of the class will be encoded and dispatched to another object through a uniform interface2. 动态代理类生成调用方法如下： Proxy.newProxyInstance(handler.getClass().getClassLoader(),"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.110.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2023/02/12/java-jdk-proxy/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Java Jdk Proxy"><meta property="og:description" content="分析环境: jdk8 dynamic proxy 是啥？ A dynamic proxy class is a class that implements a list of interfaces1 specified at runtime such that a method invocation through one of the interfaces on an instance of the class will be encoded and dispatched to another object through a uniform interface2. 动态代理类生成调用方法如下： Proxy.newProxyInstance(handler.getClass().getClassLoader(),"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2023/02/12/java-jdk-proxy/"><meta property="article:section" content="post"><meta property="article:published_time" content="2023-02-12T19:02:31+08:00"><meta property="article:modified_time" content="2023-02-12T19:02:31+08:00"><meta itemprop=name content="Java Jdk Proxy"><meta itemprop=description content="分析环境: jdk8 dynamic proxy 是啥？ A dynamic proxy class is a class that implements a list of interfaces1 specified at runtime such that a method invocation through one of the interfaces on an instance of the class will be encoded and dispatched to another object through a uniform interface2. 动态代理类生成调用方法如下： Proxy.newProxyInstance(handler.getClass().getClassLoader(),"><meta itemprop=datePublished content="2023-02-12T19:02:31+08:00"><meta itemprop=dateModified content="2023-02-12T19:02:31+08:00"><meta itemprop=wordCount content="921"><meta itemprop=keywords content><meta name=twitter:card content="summary"><meta name=twitter:title content="Java Jdk Proxy"><meta name=twitter:description content="分析环境: jdk8 dynamic proxy 是啥？ A dynamic proxy class is a class that implements a list of interfaces1 specified at runtime such that a method invocation through one of the interfaces on an instance of the class will be encoded and dispatched to another object through a uniform interface2. 动态代理类生成调用方法如下： Proxy.newProxyInstance(handler.getClass().getClassLoader(),"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>keep writing</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/2022/03/27/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>keep writing</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/2022/03/27/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Java Jdk Proxy</h1><div class=post-meta><span class=post-time>2023-02-12</span>
+<span class=more-meta>921 words</span>
+<span class=more-meta>2 mins read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#dynamic-proxy-是啥>dynamic proxy 是啥？</a></li><li><a href=#保存运行时生成的动态代理类>保存运行时生成的动态代理类</a><ul><li><a href=#proxygeneratorjava>ProxyGenerator.java</a></li><li><a href=#设置-sunmiscproxygeneratorsavegeneratedfiles>设置 <code>sun.misc.ProxyGenerator.saveGeneratedFiles</code></a></li></ul></li><li><a href=#运行时生成的动态代理类proxy0分析>运行时生成的动态代理类($Proxy0)分析</a><ul><li><a href=#运行时生成的动态代理类实例化>运行时生成的动态代理类实例化</a></li><li><a href=#运行时生成的动态代理类方法>运行时生成的动态代理类方法</a><ul><li><a href=#proxy0-的命名>$Proxy0 的命名</a></li><li><a href=#proxy0founder>$Proxy0#founder</a></li><li><a href=#proxy0reviver>$Proxy0#reviver</a></li><li><a href=#proxy0lastemperor>$Proxy0#lastEmperor</a></li></ul></li></ul></li><li><a href=#invocationhandler-接口实现类-dynastydynamicproxy-分析><code>InvocationHandler</code> 接口实现类 <code>DynastyDynamicProxy</code> 分析</a></li><li><a href=#被代理的类-tangdynasty-分析>被代理的类 <code>TangDynasty</code> 分析</a></li><li><a href=#references>References</a></li></ul></nav></div></div><div class=post-content><blockquote><p>分析环境: jdk8</p></blockquote><h1 id=dynamic-proxy-是啥>dynamic proxy 是啥？</h1><blockquote><p>A dynamic proxy class is a class that implements <code>a list of interfaces</code><sub><strong>1</strong></sub> specified at <code>runtime </code>such that a method invocation through one of the interfaces on an instance of the class will be <code>encoded and dispatched</code> to <code>another</code> object through a <code>uniform interface</code><sub><strong>2</strong></sub>.</p></blockquote><ol><li>动态代理类生成调用方法如下：</li></ol><pre><code class=language-java>Proxy.newProxyInstance(handler.getClass().getClassLoader(), new Class[]{Dynasty.class},handler);
+</code></pre><ul><li><code>handler.getClass().getClassLoader()</code> 运行时动态生成的代理类 load 到 jvm 使用的 class loader。</li><li><code>new Class[]{Dynasty.class}</code> 运行时动态生成的代理类实现的一系列接口。</li><li><code>handler</code> Invocation Handler 通过 invoke() 来分发方法，包含被实际代理的对象实例。</li></ul><h1 id=保存运行时生成的动态代理类>保存运行时生成的动态代理类</h1><h2 id=proxygeneratorjava>ProxyGenerator.java</h2><pre><code class=language-java>    /** debugging flag for saving generated class files */
+    private final static boolean saveGeneratedFiles =
+        java.security.AccessController.doPrivileged(
+            new GetBooleanAction(
+                &quot;sun.misc.ProxyGenerator.saveGeneratedFiles&quot;)).booleanValue();
+</code></pre><h2 id=设置-sunmiscproxygeneratorsavegeneratedfiles>设置 <code>sun.misc.ProxyGenerator.saveGeneratedFiles</code></h2><pre><code class=language-java>System.setProperty(&quot;sun.misc.ProxyGenerator.saveGeneratedFiles&quot;, &quot;true&quot;);
+</code></pre><h1 id=运行时生成的动态代理类proxy0分析>运行时生成的动态代理类($Proxy0)分析</h1><h2 id=运行时生成的动态代理类实例化>运行时生成的动态代理类实例化</h2><p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/dynamic-proxy-instance.jpg alt=dynamic-proxy-instance></p><p>$Proxy0 -> Proxy(InvocationHandler h) 由此可见:</p><ol><li>动态代理类 <code>$Proxy0</code> 实例化时，调用 super class <code>Proxy</code> 的构造函数，需要的 InvocationHandler 是实现了该接口的 <code>DynastyDynamicProxy</code></li><li><code>DynastyDynamicProxy</code> 实例化时，构造函数需要的是 <code>TangDynasty</code> 这个实际被代理的类。</li></ol><p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/dynamic-proxy-class-method-founder.jpg alt=dynamic-proxy-class-method-founder></p><h2 id=运行时生成的动态代理类方法>运行时生成的动态代理类方法</h2><h3 id=proxy0-的命名>$Proxy0 的命名</h3><pre><code class=language-java>        // prefix for all proxy class names
+        private static final String proxyClassNamePrefix = &quot;$Proxy&quot;;
+
+        // next number to use for generation of unique proxy class names
+        private static final AtomicLong nextUniqueNumber = new AtomicLong();
+</code></pre><h3 id=proxy0founder>$Proxy0#founder</h3><p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/dynamic-proxy-stack-frame-1.jpg alt=dynamic-proxy-stack-frame-1></p><hr><p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/dynamic-proxy-stack-frame-2.jpg alt></p><pre><code class=language-java>    public final String founder() throws  {
+        try {
+            return (String)super.h.invoke(this, m4, (Object[])null); // super.h.invoke 指的就是 DynastyDynamicProxy.invoke
+        } catch (RuntimeException | Error var2) {
+            throw var2;
+        } catch (Throwable var3) {
+            throw new UndeclaredThrowableException(var3);
+        }
+    }
+</code></pre><h3 id=proxy0reviver>$Proxy0#reviver</h3><pre><code class=language-java>    public final String reviver() throws  {
+        try {
+            return (String)super.h.invoke(this, m5, (Object[])null); // super.h.invoke 指的就是 DynastyDynamicProxy.invoke
+        } catch (RuntimeException | Error var2) {
+            throw var2;
+        } catch (Throwable var3) {
+            throw new UndeclaredThrowableException(var3);
+        }
+    }
+</code></pre><h3 id=proxy0lastemperor>$Proxy0#lastEmperor</h3><pre><code class=language-java>    public final String lastEmperor() throws  {
+        try {
+            return (String)super.h.invoke(this, m3, (Object[])null); // super.h.invoke 指的就是 DynastyDynamicProxy.invoke
+        } catch (RuntimeException | Error var2) {
+            throw var2;
+        } catch (Throwable var3) {
+            throw new UndeclaredThrowableException(var3);
+        }
+    }
+</code></pre><blockquote><p>由上可知，<code>$Proxy0</code> 实现的方法的统一调用入口(<code>uniform interface</code>) 就是 DynastyDynamicProxy#invoke，也就是 jdk 动态代理必须实现的 InvocationHandler#invoke 方法。</p></blockquote><h1 id=invocationhandler-接口实现类-dynastydynamicproxy-分析><code>InvocationHandler</code> 接口实现类 <code>DynastyDynamicProxy</code> 分析</h1><pre><code class=language-java>
+public class DynastyDynamicProxy implements InvocationHandler {
+
+    // 被代理的对象
+    private Object delegate;
+    public DynastyDynamicProxy(Object originalDynamic){
+        this.delegate = originalDynamic;
+    }
+    /**
+    @param proxy 当前动态代理类 $Proxy0 的实例
+    @param method 当前动态代理类调用的方法
+    @param args 当前动态代理类调用的方法的参数
+    **/
+    @Override
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+        System.out.println(&quot;公元 618 年唐朝建立!&quot;);
+        String res = (String) method.invoke(delegate,args);
+        System.out.println(method.getName() + &quot; of Tang Dynasty was &quot; + res + &quot;!&quot;);
+        System.out.println(&quot;公元 907 年唐朝灭亡!\n&quot;);
+        return res;
+    }
+}
+</code></pre><p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/dynamic-proxy-stack-frame-3.jpg alt=dynamic-proxy-method-call></p><h1 id=被代理的类-tangdynasty-分析>被代理的类 <code>TangDynasty</code> 分析</h1><p><img src=https://raw.githubusercontent.com/stardustman/pictures/main/img/dynamic-proxy-stack-frame-4.jpg alt></p><pre><code class=language-java>public class TangDynasty implements Dynasty{
+
+    @Override
+    public String founder() {
+        return &quot;李渊&quot;;
+    }
+
+    @Override
+    public String reviver() {
+        return &quot;李隆基&quot;;
+    }
+
+    @Override
+    public String lastEmperor() {
+        return &quot;李柷&quot;;
+    }
+}
+</code></pre><blockquote><ul><li>由<code>调用栈</code>可知，最终还是要调用<code>被代理的类</code>的方法。</li><li>但是可以在执行真正的代理类方法之前，在 <code>InvocationHandler#invoke</code> 中添加实际需要的逻辑。这就是中间层，通过中间层进行逻辑的增强。</li><li>这样看起来就好像对真正的代理对象进行了增强。</li></ul></blockquote><h1 id=references>References</h1><ol><li><a href=https://github.com/JetBrains/jdk8u_jdk/blob/master/src/share/classes/sun/misc/ProxyGenerator.java#L441-L443>dynamic-proxy-class-method</a></li><li><a href=https://www.baeldung.com/jdk-com-sun-proxy>jdk-com-sun-proxy</a></li><li><a href=https://github.com/JetBrains/jdk8u_jdk/blob/master/src/share/classes/sun/misc/ProxyGenerator.java#L313-L317>ProxyGenerator#sun.misc.ProxyGenerator.saveGeneratedFiles</a></li><li><a href=https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html>jdk8-proxy</a></li><li><a href=https://github.com/stardustman/java-inspect>分析所用代码</a></li><li><a href=https://github.com/JetBrains/jdk8u_jdk/blob/master/src/share/classes/java/lang/reflect/Proxy.java#L560-L564>$Proxy0</a></li></ol></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>stardust</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2023-02-12</span></p><p class=copyright-item><span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2023/02/12/java-jdk-proxy/index.md target=_blank>The Markdown version »</a></span></p></div><footer class=post-footer><nav class=post-nav><a class=prev href=/2022/03/27/about/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">About</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/2022/06/25/algorithm-snowflake/><span class="next-text nav-default">Algorithm Snowflake</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=https://www.zhihu.com/people/aoyunyoung class="iconfont icon-zhihu" title=zhihu></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
+<span class=division>|</span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2019 -
+2023<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script></body></html>
