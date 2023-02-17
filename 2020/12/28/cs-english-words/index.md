@@ -37,6 +37,8 @@
 ## g
 
 ## h
+1. handle
+   > A handle is the part of an object such as a tool, bag, or cup that you hold in order to be able to `pick up and use` the object.
 
 ## i
 
