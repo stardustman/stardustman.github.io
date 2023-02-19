@@ -74,6 +74,8 @@
    > Parameters are factors or limits which `affect` the way that something can be done or made.
 6. proxy
    > A proxy is a person or thing that is acting or being used in the place of someone or something else. 
+7. payload
+   > The payload of an aircraft or spacecraft is the `amount or weight` of things or people that `it is carrying`. 
 
 ## q
 
