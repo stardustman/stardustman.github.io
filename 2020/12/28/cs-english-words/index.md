@@ -31,6 +31,8 @@
 
 1. eligible
    > qualified to participate or be chosen
+2. exception
+   > An exception is a `particular` thing, person, or situation that is `not included in a general` statement, judgment, or rule. 
 
 ## f
 1. failover
