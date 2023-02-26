@@ -65,6 +65,8 @@
 
 1. overhead 
   > 额外的费用、消耗
+2. on the fly
+  > If you do something on the fly, you do it quickly `without` thinking about it `or` planning it in advance, especially while something else is happening. 没有提前计划做事情或者不假思索做事情
 
 ## p
 
