@@ -33,6 +33,8 @@
    > qualified to participate or be chosen
 2. exception
    > An exception is a `particular` thing, person, or situation that is `not included in a general` statement, judgment, or rule. 
+3. entity
+   > An entity is something that exists `separately` from other things and has a `clear identity` of its own. 独立有清晰标识的东西
 
 ## f
 1. failover
