@@ -114,6 +114,8 @@
 3. traid / triplet
 4. ticket
    > a certificate or token showing that a fare or admission fee has been paid  票
+5. tuple
+  > computing a row of values in a `relational database` 关系型数据库中的一行就是 tuple
 
 ## u
 
