@@ -169,4 +169,5 @@ public class TangDynasty implements Dynasty{
 4. [jdk8-proxy](https://docs.oracle.com/javase/8/docs/technotes/guides/reflection/proxy.html)
 5. [分析所用代码](https://github.com/stardustman/java-inspect)
 6. [$Proxy0](https://github.com/JetBrains/jdk8u_jdk/blob/master/src/share/classes/java/lang/reflect/Proxy.java#L560-L564)
+7. [jdk-porxy-and-cglib](https://www.springcloud.io/post/2023-01/jdk-porxy-and-cglib/#gsc.tab=0)
 
