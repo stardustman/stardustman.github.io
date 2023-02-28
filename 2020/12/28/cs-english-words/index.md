@@ -67,6 +67,8 @@
   > 额外的费用、消耗
 2. on the fly
   > If you do something on the fly, you do it quickly `without` thinking about it `or` planning it in advance, especially while something else is happening. 没有提前计划做事情或者不假思索做事情
+3. > overlap
+  > If one thing overlaps another, or if you overlap them, a part of the first thing `occupies the same area` as a part of the other thing. You can also say that two things overlap. 空间上重叠
 
 ## p
 
