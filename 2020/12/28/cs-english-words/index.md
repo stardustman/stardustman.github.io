@@ -39,6 +39,8 @@
 ## f
 1. failover
    > The designed ability of a server, network or other computer system to `switch over automatically` to a r`edundant or standby` system in order to avoid loss of access in the event of a `failure of the primary system`.
+2. fallback
+   > Someone's fallback position is what they will do `if their plans do not succeed, or if something unexpected happens`.
 
 ## g
 
