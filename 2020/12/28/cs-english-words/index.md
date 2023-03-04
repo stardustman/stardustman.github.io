@@ -94,6 +94,8 @@
 1. relinquish
    > voluntarily cease to keep or claim; give up. 自愿放弃
    > to give over possession or control of : YIELD 放弃控制
+2. reference
+   > A reference is something such as a number or a name that tells you where you can obtain the information you want. 能从中获取信息的东西，隔一层。you->reference->info
 
 ## s
 
