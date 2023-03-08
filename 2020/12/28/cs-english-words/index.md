@@ -88,6 +88,8 @@
    > A proxy is a person or thing that is acting or being used in the place of someone or something else. 
 7. payload
    > The payload of an aircraft or spacecraft is the `amount or weight` of things or people that `it is carrying`. 
+8. proceed
+   > If you proceed to do something, you do it, often after doing something else first. 先做完一件事，接着做另一件事。
 
 ## q
 
