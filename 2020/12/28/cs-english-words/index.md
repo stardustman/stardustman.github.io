@@ -90,7 +90,8 @@
    > The payload of an aircraft or spacecraft is the `amount or weight` of things or people that `it is carrying`. 
 8. proceed
    > If you proceed to do something, you do it, often after doing something else first. 先做完一件事，接着做另一件事。
-
+9. pending
+   > If something is done `pending a future event`, it is done until that event happens. 
 ## q
 
 ## r
