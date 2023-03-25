@@ -12,6 +12,8 @@
 ## b
 
 1. bypass
+2. bound
+   > Bounds are limits which normally restrict what can happen or what people can do.
 
 ## c
 
