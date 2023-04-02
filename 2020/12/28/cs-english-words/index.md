@@ -118,6 +118,8 @@
 2. slot
    > a long, narrow aperture or slit in a machine for something to be inserted
    > an allotted place in a arrangement or plan such as a broadcasting schedule.(安排或计划中分配的位置)
+3. sandbox
+   > A sandbox is a place on a computer system where an `untrusted program` can be run without affecting other parts of the system.
 
 ## t
 
