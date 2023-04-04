@@ -101,6 +101,10 @@
    > If you proceed to do something, you do it, often after doing something else first. 先做完一件事，接着做另一件事。
 9. pending
    > If something is done `pending a future event`, it is done until that event happens. 
+10. post-
+   > Post- is used to form words that indicate that something takes place after a particular date, period, or event.
+11. pre-
+   > Pre- is used to form words that indicate that something takes place before a particular date, period, or event.
 ## q
 
 ## r
