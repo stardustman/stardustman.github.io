@@ -1,7 +1,7 @@
 
 # jvm
 
-> jvm 是一个栈式(stack-based)虚拟计算机。啥意思，就是 opcode 的操作数在 operand stack 的。执行的就是后缀表达式。
+> jvm 是一个栈式(stack-based)虚拟计算机。啥意思，就是 opcode 的操作数在 operand stack 上，执行的结果也放在 oprand stack 上。
 
 # 分析的代码
 
