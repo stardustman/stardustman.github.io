@@ -14,6 +14,8 @@
 1. bypass
 2. bound
    > Bounds are limits which normally restrict what can happen or what people can do.
+3. base
+   > The base of something is its lowest edge or part. same as bottom
 
 ## c
 
