@@ -126,6 +126,8 @@
    > an allotted place in a arrangement or plan such as a broadcasting schedule.(安排或计划中分配的位置)
 3. sandbox
    > A sandbox is a place on a computer system where an `untrusted program` can be run without affecting other parts of the system.
+4. suspend
+   > If you suspend something, you delay it or stop it from happening for a while or until a decision is made about it. 最著名的例子就是进程 suspend，之后 scheduler 再 decide 是不是再次运行。
 
 ## t
 
