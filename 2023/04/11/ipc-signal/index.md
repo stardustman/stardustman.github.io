@@ -102,6 +102,19 @@ public class ExampleSignalHandler {
 }
 ```
 
+1. 可以将 “INT” 替换为 “STOP” 运行结果为:
+   ```bash
+   Exception in thread "main" java.lang.IllegalArgumentException: Signal already used by VM or OS: SIGSTOP
+	at sun.misc.Signal.handle(Signal.java:166)
+	at ExampleSignalHandler.main(ExampleSignalHandler.java:9)
+   ```
+2. 可以将 “INT” 替换为 “KILL” 运行结果为:
+   ```bash
+   Exception in thread "main" java.lang.IllegalArgumentException: Signal already used by VM or OS: SIGKILL
+	at sun.misc.Signal.handle(Signal.java:166)
+	at stardustman.github.io.signal.ExampleSignalHandler.main(ExampleSignalHandler.java:9)
+   ```
+
 
 
 # References
