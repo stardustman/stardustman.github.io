@@ -131,5 +131,6 @@ public class ExampleSignalHandler {
 9. [signal-handling-in-linux](http://www.alexonlinux.com/signal-handling-in-linux)
 10. [nohup](https://elixir.bootlin.com/busybox/latest/source/coreutils/nohup.c#L94)
 11. [https://www.cs.princeton.edu/courses/archive/fall05/cos217/lectures/23signals.pdf](https://www.cs.princeton.edu/courses/archive/fall05/cos217/lectures/23signals.pdf)
-12. [csci480/signals.htm](https://faculty.cs.niu.edu/~hutchins/csci480/signals.htm)
-13. [kill(2)](https://man7.org/linux/man-pages/man2/kill.2.html)
+12. [cs.kent.edu/signals.html](https://www.cs.kent.edu/~ruttan/sysprog/lectures/signals.html)
+13. [csci480/signals.htm](https://faculty.cs.niu.edu/~hutchins/csci480/signals.htm)
+14. [kill(2)](https://man7.org/linux/man-pages/man2/kill.2.html)
