@@ -77,7 +77,7 @@ testArgs(long, long, long, long, long, long, long, long):
         addq    %rax, %rdx
         movq    -64(%rbp), %rax ; a6
         addq    %rax, %rdx
-        movq    16(%rbp), %rax  ; a7，其实是到 main 的栈帧里取的,main 准备的参数
+        movq    16(%rbp), %rax  ; a7，其实是到 main 的栈帧里取的,main 准备的参数,因为 rbp 就是 stack frame 的栈底
         addq    %rax, %rdx
         movq    24(%rbp), %rax  ; a8，其实是到 main 的栈帧里取的,main 准备的参数
         addq    %rdx, %rax
