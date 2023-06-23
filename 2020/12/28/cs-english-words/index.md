@@ -16,6 +16,8 @@
    > Bounds are limits which normally restrict what can happen or what people can do.
 3. base
    > The base of something is its lowest edge or part. same as bottom
+4. backlog
+   > A backlog is a number of things which have not yet been done but which need to be done. 积压的工作量
 
 ## c
 

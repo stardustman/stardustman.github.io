@@ -58,9 +58,9 @@ q | quad | 64bit
 
 ## direct addressing
 
-> movb $0x05,%al
-> 表示为:R[al] = 0x05;
-> 将立即数 0x05(1 byte) 复制到寄存器 al
+> movb $0x05,%al  
+> 表示为:R[al] = 0x05;  
+> 将立即数 0x05(1 byte) 复制到寄存器 al  
 
 ## indirect addressing
 
@@ -68,52 +68,52 @@ q | quad | 64bit
 
 ### register to memory
 
-> movl %eax, -4(%ebp)
-> 表示为: mem[R[ebp]-4] = R[eax];
-> 将寄存器 eax 里面的值复制到寄存器 ebp 的值减去 4 指向的内存地址处(也就是 R[ebp] -4 的值是一个内存地址). 
+> movl %eax, -4(%ebp)  
+> 表示为: mem[R[ebp]-4] = R[eax];  
+> 将寄存器 eax 里面的值复制到寄存器 ebp 的值减去 4 指向的内存地址处(也就是 R[ebp] -4 的值是一个内存地址).   
 > 通过寄存器指向了内存地址, 是不是很熟悉的指针啊, 对, 就是指针. C 语言的指针就是这么玩的啊!
 
 ### memory to register
 
-> movl -4(%ebp), %eax
-> %eax 表示为: R[eax] = mem[R[ebp] -4]; 
-> 将寄存器 esp 的值减去 4 的值指向的内存地址处存放的值, 复制到寄存器 eax
+> movl -4(%ebp), %eax  
+> %eax 表示为: R[eax] = mem[R[ebp] -4];  
+> 将寄存器 esp 的值减去 4 的值指向的内存地址处存放的值, 复制到寄存器 eax  
 
 # program counter for stored program
 
-> PC = PC + \(instruction size in bytes\)
-> (instruction) (src1) (src2) (dst)
+> PC = PC + \(instruction size in bytes\)  
+> (instruction) (src1) (src2) (dst)  
 > In most processors, the PC is incremented after fetching an instruction,
-> and holds the memory address of ("points to") the next instruction that would be executed. 
+> and holds the memory address of ("points to") the next instruction that would be executed.   
 > 这里就用到了指令周期(instruction cycle)这个概念了, fetch, decode, execute.
 注意到 PC 这个寄存器, 在 CPU fetch 了一条指令后就自动增加了.
-> (In a processor where the incrementation precedes the fetch, the PC points to the current instruction being executed.)
-> 同样的在 CPU fetch 一条指令之前, PC 指向当前正在执行的指令.
+> (In a processor where the incrementation precedes the fetch, the PC points to the current instruction being executed.)  
+> 同样的在 CPU fetch 一条指令之前, PC 指向当前正在执行的指令.  
 > 注意: 不允许直接操作 ip(instruction pointer) 也叫 pc(program counter) 这个寄存器, 如果这个能被编译器操作的话, 就完全想跳到哪执行就跳到哪执行了. 实际上 call 和 ret 指令就是在间接操作这两个寄存器. call 带来的效果之一就是 push %rip, ret 带来的效果之一就是 pop %rip. 两者具有对称作用啊!
 
 # change control flow
 
 ## jmp label
 
-> When a jump instruction executes (in the last step of the machine cycle), it puts a new address into the PC. Now the fetch at the top of the next machine cycle fetches the instruction at that new address. Instead of executing the instruction that follows the jump instruction in memory, the processor "jumps" to an instruction somewhere else in memory.
+> When a jump instruction executes (in the last step of the machine cycle), it puts a new address into the PC. Now the fetch at the top of the next machine cycle fetches the instruction at that new address. Instead of executing the instruction that follows the jump instruction in memory, the processor "jumps" to an instruction somewhere else in memory.  
 > jmp 指令把 label 所在的地址, 复制给 pc 寄存器. 这就改变了程序的控制流. 然后程序流程就脱离了原来的执行流. 和 call label 很相似, 对, call指令作用之一就包括了一个隐式的 jmp label. 函数调用也就是把控制权交给了被调用者. 但是控制权要回到调用函数那里. 只不过 call 指令在函数交出控制权之前还多干了一件事, 就是把此时的 pc 值 push 到了栈里. 
 
 # stack management 
 
 ## stack pointer
 
-> A stack register is a computer central processor register whose purpose is to keep track of a call stack.
-> push pop 指令操作的是 sp(stack pointer) 这个寄存器.
-> 栈底地址: 由bp(base pointer) 保存
-> 栈分配空间: sp 减去需要的地址空间大小(所谓的栈向下生长); 
-> 栈回收空间: sp 加上需要的地址空间大小(所谓的栈向上收缩);(PS: 相当无聊的话)
+> A stack register is a computer central processor register whose purpose is to keep track of a call stack.  
+> push pop 指令操作的是 sp(stack pointer) 这个寄存器.  
+> 栈底地址: 由bp(base pointer) 保存  
+> 栈分配空间: sp 减去需要的地址空间大小(所谓的栈向下生长);   
+> 栈回收空间: sp 加上需要的地址空间大小(所谓的栈向上收缩);(PS: 相当无聊的话)  
 
 ![x86-64-stack](https://github.com/stardustman/pictures/raw/main/img/x86-64-stack.png) #(x86-64-stack)
 
 ## pushl %eax
 
 > push value of %eax onto stack
-> The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.
+> The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.  
 > 这里可以看到 push 的是多字节的数据, 那就涉及到怎样排列多字节数据的问题了. 也就是所谓的字节序的问题. X86 采用所谓的小端, 也就是把数字按照顺序放到栈里, 数字的高位放在了比较大的内存地址那里.(这里不做讨论)
 等价于
 
@@ -137,23 +137,24 @@ addl $4,%esp //回收空间
 
 ## call <label>
 
-> The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.
-> 注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. call 指令做了两件事, 第一件事: 将此时的 ip 保存到栈中, 第二件事: jump 到 label 位置, 此时已经改变了 PC 的值.
-> call label 作用等价于:
-> pushq %rip
-> jmp label
+> The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.  
+> 注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. 
+> call 指令做了两件事, 第一件事: 将此时的 ip 保存到栈中, 第二件事: jump 到 label 位置, 此时已经改变了 PC 的值.  
+> call label 作用等价于:  
+> pushq %rip  
+> jmp label  
 
 ## ret
 
-> The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (也就是 call 指令压入栈中的 PC, 将这个值复制到 PC 寄存器)(see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.
-> 所以啊, call(含有一个 push 操作) 和 ret(含有一个 pop 操作) 指令, 这是实现控制流跳转和恢复的关键. 也间接操作了 sp 这个寄存器. 硬件实现的功能, 不需要过多的计较.
-> ret 作用等价于:
+> The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (也就是 call 指令压入栈中的 PC, 将这个值复制到 PC 寄存器)(see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.  
+> 所以啊, call(含有一个 push 操作) 和 ret(含有一个 pop 操作) 指令, 这是实现控制流跳转和恢复的关键. 也间接操作了 sp 这个寄存器. 硬件实现的功能, 不需要过多的计较.  
+> ret 作用等价于:  
 > popq %rip
 
 # call stack
 
-> In computer science, a call stack is a stack data structure that stores information about the active subroutines of a computer program. This kind of stack is also known as an execution stack, program stack, control stack, run-time stack, or machine stack, and is often shortened to just "the stack".
-> A call stack is used for several related purposes, but the main reason for having one is to keep track of the point to which each active subroutine should return control when it finishes executing. 
+> In computer science, a call stack is a stack data structure that stores information about the active subroutines of a computer program. This kind of stack is also known as an execution stack, program stack, control stack, run-time stack, or machine stack, and is often shortened to just "the stack".  
+> A call stack is used for several related purposes, but the main reason for having one is to keep track of the point to which each active subroutine should return control when it finishes executing.   
 > An active subroutine is one that has been called but is yet to complete execution after which control should be handed back to the point of call. Such activations of subroutines may be nested to any level (recursive as a special case), hence the stack structure.
 
 ## example
@@ -225,8 +226,14 @@ main:
   图3 是 swap 函数的栈帧, 此时新函数的栈帧 rsp 和 rbp 指向的是相同的内存地址.  
   图4 所有的 mov 使用的内存地址, 都是通过 rbp 来偏移得到, rbp 的值并没有发生改变.   
   图5 执行完 popq %rsp, 恢复 main 函数的栈基址(rbp), 也就是和图1 一样.  
-  图6 执行完 ret 恢复为 main 函数的栈帧(这里主要是 rsp, rbp, pc, 个人理解把 pc 视为栈帧的一部分, 因为函数调用控制权发生转移, 幕后也离不开 pc 这个寄存器的变化). ret 的作用等价于 popq %rip. 但是无法直接操作 ip(pc) 这个寄存器. 也就相当于间接改变 ip. 此时 pc 已被 ret 指令恢复成了 X. (此时实际上控制权已经回到 main 函数了), 接下来就是继续执行 main 函数的代码. 其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.  
-  注意: 图1 和 图6 , 图2 和 图5 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的. 在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的 rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址. 也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧. 也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 pc). call 和 ret 指令的也分别有 push %rip 和 pop %rip 的作用. 很对称的操作!
+  图6 执行完 ret 恢复为 main 函数的栈帧(这里主要是 rsp, rbp, pc, 个人理解把 pc 视为栈帧的一部分, 因为函数调用控制权发生转移, 幕后也离不开 pc 这个寄存器的变化).  
+  ret 的作用等价于 popq %rip. 但是无法直接操作 ip(pc) 这个寄存器.  
+  也就相当于间接改变 ip. 此时 pc 已被 ret 指令恢复成了 X. (此时实际上控制权已经回到 main 函数了), 接下来就是继续执行 main 函数的代码.  
+  其实 swap 函数的栈帧已经被销毁了. 也就是再也访问不到 swap 函数里的变量了. 这就是 C 语言里的所谓的本地变量的本质.  
+  注意: 图1 和 图6 , 图2 和 图5 完全一样, 这不是有意为之, 按照 X86 的函数调用机制就是这样的.    
+  在被调用函数(swap)执行 popq % rbp, 这条指令就是要恢复调用函数(main)的 rbp, 执行 ret 这条指令就是要恢复调用函数(main)的下一条指令的地址.    
+  也就是将 pc 的值恢复为 X, 这样就可以接着执行了嘛. 也就是所谓的恢复调用者(main)的栈帧.  
+  也就是 main 函数调用 swap 函数(call 指令)保留 main 的状态(也就是 main 函数的 rbp 和 pc), swap 执行到最后(popq, ret)负责恢复现场(也就是恢复 main 函数的 rbp 和 pc). call 和 ret 指令的也分别有 push %rip 和 pop %rip 的作用. 很对称的操作!
 
 # bombs
 
@@ -235,7 +242,10 @@ pushq   %rbp  ; 保留上一个函数(也就是调用者)的栈基址
 movq    %rsp, %rbp ; 新函数的栈基址. 一个新的栈帧 sp 和 bp 指向的是同一个地址
 ```
 
-> 一个所谓的栈帧(stack frame)就是由 sp(stack pointer) 和 bp(base pointer) 这两个寄存器来维护的。在编译器没有开启优化情况下，这两句会出现在每一个函数的开始, 那么问题来了 main 函数里面保留的是哪一个调用函数的栈基址呢? 个人推测, 不一定正确, 我们知道创建进程(线程)是 OS 内核的功能, 当然进程销毁也是内核的功能. 内核同样维护着属于内核空间的栈帧, 当进程创建完毕后, 我们写的 C 代码应该是被内核里的函数调用的, 这样的话 main 里面 pushq %rbp 应该是保留的内核函数的栈基址. 这样 main 的 ret 返回后就能接着执行内核函数里面的逻辑了. (估计也就是销毁进程一系列操作了, 这样才能把分配的资源收回来啊!)
+> 一个所谓的栈帧(stack frame)就是由 sp(stack pointer) 和 bp(base pointer) 这两个寄存器来维护的。  
+> 在编译器没有开启优化情况下，这两句会出现在每一个函数的开始, 那么问题来了 main 函数里面保留的是哪一个调用函数的栈基址呢?   
+> 个人推测, 不一定正确, 我们知道创建进程(线程)是 OS 内核的功能, 当然进程销毁也是内核的功能.   
+> 内核同样维护着属于内核空间的栈帧, 当进程创建完毕后, 我们写的 C 代码应该是被内核里的函数调用的, 这样的话 main 里面 pushq %rbp 应该是保留的内核函数的栈基址. 这样 main 的 ret 返回后就能接着执行内核函数里面的逻辑了. (估计也就是销毁进程一系列操作了, 这样才能把分配的资源收回来啊!)
 
 # references
 
