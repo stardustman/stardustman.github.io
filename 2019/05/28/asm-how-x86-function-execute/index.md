@@ -161,8 +161,8 @@ addl $4,%esp //回收空间
 
 > for example, a subroutine DrawSquare calls a subroutine DrawLine from four different places, DrawLine must know where to return when its execution completes. To accomplish this, the address following the instruction that jumps to DrawLine, the return address, is pushed onto the call stack with each call.
 
-![callstack-layout-for-upward-growing-stacks](https://github.com/stardustman/pictures/raw/main/img/callstack-layout-for-upward-growing-stacks.png) 
-        #(callstack-layout-for-upward-growing-stacks)
+![callstack-layout-for-upward-growing-stacks](https://github.com/stardustman/pictures/raw/main/img/callstack-layout-for-upward-growing-stacks.png)  
+#(callstack-layout-for-upward-growing-stacks)
 
 # code analysis
 
