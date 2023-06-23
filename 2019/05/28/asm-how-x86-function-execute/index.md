@@ -45,12 +45,12 @@ swap(int, int):
 
 # instruction suffixes
 
-缩写 | 全称 | 位数
----- | ---- | ----
-b | byte | 8bit
-w | word | 16bit
-l | long | 32bit
-q | quad | 64bit
+| 缩写 | 全称 | 位数  |
+| ---- | ---- | ----- |
+| b    | byte | 8bit  |
+| w    | word | 16bit |
+| l    | long | 32bit |
+| q    | quad | 64bit |
 
 # addressing mode
 
@@ -261,3 +261,4 @@ movq    %rsp, %rbp ; 新函数的栈基址. 一个新的栈帧 sp 和 bp 指向�
 10. [eax-x86-register-meaning-and-history](https://keleshev.com/eax-x86-register-meaning-and-history/)
 11. [flint.cs.yale.edu/cs421/papers/x86-asm/asm.html](https://flint.cs.yale.edu/cs421/papers/x86-asm/asm.html)
 12. [at&t 语法](https://csiflabs.cs.ucdavis.edu/~ssdavis/50/att-syntax.htm)
+13. [x86-instruction-list](https://c9x.me/x86/)
