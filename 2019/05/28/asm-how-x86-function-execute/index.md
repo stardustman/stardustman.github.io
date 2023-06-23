@@ -118,8 +118,8 @@ swap(int, int):
 等价于
 
 ```asm
-subl $4, %esp //分配4个字节的空间, 所谓的栈向下生长
-movl %eax, (%esp) //将 eax 的值复制到 esp 指到的内存地址处
+subl $4, %esp ;分配4个字节的空间, 所谓的栈向下生长
+movl %eax, (%esp) ;将 eax 的值复制到 esp 指到的内存地址处
 ```
 
 ## popl %eax
@@ -129,8 +129,8 @@ movl %eax, (%esp) //将 eax 的值复制到 esp 指到的内存地址处
 等价于
 
 ```asm
-movl (%esp),%eax //将 esp 指向的内存地址里面的值复制到 eax
-addl $4,%esp //回收空间
+movl (%esp),%eax ;将 esp 指向的内存地址里面的值复制到 eax
+addl $4,%esp ;回收空间
 ```
 
 # function call and return
@@ -159,14 +159,15 @@ addl $4,%esp //回收空间
 
 ## example
 
-> for example, a subroutine DrawSquare calls a subroutine DrawLine from four different places, DrawLine must know where to return when its execution completes. To accomplish this, the address following the instruction that jumps to DrawLine, the return address, is pushed onto the call stack with each call.
+> for example, a subroutine DrawSquare calls a subroutine DrawLine from four different places, DrawLine must know where to return when its execution completes.  
+> To accomplish this, the address following the instruction that jumps to DrawLine, the return address, is pushed onto the call stack with each call.
 
 ![callstack-layout-for-upward-growing-stacks](https://github.com/stardustman/pictures/raw/main/img/callstack-layout-for-upward-growing-stacks.png)  
 #(callstack-layout-for-upward-growing-stacks)
 
 # code analysis
 
-```cpp
+```c
 void swap(int a, int b){
     int tmp = a;
     a = b;
@@ -177,19 +178,19 @@ void swap(int a, int b){
 ```asm
 -- 64 bit 机器 , AT&T 风格的汇编
 swap(int, int):
-        pushq   %rbp // 上一个栈帧(main)的基地址压栈 等价于 subq $8, %rsp; movq %rbp,(%rsp)
-        movq    %rsp, %rbp // 开辟新的函数栈帧, 也就是形成一个新的栈的基地址
-        movl    %edi, -20(%rbp) // 参数 a
-        movl    %esi, -24(%rbp) // 参数 b
-        movl    -20(%rbp), %eax // 把 a 赋值给 %eax
-        movl    %eax, -4(%rbp)  // 把 %eax (a)赋值给 %rbp - 4(a) 的地址处
-        movl    -24(%rbp), %eax // 把 b 赋值给 % eax（b）
-        movl    %eax, -20(%rbp) // 把 %eax (b) 赋值给 %rbp - 20（b） 的地址处,完成 b 的交换
-        movl    -4(%rbp), %eax  // 把 %rbp - 4 地址处的值(a) 赋值给 %eax (a)
-        movl    %eax, -24(%rbp) // 把 %eax (a) 赋值给 %rbp - 24 的地址处, 完成 a 的交换
-        nop // 延时
-        popq    %rbp // 等价于 movq (%rsp), %rbp ; 上一个函数栈帧(main)的基地址恢复; addq $8, %rsp ; 上一个函数的 %rsp 恢复
-        ret // 1. popq %rip. (恢复 main 的 pc, call swap 这条指令压入的 pc ) 2. jmp % rip 处继续执行.(也就是 movl $0, %eax 这条指令的地址)
+        pushq   %rbp ; 上一个栈帧(main)的基地址压栈 等价于 subq $8, %rsp; movq %rbp,(%rsp)
+        movq    %rsp, %rbp ; 开辟新的函数栈帧, 也就是形成一个新的栈的基地址
+        movl    %edi, -20(%rbp) ; 参数 a
+        movl    %esi, -24(%rbp) ; 参数 b
+        movl    -20(%rbp), %eax ; 把 a 赋值给 %eax
+        movl    %eax, -4(%rbp)  ; 把 %eax (a)赋值给 %rbp - 4(a) 的地址处
+        movl    -24(%rbp), %eax ; 把 b 赋值给 % eax（b）
+        movl    %eax, -20(%rbp) ; 把 %eax (b) 赋值给 %rbp - 20（b） 的地址处,完成 b 的交换
+        movl    -4(%rbp), %eax  ; 把 %rbp - 4 地址处的值(a) 赋值给 %eax (a)
+        movl    %eax, -24(%rbp) ; 把 %eax (a) 赋值给 %rbp - 24 的地址处, 完成 a 的交换
+        nop ; 延时
+        popq    %rbp ; 等价于 movq (%rsp), %rbp ; 上一个函数栈帧(main)的基地址恢复; addq $8, %rsp ; 上一个函数的 %rsp 恢复
+        ret ; 1. popq %rip. (恢复 main 的 pc, call swap 这条指令压入的 pc ) 2. jmp % rip 处继续执行.(也就是 movl $0, %eax 这条指令的地址)
 ```
 
 ```cpp
@@ -203,10 +204,10 @@ int main() {
 main:
         pushq   %rbp
         movq    %rsp, %rbp
-        movl    $2, %esi // 由 caller 准备函数参数 2
-        movl    $1, %edi // 由 caller 准备函数参数 1
-        call    swap // 在 CPU fetch 了 call 指令后, pc 已经指向了下一条指令, 也就是 movl $0, %eax 这条指令. 此时的 call 指令完成了两件事, 第一件事: 将 pc(old) 压入到栈中(swap 函数 ret 指令(函数返回)就是把这个 pc(old) pop 到 pc 这个寄存器, CPU 就能接着执行 movl $0, %eax 这条指令了), 第二件事: jump 到swap的地址, 开始执行swap的代码.
-        movl    $0, %eax // 返回值 0 
+        movl    $2, %esi ; 由 caller(main 函数) 准备函数参数 2
+        movl    $1, %edi ; 由 caller(main 函数) 准备函数参数 1
+        call    swap ; 在 CPU fetch 了 call 指令后, pc 已经指向了下一条指令, 也就是 movl $0, %eax 这条指令. 此时的 call 指令完成了两件事, 第一件事: 将 pc(old) 压入到栈中(swap 函数 ret 指令(函数返回)就是把这个 pc(old) pop 到 pc 这个寄存器, CPU 就能接着执行 movl $0, %eax 这条指令了), 第二件事: jump 到swap的地址, 开始执行swap的代码.
+        movl    $0, %eax ; 返回值 0 
         popq    %rbp
         ret
 ```
