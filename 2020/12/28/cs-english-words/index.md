@@ -132,6 +132,8 @@
    > A sandbox is a place on a computer system where an `untrusted program` can be run without affecting other parts of the system.
 4. suspend
    > If you suspend something, you delay it or stop it from happening for a while or until a decision is made about it. 最著名的例子就是进程 suspend，之后 scheduler 再 decide 是不是再次运行。
+5. shard
+   > Shards are pieces of broken glass, pottery, or metal. fragement,piece 一片，想象一下把一整块玻璃打碎，分成多个碎片，scale out..
 
 ## t
 
