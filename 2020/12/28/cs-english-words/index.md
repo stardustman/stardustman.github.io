@@ -77,6 +77,8 @@
    > The lifetime of a particular thing is the period of time that it lasts. 某事物存在的时长。
 
 ## m
+1. majority
+   > The majority of people or things in a group is more than half of them. 什么是 majority。超过一半的人/事物才叫 majority。zookeeper cluster 推荐 server 数量奇数。
 
 ## n
 
