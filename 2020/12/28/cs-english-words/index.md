@@ -45,6 +45,8 @@
    > An exception is a `particular` thing, person, or situation that is `not included in a general` statement, judgment, or rule. 
 3. entity
    > An entity is something that exists `separately` from other things and has a `clear identity` of its own. 独立有清晰标识的东西
+4. ephemeral
+   > If you describe something as ephemeral, you mean that it lasts only for a very short time. 只持续较短时间的东西。短暂的。
 
 ## f
 1. failover
