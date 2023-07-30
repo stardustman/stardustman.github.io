@@ -156,6 +156,8 @@
    > a certificate or token showing that a fare or admission fee has been paid  票
 5. tuple
   > computing a row of values in a `relational database` 关系型数据库中的一行就是 tuple
+5. transient
+  > Transient is used to describe a situation that `lasts only a short time` or is `constantly changing`. 持续时间很短或者一直在变化的情况，和 persistent 相反
 
 ## u
 
