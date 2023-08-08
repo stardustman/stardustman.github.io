@@ -29,6 +29,8 @@
    > the number of elements in a given mathematical set 给定集合的元素数量
 3. compound
    > Compound is used to indicate that something consists of two or more parts or things.
+4. consensus
+   > A consensus is general agreement among a group of people. 一群人达成的协议。共识。
 
 ## d
 
