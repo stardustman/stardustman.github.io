@@ -38,7 +38,8 @@
    > an area of territory owned or controlled by a ruler or government.
 2. durable
    > Something that is durable is strong and lasts a `long time without breaking` or becoming weaker
-
+3. discretion
+   > If someone in `a position of authority` uses their discretion or has the discretion to do something in a particular situation, they have the freedom and authority to decide what to do. 自由裁量权。没有规范的情况下，由有权威的人进行“圣裁"。
 ## e
 
 1. eligible
