@@ -13,7 +13,7 @@
 
 > 假设在n月有兔子总共 a 对, n+1 月总共有 b 对. 在 n+2 月必定总共有 a+b 对: 因为在 n+2 月的时候, 前一月(n+1月) 的 b 对兔子可以存留至第 n+2 月(在当月属于新诞生的兔子尚不能生育). 而新生育出的兔子对数等于所有在 n 月就已存在的 a 对.
 
-![fibonacci-sequence](https://github.com/stardustman/pictures/raw/main/img/fibonacci-sequence.png) #(fibonacci-sequence)
+![fibonacci-sequence](https://github.com/stardustman/pictures/raw/main/img/fibonacci-sequence.png) 
 
 # 代码分析
 
@@ -126,7 +126,8 @@ main:
 
 ![fib](https://github.com/stardustman/pictures/raw/main/img/fib-label.png)
 
-> fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.
+> fib(n)函数里调用 fib(n - 1) 和 fib(n - 2)视为两个和 fib(n) 完全不同的函数, 因为函数返回地址在汇编层面根本不一样.
+> fib(n), fib(n - 1) 和 fib(n - 2) 的处理逻辑不一样, 只是之间有依赖而已. 也可以视为编译器级别的函数重载. 理解成三个不同的函数, 这个递归就很好理解了.
 
 ## 调用栈调用顺序分析
 
@@ -158,7 +159,7 @@ main:
 
 #### 栈帧的创建和销毁-二叉树后序遍历
 
-> fib(n) = fib(n-1) + fib(n-2)(n > 2) 递归调用可以看作是栈帧按照二叉树按照后续遍历的顺序动态的创建和销毁.
+> fib(n) = fib(n-1) + fib(n-2)(n > 2) 递归调用可以看作是栈帧按照二叉树后续遍历(左子树-右子树-根)的顺序动态的创建和销毁.
 > 着色方框为创建的栈帧
 > 白色方框为销毁的栈帧或者还未创建的栈帧
 > 方框由白色变为着色: 栈帧创建
