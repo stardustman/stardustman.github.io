@@ -307,8 +307,8 @@ unsigned long fib(unsigned long n, unsigned long prev, unsigned long sum ){
     }
     return fib(n-1, sum , prev + sum); // 尾调用
 }
-> 这里 fib(n-1, sum , prev + sum) 的才是和 fib(unsigned long n, unsigned long prev, unsigned long sum ) 完全一样的函数.
 ```
+> 这里 fib(n-1, sum , prev + sum) 的才是和 fib(unsigned long n, unsigned long prev, unsigned long sum ) 完全一样的函数.
 
 ##### 包装一层
 
@@ -330,11 +330,13 @@ unsigned long   fibonacc(unsigned long n){
 ![fib-tail-recursion](https://github.com/stardustman/pictures/raw/main/img/fib-tail-recursion.png)
 #(尾递归汇编代码)
 
-> 尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. 符合 n <= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了.
+> 尾递归的 fib(n-1, sum , prev + sum) 是尾调用, 也就是函数执行完没有其他的操作了, 就直接返回了. <br>
+> 符合 n <= 3 的条件, 汇编直接 jmp 到销毁栈帧的代码. 因为返回值在符合递归退出条件时, 已经被设置到 rax 里了. <br>
 
 ## 结论
 
-> 用简单的一句话,递归就是调用函数本身. 这句话是相当不负责任的. 递归函数在汇编级别的调用自己, 尽管调用的是自己, 递归的函数名尽管相同, 但是函数返回地址是不相同的. 这也意味着其实逻辑完全可能不一样. <br>
+> 用简单的一句话,递归就是调用函数本身. 这句话是相当不负责任的.  <br>
+> 递归函数在汇编级别的调用自己, 尽管调用的是自己, 递归的函数名尽管相同, 但是函数返回地址是不相同的. 这也意味着其实逻辑完全可能不一样. <br>
 > 结合栈帧的创建和销毁, 就可以理解 `Stack Overflow` 这种错误. <br>
 
 # References
