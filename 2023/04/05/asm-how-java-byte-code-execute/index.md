@@ -1,7 +1,8 @@
 
 # jvm
 
-> jvm 是一个栈式(stack-based)虚拟计算机。啥意思，就是 opcode 的操作数在 operand stack 上，执行的结果也放在 oprand stack 上。
+> jvm 是一个栈式(stack-based)虚拟计算机。啥意思，就是大多数的 opcode 的操作数在 operand stack 上，执行的结果也放在 oprand stack 上。<br>
+> 有的 opcode 的操作数在 local variable table，如 `iinc`。
 
 # 分析的代码
 
