@@ -121,6 +121,8 @@
    > Post- is used to form words that indicate that something takes place after a particular date, period, or event.
 11. pre-
    > Pre- is used to form words that indicate that something takes place before a particular date, period, or event.
+12. per se
+   > Per se means 'by itself' or 'in itself', and is used when you are talking about the qualities of one thing `considered on its own`, rather than in connection with other things. 本身，本质上
 ## q
 
 ## r
