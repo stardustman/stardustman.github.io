@@ -94,7 +94,7 @@
 3. overlap
   > If one thing overlaps another, or if you overlap them, a part of the first thing `occupies the same area` as a part of the other thing. You can also say that two things overlap. 空间上重叠
 4. outstanding
-  > Outstanding issues or problems have not yet been resolved. 还没完成的、还没解决的
+  > Outstanding issues or problems have not yet been resolved. 还没完成的、还没解决的。若用 tcp 确认机制，就是 unacknowledged 的包。
   
 
 ## p
