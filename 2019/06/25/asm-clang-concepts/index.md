@@ -233,13 +233,13 @@ sumArray(long*, long):
         ret
 ```
 
-> 通过 a[i] 访问数组的方法, 与具体的数据类型有关
-> movl    -8(%rbp), %eax ; i
-> cltq    ; convert long(32 bit) to quad(64 bit)
-> leaq    0(,%rax,8), %rdx ; rdx = 0 + 8 * i , 比例寻址. 8 是比例因子,也就是数据类型的字节数,long 8 bytes.
-> movq    -24(%rbp), %rax  ; rax = &a[0]
-> addq    %rdx, %rax       ; rax = &a[0] + (0 + 8 * i), 地址增加 8 * i
-> movq    (%rax), %rax     ; rax = a[i]
+> 通过 a[i] 访问数组的方法, 与具体的数据类型有关  
+> movl    -8(%rbp), %eax ; i  
+> cltq    ; convert long(32 bit) to quad(64 bit)  
+> leaq    0(,%rax,8), %rdx ; rdx = 0 + 8 * i , 比例寻址. 8 是比例因子,也就是数据类型的字节数,long 8 bytes.  
+> movq    -24(%rbp), %rax  ; rax = &a[0]  
+> addq    %rdx, %rax       ; rax = &a[0] + (0 + 8 * i), 地址增加 8 * i  
+> movq    (%rax), %rax     ; rax = a[i]  
 
 ### Asm sumMatrix
 
@@ -282,25 +282,25 @@ sumMatrix(int (*) [3]):
         ret
 ```
 
-> int matrix[i][j]
->  movl    -8(%rbp), %eax // eax = i
->  movslq  %eax, %rdx // rdx = i
->  movq    %rdx, %rax ; rax = i
->  addq    %rax, %rax ; rax = i + i
->  addq    %rdx, %rax ; rax = i + (i + i)
->  salq    $2, %rax ; rax = 2 * 2 * 3 * i rax 算术左移 2 位
->  movq    %rax, %rdx ; rdx = 12 * i
->  movq    -24(%rbp), %rax ; rax = &matrix[0][0]
->  addq    %rax, %rdx ; rdx = &matrix[0][0] + 12 * i
->  movl    -12(%rbp), %eax ; eax = j
->  cltq
->  movl    (%rdx,%rax,4), %eax ; 4 * rax + rdx = 4 * j + &matrix[0][0] + 12 * i ), 也就是 &matrix[i][j]. eax = matrix[i][j]. sizeOf(int) = 4
-> 在 main 中可知 matrix[0][0],matrix[0][1] ... matrix[1][1],matrix[1][2]顺序排列
-> 当 i = 0, j = 0 时 4 * 0 + &matrix[0][0] + 12 * 0 = &matrix[0][0]
-> 当 i = 0, j = 1 时 4 * 1 + &matrix[0][0] + 12 * 0 = &matrix[0][1]
-> 当 i = 1, j = 0 时 4 * 0 + &matrix[0][0] + 12 * 1, 此时是 &matrix[0][0] + 12, 
-> 二维数组每一行的字节总数是: 3(每一行 3 个 int) * 4(int 数据大小), 此时的地址是 &matrix[1][0]
-> C 语言中二维数组作为函数参数传递时, 一定要给出列的数目, 不需要行数. 因为根据列数和数据类型的大小,就能算出下一行的第一个数据偏移起始位置. 偏移量 = 列数 * sizeOf(Data type)  
+> int matrix[i][j]  
+ movl    -8(%rbp), %eax ; eax = i  
+ movslq  %eax, %rdx ; rdx = i  
+ movq    %rdx, %rax ; rax = i  
+ addq    %rax, %rax ; rax = i + i  
+ addq    %rdx, %rax ; rax = i + (i + i)  
+ salq    $2, %rax ; rax = 2 * 2 * 3 * i rax 算术左移 2 位  
+ movq    %rax, %rdx ; rdx = 12 * i  
+ movq    -24(%rbp), %rax ; rax = &matrix[0][0]  
+ addq    %rax, %rdx ; rdx = &matrix[0][0] + 12 * i  
+ movl    -12(%rbp), %eax ; eax = j  
+ cltq  
+ movl    (%rdx,%rax,4), %eax ; 4 * rax + rdx = 4 * j + &matrix[0][0] + 12 * i ), 也就是 &matrix[i][j]. eax = matrix[i][j]. sizeOf(int) = 4  
+在 main 中可知 matrix[0][0],matrix[0][1] ... matrix[1][1],matrix[1][2]顺序排列  
+当 i = 0, j = 0 时 4 * 0 + &matrix[0][0] + 12 * 0 = &matrix[0][0]  
+当 i = 0, j = 1 时 4 * 1 + &matrix[0][0] + 12 * 0 = &matrix[0][1]  
+当 i = 1, j = 0 时 4 * 0 + &matrix[0][0] + 12 * 1, 此时是 &matrix[0][0] + 12,   
+二维数组每一行的字节总数是: 3(每一行 3 个 int) * 4(int 数据大小), 此时的地址是 &matrix[1][0].    
+C 语言中二维数组作为函数参数传递时, 一定要给出列的数目, 不需要行数. 因为根据列数和数据类型的大小,就能算出下一行的第一个数据偏移起始位置. 偏移量 = 列数 * sizeOf(Data type)  
 
 ### Asm main
 
