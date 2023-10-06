@@ -151,7 +151,26 @@ github.com.  900 IN NS ns1.p16.dynect.net.
 
 `Canonical Name` 域名指向另一个域名。见下图：
 
-{% asset_img ping-music.163.com.png tcp-ip-stack %}
+```bash
+ dig -t cname music.163.com     
+
+; <<>> DiG 9.10.6 <<>> -t cname music.163.com
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 12400
+;; flags: qr aa rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 0
+
+;; QUESTION SECTION:
+;music.163.com.			IN	CNAME
+
+;; ANSWER SECTION:
+music.163.com.		1	IN	CNAME	music.ntes53.netease.com.
+
+;; Query time: 0 msec
+;; SERVER: 198.18.0.2#53(198.18.0.2)
+;; WHEN: Fri Oct 06 11:41:17 CST 2023
+;; MSG SIZE  rcvd: 82
+```
 
 ### A
 
@@ -159,7 +178,7 @@ github.com.  900 IN NS ns1.p16.dynect.net.
 
 ### NS
 
-`name server` 保存下一级域名的服务器，只设置成域名
+`name server` 保存下一级域名的服务器，只设置成域名。
 
 ### PTR
 
