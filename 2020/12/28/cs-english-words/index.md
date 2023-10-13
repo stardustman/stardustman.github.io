@@ -69,6 +69,8 @@
 
 1. independent
    > not connected with another or with each other; separate 互不关联，分离的
+2. integrity
+   > The integrity of something such as a group of people or a text is its `state of being a united whole`. 完整性
 
 ## j
 
