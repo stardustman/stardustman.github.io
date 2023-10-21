@@ -77,6 +77,10 @@ xxd log.500000004.new|head -n 50
 
 > 可以看到 txn log 文件，写入的第一个 transaction 的 `zxid` 就是 `0x0000000500000004`。这个就是 log.`500000004` 的由来。
 
+### 什么是 `zxid`？
+
+![zookeeper-zxid](https://raw.githubusercontent.com/stardustman/pictures/main/img/zookeeper-zxid-format.svg)
+
 ### 文件结构
 
 1. 第一行 FileHeader。
