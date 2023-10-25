@@ -134,6 +134,7 @@ zookeeper-jute 中 org.apache.zookeeper.txn 下, 这个是 jute compiler 生成�
 5. [log.500000004](https://raw.githubusercontent.com/stardustman/pictures/main/img/log.500000004)
 6. [zklogtool](https://github.com/alenca/zklogtool/tree/master/zklogtool)
 7. [hexyl-二进制分析工具](https://github.com/sharkdp/hexyl/releases)
+8. [dataLogDir](https://zookeeper.apache.org/doc/r3.4.8/zookeeperAdmin.html#sc_zkCommands:~:text=The%20Log%20Directory%20contains,written%20to%20that%20log.)
 
 
 
