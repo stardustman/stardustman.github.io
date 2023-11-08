@@ -1,7 +1,7 @@
 
 > 分析的 zookeeper 版本为 3.9.1 。    
 > zookeer 的 transaction log 为二进制文件，采用的是大端序。  
-> zookeeper 数据持久化的功能在  `zookeeper/server/persistence` 下。 
+> zookeeper 数据持久化的功能在  `zookeeper/server/persistence` 下。  
 > 解析日志就可以获取 zookeeper 的数据。可以用来实现实时备份到另一个独立的 zookeeper 集群。
 
 # 日志文件命名规则
