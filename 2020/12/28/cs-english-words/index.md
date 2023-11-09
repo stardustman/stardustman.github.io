@@ -20,6 +20,8 @@
    > A backlog is a number of things which have not yet been done but which need to be done. 积压的工作量
 5. backup
    > If you have something such as `a second piece of equipment or set of plans as backup`, you have arranged for them to be available for use in case the first one does not work. 一个完蛋后，另一个可以无缝顶上。
+6. broker
+   > A broker is a person whose job is to `buy and sell` shares, foreign money, or goods for other people. 对于消息中间件就是从 producer 买消息，卖给 consumer。🐶
 
 ## c
 
