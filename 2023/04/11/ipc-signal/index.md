@@ -134,3 +134,4 @@ public class ExampleSignalHandler {
 12. [cs.kent.edu/signals.html](https://www.cs.kent.edu/~ruttan/sysprog/lectures/signals.html)
 13. [csci480/signals.htm](https://faculty.cs.niu.edu/~hutchins/csci480/signals.htm)
 14. [kill(2)](https://man7.org/linux/man-pages/man2/kill.2.html)
+15. https://goodyduru.github.io/os/2023/10/05/ipc-unix-signals.html
