@@ -166,6 +166,8 @@
    > balance achieved between two desirable but incompatible features;
    > balancing of factors all of which are not attainable at the same time
    平衡两个`互不兼容的特性`，妥协
+3. trade off
+   > If you trade off one thing against another, you exchange all or part of one thing for another, as part of a negotiation or compromise. 以 ... 换取
    
 3. traid / triplet
 4. ticket
