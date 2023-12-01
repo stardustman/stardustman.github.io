@@ -10,6 +10,8 @@
      想起了 ansible cli 可以直接执行一次性的命令，这就是 ad-hoc，也可以提前写好 playbook，写好剧本，这就是计划好的。
 4. at the discretion of
    > 由 ... 决定，由 ... 自行处理。比如 object 怎样回收由 gc 具体实现决定。向线程池 submit 的 command 怎么执行, 由具体的 executor 实现来决定。
+5. ASAP
+   > as soon as possible 尽快
 
 ## b
 
