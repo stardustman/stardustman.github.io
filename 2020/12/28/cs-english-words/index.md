@@ -86,6 +86,7 @@
 1. lifetime
    > A lifetime is the length of time that someone is alive. 某人活着的时间，也就是享年多久。
    > The lifetime of a particular thing is the period of time that it lasts. 某事物存在的时长。
+2. leave options open 暂不决定
 
 ## m
 1. majority
