@@ -46,6 +46,11 @@
    > Something that is durable is strong and lasts a `long time without breaking` or becoming weaker
 3. discretion
    > If someone in `a position of authority` uses their discretion or has the discretion to do something in a particular situation, they have the freedom and authority to decide what to do. 自由裁量权。没有规范的情况下，由有权威的人进行“圣裁"。
+4. delegation
+   > A delegation is a group of people who have been sent somewhere to have talks with other people on behalf of a larger group of people.
+   > 代表更大集团的一个和其他人交流的小集团
+
+
 ## e
 
 1. eligible
