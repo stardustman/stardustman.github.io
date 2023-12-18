@@ -69,6 +69,8 @@
    > Someone's fallback position is what they will do `if their plans do not succeed, or if something unexpected happens`.
 3. field
    > A field is `an area of a computer's memory or a program` where data can be entered, edited, or stored.
+4. factor out
+   > 分解
 
 ## g
 
