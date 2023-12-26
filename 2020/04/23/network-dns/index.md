@@ -34,7 +34,7 @@
 
 ![dns-look-up](https://github.com/stardustman/pictures/raw/main/img/network-dns.svg)
 > 图中 `OS stub resovler` 就是负责 DNS 解析的进程，发起 DNS 递归查询请求。
-> `local dns server` 发起迭代查询，查询域名对应的 IP。之后返给 `OS stub resovler`。
+> `local dns server` 发起迭代查询，查询域名对应的 IP。之后返给 `OS stub resovler`(name servers that provide the complete answers to user queries)。
 
 1. 这个进程向 `local dns server` 发起递归查询。也就是只需要等 `local dns server` 查询结果就行。
 2. `local dns server` 发起迭代查询。因为 `local dns server` 有所有 root server 的 IP，选择一个 IP，根据顶级域名属于哪一个 `TLD Zone`， 发起迭代查询。
