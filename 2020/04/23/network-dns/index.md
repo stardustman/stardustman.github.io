@@ -45,6 +45,9 @@
 7. `local dns server` 从权威服务器得到域名对应的 IP。
 8. 返还给 `OS stub resovler`。递归查询结束。
 
+> Systems normally lookup any name (including domain names) using the hosts file first (if present), followed by DNS.
+> However, the nsswitch.conf file (typically in /etc) controls this order (normally hosts: file dns), allowing the order to be changed or the file value to be deleted entirely depending on local needs. 
+
 ### 有没有其他解决方案
 
 ## dig 命令
@@ -201,3 +204,4 @@ mail exchange 电子邮件服务器
 9. [dns record types](https://simpledns.plus/help/dns-record-types)
 10. [ascii](https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html)
 11. [dns-zone](https://www.cloudflare.com/learning/dns/glossary/dns-zone/)
+12. https://bind9.readthedocs.io/en/v9.18.21/chapter3.html#localhost-zone-file
