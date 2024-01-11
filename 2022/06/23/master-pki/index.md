@@ -21,3 +21,4 @@
 5. [csr-在线解析](http://web.chacuo.net/netcsrdecoder/)
 6. [github-public-key](https://github.com/stardustman.keys)
 7. [dns-caa-record](https://geekflare.com/dns-caa-record/)
+8. [X.509](https://en.wikipedia.org/wiki/X.509)
