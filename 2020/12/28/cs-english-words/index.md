@@ -41,6 +41,8 @@
    > Compound is used to indicate that something consists of two or more parts or things.
 4. consensus
    > A consensus is general agreement among a group of people. 一群人达成的协议。共识。
+5. coalesce
+   > If two or more things coalesce, they come together and form a larger group or system. 合并
 
 ## d
 
