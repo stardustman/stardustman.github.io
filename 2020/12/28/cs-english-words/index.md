@@ -17,6 +17,8 @@ Ad hoc can be used as an adjective or an adverb.
 6. authoritative
    > Someone or something that is authoritative has `a lot of knowledge` of a particular subject.
    > 比如 authoritative DNS server 是知道相关 domain 的 resource record 的。给你的信息是可以无脑相信的。😄
+7. archive
+   > The archive or archives are a collection of documents and records that contain `historical information`. You can also use archives to refer to the place where archives are stored. 包含历史信息，如 oracle 的 archived redo log.
    
 
 ## b
