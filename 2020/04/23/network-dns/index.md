@@ -1,3 +1,4 @@
+
 > 怎样学习一个新的东西，也可以按照一定的套路的。这个东西解决什么问题？这个东西怎样解决问题？
 > 还有没有其他方法？
 
@@ -23,16 +24,19 @@
 #### DNS 层级树
 
 ![DNS 层级树](https://github.com/stardustman/pictures/raw/main/img/dns-hierarchy.svg)
+
 > 可以看到整个 DNS 的入口就是 root。也就是记录顶级域名在哪些服务器上的信息。这是 `root` 也就是不需要解析这些记录顶级域名的服务器。直接固定了这些 [root server 的 IP](https://www.iana.org/domains/root/servers) 地址。实现 DNS 功能的软件，直接内置这些固定的 IP。DNS 查询第一步就是向这些 root server 查询顶级域名对应哪些 nameserver，也就是顶级域名对应的 IP。其实 DNS也就是个分布式层级数据库。注册域名也就是向数据库添加一条记录。但是不是免费注册的。
 
 #### DNS Zone
 
 ![DNS Zone](https://github.com/stardustman/pictures/raw/main/img/dns-zone.svg)
+
 > 可以看到整个 DNS 层级树，每一个节点对应一个 Zone。
 
 #### uncached DNS lookup
 
 ![dns-look-up](https://github.com/stardustman/pictures/raw/main/img/network-dns.svg)
+
 > 图中 `OS stub resovler` 就是负责 DNS 解析的进程，发起 DNS 递归查询请求。
 > `local dns server` 发起迭代查询，查询域名对应的 IP。之后返给 `OS stub resovler`(name servers that provide the complete answers to user queries)。
 
@@ -46,7 +50,7 @@
 8. 返还给 `OS stub resovler`。递归查询结束。
 
 > Systems normally lookup any name (including domain names) using the hosts file first (if present), followed by DNS.
-> However, the nsswitch.conf file (typically in /etc) controls this order (normally hosts: file dns), allowing the order to be changed or the file value to be deleted entirely depending on local needs. 
+> However, the nsswitch.conf file (typically in /etc) controls this order (normally hosts: file dns), allowing the order to be changed or the file value to be deleted entirely depending on local needs.
 
 ### 有没有其他解决方案
 
@@ -155,7 +159,7 @@ github.com.  900 IN NS ns1.p16.dynect.net.
 `Canonical Name` 域名指向另一个域名。见下图：
 
 ```bash
- dig -t cname music.163.com     
+ dig -t cname music.163.com
 
 ; <<>> DiG 9.10.6 <<>> -t cname music.163.com
 ;; global options: +cmd
@@ -191,6 +195,10 @@ music.163.com.		1	IN	CNAME	music.ntes53.netease.com.
 
 mail exchange 电子邮件服务器
 
+### TXT
+
+[可以获取这个网站在使用那些第三方服务](https://allagora.wordpress.com/2022/03/22/use-dns-txt-lookup-to-gain-quick-insights-which-services-companies-are-using/)
+
 ## Reference
 
 1. [DNS 入门](https://www.ruanyifeng.com/blog/2016/06/dns.html)
@@ -204,4 +212,7 @@ mail exchange 电子邮件服务器
 9. [dns record types](https://simpledns.plus/help/dns-record-types)
 10. [ascii](https://www.cs.cmu.edu/~pattis/15-1XX/common/handouts/ascii.html)
 11. [dns-zone](https://www.cloudflare.com/learning/dns/glossary/dns-zone/)
-12. https://bind9.readthedocs.io/en/v9.18.21/chapter3.html#localhost-zone-file
+12. [zone-file](https://bind9.readthedocs.io/en/v9.18.21/chapter3.html#localhost-zone-file)
+13. [viewdns](https://viewdns.info/)
+14. [dns record txt](https://allagora.wordpress.com/2022/03/22/use-dns-txt-lookup-to-gain-quick-insights-which-services-companies-are-using/)
+15. [https://www.nslookup.io/](https://www.nslookup.io/)
