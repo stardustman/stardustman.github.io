@@ -159,7 +159,7 @@ public class TangDynasty implements Dynasty{
 
 > - 由`调用栈`可知，最终还是要调用`被代理的类`的方法。
 > - 但是可以在执行真正的代理类方法之前，在 `InvocationHandler#invoke` 中添加实际需要的逻辑。这就是中间层，通过中间层进行逻辑的增强。
-> - 这样看起来就好像对真正的代理对象进行了增强。
+> - 这样看起来就好像被代理对象的逻辑进行了增强。
 
 # References
 
