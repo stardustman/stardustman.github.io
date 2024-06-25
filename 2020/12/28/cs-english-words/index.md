@@ -73,6 +73,8 @@ Ad hoc can be used as an adjective or an adverb.
    > If you describe something as ephemeral, you mean that it lasts only for a very short time. 只持续较短时间的东西。短暂的。
 5. exclusive
    > If two things are `mutually exclusive`, they are separate and very different from each other, so that it is `impossible for them to exist or happen together`. 不可共存
+6. efficiency
+   > Efficiency is the quality of being able to do a task successfully, `without wasting time or energy`. 何谓效率？不浪费时间或能量。
 
 ## f
 1. failover
