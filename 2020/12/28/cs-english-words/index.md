@@ -182,6 +182,8 @@ Ad hoc can be used as an adjective or an adverb.
    > Shards are pieces of broken glass, pottery, or metal. fragement,piece 一片，想象一下把一整块玻璃打碎，分成多个碎片，scale out..
 6. standby
    > A standby is something or someone that is `always ready to be used` if they are needed.
+7. segment
+   > A segment of something is `one part of` it, considered separately from the rest. 整体的一部分，分段
 
 ## t
 
