@@ -216,3 +216,4 @@ mail exchange 电子邮件服务器
 13. [viewdns](https://viewdns.info/)
 14. [dns record txt](https://allagora.wordpress.com/2022/03/22/use-dns-txt-lookup-to-gain-quick-insights-which-services-companies-are-using/)
 15. [https://www.nslookup.io/](https://www.nslookup.io/)
+16. [域名信息查询](https://whois.gandi.net/zh-hans)
