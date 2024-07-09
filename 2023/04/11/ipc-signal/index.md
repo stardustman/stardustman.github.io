@@ -135,3 +135,4 @@ public class ExampleSignalHandler {
 13. [csci480/signals.htm](https://faculty.cs.niu.edu/~hutchins/csci480/signals.htm)
 14. [kill(2)](https://man7.org/linux/man-pages/man2/kill.2.html)
 15. https://goodyduru.github.io/os/2023/10/05/ipc-unix-signals.html
+16. [java Signal 处理实现](https://github.com/JetBrains/jdk8u_jdk/blob/94318f9185757cc33d2b8d527d36be26ac6b7582/src/share/classes/sun/misc/Signal.java#L30)
