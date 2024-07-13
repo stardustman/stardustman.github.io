@@ -183,7 +183,7 @@ Ad hoc can be used as an adjective or an adverb.
 6. standby
    > A standby is something or someone that is `always ready to be used` if they are needed.
 7. segment
-   > A segment of something is `one part of` it, considered separately from the rest. 整体的一部分，分段
+   > A segment of something is `one part of` it, considered separately from the rest. 整体的一部分，分段，和余下的部分分开的。
 
 ## t
 
