@@ -96,6 +96,7 @@ Ad hoc can be used as an adjective or an adverb.
 
 1. independent
    > not connected with another or with each other; separate 互不关联，分离的
+   > If one thing or person is independent of another, they are `separate and not connected`, so the first one is `not affected or influenced` by the second.
 2. integrity
    > The integrity of something such as a group of people or a text is its `state of being a united whole`. 完整性
 3. interpose
