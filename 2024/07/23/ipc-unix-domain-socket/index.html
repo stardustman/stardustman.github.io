@@ -1,0 +1,131 @@
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Ipc Unix Domain Socket - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.119.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2024/07/23/ipc-unix-domain-socket/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Ipc Unix Domain Socket"><meta property="og:description" content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2024/07/23/ipc-unix-domain-socket/"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-07-23T15:00:13+08:00"><meta property="article:modified_time" content="2024-07-23T15:00:13+08:00"><meta itemprop=name content="Ipc Unix Domain Socket"><meta itemprop=description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta itemprop=datePublished content="2024-07-23T15:00:13+08:00"><meta itemprop=dateModified content="2024-07-23T15:00:13+08:00"><meta itemprop=wordCount content="500"><meta itemprop=keywords content="ipc,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Ipc Unix Domain Socket"><meta name=twitter:description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>keep writing</a></div><div class=mobile-navbar-icon><span></span>
+<span></span>
+<span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/2022/03/27/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>keep writing</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/2022/03/27/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Ipc Unix Domain Socket</h1><div class=post-meta><span class=post-time>2024-07-23</span>
+<span class=more-meta>500 words</span>
+<span class=more-meta>1 min read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#unix-domain-socket-是啥>unix domain socket 是啥?</a></li><li><a href=#问题背景>问题背景</a></li><li><a href=#gradle-配置>gradle 配置</a></li><li><a href=#程序示例>程序示例</a></li><li><a href=#references>References</a></li></ul></nav></div></div><div class=post-content><h1 id=unix-domain-socket-是啥>unix domain socket 是啥?</h1><blockquote><p>A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system.
+同一台机器两个不同的进程之间交换数据，优化过的 socket。</p></blockquote><h1 id=问题背景>问题背景</h1><blockquote><p>java 写的程序需要和 c 写的程序交换数据，且两个程序运行在同一台机器上。</p></blockquote><h1 id=gradle-配置>gradle 配置</h1><pre><code class=language-groovy>// https://mvnrepository.com/artifact/com.kohlschutter.junixsocket/junixsocket-native-common
+implementation group: 'com.kohlschutter.junixsocket', name: 'junixsocket-native-common', version: '2.9.1'
+
+// https://mvnrepository.com/artifact/com.kohlschutter.junixsocket/junixsocket-common
+implementation group: 'com.kohlschutter.junixsocket', name: 'junixsocket-common', version: '2.9.1'
+</code></pre><h1 id=程序示例>程序示例</h1><pre><code class=language-java>import org.newsclub.net.unix.AFUNIXServerSocket;
+import org.newsclub.net.unix.AFUNIXSocket;
+import org.newsclub.net.unix.AFUNIXSocketAddress;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
+
+/**
+ * unix domain socket 进程通信
+ */
+@SuppressWarnings({&quot;CatchAndPrintStackTrace&quot; /* errorprone */, &quot;PMD.CognitiveComplexity&quot;})
+public final class MsgServer implements Runnable {
+    private static final String UDS = System.getProperty(&quot;user.home&quot;) + &quot;ipc.sock&quot;;
+    private static final Logger logger = LoggerFactory.getLogger(MsgServer.class);
+
+    private static void startServer() throws IOException {
+        Path path = Paths.get(UDS);
+        logger.info(&quot;UDO  path: {}&quot;, UDS);
+        if (Files.exists(path)) {
+            Files.delete(path);
+        }
+
+        File socketFile = new File(UDS);
+        try (AFUNIXServerSocket server = AFUNIXServerSocket.newInstance()) {
+            server.setReuseAddress(false);
+            server.bind(AFUNIXSocketAddress.of(socketFile));
+            logger.info(&quot;MsgServer 监听 socket: {}&quot;, server);
+
+            while (!Thread.interrupted() &amp;&amp; !server.isClosed()) {
+                logger.info(&quot;Waiting for connection...&quot;);
+                try {
+                    AFUNIXSocket sock = server.accept();
+                    Thread thread = new Thread(new ClientHandler(sock), &quot;msg-receiver&quot;);
+                    thread.start();
+                } catch (IOException e) {
+                    logger.error(&quot;server.accept() 出错&quot;, e);
+                }
+            }
+        } finally {
+            logger.info(&quot;MsgServer terminated&quot;);
+        }
+    }
+
+    @Override
+    public void run() {
+        try {
+            startServer();
+        } catch (IOException e) {
+            logger.error(&quot;启动 MsgServer 失败&quot;, e);
+        }
+    }
+
+    /**
+     * 处理连接,以接收 utf-8 字符串为例
+     */
+    static class ClientHandler implements Runnable {
+        AFUNIXSocket sock;
+
+        public ClientHandler(AFUNIXSocket socket) {
+            this.sock = socket;
+        }
+
+        @Override
+        public void run() {
+            try (InputStream is = sock.getInputStream(); OutputStream os = sock.getOutputStream(); PrintWriter writer = new PrintWriter(os, true); BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+                String line;
+                while ((line = reader.readLine()) != null &amp;&amp; !line.equalsIgnoreCase(&quot;bye&quot;)) {
+                    logger.info(&quot;Received: &quot; + line);
+                    handleMsg(line);
+                    writer.println(&quot;Received successfully&quot;);
+                    writer.flush();
+                }
+            } catch (IOException e) {
+                logger.error(&quot;客户端关闭了连接&quot;, e);
+            } finally {
+                try {
+                    sock.close();
+                } catch (IOException e) {
+                    logger.error(&quot;关闭连接出错&quot;, e);
+                }
+            }
+
+        }
+
+        private void handleMsg(String msg) {
+            // process receive string msg
+        }
+
+    }
+
+}
+
+</code></pre><h1 id=references>References</h1><ol><li><a href=https://github.com/kohlschutter/junixsocket>junixsocket</a></li><li><a href=https://en.wikipedia.org/wiki/Unix_domain_socket>Unix_domain_socket</a></li></ol></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>
+<span class=item-content>stardust</span></p><p class=copyright-item><span class=item-title>LastMod</span>
+<span class=item-content>2024-07-23</span></p><p class=copyright-item><span class=item-title>Markdown</span>
+<span class=item-content><a class=link-to-markdown href=http://stardustman.github.io/2024/07/23/ipc-unix-domain-socket/index.md target=_blank>The Markdown version »</a></span></p></div><footer class=post-footer><div class=post-tags><a href=/tags/ipc/>ipc</a></div><nav class=post-nav><a class=prev href=/2022/03/27/about/><i class="iconfont icon-left"></i>
+<span class="prev-text nav-default">About</span>
+<span class="prev-text nav-mobile">Prev</span></a>
+<a class=next href=/2023/10/21/zookeeper-transaction-log/><span class="next-text nav-default">Zookeeper Transaction Log</span>
+<span class="next-text nav-mobile">Next</span>
+<i class="iconfont icon-right"></i></a></nav></footer></article></div><script src=https://utteranc.es/client.js repo=stardustman/comments issue-term=pathname theme=github-light crossorigin=anonymous async></script><noscript>Please enable JavaScript to view the <a href=https://github.com/utterance>comments powered by utterances.</a></noscript></div></main><footer id=footer class=footer><div class=social-links><a href=mailto:aoyunyoung@gmail.com class="iconfont icon-email" title=email></a>
+<a href=https://stackoverflow.com/users/9112817/cloud-young class="iconfont icon-stack-overflow" title=stack-overflow></a>
+<a href=https://github.com/stardustman class="iconfont icon-github" title=github></a>
+<a href=http://stardustman.github.io/index.xml type=application/rss+xml class="iconfont icon-rss" title=rss></a></div><div class=copyright><span class=power-by>Powered by <a class=hexo-link href=https://gohugo.io>Hugo</a></span>
+<span class=division>|</span>
+<span class=theme-info>Theme -
+<a class=theme-link href=https://github.com/olOwOlo/hugo-theme-even>Even</a></span>
+<span class=copyright-year>&copy;
+2019 -
+2024<span class=heart><i class="iconfont icon-heart"></i></span><span>stardust</span></span></div></footer><div class=back-to-top id=back-to-top><i class="iconfont icon-up"></i></div></div><script src="/lib/highlight/highlight.pack.js?v=20171001"></script>
+<script src=https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/slideout@1.0.1/dist/slideout.min.js integrity="sha256-t+zJ/g8/KXIJMjSVQdnibt4dlaDxc9zXr/9oNPeWqdg=" crossorigin=anonymous></script>
+<script src=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.js integrity="sha256-XVLffZaxoWfGUEbdzuLi7pwaUJv1cecsQJQqGLe7axY=" crossorigin=anonymous></script>
+<script type=text/javascript src=/js/main.min.4ae89da218555efa0e7093a20b92017d2e1202b66fff9fc2edf4cb8d44b44c6e.js></script></body></html>
