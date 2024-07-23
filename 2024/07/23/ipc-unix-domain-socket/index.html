@@ -1,15 +1,15 @@
-<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Ipc Unix Domain Socket - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.119.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2024/07/23/ipc-unix-domain-socket/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Ipc Unix Domain Socket"><meta property="og:description" content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2024/07/23/ipc-unix-domain-socket/"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-07-23T15:00:13+08:00"><meta property="article:modified_time" content="2024-07-23T15:00:13+08:00"><meta itemprop=name content="Ipc Unix Domain Socket"><meta itemprop=description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta itemprop=datePublished content="2024-07-23T15:00:13+08:00"><meta itemprop=dateModified content="2024-07-23T15:00:13+08:00"><meta itemprop=wordCount content="500"><meta itemprop=keywords content="ipc,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Ipc Unix Domain Socket"><meta name=twitter:description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
+<!doctype html><html lang=en><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge,chrome=1"><title>Ipc Unix Domain Socket - stardustman</title><meta name=renderer content="webkit"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta http-equiv=cache-control content="no-transform"><meta http-equiv=cache-control content="no-siteapp"><meta name=theme-color content="#f8f5ec"><meta name=msapplication-navbutton-color content="#f8f5ec"><meta name=apple-mobile-web-app-capable content="yes"><meta name=apple-mobile-web-app-status-bar-style content="#f8f5ec"><meta name=author content="stardust"><meta name=description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta name=keywords content="Hugo,theme,even"><meta name=generator content="Hugo 0.119.0 with theme even"><link rel=canonical href=http://stardustman.github.io/2024/07/23/ipc-unix-domain-socket/><link rel=apple-touch-icon sizes=180x180 href=/apple-touch-icon.png><link rel=icon type=image/png sizes=32x32 href=/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=/favicon-16x16.png><link rel=manifest href=/manifest.json><link rel=mask-icon href=/safari-pinned-tab.svg color=#5bbad5><link href=/sass/main.min.f92fd13721ddf72129410fd8250e73152cc6f2438082b6c0208dc24ee7c13fc4.css rel=stylesheet><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.1.20/dist/jquery.fancybox.min.css integrity="sha256-7TyXnr2YU040zfSP+rEcz29ggW4j56/ujTPwjMzyqFY=" crossorigin=anonymous><meta property="og:title" content="Ipc Unix Domain Socket"><meta property="og:description" content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta property="og:type" content="article"><meta property="og:url" content="http://stardustman.github.io/2024/07/23/ipc-unix-domain-socket/"><meta property="article:section" content="post"><meta property="article:published_time" content="2024-07-23T15:00:13+08:00"><meta property="article:modified_time" content="2024-07-23T15:00:13+08:00"><meta itemprop=name content="Ipc Unix Domain Socket"><meta itemprop=description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><meta itemprop=datePublished content="2024-07-23T15:00:13+08:00"><meta itemprop=dateModified content="2024-07-23T15:00:13+08:00"><meta itemprop=wordCount content="650"><meta itemprop=keywords content="ipc,"><meta name=twitter:card content="summary"><meta name=twitter:title content="Ipc Unix Domain Socket"><meta name=twitter:description content="unix domain socket 是啥? A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 同一台机器两个不同的进程之间交换数据，优化过的 socket。 问题背景 java 写的"><!--[if lte IE 9]><script src=https://cdnjs.cloudflare.com/ajax/libs/classlist/1.1.20170427/classList.min.js></script><![endif]--><!--[if lt IE 9]><script src=https://cdn.jsdelivr.net/npm/html5shiv@3.7.3/dist/html5shiv.min.js></script>
 <script src=https://cdn.jsdelivr.net/npm/respond.js@1.4.2/dest/respond.min.js></script><![endif]--></head><body><div id=mobile-navbar class=mobile-navbar><div class=mobile-header-logo><a href=/ class=logo>keep writing</a></div><div class=mobile-navbar-icon><span></span>
 <span></span>
 <span></span></div></div><nav id=mobile-menu class="mobile-menu slideout-menu"><ul class=mobile-menu-list><a href=/><li class=mobile-menu-item>Home</li></a><a href=/post/><li class=mobile-menu-item>Archives</li></a><a href=/tags/><li class=mobile-menu-item>Tags</li></a><a href=/categories/><li class=mobile-menu-item>Categories</li></a><a href=/2022/03/27/about/><li class=mobile-menu-item>About</li></a></ul></nav><div class=container id=mobile-panel><header id=header class=header><div class=logo-wrapper><a href=/ class=logo>keep writing</a></div><nav class=site-navbar><ul id=menu class=menu><li class=menu-item><a class=menu-item-link href=/>Home</a></li><li class=menu-item><a class=menu-item-link href=/post/>Archives</a></li><li class=menu-item><a class=menu-item-link href=/tags/>Tags</a></li><li class=menu-item><a class=menu-item-link href=/categories/>Categories</a></li><li class=menu-item><a class=menu-item-link href=/2022/03/27/about/>About</a></li></ul></nav></header><main id=main class=main><div class=content-wrapper><div id=content class=content><article class=post><header class=post-header><h1 class=post-title>Ipc Unix Domain Socket</h1><div class=post-meta><span class=post-time>2024-07-23</span>
-<span class=more-meta>500 words</span>
-<span class=more-meta>1 min read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#unix-domain-socket-是啥>unix domain socket 是啥?</a></li><li><a href=#问题背景>问题背景</a></li><li><a href=#gradle-配置>gradle 配置</a></li><li><a href=#程序示例>程序示例</a></li><li><a href=#references>References</a></li></ul></nav></div></div><div class=post-content><h1 id=unix-domain-socket-是啥>unix domain socket 是啥?</h1><blockquote><p>A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system.
+<span class=more-meta>650 words</span>
+<span class=more-meta>2 mins read</span></div></header><div class=post-toc id=post-toc><h2 class=post-toc-title>Contents</h2><div class="post-toc-content always-active"><nav id=TableOfContents><ul><li><a href=#unix-domain-socket-是啥>unix domain socket 是啥?</a></li><li><a href=#问题背景>问题背景</a></li><li><a href=#gradle-配置>gradle 配置</a></li><li><a href=#java-服务端程序示例>java 服务端程序示例</a></li><li><a href=#c-客户端程序示例>C 客户端程序示例</a></li><li><a href=#references>References</a></li></ul></nav></div></div><div class=post-content><h1 id=unix-domain-socket-是啥>unix domain socket 是啥?</h1><blockquote><p>A <code>Unix domain socket (UDS)</code> or <code>IPC socket</code> (inter-process communication) is a data communications <code>endpoint</code> for exchanging data between processes executing on the <code>same</code> host operating system.
 同一台机器两个不同的进程之间交换数据，优化过的 socket。</p></blockquote><h1 id=问题背景>问题背景</h1><blockquote><p>java 写的程序需要和 c 写的程序交换数据，且两个程序运行在同一台机器上。</p></blockquote><h1 id=gradle-配置>gradle 配置</h1><pre><code class=language-groovy>// https://mvnrepository.com/artifact/com.kohlschutter.junixsocket/junixsocket-native-common
 implementation group: 'com.kohlschutter.junixsocket', name: 'junixsocket-native-common', version: '2.9.1'
 
 // https://mvnrepository.com/artifact/com.kohlschutter.junixsocket/junixsocket-common
 implementation group: 'com.kohlschutter.junixsocket', name: 'junixsocket-common', version: '2.9.1'
-</code></pre><h1 id=程序示例>程序示例</h1><pre><code class=language-java>import org.newsclub.net.unix.AFUNIXServerSocket;
+</code></pre><h1 id=java-服务端程序示例>java 服务端程序示例</h1><pre><code class=language-java>import org.newsclub.net.unix.AFUNIXServerSocket;
 import org.newsclub.net.unix.AFUNIXSocket;
 import org.newsclub.net.unix.AFUNIXSocketAddress;
 import org.slf4j.Logger;
@@ -105,6 +105,55 @@ public final class MsgServer implements Runnable {
 
     }
 
+}
+
+</code></pre><h1 id=c-客户端程序示例>C 客户端程序示例</h1><pre><code class=language-c>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+#include &lt;sys/socket.h&gt;
+#include &lt;sys/un.h&gt;
+#include &lt;unistd.h&gt;
+
+#define SOCKET_PATH &quot;/path/to/ipc.sock&quot;
+
+int main() {
+    int client_fd;
+    struct sockaddr_un addr;
+    const char *message = &quot;Hello from 中国!&quot;;
+    char buffer[100];
+
+    // Create a socket
+    if ((client_fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
+        perror(&quot;socket error&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    // Set up the address structure
+    memset(&amp;addr, 0, sizeof(struct sockaddr_un));
+    addr.sun_family = AF_UNIX;
+    strncpy(addr.sun_path, SOCKET_PATH, sizeof(addr.sun_path) - 1);
+
+    // Connect to the server
+    if (connect(client_fd, (struct sockaddr*)&amp;addr, sizeof(struct sockaddr_un)) == -1) {
+        perror(&quot;connect error&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    // Send a message to the server
+    if (write(client_fd, message, strlen(message)) == -1) {
+        perror(&quot;write error&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    // Receive a response from the server
+    if (read(client_fd, buffer, sizeof(buffer)) == -1) {
+        perror(&quot;read error&quot;);
+        exit(EXIT_FAILURE);
+    }
+
+    printf(&quot;Received response: %s\n&quot;, buffer);
+    close(client_fd);
+    return 0;
 }
 
 </code></pre><h1 id=references>References</h1><ol><li><a href=https://github.com/kohlschutter/junixsocket>junixsocket</a></li><li><a href=https://en.wikipedia.org/wiki/Unix_domain_socket>Unix_domain_socket</a></li></ol></div><div class=post-copyright><p class=copyright-item><span class=item-title>Author</span>

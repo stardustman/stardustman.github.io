@@ -1,7 +1,7 @@
 
 # unix domain socket 是啥?
 
-> A Unix domain socket (UDS) or IPC socket (inter-process communication) is a data communications endpoint for exchanging data between processes executing on the same host operating system. 
+> A `Unix domain socket (UDS)` or `IPC socket` (inter-process communication) is a data communications `endpoint` for exchanging data between processes executing on the `same` host operating system. 
 > 同一台机器两个不同的进程之间交换数据，优化过的 socket。
 
 # 问题背景
@@ -18,7 +18,7 @@ implementation group: 'com.kohlschutter.junixsocket', name: 'junixsocket-native-
 implementation group: 'com.kohlschutter.junixsocket', name: 'junixsocket-common', version: '2.9.1'
 ```
 
-# 程序示例
+# java 服务端程序示例
 
 ```java
 import org.newsclub.net.unix.AFUNIXServerSocket;
@@ -117,6 +117,60 @@ public final class MsgServer implements Runnable {
 
     }
 
+}
+
+```
+
+# C 客户端程序示例
+
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <unistd.h>
+
+#define SOCKET_PATH "/path/to/ipc.sock"
+
+int main() {
+    int client_fd;
+    struct sockaddr_un addr;
+    const char *message = "Hello from 中国!";
+    char buffer[100];
+
+    // Create a socket
+    if ((client_fd = socket(AF_UNIX, SOCK_STREAM, 0)) == -1) {
+        perror("socket error");
+        exit(EXIT_FAILURE);
+    }
+
+    // Set up the address structure
+    memset(&addr, 0, sizeof(struct sockaddr_un));
+    addr.sun_family = AF_UNIX;
+    strncpy(addr.sun_path, SOCKET_PATH, sizeof(addr.sun_path) - 1);
+
+    // Connect to the server
+    if (connect(client_fd, (struct sockaddr*)&addr, sizeof(struct sockaddr_un)) == -1) {
+        perror("connect error");
+        exit(EXIT_FAILURE);
+    }
+
+    // Send a message to the server
+    if (write(client_fd, message, strlen(message)) == -1) {
+        perror("write error");
+        exit(EXIT_FAILURE);
+    }
+
+    // Receive a response from the server
+    if (read(client_fd, buffer, sizeof(buffer)) == -1) {
+        perror("read error");
+        exit(EXIT_FAILURE);
+    }
+
+    printf("Received response: %s\n", buffer);
+    close(client_fd);
+    return 0;
 }
 
 ```
