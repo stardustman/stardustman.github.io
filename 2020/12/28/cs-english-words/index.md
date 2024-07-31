@@ -19,6 +19,8 @@ Ad hoc can be used as an adjective or an adverb.
    > 比如 authoritative DNS server 是知道相关 domain 的 resource record 的。给你的信息是可以无脑相信的。😄
 7. archive
    > The archive or archives are a collection of documents and records that contain `historical information`. You can also use archives to refer to the place where archives are stored. 包含历史信息，如 oracle 的 archived redo log.
+8. abstraction
+   > An abstraction is a `general idea` rather than one `relating to a particular object, person, or situation`. 通用的概念，和特定的物体、人、情况无关。
    
 
 ## b
