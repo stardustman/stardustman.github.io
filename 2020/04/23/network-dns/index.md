@@ -217,3 +217,5 @@ mail exchange 电子邮件服务器
 14. [dns record txt](https://allagora.wordpress.com/2022/03/22/use-dns-txt-lookup-to-gain-quick-insights-which-services-companies-are-using/)
 15. [https://www.nslookup.io/](https://www.nslookup.io/)
 16. [域名信息查询](https://whois.gandi.net/zh-hans)
+17. [dns延迟测试](https://www.dnsperf.com/)
+18. [dns实践](https://messwithdns.net/)
