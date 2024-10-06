@@ -52,17 +52,17 @@ swap(int, int):
 | l    | long | 32bit |
 | q    | quad | 64bit |
 
-# addressing mode
+# addressing mode(寻址模式)
 
 > CPU 寻址方式, 也就是拿到数据的方式.
 
-## direct addressing
+## direct addressing(直接寻址)
 
 > movb $0x05,%al  
 > 表示为:R[al] = 0x05;  
 > 将立即数 0x05(1 byte) 复制到寄存器 al  
 
-## indirect addressing
+## indirect addressing(间接寻址)
 
 > 间接寻址也就是到内存里去找
 
@@ -83,19 +83,19 @@ swap(int, int):
 
 > PC = PC + \(instruction size in bytes\)  
 > (instruction) (src1) (src2) (dst)  
-> In most processors, the PC is incremented after fetching an instruction,
+> In most processors, the PC is `incremented after fetching` an instruction,
 > and holds the memory address of ("points to") the next instruction that would be executed.   
 > 这里就用到了指令周期(instruction cycle)这个概念了, fetch, decode, execute.
-注意到 PC 这个寄存器, 在 CPU fetch 了一条指令后就自动增加了.
+> 注意到 PC 这个寄存器, 在 CPU fetch 了一条指令后就自动增加了.
 > (In a processor where the incrementation precedes the fetch, the PC points to the current instruction being executed.)  
 > 同样的在 CPU fetch 一条指令之前, PC 指向当前正在执行的指令.  
 > 注意: 不直接操作 ip(instruction pointer) 也叫 pc(program counter) 这个寄存器, 如果这个能被编译器直接操作的话, 就完全想跳到哪执行就跳到哪执行了. 
 > 实际上 `call` 和 `ret` 指令就是在间接操作 `pc` 这个寄存器. 
 > call 带来的效果之一就是 push %rip, ret 带来的效果之一就是 pop %rip. 两者具有对称作用啊!
 
-# change control flow
+# change control flow(改变控制流)
 
-## jmp label
+## `jmp` label
 
 > When a jump instruction executes (in the last step of the machine cycle), it puts a new address into the PC. Now the fetch at the top of the next machine cycle fetches the instruction at that new address. Instead of executing the instruction that follows the jump instruction in memory, the processor "jumps" to an instruction somewhere else in memory.  
 > jmp 指令把 label 所在的地址, 复制给 pc 寄存器. 这就改变了程序的控制流. 然后程序流程就脱离了原来的执行流. 和 call label 很相似, 对, call 指令作用之一就包括了一个隐式的 jmp label. 
@@ -113,7 +113,7 @@ swap(int, int):
 
 ![x86-64-stack](https://github.com/stardustman/pictures/raw/main/img/x86-64-stack.png) #(x86-64-stack)
 
-## pushl %eax
+## `pushl` %eax
 
 > push value of %eax onto stack
 > The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.  
@@ -125,7 +125,7 @@ subl $4, %esp ;分配4个字节的空间, 所谓的栈向下生长
 movl %eax, (%esp) ;将 eax 的值复制到 esp 指到的内存地址处
 ```
 
-## popl %eax
+## `popl` %eax
 
 > pop %eax off stack
 > The pop instruction removes the 4-byte data element from the top of the hardware-supported stack into the specified operand (i.e. register or memory location). It first moves the 4 bytes located at memory location [ESP] into the specified register or memory location, and then increments SP by 4. 
@@ -138,7 +138,7 @@ addl $4,%esp ;回收空间
 
 # function call and return
 
-## call <label>
+## `call` <label>
 
 > The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.  
 > 注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. 
@@ -151,7 +151,7 @@ pushq %rip
 jmp label 
 ``` 
 
-## ret
+## `ret`
 
 > The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (也就是 call 指令压入栈中的 PC, 将这个值复制到 PC 寄存器)(see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.  
 > 所以啊, call(含有一个 push 操作) 和 ret(含有一个 pop 操作) 指令, 这是实现控制流跳转和恢复的关键. 也间接操作了 sp 这个寄存器. 硬件实现的功能, 不需要过多的计较.  
@@ -159,7 +159,7 @@ jmp label
 
 作用等价于:
 
-```asm
+```gas
 popq %rip
 ```
 
