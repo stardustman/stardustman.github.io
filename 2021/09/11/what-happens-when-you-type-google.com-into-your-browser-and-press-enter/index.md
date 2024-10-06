@@ -22,7 +22,7 @@ firefox(about:networking#dns)
 2. ARP request for the nameserver
 3. send dns query to get the ip of the domain
 
-## arp 获取 gateway ip
+## arp 获取 gateway 的 mac 地址
 
 ## References
 
