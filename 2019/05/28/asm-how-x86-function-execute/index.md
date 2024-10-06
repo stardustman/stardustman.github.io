@@ -89,14 +89,17 @@ swap(int, int):
 注意到 PC 这个寄存器, 在 CPU fetch 了一条指令后就自动增加了.
 > (In a processor where the incrementation precedes the fetch, the PC points to the current instruction being executed.)  
 > 同样的在 CPU fetch 一条指令之前, PC 指向当前正在执行的指令.  
-> 注意: 不允许直接操作 ip(instruction pointer) 也叫 pc(program counter) 这个寄存器, 如果这个能被编译器操作的话, 就完全想跳到哪执行就跳到哪执行了. 实际上 call 和 ret 指令就是在间接操作这两个寄存器. call 带来的效果之一就是 push %rip, ret 带来的效果之一就是 pop %rip. 两者具有对称作用啊!
+> 注意: 不直接操作 ip(instruction pointer) 也叫 pc(program counter) 这个寄存器, 如果这个能被编译器直接操作的话, 就完全想跳到哪执行就跳到哪执行了. 
+> 实际上 `call` 和 `ret` 指令就是在间接操作 `pc` 这个寄存器. 
+> call 带来的效果之一就是 push %rip, ret 带来的效果之一就是 pop %rip. 两者具有对称作用啊!
 
 # change control flow
 
 ## jmp label
 
 > When a jump instruction executes (in the last step of the machine cycle), it puts a new address into the PC. Now the fetch at the top of the next machine cycle fetches the instruction at that new address. Instead of executing the instruction that follows the jump instruction in memory, the processor "jumps" to an instruction somewhere else in memory.  
-> jmp 指令把 label 所在的地址, 复制给 pc 寄存器. 这就改变了程序的控制流. 然后程序流程就脱离了原来的执行流. 和 call label 很相似, 对, call指令作用之一就包括了一个隐式的 jmp label. 函数调用也就是把控制权交给了被调用者. 但是控制权要回到调用函数那里. 只不过 call 指令在函数交出控制权之前还多干了一件事, 就是把此时的 pc 值 push 到了栈里. 
+> jmp 指令把 label 所在的地址, 复制给 pc 寄存器. 这就改变了程序的控制流. 然后程序流程就脱离了原来的执行流. 和 call label 很相似, 对, call 指令作用之一就包括了一个隐式的 jmp label. 
+> 函数调用也就是把控制权交给了被调用者. 但是控制权最后要回到调用函数那里. 只不过 call 指令在函数交出控制权之前还多干了一件事, 就是把此时的 pc 值 push 到了栈里. 
 
 # stack management 
 
@@ -115,7 +118,7 @@ swap(int, int):
 > push value of %eax onto stack
 > The push instruction places its operand onto the top of the hardware supported stack in memory. Specifically, push first decrements ESP by 4, then places its operand into the contents of the 32-bit location at address [ESP]. ESP (the stack pointer) is decremented by push since the x86 stack grows down - i.e. the stack grows from high addresses to lower addresses.  
 > 这里可以看到 push 的是多字节的数据, 那就涉及到怎样排列多字节数据的问题了. 也就是所谓的字节序的问题. X86 采用所谓的小端, 也就是把数字按照顺序放到栈里, 数字的高位放在了比较大的内存地址那里.(这里不做讨论)
-等价于
+作用等价于
 
 ```asm
 subl $4, %esp ;分配4个字节的空间, 所谓的栈向下生长
@@ -125,8 +128,8 @@ movl %eax, (%esp) ;将 eax 的值复制到 esp 指到的内存地址处
 ## popl %eax
 
 > pop %eax off stack
-> The pop instruction removes the 4-byte data element from the top of the hardware-supported stack into the specified operand (i.e. register or memory location). It first moves the 4 bytes located at memory location [ESP] into the specified register or memory location, and then increments SP by 4.
-等价于
+> The pop instruction removes the 4-byte data element from the top of the hardware-supported stack into the specified operand (i.e. register or memory location). It first moves the 4 bytes located at memory location [ESP] into the specified register or memory location, and then increments SP by 4. 
+作用等价于
 
 ```asm
 movl (%esp),%eax ;将 esp 指向的内存地址里面的值复制到 eax
@@ -140,16 +143,25 @@ addl $4,%esp ;回收空间
 > The call instruction first pushes the current code location onto the hardware supported stack in memory(see the push instruction for details), and then performs an unconditional jump to the code location indicated by the label operand. Unlike the simple jump instructions, the call instruction saves the location to return to when the subroutine completes.  
 > 注意到 CPU 在 fetch 到 call 指令后, PC 就已经自动加 1 了. 此时的 PC 值也就是所谓的函数返回地址. 
 > call 指令做了两件事, 第一件事: 将此时的 ip 保存到栈中, 第二件事: jump 到 label 位置, 此时已经改变了 PC 的值.  
-> call label 作用等价于:  
-> pushq %rip  
-> jmp label  
+> call label 
+作用等价于 
+ 
+```asm
+pushq %rip  
+jmp label 
+``` 
 
 ## ret
 
 > The ret instruction implements a subroutine return mechanism. This instruction first pops a code location off the hardware supported in-memory stack (也就是 call 指令压入栈中的 PC, 将这个值复制到 PC 寄存器)(see the pop instruction for details). It then performs an unconditional jump to the retrieved code location.  
 > 所以啊, call(含有一个 push 操作) 和 ret(含有一个 pop 操作) 指令, 这是实现控制流跳转和恢复的关键. 也间接操作了 sp 这个寄存器. 硬件实现的功能, 不需要过多的计较.  
-> ret 作用等价于:  
-> popq %rip
+> ret 
+
+作用等价于:
+
+```asm
+popq %rip
+```
 
 # call stack
 
@@ -176,7 +188,7 @@ void swap(int a, int b){
 ```
 
 ```asm
--- 64 bit 机器 , AT&T 风格的汇编
+; 64 bit 机器 , AT&T 风格的汇编
 swap(int, int):
         pushq   %rbp ; 上一个栈帧(main)的基地址压栈 等价于 subq $8, %rsp; movq %rbp,(%rsp)
         movq    %rsp, %rbp ; 开辟新的函数栈帧, 也就是形成一个新的栈的基地址
