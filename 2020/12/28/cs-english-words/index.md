@@ -117,6 +117,8 @@ Ad hoc can be used as an adjective or an adverb.
 ## m
 1. majority
    > The majority of people or things in a group is more than half of them. 什么是 majority。超过一半的人/事物才叫 majority。zookeeper cluster 推荐 server 数量奇数。
+2. mediator
+   > a person or an organization that tries to get agreement `between people or groups` who disagree with each other 多方势力之间的调停者
 
 ## n
 
